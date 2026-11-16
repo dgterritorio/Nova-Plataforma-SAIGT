@@ -1,0 +1,281 @@
+/*
+  Tokens por função, a única camada que componentes e ecrãs usam.
+  Só aliases para tokens.css/fontes.css ou dimensões numéricas; nunca hex.
+  Os valores fracionários do Figma (5.25, 10.5, 12.25…) são desenhos a 87,5% e não entram aqui.
+*/
+:root {
+  /* Cor */
+  --cor-primaria: var(--dark-blue);
+  --cor-primaria-hover: var(--color-1b3a6b);
+  --cor-primaria-contraste: var(--white);
+  --cor-primaria-variante: var(--color-1e4db7);
+  --cor-acento: var(--color-3);
+  --cor-destaque: var(--color-dc2626);
+
+  /* Texto */
+  --cor-texto: var(--color-0f1923);
+  --cor-texto-secundario: var(--color-64748b);
+  --cor-texto-terciario: var(--color-94a3b8);
+  --cor-texto-rotulo: var(--color-374151);
+  --cor-texto-nav: var(--color-6b7280);
+  --cor-texto-celula: var(--color-475569);
+
+  /* Superfícies */
+  --cor-fundo: var(--color-f5f7fa);
+  --cor-fundo-camada: var(--fundo);
+  --cor-superficie: var(--white);
+  --cor-superficie-alt: var(--color-f8fafc);
+  --cor-sobreposicao: var(--color-000000-40);
+  --cor-menu-item-ativo: var(--color-94a3b8-29);
+
+  /* Bordas */
+  --cor-borda: var(--color);
+  --cor-borda-suave: var(--color-f1f5f9);
+  --cor-borda-controlo: var(--color-d8dde8);
+  --borda-largura: var(--border-size-s);
+  --borda-largura-fina: var(--border-0-8);
+
+  /* Estados */
+  --cor-sucesso: var(--color-007a55);
+  --cor-sucesso-fundo: var(--color-d0fae5);
+  --cor-aviso: var(--color-92400e);
+  --cor-aviso-fundo: var(--color-fffbeb);
+  --cor-erro: var(--color-dc2626);
+  --cor-erro-fundo: var(--color-fef2f2);
+  --cor-info: var(--dark-blue);
+  --cor-info-fundo: var(--color-eff6ff);
+  --cor-neutra: var(--color-475569);
+  --cor-neutra-fundo: var(--color-f0f4f9);
+
+  /* Os selos do Figma usam outro verde e outro âmbar que os alertas. */
+  --cor-selo-sucesso: var(--color-166534);
+  --cor-selo-sucesso-fundo: var(--color-dcfce7);
+  --cor-selo-aviso-fundo: var(--color-fef3c7);
+  --cor-selo-laranja: var(--color-ca3500);
+  --cor-selo-laranja-fundo: var(--color-ffedd4);
+  --cor-selo-violeta: var(--color-7c3aed);
+  --cor-selo-violeta-fundo: var(--color-f5f3ff);
+
+  /* O ciano do Figma (#0891b2) fica em 3,6:1 sobre o fundo: escurecido para 4,5:1. */
+  --cor-selo-ciano: var(--color-0369a1);
+  --cor-selo-ciano-fundo: var(--color-ecfeff);
+
+  /* Notificações (UI-056, UI-084): fundo das linhas por ler. */
+  --cor-notificacao-nao-lida-fundo: var(--color-fafcff);
+
+  /* Seta decorativa de cada linha da lista: não transmite informação, por isso não precisa de 3:1. */
+  --cor-seta-lista: var(--color-cbd5e1);
+  --cor-marcador-rejeicao: var(--color-ffb900);
+  --cor-texto-informativo: var(--color-155dfc);
+
+  /* Sem selo de erro no Figma: o vermelho de estado não chega a 4,5:1 sobre o fundo de erro. */
+  --cor-selo-erro: var(--color-b91c1c);
+
+  /* Backoffice (UI-058 a UI-063). */
+  --cor-avatar-fundo: var(--color-dbeafe);
+  --cor-texto-papel: var(--color-3a4a6b);
+  --cor-estado-ativo: var(--color-00bc7d);
+  --cor-estado-inativo: var(--color-cbd5e1);
+  --cor-titulo-pagina: var(--color-0f172b);
+  --cor-texto-seccao: var(--color-1a2233);
+  --cor-ligacao-email: var(--color-155dfc);
+  --cor-texto-data: var(--color-6a7282);
+  --cor-filtro-ativo: var(--color-1b3a6b);
+  --cor-borda-filtro: var(--color-e5e7eb);
+  --cor-texto-item: var(--color-4);
+  --cor-rotulo-indicador: var(--color-62748e);
+
+  /* Selo de acesso «Permitido» da matriz de perfis (UI-059). */
+  --cor-acesso-permitido-fundo: var(--color-ecfdf5);
+  --cor-acesso-permitido-borda: var(--color-a4f4cf);
+  --cor-cabecalho-tabela-relatorio: var(--color-fbfcfd);
+  --cor-borda-suave-primaria: var(--color-1a56a0-30);
+  --cor-grafico-barras: var(--color-fca5a5);
+  --cor-grafico-barras-horizontais: var(--color-2fa3e7);
+  --cor-icone-indigo: var(--color-6366f1);
+  --cor-icone-indigo-fundo: var(--color-e0e7ff);
+  --cor-sucesso-grafico: var(--color-16a34a);
+  --cor-aviso-grafico: var(--color-d97706);
+
+  /* Painéis: o Figma usa aqui a escala cinza e não a ardósia da listagem. */
+  --cor-borda-elevado: var(--color-f3f4f6);
+  --cor-superficie-tabela: var(--color-f9fafb);
+  --cor-texto-forte: var(--color-000000);
+  --cor-texto-titulo: var(--color-101828);
+  --cor-titulo-cartao: var(--color-314158);
+  --cor-texto-cartao: var(--color-4a5565);
+  --cor-texto-celula-forte: var(--color-1e2939);
+  --cor-acao-cartao: var(--color-0f2d5e);
+  --cor-ligacao-secundaria: var(--color-1b3a6b);
+  --cor-acao-sucesso: var(--color-008236);
+  --cor-acao-aviso: var(--color-bb4d00);
+  --cor-faixa-fundo: var(--color-dbeafe-50);
+  --cor-faixa-dinamica-fundo: var(--cor-icone-opcao-fundo);
+  --cor-recibo-faixa: var(--color-0f1923);
+  --cor-recibo-faixa-rotulo: var(--color-bedbff);
+  --cor-recibo-botao-fundo: var(--color-ffffff-15);
+  --cor-recibo-botao-borda: var(--color-ffffff-30);
+  --cor-sucesso-titulo: var(--color-006045);
+  --cor-icone-sucesso-fundo: var(--color-dcfce7);
+  --cor-icone-info-fundo: var(--color-dbeafe);
+  --cor-icone-erro-fundo: var(--color-ffe2e2);
+  --cor-icone-aviso-fundo: var(--color-fef3c6);
+  --borda-largura-destaque: var(--border-1-5);
+  --borda-largura-indicador: var(--border-4);
+  --borda-largura-opcao: var(--border-2);
+  --cor-icone-opcao-fundo: var(--color-1a56a0-14);
+
+  /* Documentos do processo (Figma da Elaboração): caixas de Publicação/Depósito, bloco Informação Base e Nota do RJIGT. */
+  --cor-texto-caixa: var(--color-364153);
+  --cor-icone-carregar: var(--color-6a7282);
+  --cor-fundo-informacao-base: var(--color-efefef-24);
+  --cor-borda-informacao-base: var(--color-cbd5e1);
+  --cor-borda-campo-informacao-base: var(--border-default);
+  --borda-largura-zona: var(--border-1-6);
+  --fonte-campo: var(--font-roboto);
+  --cor-borda-marca: var(--color-767676);
+  --cor-nota-borda: var(--color-bfdbfe);
+  --espaco-caixa-texto-vertical: var(--space-11);
+  --espaco-caixa-texto-horizontal: var(--space-17);
+  --texto-campo-linha: var(--leading-21);
+
+  /* Alertas (Figma UI-026/028): o info é azul-céu e o sucesso um verde claro, diferentes dos selos. */
+  --cor-info-borda: var(--color-bae6fd);
+  --cor-alerta-info-fundo: var(--color-f0f9ff);
+  --cor-alerta-info: var(--color-0369a1);
+  --cor-alerta-sucesso-fundo: var(--color-f0fdf4);
+  --cor-alerta-sucesso: var(--color-166534);
+  --cor-sucesso-borda: var(--color-bbf7d0);
+  --cor-aviso-borda: var(--color-fde68a);
+  --cor-erro-borda: var(--color-fecaca);
+  --cor-perigo-borda: var(--color-fca5a5);
+  --cor-borda-ficheiro: var(--color-eff3f7);
+
+  /* Assistente (UI-045). O #6b7a9b do Figma fica a 4,29:1 sobre branco: os passos usam o cinza acessível. */
+  --cor-texto-passo: var(--color-64748b);
+
+  /* Sobre o fundo da opção escolhida o #64748b fica a 4,37:1. */
+  --cor-texto-passo-escolhido: var(--color-475569);
+  --cor-conector-concluido: var(--color-5ee9b5);
+  --cor-titulo-assistente: var(--color-1a2233);
+  --cor-etiqueta-fundo: var(--color-eef1f7);
+  --cor-identificacao: var(--color-0f2d5e);
+
+  /* Plantas e Metadados sem GeoConform (Figma 2111:3561 e 2111:4090). O #99a1af das dicas fica a 2,6:1 sobre
+     branco: as dicas usam --cor-texto-secundario. */
+  --cor-passo-concluido: var(--color-00c950);
+  --cor-conector-passo-concluido: var(--color-b9f8cf);
+  --cor-borda-zona-carregada: var(--color-7bf1a8);
+  --cor-texto-escolhido: var(--color-016630);
+  --cor-titulo-metadados: var(--color-1e3a5f);
+
+  /* Histórico de dinâmicas (UI-047, UI-049). O verde #009966 e o âmbar #d97706 do Figma não chegam a 4,5:1
+     em texto pequeno: os rótulos usam --cor-sucesso e --cor-aviso. */
+  --cor-dinamica-terminada-fundo: var(--color-ecfdf5);
+  --cor-dinamica-terminada-borda: var(--color-a4f4cf);
+  --cor-dinamica-aberta: var(--color-155dfc);
+  --cor-dinamica-aberta-borda: var(--color-bedbff);
+
+  /* Login e escolha de entidade: fundo escuro do Figma. */
+  --cor-fundo-autenticacao: var(--color-4);
+  --cor-texto-sobre-escuro: var(--color-93c5fd);
+
+  /* Perfil: o cabeçalho dos cartões tem um fundo quase branco. */
+  --cor-cabecalho-cartao: var(--color-fafcff);
+
+  /* Raio */
+  --raio-xs: var(--radius-2);
+  --raio-sm: var(--border-radius-soft);
+  --raio-sm-md: var(--radius-6);
+  --raio-md: var(--radius-8);
+  --raio-faixa: var(--radius-10);
+  --raio-lg: var(--radius-12);
+  --raio-xl: var(--radius-16);
+  --raio-pill: var(--radius-full);
+
+  /* Sombra */
+  --sombra-cartao: var(--shadow-2);
+  --sombra-dropdown: var(--shadow-xl);
+  --sombra-modal: var(--shadow-2xl);
+  --sombra-cabecalho: var(--drop-shadow-header); /* é um drop-shadow(): usa-se com filter, não box-shadow */
+  --sombra-menu: var(--drop-shadow-sm); /* também drop-shadow(), dos menus do cabeçalho */
+
+  /* Tipografia */
+  --fonte-base: var(--font-inter);
+  --fonte-titulo: var(--font-inter);
+  --fonte-destaque: var(--font-plus-jakarta-sans);
+  --texto-numero: var(--font-size-30);
+  --texto-numero-linha: var(--leading-30);
+  --texto-numero-recibo: var(--font-size-42);
+  --texto-numero-recibo-linha: var(--leading-42);
+  --texto-indicador: var(--font-size-24);
+  --texto-xs: var(--font-size-0-625rem);
+  --texto-xs-linha: var(--leading-15);
+  --texto-xs-linha-compacta: var(--leading-13-333);
+  --texto-rotulo: var(--font-size-11);
+  --texto-rotulo-linha: var(--leading-16-5);
+  --texto-sm: var(--font-size-0-75rem);
+  --texto-sm-linha: var(--leading-16);
+  --texto-base: var(--font-size-0-875rem);
+  --texto-base-linha: var(--leading-20);
+  --texto-base-linha-compacta: var(--leading-19-25);
+  --texto-base-linha-paragrafo: var(--leading-22-75);
+  --texto-md: var(--font-size-1rem);
+  --texto-md-linha: var(--leading-24);
+  --texto-md-linha-compacta: var(--leading-22);
+  --texto-lg: var(--font-size-1-125rem);
+  --texto-lg-linha: var(--leading-27);
+  --texto-xl: var(--font-size-1-25rem);
+  --texto-xl-linha: var(--leading-28);
+  --peso-normal: 400;
+  --peso-medio: 500;
+  --peso-semi: 600;
+  --peso-negrito: 700;
+
+  /* Espaçamento (grelha de 4px) */
+  --espaco-0-5: var(--space-2);
+  --espaco-1: var(--xs);
+  --espaco-1-5: var(--space-6);
+  --espaco-2: var(--s);
+  --espaco-2-5: var(--space-10);
+  --espaco-3-5: var(--space-14);
+  --espaco-3: var(--space-12);
+  --espaco-4: var(--base);
+  --espaco-4-5: var(--space-18);
+  --espaco-5: var(--space-20);
+  --espaco-6: var(--m);
+  --espaco-7: var(--space-28);
+  --espaco-8: var(--space-32);
+  --espaco-9: var(--space-36);
+  --espaco-10: 40px;
+
+  /* Dimensões */
+  --altura-controlo: 40px;
+  --altura-controlo-sm: 36px;
+  --contentor-lista: 1258px;
+  --contentor-formulario: 1050px;
+  --contentor-assistente: 787px;
+  --contentor-titulo-assistente: 1079px;
+  --largura-cartao-autenticacao: 448px;
+  --contentor-perfil: 768px;
+  --contentor-painel: 1260px;
+  --largura-modal-sm: 448px;
+  --largura-modal-md: 503px;
+  --largura-modal-lg: 672px;
+  --largura-modal-xl: 737px;
+  --contentor-detalhe: 1273px;
+  --contentor-backoffice: 1146px;
+  --largura-detalhes: 807px;
+  --espaco-topo-ecra: 43px;
+  --anel-foco: 2px solid var(--cor-primaria);
+  --anel-foco-afastamento: 2px;
+
+  /* Resumo Validados (UI-041): painéis dos campos opcionais e botões «Gravar». */
+  --texto-rotulo-painel: var(--font-size-10-5);
+  --texto-rotulo-painel-linha: var(--leading-14);
+  --texto-painel: var(--font-size-12-25);
+  --texto-painel-linha: var(--leading-17-5);
+  --cor-borda-painel: var(--color-cbd5e1);
+  --cor-texto-botao-gravar: var(--color-45556c);
+  --raio-painel-campo: var(--radius-7);
+}

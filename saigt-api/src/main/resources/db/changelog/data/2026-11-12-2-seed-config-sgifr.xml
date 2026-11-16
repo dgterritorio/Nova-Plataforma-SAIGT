@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="2026-11-12-2-seed-config-sgifr" author="david.raposo">
+        <comment>
+            Configuração do SGIFR: o PRA publica na 2.ª série parte C e o PSA na 2.ª série parte H (EF v1.5), cada
+            Dinâmica (Delimitação e Alteração) com um só Procedimento, PUBLICACAO_SGIFR, que tem formulário próprio. O PRA
+            é carregado pela CCDR e o PSA pela CIM ou pela AM (FR-114); a DGT age em qualquer processo (TR-208). A
+            Delimitação é única, a Alteração exige o programa em vigor e nenhuma começa com outra em curso (BL-PROC-002).
+            Sem código IDUS (o SGIFR não tem IDUS) e sem limite de tamanho, que fica para a configuração dos limites
+            do SGIFR. FK resolvidas pelo código, sem ids explícitos.
+        </comment>
+
+        <insert tableName="tipo_procedimento">
+            <column name="codigo" value="PUBLICACAO_SGIFR"/>
+            <column name="nome" value="Publicação do programa SGIFR"/>
+            <column name="ativo" valueBoolean="true"/>
+        </insert>
+
+        <sql>INSERT INTO instrumento_procedimento_config (instrumento_dinamica_config_id, tipo_procedimento_id, ordem,
+                obrigatorio, serie_dr, ativo)
+            SELECT idc.id, tp.id, 1, true, v.serie_dr, true
+            FROM (VALUES ('PRA', 'DELIMITACAO', 'SEGUNDA_C'), ('PRA', 'ALTERACAO', 'SEGUNDA_C'),
+                         ('PSA', 'DELIMITACAO', 'SEGUNDA_H'), ('PSA', 'ALTERACAO', 'SEGUNDA_H'))
+                 AS v (tipo_instrumento, tipo_dinamica, serie_dr)
+            JOIN tipo_instrumento ti ON ti.codigo = v.tipo_instrumento
+            JOIN tipo_dinamica td ON td.codigo = v.tipo_dinamica
+            JOIN instrumento_dinamica_config idc ON idc.tipo_instrumento_id = ti.id AND idc.tipo_dinamica_id = td.id
+            JOIN tipo_procedimento tp ON tp.codigo = 'PUBLICACAO_SGIFR'
+            ORDER BY idc.id</sql>
+
+        <sql>INSERT INTO permissao_acao (tipo_entidade, instrumento_procedimento_config_id, ativo)
+            SELECT v.tipo_entidade, ipc.id, true
+            FROM instrumento_procedimento_config ipc
+            JOIN tipo_procedimento tp ON tp.id = ipc.tipo_procedimento_id AND tp.codigo = 'PUBLICACAO_SGIFR'
+            JOIN instrumento_dinamica_config idc ON idc.id = ipc.instrumento_dinamica_config_id
+            JOIN tipo_instrumento ti ON ti.id = idc.tipo_instrumento_id
+            JOIN (VALUES ('PRA', 1, 'CCDR_DR'), ('PRA', 2, 'DGT'),
+                         ('PSA', 1, 'CIM'), ('PSA', 2, 'AM'), ('PSA', 3, 'DGT'))
+                 AS v (tipo_instrumento, ordem, tipo_entidade) ON v.tipo_instrumento = ti.codigo
+            ORDER BY ipc.id, v.ordem</sql>
+
+        <insert tableName="regra">
+            <column name="instrumento_dinamica_config_id"
+                    valueComputed="(SELECT idc.id FROM instrumento_dinamica_config idc JOIN tipo_instrumento ti ON ti.id = idc.tipo_instrumento_id JOIN tipo_dinamica td ON td.id = idc.tipo_dinamica_id WHERE ti.codigo = 'PRA' AND td.codigo = 'DELIMITACAO')"/>
+            <column name="operador" value="AND"/>
+            <column name="substitui_sequenciamento" valueBoolean="false"/>
+            <column name="descricao" value="Delimitação é única; sem Dinâmicas em simultâneo"/>
+            <column name="ativo" valueBoolean="true"/>
+        </insert>
+        <insert tableName="regra">
+            <column name="instrumento_dinamica_config_id"
+                    valueComputed="(SELECT idc.id FROM instrumento_dinamica_config idc JOIN tipo_instrumento ti ON ti.id = idc.tipo_instrumento_id JOIN tipo_dinamica td ON td.id = idc.tipo_dinamica_id WHERE ti.codigo = 'PRA' AND td.codigo = 'ALTERACAO')"/>
+            <column name="operador" value="AND"/>
+            <column name="substitui_sequenciamento" valueBoolean="false"/>
+            <column name="descricao" value="Requer programa em vigor; sem Dinâmicas em simultâneo"/>
+            <column name="ativo" valueBoolean="true"/>
+        </insert>
+        <insert tableName="regra">
+            <column name="instrumento_dinamica_config_id"
+                    valueComputed="(SELECT idc.id FROM instrumento_dinamica_config idc JOIN tipo_instrumento ti ON ti.id = idc.tipo_instrumento_id JOIN tipo_dinamica td ON td.id = idc.tipo_dinamica_id WHERE ti.codigo = 'PSA' AND td.codigo = 'DELIMITACAO')"/>
+            <column name="operador" value="AND"/>
+            <column name="substitui_sequenciamento" valueBoolean="false"/>
+            <column name="descricao" value="Delimitação é única; sem Dinâmicas em simultâneo"/>
+            <column name="ativo" valueBoolean="true"/>
+        </insert>
+        <insert tableName="regra">
+            <column name="instrumento_dinamica_config_id"
+                    valueComputed="(SELECT idc.id FROM instrumento_dinamica_config idc JOIN tipo_instrumento ti ON ti.id = idc.tipo_instrumento_id JOIN tipo_dinamica td ON td.id = idc.tipo_dinamica_id WHERE ti.codigo = 'PSA' AND td.codigo = 'ALTERACAO')"/>
+            <column name="operador" value="AND"/>
+            <column name="substitui_sequenciamento" valueBoolean="false"/>
+            <column name="descricao" value="Requer programa em vigor; sem Dinâmicas em simultâneo"/>
+            <column name="ativo" valueBoolean="true"/>
+        </insert>
+
+        <insert tableName="condicao">
+            <column name="regra_id"
+                    valueComputed="(SELECT r.id FROM regra r WHERE r.descricao = 'Delimitação é única; sem Dinâmicas em simultâneo' AND r.instrumento_dinamica_config_id = (SELECT idc.id FROM instrumento_dinamica_config idc JOIN tipo_instrumento ti ON ti.id = idc.tipo_instrumento_id JOIN tipo_dinamica td ON td.id = idc.tipo_dinamica_id WHERE ti.codigo = 'PRA' AND td.codigo = 'DELIMITACAO'))"/>
+            <column name="avaliador" value="OCORRENCIA_NAO_EXISTE"/>
+            <column name="parametros" value='{"tipo_ocorrencia": "DINAMICA", "codigo": "DELIMITACAO"}'/>
+            <column name="grupo" valueNumeric="1"/>
+            <column name="ativo" valueBoolean="true"/>
+        </insert>
+        <insert tableName="condicao">
+            <column name="regra_id"
+                    valueComputed="(SELECT r.id FROM regra r WHERE r.descricao = 'Delimitação é única; sem Dinâmicas em simultâneo' AND r.instrumento_dinamica_config_id = (SELECT idc.id FROM instrumento_dinamica_config idc JOIN tipo_instrumento ti ON ti.id = idc.tipo_instrumento_id JOIN tipo_dinamica td ON td.id = idc.tipo_dinamica_id WHERE ti.codigo = 'PRA' AND td.codigo = 'DELIMITACAO'))"/>
+            <column name="avaliador" value="OCORRENCIA_NAO_EXISTE"/>
+            <column name="parametros" value='{"tipo_ocorrencia": "DINAMICA", "estado": "EM_CURSO"}'/>
+            <column name="grupo" valueNumeric="1"/>
+            <column name="ativo" valueBoolean="true"/>
+        </insert>
+        <insert tableName="condicao">
+            <column name="regra_id"
+                    valueComputed="(SELECT r.id FROM regra r WHERE r.descricao = 'Requer programa em vigor; sem Dinâmicas em simultâneo' AND r.instrumento_dinamica_config_id = (SELECT idc.id FROM instrumento_dinamica_config idc JOIN tipo_instrumento ti ON ti.id = idc.tipo_instrumento_id JOIN tipo_dinamica td ON td.id = idc.tipo_dinamica_id WHERE ti.codigo = 'PRA' AND td.codigo = 'ALTERACAO'))"/>
+            <column name="avaliador" value="INSTRUMENTO_EM_VIGOR"/>
+            <column name="parametros" value="{}"/>
+            <column name="grupo" valueNumeric="1"/>
+            <column name="ativo" valueBoolean="true"/>
+        </insert>
+        <insert tableName="condicao">
+            <column name="regra_id"
+                    valueComputed="(SELECT r.id FROM regra r WHERE r.descricao = 'Requer programa em vigor; sem Dinâmicas em simultâneo' AND r.instrumento_dinamica_config_id = (SELECT idc.id FROM instrumento_dinamica_config idc JOIN tipo_instrumento ti ON ti.id = idc.tipo_instrumento_id JOIN tipo_dinamica td ON td.id = idc.tipo_dinamica_id WHERE ti.codigo = 'PRA' AND td.codigo = 'ALTERACAO'))"/>
+            <column name="avaliador" value="OCORRENCIA_NAO_EXISTE"/>
+            <column name="parametros" value='{"tipo_ocorrencia": "DINAMICA", "estado": "EM_CURSO"}'/>
+            <column name="grupo" valueNumeric="1"/>
+            <column name="ativo" valueBoolean="true"/>
+        </insert>
+        <insert tableName="condicao">
+            <column name="regra_id"
+                    valueComputed="(SELECT r.id FROM regra r WHERE r.descricao = 'Delimitação é única; sem Dinâmicas em simultâneo' AND r.instrumento_dinamica_config_id = (SELECT idc.id FROM instrumento_dinamica_config idc JOIN tipo_instrumento ti ON ti.id = idc.tipo_instrumento_id JOIN tipo_dinamica td ON td.id = idc.tipo_dinamica_id WHERE ti.codigo = 'PSA' AND td.codigo = 'DELIMITACAO'))"/>
+            <column name="avaliador" value="OCORRENCIA_NAO_EXISTE"/>
+            <column name="parametros" value='{"tipo_ocorrencia": "DINAMICA", "codigo": "DELIMITACAO"}'/>
+            <column name="grupo" valueNumeric="1"/>
+            <column name="ativo" valueBoolean="true"/>
+        </insert>
+        <insert tableName="condicao">
+            <column name="regra_id"
+                    valueComputed="(SELECT r.id FROM regra r WHERE r.descricao = 'Delimitação é única; sem Dinâmicas em simultâneo' AND r.instrumento_dinamica_config_id = (SELECT idc.id FROM instrumento_dinamica_config idc JOIN tipo_instrumento ti ON ti.id = idc.tipo_instrumento_id JOIN tipo_dinamica td ON td.id = idc.tipo_dinamica_id WHERE ti.codigo = 'PSA' AND td.codigo = 'DELIMITACAO'))"/>
+            <column name="avaliador" value="OCORRENCIA_NAO_EXISTE"/>
+            <column name="parametros" value='{"tipo_ocorrencia": "DINAMICA", "estado": "EM_CURSO"}'/>
+            <column name="grupo" valueNumeric="1"/>
+            <column name="ativo" valueBoolean="true"/>
+        </insert>
+        <insert tableName="condicao">
+            <column name="regra_id"
+                    valueComputed="(SELECT r.id FROM regra r WHERE r.descricao = 'Requer programa em vigor; sem Dinâmicas em simultâneo' AND r.instrumento_dinamica_config_id = (SELECT idc.id FROM instrumento_dinamica_config idc JOIN tipo_instrumento ti ON ti.id = idc.tipo_instrumento_id JOIN tipo_dinamica td ON td.id = idc.tipo_dinamica_id WHERE ti.codigo = 'PSA' AND td.codigo = 'ALTERACAO'))"/>
+            <column name="avaliador" value="INSTRUMENTO_EM_VIGOR"/>
+            <column name="parametros" value="{}"/>
+            <column name="grupo" valueNumeric="1"/>
+            <column name="ativo" valueBoolean="true"/>
+        </insert>
+        <insert tableName="condicao">
+            <column name="regra_id"
+                    valueComputed="(SELECT r.id FROM regra r WHERE r.descricao = 'Requer programa em vigor; sem Dinâmicas em simultâneo' AND r.instrumento_dinamica_config_id = (SELECT idc.id FROM instrumento_dinamica_config idc JOIN tipo_instrumento ti ON ti.id = idc.tipo_instrumento_id JOIN tipo_dinamica td ON td.id = idc.tipo_dinamica_id WHERE ti.codigo = 'PSA' AND td.codigo = 'ALTERACAO'))"/>
+            <column name="avaliador" value="OCORRENCIA_NAO_EXISTE"/>
+            <column name="parametros" value='{"tipo_ocorrencia": "DINAMICA", "estado": "EM_CURSO"}'/>
+            <column name="grupo" valueNumeric="1"/>
+            <column name="ativo" valueBoolean="true"/>
+        </insert>
+
+        <sql>UPDATE instrumento_dinamica_config SET ativo = true
+            WHERE tipo_instrumento_id IN (SELECT id FROM tipo_instrumento WHERE codigo IN ('PRA', 'PSA'))
+              AND tipo_dinamica_id IN (SELECT id FROM tipo_dinamica WHERE codigo IN ('DELIMITACAO', 'ALTERACAO'))</sql>
+
+        <rollback>
+            <sql>DELETE FROM condicao WHERE regra_id IN (SELECT r.id FROM regra r
+                JOIN instrumento_dinamica_config idc ON idc.id = r.instrumento_dinamica_config_id
+                JOIN tipo_instrumento ti ON ti.id = idc.tipo_instrumento_id
+                JOIN tipo_dinamica td ON td.id = idc.tipo_dinamica_id
+                WHERE ti.codigo IN ('PRA', 'PSA')
+                AND ((td.codigo = 'DELIMITACAO' AND r.descricao = 'Delimitação é única; sem Dinâmicas em simultâneo')
+                OR (td.codigo = 'ALTERACAO' AND r.descricao = 'Requer programa em vigor; sem Dinâmicas em simultâneo')))</sql>
+            <sql>DELETE FROM regra WHERE id IN (SELECT r.id FROM regra r
+                JOIN instrumento_dinamica_config idc ON idc.id = r.instrumento_dinamica_config_id
+                JOIN tipo_instrumento ti ON ti.id = idc.tipo_instrumento_id
+                JOIN tipo_dinamica td ON td.id = idc.tipo_dinamica_id
+                WHERE ti.codigo IN ('PRA', 'PSA')
+                AND ((td.codigo = 'DELIMITACAO' AND r.descricao = 'Delimitação é única; sem Dinâmicas em simultâneo')
+                OR (td.codigo = 'ALTERACAO' AND r.descricao = 'Requer programa em vigor; sem Dinâmicas em simultâneo')))</sql>
+            <sql>DELETE FROM permissao_acao WHERE instrumento_procedimento_config_id IN (SELECT ipc.id
+                FROM instrumento_procedimento_config ipc
+                JOIN tipo_procedimento tp ON tp.id = ipc.tipo_procedimento_id
+                WHERE tp.codigo = 'PUBLICACAO_SGIFR')</sql>
+            <sql>DELETE FROM instrumento_procedimento_config
+                WHERE tipo_procedimento_id = (SELECT id FROM tipo_procedimento WHERE codigo = 'PUBLICACAO_SGIFR')</sql>
+            <sql>UPDATE instrumento_dinamica_config SET ativo = false
+                WHERE tipo_instrumento_id IN (SELECT id FROM tipo_instrumento WHERE codigo IN ('PRA', 'PSA'))
+                  AND tipo_dinamica_id IN (SELECT id FROM tipo_dinamica WHERE codigo IN ('DELIMITACAO', 'ALTERACAO'))</sql>
+            <sql>DELETE FROM tipo_procedimento WHERE codigo = 'PUBLICACAO_SGIFR'</sql>
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>

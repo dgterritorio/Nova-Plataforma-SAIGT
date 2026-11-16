@@ -1,0 +1,79 @@
+.lista-regras {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.regra {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--espaco-3);
+  padding: var(--espaco-3) 0;
+  border-bottom: var(--borda-largura) solid var(--cor-borda-suave);
+}
+
+.regra:first-child {
+  padding-top: 0;
+}
+
+.regra:last-child {
+  padding-bottom: 0;
+  border-bottom: 0;
+}
+
+.regra-texto {
+  display: flex;
+  flex: 1 1 320px;
+  flex-direction: column;
+  gap: var(--espaco-1);
+}
+
+.regra-cabecalho {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--espaco-2);
+}
+
+.regra-descricao,
+.regra-descricao-celula {
+  font-size: var(--texto-sm);
+  font-weight: var(--peso-semi);
+  line-height: var(--texto-sm-linha);
+  color: var(--cor-texto-titulo);
+}
+
+.regra-resumo,
+.sem-regras,
+.estado-carregamento {
+  margin: 0;
+  font-size: var(--texto-sm);
+  line-height: var(--texto-sm-linha);
+  color: var(--cor-texto-celula);
+}
+
+.regra-descricao-celula,
+.regra-resumo-celula {
+  display: block;
+}
+
+.sem-regra,
+.procedimento-inativo {
+  color: var(--cor-texto-secundario);
+}
+
+.procedimento-inativo {
+  display: block;
+  font-size: var(--texto-xs);
+  line-height: var(--texto-xs-linha);
+}
+
+.acoes-regra {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--espaco-1);
+}

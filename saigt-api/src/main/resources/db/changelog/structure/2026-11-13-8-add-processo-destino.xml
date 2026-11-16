@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="2026-11-13-8-add-processo-destino" author="arnaldo.costa">
+        <comment>
+            Destino do processo (DB-PROC-014, BL-PROC-064, BL-PROC-065, TR-227): PUBLICACAO_DEPOSITO ou SO_DEPOSITO,
+            escolhido antes do carregamento dos ficheiros. Obrigatório, com PUBLICACAO_DEPOSITO nos processos
+            existentes, que foram todos para publicação.
+        </comment>
+
+        <sql>
+            ALTER TABLE processo ADD COLUMN destino VARCHAR(20) NOT NULL DEFAULT 'PUBLICACAO_DEPOSITO'
+                CONSTRAINT ck_processo_destino CHECK (destino IN ('PUBLICACAO_DEPOSITO', 'SO_DEPOSITO'))
+        </sql>
+
+        <rollback>
+            <sql>ALTER TABLE processo DROP CONSTRAINT ck_processo_destino</sql>
+            <dropColumn tableName="processo" columnName="destino"/>
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>

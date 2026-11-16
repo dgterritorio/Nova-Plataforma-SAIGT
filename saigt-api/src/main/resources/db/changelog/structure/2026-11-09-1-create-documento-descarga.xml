@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="2026-11-09-1-create-documento-descarga" author="pedro.paixao">
+        <comment>
+            Auditoria de cada descarga servida pela saigt-api (DB-DOC-010). Nunca guarda o ticket nem o token.
+            Os ids de manifesto, de link público e de anexo de notificação não têm chave estrangeira: as tabelas a
+            que apontam (DB-DOC-007, DB-DOC-008, DB-NOTIF-003) ainda não existem.
+        </comment>
+
+        <createTable tableName="documento_descarga">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="consumidor" type="VARCHAR(20)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="processo_id" type="UUID">
+                <constraints foreignKeyName="fk_documento_descarga_processo" references="processo(id)"/>
+            </column>
+            <column name="processo_documento_id" type="UUID">
+                <constraints foreignKeyName="fk_documento_descarga_processo_documento"
+                             references="processo_documento(id)"/>
+            </column>
+            <column name="notificacao_documento_id" type="UUID"/>
+            <column name="manifesto_id" type="UUID"/>
+            <column name="utilizador_id" type="UUID">
+                <constraints foreignKeyName="fk_documento_descarga_utilizador" references="utilizador(id)"/>
+            </column>
+            <column name="documento_link_publico_id" type="UUID"/>
+            <column name="ip" type="VARCHAR(45)"/>
+            <column name="iniciada_em" type="TIMESTAMP WITH TIME ZONE">
+                <constraints nullable="false"/>
+            </column>
+            <column name="resultado" type="VARCHAR(20)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="bytes_enviados" type="BIGINT" defaultValueNumeric="0">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <sql>ALTER TABLE documento_descarga ADD CONSTRAINT ck_documento_descarga_consumidor
+            CHECK (consumidor IN ('UTILIZADOR', 'INCM', 'PCGT', 'SNIT'))</sql>
+        <sql>ALTER TABLE documento_descarga ADD CONSTRAINT ck_documento_descarga_resultado
+            CHECK (resultado IN ('INICIADA', 'CONCLUIDA', 'INTERROMPIDA', 'RECUSADA'))</sql>
+
+        <createIndex tableName="documento_descarga" indexName="idx_documento_descarga_processo_id">
+            <column name="processo_id"/>
+        </createIndex>
+        <createIndex tableName="documento_descarga" indexName="idx_documento_descarga_iniciada_em">
+            <column name="iniciada_em"/>
+        </createIndex>
+
+        <rollback>
+            <dropTable tableName="documento_descarga"/>
+        </rollback>
+    </changeSet>
+</databaseChangeLog>

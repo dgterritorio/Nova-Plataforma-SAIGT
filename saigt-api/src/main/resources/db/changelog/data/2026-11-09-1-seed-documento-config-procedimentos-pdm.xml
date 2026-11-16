@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="2026-11-09-1-seed-documento-config-procedimentos-pdm" author="david.raposo">
+        <comment>
+            Itens documentais da Elaboração (201-204), da Revisão (205-208) e das variantes da Alteração de PDM:
+            Alteração RERAE (212, 213), Alteração Simplificada do artigo 123.º do RJIGT (214, 215), Alteração por
+            Adaptação (218), Correção Material (219) e Revogação (220), por caixa (publicação e depósito). A lista vem
+            do sistema atual (IGT_SSAIGT_ListaDocumentos2020-06-29.pdf, coluna PDM) e é seed provisório até a DGT
+            confirmar a lista (OI-245). A separação Publicação/Depósito segue as cores do documento e o padrão da
+            Alteração (211). Fora do seed: Ficha de Dados Estatísticos (vem do GeoConform) e a Alteração Simplificada
+            DL 10/2024 (216, 217), que a lista não tem. As provas de notificação da Correção Material (219) não entram
+            aqui. As peças gráficas aceitam só zip nas duas caixas, como nos procedimentos 209 a 211. Sem id
+            explícito, para a sequência o atribuir.
+        </comment>
+
+        <loadData tableName="documento_config" file="db/data/2026-11-09-1-documento_config.csv"
+                  relativeToChangelogFile="false" separator=";" quotchar="&quot;" encoding="UTF-8">
+            <column name="instrumento_procedimento_config_id" type="NUMERIC"/>
+            <column name="codigo" type="STRING"/>
+            <column name="separador" type="STRING"/>
+            <column name="nome" type="STRING"/>
+            <column name="descricao" type="STRING"/>
+            <column name="categoria" type="STRING"/>
+            <column name="tipo_elemento" type="STRING"/>
+            <column name="formato" type="STRING"/>
+            <column name="obrigatorio" type="BOOLEAN"/>
+            <column name="extensoes_aceites" type="STRING"/>
+            <column name="ordem" type="NUMERIC"/>
+            <column name="ativo" type="BOOLEAN"/>
+            <column name="elemento_informacao_base" type="STRING"/>
+        </loadData>
+
+        <rollback>
+            <delete tableName="documento_config">
+                <where>instrumento_procedimento_config_id IN (201, 202, 203, 204, 205, 206, 207, 208, 212, 213, 214, 215,
+                    218, 219, 220)
+                    AND codigo IN ('TEXTO_ATO_PUB', 'TEXTO_ATO_DEP', 'DELIBERACAO_PUB', 'DELIBERACAO_DEP',
+                    'DESPACHO_CCDR_PUB', 'DESPACHO_CCDR_DEP', 'REGULAMENTO_PUB', 'REGULAMENTO_DEP',
+                    'PLANTA_ORDENAMENTO_PUB', 'PLANTA_ORDENAMENTO_DEP', 'PLANTA_CONDICIONANTES_PUB',
+                    'PLANTA_CONDICIONANTES_DEP', 'ESTUDOS_CARACTERIZACAO_DEP', 'RELATORIO_PLANO_DEP',
+                    'RELATORIO_AMBIENTAL_DEP', 'PROGRAMA_EXECUCAO_DEP', 'PLANTA_ENQUADRAMENTO_DEP',
+                    'PLANTA_SITUACAO_EXISTENTE_DEP', 'COMPROMISSOS_URBANISTICOS_DEP', 'PLANTAS_INFRAESTRUTURAS_DEP',
+                    'ESTRUTURA_ECOLOGICA_DEP', 'CARTA_EDUCATIVA_DEP', 'MAPA_RUIDO_DEP', 'OUTRAS_PLANTAS_DEP',
+                    'RELATORIO_PONDERACAO_DEP', 'PARECERES_ATA_DEP', 'DELIBERACAO_CM_DEP', 'PARECER_CA_DEP',
+                    'PARECER_CCDR_DEP', 'ALTERACOES_REGULAMENTO_PUB', 'ALTERACOES_REGULAMENTO_DEP',
+                    'REGULAMENTO_INTEGRAL_PUB', 'REGULAMENTO_INTEGRAL_DEP', 'RELATORIO_FUNDAMENTACAO_DEP',
+                    'DEMAIS_ELEMENTOS_DEP', 'DELIBERACAO_AM_DEP', 'DECLARACAO_CM_DEP')</where>
+            </delete>
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>

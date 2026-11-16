@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="2026-11-02-1-seed-documento-config-discussao-publica-publicacao-alteracao-pdm" author="david.raposo">
+        <comment>
+            Itens documentais da Abertura do período de discussão pública (procedimento 210) e da Publicação da
+            Alteração de PDM (procedimento 211), por caixa (publicação e depósito). A lista vem da EF v1.5 e ainda
+            não está confirmada com a DGT, por isso é seed. Fora do seed: Cartograma (tipo e extensões por definir),
+            Ficha de Dados Estatísticos (vem do GeoConform) e imagem de publicação das plantas (gerada pelo sistema).
+            Sem id explícito, para a sequência o atribuir.
+        </comment>
+
+        <loadData tableName="documento_config" file="db/data/2026-11-02-1-documento_config.csv"
+                  relativeToChangelogFile="false" separator=";" quotchar="&quot;" encoding="UTF-8">
+            <column name="instrumento_procedimento_config_id" type="NUMERIC"/>
+            <column name="codigo" type="STRING"/>
+            <column name="separador" type="STRING"/>
+            <column name="nome" type="STRING"/>
+            <column name="categoria" type="STRING"/>
+            <column name="tipo_elemento" type="STRING"/>
+            <column name="formato" type="STRING"/>
+            <column name="obrigatorio" type="BOOLEAN"/>
+            <column name="extensoes_aceites" type="STRING"/>
+            <column name="ordem" type="NUMERIC"/>
+            <column name="ativo" type="BOOLEAN"/>
+            <column name="elemento_informacao_base" type="STRING"/>
+        </loadData>
+
+        <rollback>
+            <delete tableName="documento_config">
+                <where>instrumento_procedimento_config_id IN (210, 211)</where>
+            </delete>
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>

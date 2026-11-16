@@ -1,0 +1,170 @@
+/* No Figma o título do cartão é um rótulo pequeno; o título da secção vem a seguir. */
+.cartao-titulo {
+  font-size: var(--texto-sm);
+  line-height: var(--texto-sm-linha);
+}
+
+.banner-linha-titulo {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--espaco-2);
+}
+
+.banner-titulo {
+  font-size: var(--texto-base);
+  font-weight: var(--peso-semi);
+  line-height: var(--texto-base-linha);
+  color: var(--cor-texto);
+}
+
+.banner-badge {
+  padding: var(--espaco-0-5) var(--espaco-1-5);
+  border-radius: var(--raio-sm);
+  background: var(--cor-selo-sucesso-fundo);
+  font-size: var(--texto-xs);
+  font-weight: var(--peso-semi);
+  line-height: var(--texto-xs-linha);
+  color: var(--cor-selo-sucesso);
+}
+
+.banner-subtitulo {
+  display: block;
+  margin-top: var(--espaco-0-5);
+  color: var(--cor-texto-secundario);
+}
+
+.secao {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaco-1);
+}
+
+.secao-titulo {
+  margin: 0;
+  font-size: var(--texto-base);
+  font-weight: var(--peso-semi);
+  line-height: var(--texto-base-linha);
+  color: var(--cor-texto);
+}
+
+.secao-intro {
+  margin: 0;
+  font-size: var(--texto-sm);
+  line-height: var(--texto-sm-linha);
+  color: var(--cor-texto-secundario);
+}
+
+.lista-entidades {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaco-2);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.linha-entidade {
+  display: flex;
+  align-items: center;
+  gap: var(--espaco-3);
+  box-sizing: border-box;
+  width: 100%;
+  padding: var(--espaco-4);
+  border: var(--borda-largura-opcao) solid var(--cor-borda);
+  border-radius: var(--raio-lg);
+  background: var(--cor-superficie);
+  font-family: var(--fonte-base);
+  text-align: left;
+  cursor: pointer;
+}
+
+.linha-entidade:disabled {
+  cursor: not-allowed;
+}
+
+.linha-entidade:focus-visible {
+  outline: var(--anel-foco);
+  outline-offset: var(--anel-foco-afastamento);
+}
+
+.linha-entidade:hover:not(:disabled) {
+  border-color: var(--cor-borda-controlo);
+}
+
+.linha-entidade-selecionada,
+.linha-entidade-selecionada:hover:not(:disabled) {
+  border-color: var(--cor-primaria);
+  background: var(--cor-info-fundo);
+}
+
+.linha-icone {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: var(--raio-md);
+  background: var(--cor-neutra-fundo);
+  color: var(--cor-texto-secundario);
+}
+
+.linha-icone svg {
+  width: 16px;
+  height: 16px;
+}
+
+.linha-texto {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.linha-nome {
+  font-size: var(--texto-base);
+  font-weight: var(--peso-medio);
+  line-height: var(--texto-base-linha);
+  color: var(--cor-texto);
+}
+
+.linha-nipc {
+  font-size: var(--texto-sm);
+  font-weight: var(--peso-medio);
+  line-height: var(--texto-sm-linha);
+  color: var(--cor-texto-secundario);
+}
+
+.linha-radio {
+  flex-shrink: 0;
+  box-sizing: border-box;
+  width: 16px;
+  height: 16px;
+  border: var(--borda-largura-opcao) solid var(--cor-texto-terciario);
+  border-radius: var(--raio-pill);
+}
+
+.linha-entidade-selecionada .linha-radio {
+  border: var(--borda-largura-indicador) solid var(--cor-primaria);
+}
+
+.linha-entidade-indisponivel {
+  border-style: dashed;
+}
+
+.linha-indisponivel {
+  font-size: var(--texto-sm);
+  font-weight: var(--peso-semi);
+  line-height: var(--texto-sm-linha);
+  color: var(--cor-erro);
+}
+
+.alerta-escolha:focus-visible {
+  outline: var(--anel-foco);
+  outline-offset: var(--anel-foco-afastamento);
+}
+
+.continuar {
+  width: 100%;
+}

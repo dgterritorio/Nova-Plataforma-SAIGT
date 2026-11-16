@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="2026-11-16-2-seed-procedimentos-ren" author="david.raposo">
+        <comment>
+            Procedimentos da REN (premissa do OI-488): cada Dinâmica (Delimitação, Alteração, Correção Material ou
+            Retificação) tem um só Procedimento, PUBLICACAO_REN, com formulário próprio, na 2.ª série parte C (EF v1.5,
+            SRUP – Série DR), criado pela CCDR; a DGT age em qualquer processo (TR-208). As regras de elegibilidade e
+            de simultaneidade da REN já existem; aqui ativam-se as três configurações. O diploma corrigido só se pede
+            na Correção Material ou Retificação e a Delimitação publica sempre o texto integral (EF v1.5). A lista de
+            motivos arranca vazia (OI-246). FK resolvidas pelo código, sem ids explícitos.
+        </comment>
+
+        <insert tableName="tipo_procedimento">
+            <column name="codigo" value="PUBLICACAO_REN"/>
+            <column name="nome" value="Publicação da REN"/>
+            <column name="ativo" valueBoolean="true"/>
+        </insert>
+
+        <sql>INSERT INTO instrumento_procedimento_config (instrumento_dinamica_config_id, tipo_procedimento_id, ordem,
+                obrigatorio, serie_dr, ativo, tamanho_maximo_processo)
+            SELECT idc.id, tp.id, 1, true, 'SEGUNDA_C', true, 5368709120
+            FROM instrumento_dinamica_config idc
+            JOIN tipo_instrumento ti ON ti.id = idc.tipo_instrumento_id AND ti.codigo = 'REN'
+            JOIN tipo_dinamica td ON td.id = idc.tipo_dinamica_id
+                AND td.codigo IN ('DELIMITACAO', 'ALTERACAO', 'CORRECAO_MATERIAL_RETIFICACAO')
+            JOIN tipo_procedimento tp ON tp.codigo = 'PUBLICACAO_REN'
+            ORDER BY idc.id</sql>
+
+        <sql>INSERT INTO permissao_acao (tipo_entidade, instrumento_procedimento_config_id, ativo)
+            SELECT v.tipo_entidade, ipc.id, true
+            FROM instrumento_procedimento_config ipc
+            JOIN tipo_procedimento tp ON tp.id = ipc.tipo_procedimento_id AND tp.codigo = 'PUBLICACAO_REN'
+            CROSS JOIN (VALUES (1, 'CCDR_DR'), (2, 'DGT')) AS v (ordem, tipo_entidade)
+            ORDER BY ipc.id, v.ordem</sql>
+
+        <sql>UPDATE instrumento_dinamica_config SET ativo = true
+            WHERE tipo_instrumento_id = (SELECT id FROM tipo_instrumento WHERE codigo = 'REN')
+              AND tipo_dinamica_id IN (SELECT id FROM tipo_dinamica
+                                       WHERE codigo IN ('DELIMITACAO', 'ALTERACAO', 'CORRECAO_MATERIAL_RETIFICACAO'))</sql>
+        <sql>UPDATE instrumento_dinamica_config SET pede_diploma_corrigido = true
+            WHERE tipo_instrumento_id = (SELECT id FROM tipo_instrumento WHERE codigo = 'REN')
+              AND tipo_dinamica_id = (SELECT id FROM tipo_dinamica WHERE codigo = 'CORRECAO_MATERIAL_RETIFICACAO')</sql>
+        <sql>UPDATE instrumento_dinamica_config SET tipo_informacao_fixo = 'TEXTO_INTEGRAL'
+            WHERE tipo_instrumento_id = (SELECT id FROM tipo_instrumento WHERE codigo = 'REN')
+              AND tipo_dinamica_id = (SELECT id FROM tipo_dinamica WHERE codigo = 'DELIMITACAO')</sql>
+
+        <rollback>
+            <sql>UPDATE instrumento_dinamica_config SET ativo = false, pede_diploma_corrigido = false,
+                    tipo_informacao_fixo = NULL
+                WHERE tipo_instrumento_id = (SELECT id FROM tipo_instrumento WHERE codigo = 'REN')
+                  AND tipo_dinamica_id IN (SELECT id FROM tipo_dinamica
+                                           WHERE codigo IN ('DELIMITACAO', 'ALTERACAO', 'CORRECAO_MATERIAL_RETIFICACAO'))</sql>
+            <sql>DELETE FROM permissao_acao WHERE instrumento_procedimento_config_id IN (SELECT ipc.id
+                FROM instrumento_procedimento_config ipc
+                JOIN tipo_procedimento tp ON tp.id = ipc.tipo_procedimento_id
+                WHERE tp.codigo = 'PUBLICACAO_REN')</sql>
+            <sql>DELETE FROM instrumento_procedimento_config
+                WHERE tipo_procedimento_id = (SELECT id FROM tipo_procedimento WHERE codigo = 'PUBLICACAO_REN')</sql>
+            <sql>DELETE FROM tipo_procedimento WHERE codigo = 'PUBLICACAO_REN'</sql>
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>

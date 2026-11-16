@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="2026-11-11-7-entidade-contacto-principal-unico" author="arnaldo.costa">
+        <comment>
+            No máximo um contacto institucional principal e ativo por entidade (DB-IAM-003, BL-IAM-018), garantido
+            também na base para os pedidos em simultâneo. Falha se já houver dois principais ativos na mesma
+            entidade, que é preciso resolver antes. Rollback: retira só o índice.
+        </comment>
+        <sql>CREATE UNIQUE INDEX uq_entidade_contacto_principal_ativo ON entidade_contacto (entidade_id) WHERE principal AND ativo</sql>
+
+        <rollback>
+            <sql>DROP INDEX IF EXISTS uq_entidade_contacto_principal_ativo</sql>
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>

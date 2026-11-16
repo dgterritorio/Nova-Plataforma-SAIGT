@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="2026-11-09-5-seed-snit-codigo" author="david.raposo">
+        <comment>
+            IDs do SNIT nos catálogos, de IDUS_Tabelas_SNIT_20261009.XLSX: IDTYPE da folha B para o Instrumento e ID (não
+            o CodProcedimento) da folha D para a Dinâmica. O UPDATE é pelo código do tipo, para servir qualquer ambiente;
+            um tipo que ainda não existe não é alterado. A REN fica com 37, escolha provisória (OI-499): o SNIT também
+            tem 90015. Ficam a nulo, até o SNIT os confirmar: ALTERACAO_RERAE, SUSPENSAO_CCDR, RATIFICACAO,
+            CORRECAO_MATERIAL_RETIFICACAO e todos os tipos de Procedimento.
+        </comment>
+
+        <sql>UPDATE tipo_instrumento SET snit_codigo = v.snit_codigo
+            FROM (VALUES ('PDM', '1'), ('PP', '6'), ('PU', '7'), ('REN', '37'), ('PDIM', '53'), ('PUIM', '54'),
+                         ('PPIM', '55'), ('PNPOT', '17'), ('PROT', '51'), ('PS', '46'), ('PIMOT', '52'))
+                 AS v (codigo, snit_codigo)
+            WHERE tipo_instrumento.codigo = v.codigo</sql>
+
+        <sql>UPDATE tipo_dinamica SET snit_codigo = v.snit_codigo
+            FROM (VALUES ('ELABORACAO', '1'), ('ALTERACAO', '2'), ('REVISAO', '7'), ('ALTERACAO_ADAPTACAO', '3'),
+                         ('ALTERACAO_SIMPLIFICADA_ART123', '4'), ('ALTERACAO_SIMPLIFICADA_DL10_2024', '4'),
+                         ('CORRECAO_MATERIAL', '6'), ('REVOGACAO', '11'), ('MEDIDAS_PREVENTIVAS', '14'),
+                         ('SUSPENSAO', '19'), ('NORMAS_PROVISORIAS', '24'), ('MEDIDAS_PREVENTIVAS_GOVERNO', '15'),
+                         ('SUSPENSAO_GOVERNO', '18'))
+                 AS v (codigo, snit_codigo)
+            WHERE tipo_dinamica.codigo = v.codigo</sql>
+
+        <rollback>
+            <sql>UPDATE tipo_dinamica SET snit_codigo = NULL</sql>
+            <sql>UPDATE tipo_instrumento SET snit_codigo = NULL</sql>
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>

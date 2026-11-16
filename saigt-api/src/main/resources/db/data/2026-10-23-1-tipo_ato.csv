@@ -1,0 +1,10 @@
+id;codigo;nome;incm_act_type_id_serie_2;ordem;ativo;incm_act_type_id_serie_1
+9;"ANUN";"Anúncio";40;1;true;NULL
+10;"CONTR";"Contrato";41;3;true;NULL
+11;"DECLRET";"Declaração de Retificação";42;5;true;32
+12;"DECRETO";"Decreto";NULL;6;true;33
+13;"DLR";"Decreto Legislativo Regional";NULL;7;true;34
+14;"DREG";"Decreto Regulamentar";NULL;8;true;35
+15;"DRR";"Decreto Regulamentar Regional";NULL;9;true;36
+16;"DELIB";"Deliberação";43;11;true;NULL
+17;"LEI";"Lei";NULL;14;true;38

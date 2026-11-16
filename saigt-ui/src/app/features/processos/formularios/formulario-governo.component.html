@@ -1,0 +1,41 @@
+@if (seccaoVisivel()) {
+  <section class="cartao-governo" [attr.aria-labelledby]="idTitulo">
+    <h2 class="cabecalho" [id]="idTitulo">{{ titulo() }}</h2>
+    <div class="corpo">
+      <dl class="contexto">
+        <div>
+          <dt>Tipo de instrumento</dt>
+          <dd class="tipo-instrumento">{{ rotuloTiposInstrumento() }}</dd>
+        </div>
+        <div>
+          <dt>Tipo de procedimento</dt>
+          <dd class="tipo-procedimento">{{ tipoProcedimento() || '—' }}</dd>
+        </div>
+        <div class="largo">
+          <dt>Designação</dt>
+          <dd class="designacao">{{ designacao() || '—' }}</dd>
+        </div>
+        @if (instrumentosAbrangidos(); as instrumentos) {
+          <div class="largo instrumentos">
+            <dt>Instrumentos associados</dt>
+            <dd class="instrumentos-associados">
+              @if (instrumentos.length > 0) {
+                <ul>
+                  @for (instrumento of instrumentos; track instrumento.id) {
+                    <li>
+                      {{ instrumento.designacao }}
+                      <span class="tipo-do-instrumento">({{ nomeTipo(instrumento.tipoInstrumento) }})</span>
+                    </li>
+                  }
+                </ul>
+              } @else {
+                Sem instrumentos associados.
+              }
+            </dd>
+          </div>
+        }
+      </dl>
+    </div>
+  </section>
+}
+<ng-content />

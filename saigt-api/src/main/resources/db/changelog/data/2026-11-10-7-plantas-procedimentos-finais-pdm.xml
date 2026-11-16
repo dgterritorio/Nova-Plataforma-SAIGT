@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="2026-11-10-7-plantas-procedimentos-finais-pdm" author="arnaldo.costa">
+        <comment>
+            Página das Plantas nos procedimentos finais do PDM sem GeoConform (EF v1.5 §3.1.2, FR-170): Elaboração
+            (204), Revisão (208) e Publicação da Alteração (211) recebem os quatro itens da página, como a Decisão de
+            início (201, 205). O nome de cada ZIP é o do item de publicação da mesma planta no procedimento, que é a
+            chave com que as folhas se ligam ao Conjunto MOTU. A ordem continua a do procedimento, sem buracos, e os
+            limites de tamanho são os do baseline legado, como nos restantes itens.
+        </comment>
+        <sql>
+            INSERT INTO documento_config (instrumento_procedimento_config_id, codigo, separador, nome, categoria,
+                                          tipo_elemento, formato, obrigatorio, extensoes_aceites, ordem, ativo, pagina,
+                                          tamanho_maximo_ficheiro, tamanho_maximo_total, numero_maximo_ficheiros)
+            SELECT p.procedimento, item.codigo, item.separador,
+                   COALESCE((SELECT pub.nome FROM documento_config pub
+                             WHERE pub.instrumento_procedimento_config_id = p.procedimento
+                               AND pub.codigo = item.codigo_publicacao), item.nome),
+                   'DEPOSITO', item.tipo_elemento, 'NAO_EDITAVEL', false, item.extensoes::jsonb,
+                   (SELECT max(atual.ordem) FROM documento_config atual
+                    WHERE atual.instrumento_procedimento_config_id = p.procedimento) + item.posicao,
+                   true, 'PLANTAS', 524288000, 2147483648, 10
+            FROM (VALUES (204), (208), (211)) AS p(procedimento)
+            CROSS JOIN (VALUES
+                ('PLANTAS_ZIP_ORDENAMENTO_DEP', 'Planta de Ordenamento', 'Planta de ordenamento',
+                 'PLANTA_ORDENAMENTO_PUB', 'PECA_GRAFICA', '["zip"]', 1),
+                ('PLANTAS_ZIP_CONDICIONANTES_DEP', 'Planta de Condicionantes', 'Planta de condicionantes',
+                 'PLANTA_CONDICIONANTES_PUB', 'PECA_GRAFICA', '["zip"]', 2),
+                ('PLANTAS_TXT_NOMES_DEP', 'Nomes das plantas', 'Nomes das plantas conforme o regulamento',
+                 NULL, 'OUTROS', '["txt"]', 3),
+                ('PLANTAS_CARTOGRAMA_DEP', 'Cartograma das folhas', 'Cartograma das folhas',
+                 NULL, 'OUTROS', '["pdf", "jpg", "png"]', 4)
+            ) AS item(codigo, separador, nome, codigo_publicacao, tipo_elemento, extensoes, posicao)
+        </sql>
+        <rollback>
+            <delete tableName="documento_config">
+                <where>instrumento_procedimento_config_id IN (204, 208, 211) AND pagina = 'PLANTAS'</where>
+            </delete>
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>

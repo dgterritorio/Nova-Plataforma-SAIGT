@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="2026-11-10-8-seed-pcgt-codigo" author="david.raposo">
+        <comment>
+            Premissa (OI-361): a PCGT usa os códigos dos grupos igt e dinamica do IDUS (contrato de 04/11 §3.2 e §6.1),
+            por isso pcgt_codigo = codigo_idus. O UPDATE é pelo código do tipo; um tipo que não existe não é alterado. Os
+            restantes ficam nulos até a PCGT confirmar. Mudar um valor é um changeset novo.
+        </comment>
+
+        <sql>UPDATE tipo_instrumento SET pcgt_codigo = v.pcgt_codigo
+            FROM (VALUES ('PDM', '01'), ('PP', '06'), ('PU', '07')) AS v (codigo, pcgt_codigo)
+            WHERE tipo_instrumento.codigo = v.codigo</sql>
+
+        <sql>UPDATE tipo_dinamica SET pcgt_codigo = v.pcgt_codigo
+            FROM (VALUES ('ELABORACAO', '01'), ('ALTERACAO', '02'), ('REVISAO', '03'), ('ALTERACAO_ADAPTACAO', '04'),
+                         ('ALTERACAO_SIMPLIFICADA_ART123', '06'), ('ALTERACAO_SIMPLIFICADA_DL10_2024', '06'),
+                         ('CORRECAO_MATERIAL', '10'), ('REVOGACAO', '15'))
+                 AS v (codigo, pcgt_codigo)
+            WHERE tipo_dinamica.codigo = v.codigo</sql>
+
+        <rollback>
+            <sql>UPDATE tipo_dinamica SET pcgt_codigo = NULL</sql>
+            <sql>UPDATE tipo_instrumento SET pcgt_codigo = NULL</sql>
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>

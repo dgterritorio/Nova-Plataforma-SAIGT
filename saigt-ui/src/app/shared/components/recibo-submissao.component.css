@@ -1,0 +1,251 @@
+.recibo {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaco-5);
+}
+
+.sucesso {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--espaco-5);
+  padding: var(--espaco-6);
+  border: var(--borda-largura) solid var(--cor-dinamica-terminada-borda);
+  border-radius: var(--raio-xl);
+  background: var(--cor-dinamica-terminada-fundo);
+}
+
+.sucesso-icone {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  border-radius: var(--raio-pill);
+  background: var(--cor-sucesso-fundo);
+  color: var(--cor-sucesso);
+}
+
+.sucesso-icone svg {
+  width: 28px;
+  height: 28px;
+}
+
+.sucesso h2 {
+  margin: 0;
+  font-size: var(--texto-lg);
+  font-weight: var(--peso-negrito);
+  line-height: var(--texto-lg-linha);
+  color: var(--cor-sucesso-titulo);
+}
+
+.sucesso p {
+  margin: var(--espaco-1) 0 0;
+  font-size: var(--texto-base);
+  line-height: var(--texto-base-linha);
+  color: var(--cor-sucesso);
+}
+
+.numero {
+  overflow: hidden;
+  border: var(--borda-largura) solid var(--cor-borda);
+  border-radius: var(--raio-xl);
+  background: var(--cor-superficie);
+  box-shadow: var(--sombra-cartao);
+}
+
+.numero-faixa {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--espaco-4);
+  padding: var(--espaco-6) var(--espaco-8);
+  background: var(--cor-recibo-faixa);
+}
+
+.numero-rotulo {
+  margin: 0;
+  font-size: var(--texto-sm);
+  font-weight: var(--peso-semi);
+  line-height: var(--texto-sm-linha);
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  color: var(--cor-recibo-faixa-rotulo);
+}
+
+.numero-valor {
+  margin: var(--espaco-1) 0 0;
+  font-family: var(--fonte-mono);
+  font-size: var(--texto-numero-recibo);
+  font-weight: var(--peso-negrito);
+  line-height: var(--texto-numero-recibo-linha);
+  letter-spacing: -1.2px;
+  color: var(--cor-primaria-contraste);
+}
+
+.numero-copiar {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: var(--espaco-3);
+}
+
+.numero-copiar-rotulo {
+  font-size: var(--texto-sm);
+  line-height: var(--texto-sm-linha);
+  color: var(--cor-recibo-faixa-rotulo);
+}
+
+.botao-copiar {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--espaco-2);
+  min-height: var(--altura-controlo);
+  padding: var(--espaco-2) var(--espaco-4);
+  border: var(--borda-largura) solid var(--cor-recibo-botao-borda);
+  border-radius: var(--raio-lg);
+  background: var(--cor-recibo-botao-fundo);
+  font: inherit;
+  font-size: var(--texto-base);
+  font-weight: var(--peso-semi);
+  line-height: var(--texto-base-linha);
+  color: var(--cor-primaria-contraste);
+  cursor: pointer;
+}
+
+.botao-copiar svg {
+  width: 16px;
+  height: 16px;
+}
+
+.botao-copiar:focus-visible {
+  outline: 2px solid var(--cor-primaria-contraste);
+  outline-offset: var(--anel-foco-afastamento);
+}
+
+.numero-info {
+  display: flex;
+  align-items: center;
+  gap: var(--espaco-2);
+  margin: 0;
+  padding: var(--espaco-4) var(--espaco-8);
+  border-bottom: var(--borda-largura) solid var(--cor-avatar-fundo);
+  background: var(--cor-info-fundo);
+  font-size: var(--texto-sm);
+  font-weight: var(--peso-medio);
+  line-height: var(--texto-sm-linha);
+  color: var(--cor-texto);
+}
+
+.numero-info svg {
+  flex-shrink: 0;
+  width: 14px;
+  height: 14px;
+  color: var(--cor-ligacao-email);
+}
+
+.cartoes {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--espaco-4);
+}
+
+.dados {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaco-4);
+  margin: 0;
+}
+
+/* O #90a1b9 do Figma fica a 2,6:1 sobre branco: usa-se o cinzento acessível mais próximo. */
+.dados dt {
+  font-size: var(--texto-rotulo);
+  font-weight: var(--peso-semi);
+  line-height: var(--texto-xs-linha);
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  color: var(--cor-texto-secundario);
+}
+
+.dados dd {
+  margin: var(--espaco-0-5) 0 0;
+  font-size: var(--texto-base);
+  font-weight: var(--peso-medio);
+  line-height: var(--texto-base-linha);
+  color: var(--cor-texto-rotulo);
+  overflow-wrap: anywhere;
+}
+
+.dados .valor-forte {
+  font-weight: var(--peso-semi);
+  color: var(--cor-titulo-pagina);
+}
+
+.dados .valor-mono {
+  font-family: var(--fonte-mono);
+}
+
+.dados .valor-destaque {
+  font-weight: var(--peso-negrito);
+  color: var(--cor-primaria);
+}
+
+.dados-nota {
+  margin: var(--espaco-4) 0 0;
+  padding-top: var(--espaco-2);
+  border-top: var(--borda-largura) solid var(--cor-borda-suave);
+  font-size: var(--texto-sm);
+  line-height: var(--texto-sm-linha);
+  color: var(--cor-texto-secundario);
+}
+
+.rodape {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--espaco-3);
+}
+
+.rodape-gerado {
+  margin: 0;
+  font-size: var(--texto-sm);
+  line-height: var(--texto-sm-linha);
+  color: var(--cor-texto-secundario);
+}
+
+.rodape-acoes {
+  display: flex;
+  gap: var(--espaco-2);
+}
+
+@media (width <= 768px) {
+  .cartoes {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .numero-faixa {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .numero-copiar {
+    align-items: flex-start;
+  }
+}
+
+@media print {
+  .numero-faixa {
+    background: var(--cor-superficie);
+  }
+
+  .numero-rotulo,
+  .numero-valor {
+    color: var(--cor-texto);
+  }
+
+  .numero-copiar,
+  .rodape-acoes {
+    display: none;
+  }
+}

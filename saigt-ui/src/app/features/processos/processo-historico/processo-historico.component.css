@@ -1,0 +1,109 @@
+.conteudo {
+    max-width: 860px;
+    margin: 0 auto;
+}
+
+.voltar {
+    display: inline-block;
+    margin-bottom: 8px;
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
+    color: #64748b;
+    text-decoration: none;
+}
+
+.voltar:hover {
+    color: #1a56a0;
+}
+
+h1 {
+    margin: 0 0 16px;
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 28px;
+    color: #0f172b;
+}
+
+.estado-carregamento {
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    color: #64748b;
+}
+
+.linha-tempo {
+    list-style: none;
+    margin: 0 0 16px;
+    padding: 0;
+}
+
+.entrada {
+    background: #fff;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 14px 20px;
+    margin-bottom: 10px;
+    font-family: 'Inter', sans-serif;
+}
+
+.entrada-cabecalho {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+.acao {
+    font-weight: 600;
+    font-size: 14px;
+    color: #0f172b;
+}
+
+time,
+.autor {
+    font-size: 12px;
+    color: #64748b;
+}
+
+.transicao {
+    margin-top: 6px;
+    font-size: 13px;
+    color: #1a56a0;
+}
+
+.detalhes {
+    margin: 8px 0 0;
+    display: grid;
+    gap: 4px;
+    font-size: 12px;
+}
+
+.detalhes div {
+    display: flex;
+    gap: 8px;
+}
+
+.detalhes dt {
+    color: #64748b;
+}
+
+.detalhes dd {
+    margin: 0;
+    color: #334155;
+    word-break: break-word;
+}
+
+.btn-secundario {
+    padding: 8px 16px;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    background: #fff;
+    color: #334155;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.btn-secundario:disabled {
+    opacity: 0.6;
+    cursor: default;
+}

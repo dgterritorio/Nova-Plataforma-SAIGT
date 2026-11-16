@@ -1,0 +1,310 @@
+/* @import "fonts.css" removido da cópia do Figma: as fontes entram por src/styles/fontes.css (angular.json). */
+/*
+  SAIGT design tokens, built from the Figma variables (ui-screens.json designTokens.variables)
+  and from values repeated in the 85 figma.tsx files (3+ uses or 2+ screens).
+  Origin per token: "variable: <Figma name>" or "repeated: <uses> uses / <screens> screens".
+  A value used once is not a token: it stays literal in its screen.
+  Fonts are applied only through the classes in fonts.css (no font-family / font-weight tokens).
+*/
+
+:root {
+  /* ---------- Colors: Figma variables ---------- */
+  --white: #ffffff; /* variable: White; also color/neutral/0, bg/inverse, error/contrastText, primary/contrastText, _components/paper/elevation-0; repeated: 668 uses */
+  --color: #e2e8f0; /* variable: Color; repeated: 542 uses / 69 screens */
+  --color-3: #9bb239; /* variable: Color 3; repeated: 72 uses / 72 screens */
+  --color-4: #1d293d; /* variable: Color 4; repeated: 46 uses / 13 screens */
+  --dark-blue: #1a56a0; /* variable: Dark Blue; repeated: 372 uses / 76 screens */
+  --text-strong: #101213; /* variable: text/strong */
+  --icon-sub: #6a7178; /* variable: icon/sub */
+  --border-default: #ced4da; /* variable: border/default */
+  --primary-main: #1976d2; /* variable: primary/main */
+  --components-stepper-connector: #bdbdbd; /* variable: _components/stepper/connector */
+  --text-primary: rgba(0,0,0,0.87); /* variable: text/primary #000000de */
+  --text-secondary: rgba(0,0,0,0.6); /* variable: text/secondary #00000099 */
+  --text-disabled: rgba(0,0,0,0.38); /* variable: text/disabled #00000061 */
+  --fundo: rgba(240,243,225,0.32); /* variable: Fundo #f0f3e152 */
+
+  /* ---------- Colors: repeated in the code ---------- */
+  --color-0f1923: #0f1923; /* repeated: 547 uses / 80 screens */
+  --color-374151: #374151; /* repeated: 443 uses / 42 screens */
+  --color-64748b: #64748b; /* repeated: 345 uses / 79 screens */
+  --color-94a3b8: #94a3b8; /* repeated: 243 uses / 56 screens */
+  --color-6b7a9b: #6b7a9b; /* repeated: 226 uses / 30 screens */
+  --color-475569: #475569; /* repeated: 198 uses / 15 screens */
+  --color-6b7280: #6b7280; /* repeated: 196 uses / 70 screens */
+  --color-dc2626: #dc2626; /* repeated: 180 uses / 67 screens */
+  --color-f8fafc: #f8fafc; /* repeated: 173 uses / 54 screens */
+  --color-f1f5f9: #f1f5f9; /* repeated: 152 uses / 35 screens */
+  --color-007a55: #007a55; /* repeated: 149 uses / 34 screens */
+  --color-1a2233: #1a2233; /* repeated: 145 uses / 17 screens */
+  --color-90a1b9: #90a1b9; /* repeated: 136 uses / 21 screens */
+  --color-62748e: #62748e; /* repeated: 129 uses / 21 screens */
+  --color-f5f7fa: #f5f7fa; /* repeated: 119 uses / 76 screens */
+  --color-d8dde8: #d8dde8; /* repeated: 115 uses / 17 screens */
+  --color-eff6ff: #eff6ff; /* repeated: 97 uses / 36 screens */
+  --color-d0fae5: #d0fae5; /* repeated: 84 uses / 26 screens */
+  --color-f3f4f6: #f3f4f6; /* repeated: 75 uses / 8 screens */
+  --color-0f2d5e: #0f2d5e; /* repeated: 73 uses / 47 screens */
+  --color-5ee9b5: #5ee9b5; /* repeated: 69 uses / 23 screens */
+  --color-ecfdf5: #ecfdf5; /* repeated: 65 uses / 15 screens */
+  --color-4a5565: #4a5565; /* repeated: 55 uses / 9 screens */
+  --color-dbeafe: #dbeafe; /* repeated: 54 uses / 25 screens */
+  --color-f9fafb: #f9fafb; /* repeated: 52 uses / 11 screens */
+  --color-99a1af: #99a1af; /* repeated: 46 uses / 8 screens */
+  --color-314158: #314158; /* repeated: 45 uses / 17 screens */
+  --color-eef1f7: #eef1f7; /* repeated: 44 uses / 16 screens */
+  --color-101828: #101828; /* repeated: 43 uses / 8 screens */
+  --color-1e4db7: #1e4db7; /* repeated: 43 uses / 22 screens */
+  --color-fffbeb: #fffbeb; /* repeated: 38 uses / 19 screens */
+  --color-364153: #364153; /* repeated: 38 uses / 5 screens */
+  --color-e5e7eb: #e5e7eb; /* repeated: 37 uses / 7 screens */
+  --color-fafcff: #fafcff; /* repeated: 35 uses / 15 screens */
+  --color-6a7282: #6a7282; /* repeated: 35 uses / 6 screens */
+  --color-1e2939: #1e2939; /* repeated: 31 uses / 6 screens */
+  --color-0f172b: #0f172b; /* repeated: 30 uses / 17 screens */
+  --color-a4f4cf: #a4f4cf; /* repeated: 29 uses / 6 screens */
+  --color-dcfce7: #dcfce7; /* repeated: 28 uses / 20 screens */
+  --color-fef3c7: #fef3c7; /* repeated: 27 uses / 14 screens */
+  --color-92400e: #92400e; /* repeated: 27 uses / 13 screens */
+  --color-1b3a6b: #1b3a6b; /* repeated: 26 uses / 6 screens */
+  --color-d97706: #d97706; /* repeated: 26 uses / 9 screens */
+  --color-155dfc: #155dfc; /* repeated: 22 uses / 9 screens */
+  --color-cbd5e1: #cbd5e1; /* repeated: 21 uses / 11 screens */
+  --color-f0f4f9: #f0f4f9; /* repeated: 21 uses / 13 screens */
+  --color-000000: #000000; /* repeated: 18 uses */
+  --color-f0fdf4: #f0fdf4; /* repeated: 13 uses / 7 screens */
+  --color-0369a1: #0369a1; /* repeated: 13 uses / 9 screens */
+  --color-c10007: #c10007; /* repeated: 12 uses / 2 screens */
+  --color-eeeeee: #eeeeee; /* repeated: 12 uses / 4 screens */
+  --color-fbfcfd: #fbfcfd; /* repeated: 11 uses / 11 screens */
+  --color-fef2f2: #fef2f2; /* repeated: 11 uses / 7 screens */
+  --color-166534: #166534; /* repeated: 11 uses / 10 screens */
+  --color-bedbff: #bedbff; /* repeated: 10 uses / 5 screens */
+  --color-45556c: #45556c; /* repeated: 10 uses / 7 screens */
+  --color-15803d: #15803d; /* repeated: 10 uses / 3 screens */
+  --color-bbf7d0: #bbf7d0; /* repeated: 10 uses / 4 screens */
+  --color-bae6fd: #bae6fd; /* repeated: 10 uses / 9 screens */
+  --color-008236: #008236; /* repeated: 10 uses / 3 screens */
+  --color-00c950: #00c950; /* repeated: 10 uses / 2 screens */
+  --color-00bc7d: #00bc7d; /* repeated: 9 uses / 3 screens */
+  --color-f5f3ff: #f5f3ff; /* repeated: 9 uses / 2 screens */
+  --color-ffe2e2: #ffe2e2; /* repeated: 8 uses / 2 screens */
+  --color-767676: #767676; /* repeated: 8 uses / 4 screens */
+  --color-16a34a: #16a34a; /* repeated: 8 uses / 5 screens */
+  --color-059669: #059669; /* repeated: 8 uses / 3 screens */
+  --color-eff3f7: #eff3f7; /* repeated: 8 uses / 4 screens */
+  --color-efefef-24: rgba(239,239,239,0.24); /* repeated: 7 uses / 7 screens */
+  --color-1447e6: #1447e6; /* repeated: 7 uses / 1 screen */
+  --color-e0e7ff: #e0e7ff; /* repeated: 7 uses / 1 screen */
+  --color-432dd7: #432dd7; /* repeated: 7 uses / 1 screen */
+  --color-b45309: #b45309; /* repeated: 6 uses / 3 screens */
+  --color-fecaca: #fecaca; /* repeated: 6 uses / 6 screens */
+  --color-0f1923-50: rgba(15,25,35,0.5); /* repeated: 6 uses / 3 screens */
+  --color-dde2ea: #dde2ea; /* repeated: 6 uses / 2 screens */
+  --color-ffedd4: #ffedd4; /* repeated: 6 uses / 2 screens */
+  --color-ca3500: #ca3500; /* repeated: 6 uses / 2 screens */
+  --color-ecfeff: #ecfeff; /* repeated: 5 uses / 3 screens */
+  --color-e0f2fe: #e0f2fe; /* repeated: 5 uses / 5 screens */
+  --color-fee2e2: #fee2e2; /* repeated: 5 uses / 5 screens */
+  --color-0f172a: #0f172a; /* repeated: 5 uses / 1 screen */
+  --color-bb4d00: #bb4d00; /* repeated: 4 uses / 4 screens */
+  --color-7cb5c7: #7cb5c7; /* repeated: 4 uses / 3 screens */
+  --color-93c5fd: #93c5fd; /* repeated: 4 uses / 4 screens */
+  --color-93c5fd-60: rgba(147,197,253,0.6); /* repeated: 4 uses / 4 screens */
+  --color-7bf1a8: #7bf1a8; /* repeated: 4 uses / 1 screen */
+  --color-d1d5dc: #d1d5dc; /* repeated: 4 uses / 1 screen */
+  --color-1e3a5f: #1e3a5f; /* repeated: 4 uses / 1 screen */
+  --color-7c3aed: #7c3aed; /* repeated: 4 uses / 2 screens */
+  --color-3a4a6b: #3a4a6b; /* repeated: 4 uses / 1 screen */
+  --color-7b7878: #7b7878; /* repeated: 4 uses / 2 screens */
+  --color-dbeafe-50: rgba(219,234,254,0.5); /* repeated: 3 uses / 3 screens */
+  --color-fef3c6: #fef3c6; /* repeated: 3 uses / 3 screens */
+  --color-1a2233-50: rgba(26,34,51,0.5); /* repeated: 3 uses / 3 screens */
+  --color-fee685: #fee685; /* repeated: 3 uses / 3 screens */
+  --color-006045: #006045; /* repeated: 3 uses / 3 screens */
+  --color-ffffff-15: rgba(255,255,255,0.15); /* repeated: 3 uses / 3 screens */
+  --color-ffffff-30: rgba(255,255,255,0.3); /* repeated: 3 uses / 3 screens */
+  --color-6dbc6d: #6dbc6d; /* repeated: 3 uses / 3 screens */
+  --color-0891b2: #0891b2; /* repeated: 3 uses / 3 screens */
+  --color-bfdbfe: #bfdbfe; /* repeated: 3 uses / 2 screens */
+  --color-fde68a: #fde68a; /* repeated: 3 uses / 2 screens */
+  --color-fed7aa: #fed7aa; /* repeated: 3 uses / 1 screen */
+  --color-b91c1c: #b91c1c; /* repeated: 3 uses / 2 screens */
+  --color-fca5a5: #fca5a5; /* repeated: 3 uses / 3 screens */
+  --color-d97706-20: rgba(217,119,6,0.2); /* repeated: 3 uses / 1 screen */
+  --color-000000-40: rgba(0,0,0,0.4); /* repeated: 3 uses / 3 screens */
+  --color-1a56a0-14: rgba(26,86,160,0.14); /* repeated: 3 uses / 1 screen */
+  --color-94a3b8-29: rgba(148,163,184,0.29); /* repeated: 3 uses / 3 screens */
+  --color-009966: #009966; /* repeated: 2 uses / 2 screens */
+  --color-f2c051: #f2c051; /* repeated: 2 uses / 2 screens */
+  --color-e2e2e2: #e2e2e2; /* repeated: 2 uses / 2 screens */
+  --color-afa7a7: #afa7a7; /* repeated: 2 uses / 2 screens */
+  --color-f0f9ff: #f0f9ff; /* repeated: 2 uses / 2 screens */
+  --color-1e2330: #1e2330; /* repeated: 2 uses / 2 screens */
+  --color-ffb900: #ffb900; /* repeated: 2 uses / 2 screens */
+  --color-1a56a0-30: rgba(26,86,160,0.3); /* repeated: 2 uses / 2 screens */
+  --color-16a34a-10: rgba(22,163,74,0.1); /* repeated: 2 uses / 2 screens */
+
+  /* ---------- Spacing (padding, margin, gap): Figma variables ---------- */
+  --none: 0px; /* variable: none */
+  --xs: 4px; /* variable: xs; repeated: 539 uses / 61 screens */
+  --s: 8px; /* variable: s; repeated: 803 uses / 79 screens */
+  --base: 16px; /* variable: base; repeated: 445 uses / 81 screens */
+  --m: 24px; /* variable: m; also "3" (24); repeated: 352 uses / 79 screens */
+
+  /* ---------- Spacing: repeated in the code ---------- */
+  --space-0-8: 0.8px; /* repeated: 45 uses / 24 screens */
+  --space-1: 1px; /* repeated: 72 uses */
+  --space-1-75: 1.75px; /* repeated: 128 uses / 20 screens */
+  --space-2: 2px; /* repeated: 354 uses / 57 screens */
+  --space-3: 3px; /* repeated: 14 uses / 9 screens */
+  --space-3-5: 3.5px; /* repeated: 78 uses / 13 screens */
+  --space-5: 5px; /* repeated: 22 uses / 6 screens */
+  --space-5-25: 5.25px; /* repeated: 64 uses / 10 screens */
+  --space-6: 6px; /* repeated: 384 uses / 73 screens */
+  --space-6-25: 6.25px; /* repeated: 2 uses / 2 screens */
+  --space-7: 7px; /* repeated: 109 uses / 20 screens */
+  --space-7-8: 7.8px; /* repeated: 8 uses / 8 screens */
+  --space-8-75: 8.75px; /* repeated: 3 uses / 3 screens */
+  --space-8-8: 8.8px; /* repeated: 2 uses / 2 screens */
+  --space-9: 9px; /* repeated: 86 uses / 45 screens */
+  --space-9-55: 9.55px; /* repeated: 7 uses / 4 screens */
+  --space-10: 10px; /* repeated: 396 uses / 83 screens */
+  --space-10-5: 10.5px; /* repeated: 81 uses / 14 screens */
+  --space-11: 11px; /* repeated: 56 uses / 17 screens */
+  --space-11-5: 11.5px; /* repeated: 17 uses / 4 screens */
+  --space-12: 12px; /* repeated: 623 uses / 81 screens */
+  --space-12-8: 12.8px; /* repeated: 3 uses / 3 screens */
+  --space-13: 13px; /* repeated: 116 uses / 57 screens */
+  --space-14: 14px; /* repeated: 337 uses / 67 screens */
+  --space-14-8: 14.8px; /* repeated: 41 uses / 16 screens */
+  --space-15: 15px; /* repeated: 20 uses / 5 screens */
+  --space-15-6: 15.6px; /* repeated: 4 uses / 2 screens */
+  --space-16-8: 16.8px; /* repeated: 4 uses / 2 screens */
+  --space-17: 17px; /* repeated: 70 uses / 35 screens */
+  --space-17-5: 17.5px; /* repeated: 93 uses / 18 screens */
+  --space-18: 18px; /* repeated: 16 uses / 9 screens */
+  --space-18-5: 18.5px; /* repeated: 7 uses / 1 screen */
+  --space-19: 19px; /* repeated: 65 uses / 65 screens */
+  --space-20: 20px; /* repeated: 211 uses / 50 screens */
+  --space-21: 21px; /* repeated: 57 uses / 24 screens */
+  --space-21-8: 21.8px; /* repeated: 3 uses / 3 screens */
+  --space-23: 23px; /* repeated: 3 uses / 3 screens */
+  --space-24-5: 24.5px; /* repeated: 4 uses / 4 screens */
+  --space-25: 25px; /* repeated: 46 uses / 15 screens */
+  --space-26: 26px; /* repeated: 11 uses / 7 screens */
+  --space-28: 28px; /* repeated: 24 uses / 7 screens */
+  --space-29: 29px; /* repeated: 8 uses / 8 screens */
+  --space-31: 31px; /* repeated: 10 uses / 10 screens */
+  --space-32: 32px; /* repeated: 33 uses / 17 screens */
+  --space-36: 36px; /* repeated: 9 uses / 9 screens */
+  --space-37: 37px; /* repeated: 4 uses / 2 screens */
+  --space-41: 41px; /* repeated: 2 uses / 2 screens */
+  --space-42: 42px; /* repeated: 67 uses / 67 screens */
+  --space-47: 47px; /* repeated: 10 uses / 10 screens */
+  --space-64: 64px; /* repeated: 3 uses / 3 screens */
+
+  /* ---------- Radii ---------- */
+  --border-radius-soft: 4px; /* variable: border/radius/soft; also borderRadius (4); repeated: 129 uses / 34 screens */
+  --radius-1: 1px; /* repeated: 2 uses / 2 screens */
+  --radius-2: 2px; /* repeated: 16 uses / 4 screens */
+  --radius-3-5: 3.5px; /* repeated: 41 uses / 12 screens */
+  --radius-5: 5px; /* repeated: 3 uses / 3 screens */
+  --radius-6: 6px; /* repeated: 8 uses / 1 screen */
+  --radius-7: 7px; /* repeated: 98 uses / 19 screens */
+  --radius-8: 8px; /* repeated: 732 uses / 72 screens */
+  --radius-10: 10px; /* repeated: 14 uses / 11 screens */
+  --radius-11: 11px; /* repeated: 63 uses / 17 screens */
+  --radius-12: 12px; /* repeated: 212 uses / 69 screens */
+  --radius-14: 14px; /* repeated: 7 uses / 4 screens */
+  --radius-16: 16px; /* repeated: 59 uses / 26 screens */
+  --radius-full: 33554400px; /* repeated: 405 uses / 73 screens; Figma pill radius. rounded-[26843500px] (185 uses / 23 screens) draws the same pill */
+
+  /* ---------- Border widths ---------- */
+  --border-size-s: 1px; /* variable: border/size/S; repeated: border-t / border-b / border-r 191 uses */
+  --border-0-8: 0.8px; /* repeated: 317 uses / 38 screens */
+  --border-1-5: 1.5px; /* repeated: 2 uses / 2 screens */
+  --border-1-6: 1.6px; /* repeated: 61 uses / 7 screens */
+  --border-2: 2px; /* repeated: 118 uses */
+  --border-3: 3px; /* repeated: 65 uses */
+  --border-4: 4px; /* repeated: 10 uses */
+
+  /* ---------- Shadows (box-shadow: var(--shadow-*)) ---------- */
+  --shadow: 0px 1px 4px 0px rgba(0,0,0,0.06); /* variable: Shadow (DROP_SHADOW #0000000F, 0 1, blur 4, spread 0) */
+  --shadow-2: 0px 1px 3px 0px rgba(0,0,0,0.1), 0px 1px 2px -1px rgba(0,0,0,0.1); /* variable: 2; repeated: 49 uses / 21 screens */
+  --shadow-2-flat: 0px 1px 3px 0px rgba(0,0,0,0.1), 0px 1px 2px 0px rgba(0,0,0,0.1); /* repeated: 27 uses / 1 screen (UI-064); --shadow-2 with spread 0 */
+  --shadow-soft: 0px 1px 8px 0px rgba(0,0,0,0.06); /* repeated: 4 uses / 4 screens */
+  --shadow-xl: 0px 20px 25px -5px rgba(0,0,0,0.1), 0px 8px 10px -6px rgba(0,0,0,0.1); /* repeated: 2 uses / 2 screens (dropdowns) */
+  --shadow-2xl: 0px 25px 50px -12px rgba(0,0,0,0.25); /* repeated: 5 uses / 5 screens */
+
+  /* ---------- Drop shadows (filter: var(--drop-shadow-*)) ---------- */
+  --drop-shadow-header: drop-shadow(0px 1px 2px rgba(0,0,0,0.06)); /* repeated: 71 uses / 65 screens (INCM header) */
+  --drop-shadow-sm: drop-shadow(0px 1px 1.5px rgba(0,0,0,0.1)) drop-shadow(0px 1px 1px rgba(0,0,0,0.1)); /* repeated: 69 uses / 41 screens */
+  --drop-shadow-card: drop-shadow(0px 1px 2px rgba(0,0,0,0.05)); /* repeated: 45 uses / 16 screens */
+  --drop-shadow-2xl: drop-shadow(0px 25px 25px rgba(0,0,0,0.25)); /* repeated: 6 uses / 6 screens */
+
+  /* ---------- Gradients: none (each of the 12 gradients in the code is used once and stays literal) ---------- */
+
+  /* ---------- Type: font sizes, Figma variables ---------- */
+  --font-size-0-625rem: 10px; /* variable: _fontSize/0,625rem; repeated: 214 uses / 40 screens */
+  --font-size-0-75rem: 12px; /* variable: _fontSize/0,75rem; also body/XS, typography/caption (12); repeated: 1140 uses / 78 screens */
+  --font-size-0-875rem: 14px; /* variable: _fontSize/0,875rem; also typography/subtitle2, typography/body2 (14); repeated: 1261 uses / 84 screens */
+  --font-size-1rem: 16px; /* variable: _fontSize/1rem; repeated: 47 uses / 18 screens */
+  --font-size-1-125rem: 18px; /* variable: _fontSize/1,125rem; repeated: 45 uses / 12 screens */
+  --font-size-1-25rem: 20px; /* variable: _fontSize/1,25rem; repeated: 68 uses / 49 screens */
+
+  /* ---------- Type: font sizes, repeated in the code ---------- */
+  --font-size-8: 8px; /* repeated: 2 uses / 2 screens */
+  --font-size-9: 9px; /* repeated: 12 uses / 2 screens */
+  --font-size-10-5: 10.5px; /* repeated: 254 uses / 26 screens */
+  --font-size-11: 11px; /* repeated: 162 uses / 26 screens */
+  --font-size-12-25: 12.25px; /* repeated: 155 uses / 17 screens */
+  --font-size-13: 13px; /* repeated: 3 uses / 3 screens */
+  --font-size-15-75: 15.75px; /* repeated: 12 uses / 12 screens */
+  --font-size-21: 21px; /* repeated: 4 uses / 1 screen */
+  --font-size-24: 24px; /* repeated: 9 uses / 3 screens */
+  --font-size-30: 30px; /* repeated: 11 uses / 4 screens */
+  --font-size-42: 42px; /* repeated: 3 uses / 3 screens */
+
+  /* ---------- Type: line heights, repeated in the code ---------- */
+  --leading-1: 1; /* repeated: leading-none 15 uses; Display/Display 2/Link Small/Regular lineHeight */
+  --leading-1-66: 1.66; /* repeated: 3 uses / 1 screen; typography/caption lineHeight */
+  --leading-13-333: 13.333px; /* repeated: 73 uses / 34 screens */
+  --leading-13-5: 13.5px; /* repeated: 5 uses / 1 screen */
+  --leading-13-75: 13.75px; /* repeated: 6 uses / 2 screens */
+  --leading-14: 14px; /* repeated: 210 uses / 26 screens */
+  --leading-14-286: 14.286px; /* repeated: 4 uses / 2 screens */
+  --leading-15: 15px; /* repeated: 304 uses / 69 screens */
+  --leading-15-75: 15.75px; /* repeated: 36 uses / 11 screens */
+  --leading-16: 16px; /* repeated: 1110 uses / 78 screens */
+  --leading-16-5: 16.5px; /* repeated: 151 uses / 26 screens */
+  --leading-17-063: 17.063px; /* repeated: 8 uses / 8 screens */
+  --leading-17-5: 17.5px; /* repeated: 179 uses / 68 screens */
+  --leading-17-875: 17.875px; /* repeated: 9 uses / 1 screen */
+  --leading-18: 18px; /* repeated: 6 uses / 2 screens */
+  --leading-18-375: 18.375px; /* repeated: 46 uses / 12 screens */
+  --leading-19-25: 19.25px; /* repeated: 29 uses / 5 screens */
+  --leading-19-5: 19.5px; /* repeated: 20 uses / 5 screens */
+  --leading-20: 20px; /* repeated: 1189 uses / 81 screens */
+  --leading-21: 21px; /* repeated: 47 uses / 9 screens */
+  --leading-21-656: 21.656px; /* repeated: 3 uses / 3 screens */
+  --leading-22: 22px; /* repeated: 2 uses / 2 screens */
+  --leading-22-75: 22.75px; /* repeated: 22 uses / 8 screens */
+  --leading-24: 24px; /* repeated: 26 uses / 12 screens */
+  --leading-24-5: 24.5px; /* repeated: 9 uses / 9 screens */
+  --leading-27: 27px; /* repeated: 46 uses / 10 screens */
+  --leading-28: 28px; /* repeated: 120 uses / 57 screens */
+  --leading-30: 30px; /* repeated: 12 uses / 5 screens */
+  --leading-42: 42px; /* repeated: 4 uses / 4 screens */
+
+  /* ---------- Type: letter spacing, repeated in the code (0 is var(--none)) ---------- */
+  --tracking-n1-05: -1.05px; /* repeated: 4 uses / 4 screens */
+  --tracking-n0-525: -0.525px; /* repeated: 4 uses / 1 screen */
+  --tracking-0-275: 0.275px; /* repeated: 30 uses / 5 screens */
+  --tracking-0-3: 0.3px; /* repeated: 24 uses / 12 screens */
+  --tracking-0-4: 0.4px; /* repeated: 3 uses / 1 screen */
+  --tracking-0-5: 0.5px; /* repeated: 91 uses / 20 screens */
+  --tracking-0-525: 0.525px; /* repeated: 36 uses / 15 screens */
+  --tracking-0-6: 0.6px; /* repeated: 92 uses / 18 screens */
+  --tracking-1-05: 1.05px; /* repeated: 4 uses / 4 screens */
+}

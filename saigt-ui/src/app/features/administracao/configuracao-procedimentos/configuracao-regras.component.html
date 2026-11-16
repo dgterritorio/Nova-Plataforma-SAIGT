@@ -1,0 +1,185 @@
+<div class="barra-filtros">
+  <app-seletor
+    class="seletor-tipo-instrumento"
+    rotulo="Tipo de Instrumento"
+    [compacto]="true"
+    [opcoes]="opcoesTipoInstrumento()"
+    [formControl]="tipoInstrumento"
+  />
+  <app-seletor
+    class="seletor-dinamica"
+    rotulo="Dinâmica"
+    placeholder="Sem Dinâmicas"
+    [compacto]="true"
+    [opcoes]="opcoesDinamica()"
+    [formControl]="dinamica"
+  />
+</div>
+
+@if (mensagemSucesso(); as mensagem) {
+  <app-alerta tipo="sucesso">{{ mensagem }}</app-alerta>
+}
+<app-error-banner [erro]="erroAcao()" />
+
+@if (erro()) {
+  <app-error-banner [erro]="erro()" />
+} @else {
+  <app-cartao class="cartao-elegibilidade" titulo="Quando a Dinâmica pode ser iniciada" variante="elevado">
+    <button
+      cabecalho-acoes
+      app-botao
+      type="button"
+      tamanho="pequeno"
+      class="acao-adicionar-regra-dinamica"
+      [desativado]="dinamicaConfigId() === null || aCarregar()"
+      (click)="adicionarRegraDinamica()"
+    >
+      Adicionar regra
+    </button>
+    @if (aCarregar()) {
+      <p class="estado-carregamento" aria-busy="true">A carregar as regras…</p>
+    } @else if (regrasDinamica().length === 0) {
+      <p class="sem-regras">{{ semRegrasDinamica }}</p>
+    } @else {
+      <ul class="lista-regras">
+        @for (regra of regrasDinamica(); track regra.id) {
+          <li class="regra">
+            <div class="regra-texto">
+              <div class="regra-cabecalho">
+                <span class="regra-descricao">{{ regra.descricao || 'Regra sem descrição' }}</span>
+                <app-selo [tom]="regra.ativo ? 'sucesso' : 'cinza'" forma="pill">
+                  <span icone class="status-ponto" aria-hidden="true"></span>
+                  {{ regra.ativo ? 'Ativa' : 'Inativa' }}
+                </app-selo>
+              </div>
+              <p class="regra-resumo">{{ resumo(regra) }}</p>
+            </div>
+            <div class="acoes-regra">
+              <button
+                app-botao
+                type="button"
+                variante="texto"
+                tamanho="pequeno"
+                class="acao-editar"
+                [attr.aria-label]="'Editar a regra ' + nomeRegra(regra)"
+                (click)="editarRegraDinamica(regra)"
+              >
+                Editar
+              </button>
+              <button
+                app-botao
+                type="button"
+                variante="texto"
+                tamanho="pequeno"
+                class="acao-estado"
+                [attr.aria-label]="(regra.ativo ? 'Desativar' : 'Reativar') + ' a regra ' + nomeRegra(regra)"
+                (click)="pedirAlternarEstado(regra)"
+              >
+                {{ regra.ativo ? 'Desativar' : 'Reativar' }}
+              </button>
+            </div>
+          </li>
+        }
+      </ul>
+    }
+  </app-cartao>
+
+  <app-cartao class="cartao-excecoes" titulo="Exceções ao sequenciamento" variante="elevado" espacamento="nenhum">
+    <app-tabela
+      familia="compacta"
+      [legenda]="'Exceções ao sequenciamento dos Procedimentos de ' + contexto()"
+      [colunas]="colunas"
+      [linhas]="linhasExcecoes()"
+      [aCarregar]="aCarregar()"
+      mensagemVazia="A Dinâmica não tem Procedimentos configurados."
+    >
+      <ng-template appCelula="ordem" let-linha>{{ linha.procedimento.ordem }}</ng-template>
+      <ng-template appCelula="procedimento" let-linha>
+        <span class="celula-nome">{{ linha.procedimento.tipoProcedimento.nome }}</span>
+        @if (!linha.procedimento.ativo) {
+          <span class="procedimento-inativo">(Procedimento inativo)</span>
+        }
+      </ng-template>
+      <ng-template appCelula="regra" let-linha>
+        @if (linha.regra; as regra) {
+          @if (regra.descricao) {
+            <span class="regra-descricao-celula">{{ regra.descricao }}</span>
+          }
+          <span class="regra-resumo-celula">{{ resumo(regra) }}</span>
+        } @else {
+          <span class="sem-regra">{{ semRegraProcedimento }}</span>
+        }
+      </ng-template>
+      <ng-template appCelula="efeito" let-linha>{{ linha.regra ? efeito(linha.regra) : '—' }}</ng-template>
+      <ng-template appCelula="estado" let-linha>
+        @if (linha.regra; as regra) {
+          <app-selo [tom]="regra.ativo ? 'sucesso' : 'cinza'" forma="pill">
+            <span icone class="status-ponto" aria-hidden="true"></span>
+            {{ regra.ativo ? 'Ativa' : 'Inativa' }}
+          </app-selo>
+        } @else {
+          —
+        }
+      </ng-template>
+      <ng-template appCelula="acoes" let-linha>
+        <div class="acoes-regra">
+          @if (linha.regra; as regra) {
+            <button
+              app-botao
+              type="button"
+              variante="texto"
+              tamanho="pequeno"
+              class="acao-editar"
+              [attr.aria-label]="'Editar a regra de ' + linha.procedimento.tipoProcedimento.nome"
+              (click)="editarExcecao(linha)"
+            >
+              Editar
+            </button>
+            <button
+              app-botao
+              type="button"
+              variante="texto"
+              tamanho="pequeno"
+              class="acao-estado"
+              [attr.aria-label]="(regra.ativo ? 'Desativar' : 'Reativar') + ' a regra de ' + linha.procedimento.tipoProcedimento.nome"
+              (click)="pedirAlternarEstado(regra)"
+            >
+              {{ regra.ativo ? 'Desativar' : 'Reativar' }}
+            </button>
+          } @else {
+            <button
+              app-botao
+              type="button"
+              variante="texto"
+              tamanho="pequeno"
+              class="acao-adicionar-regra"
+              [attr.aria-label]="'Adicionar regra a ' + linha.procedimento.tipoProcedimento.nome"
+              (click)="editarExcecao(linha)"
+            >
+              Adicionar regra
+            </button>
+          }
+        </div>
+      </ng-template>
+    </app-tabela>
+  </app-cartao>
+}
+
+<app-regra-editor-modal
+  [aberto]="editor() !== null"
+  [alvo]="editor()?.alvo ?? null"
+  [regra]="editor()?.regra ?? null"
+  [tiposDinamica]="tiposDinamica()"
+  [tiposProcedimento]="tiposProcedimento()"
+  (gravada)="aoGravar()"
+  (fechar)="fecharEditor()"
+/>
+
+<app-confirmacao-modal
+  [aberto]="confirmacao() !== null"
+  [titulo]="tituloConfirmacao()"
+  [mensagem]="mensagemConfirmacao()"
+  [aProcessar]="aProcessar()"
+  (sim)="confirmarAlternarEstado()"
+  (nao)="cancelarConfirmacao()"
+/>

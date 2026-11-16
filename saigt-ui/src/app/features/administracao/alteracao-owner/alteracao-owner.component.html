@@ -1,0 +1,86 @@
+<app-shell breadcrumb="Alteração de Owner">
+  <div class="conteudo">
+    <div class="cabecalho">
+      <div>
+        <h1>Alteração de Owner</h1>
+        <p class="subtitulo">Transferir a autoria de um processo para outro utilizador da mesma entidade.</p>
+      </div>
+    </div>
+
+    @if (pedidoApoioId()) {
+      <app-alerta class="pedido-apoio" tipo="info">{{ msgPedidoApoio }}</app-alerta>
+    }
+
+    <app-cartao variante="elevado" titulo="Pesquisar processo">
+      <form class="pesquisa" role="search" aria-label="Pesquisar processo pelo número" (submit)="procurar($event)">
+        <app-campo-texto
+          class="campo-numero"
+          rotulo="N.º do processo"
+          modoEntrada="numeric"
+          autocomplete="off"
+          [obrigatorio]="true"
+          [erro]="erroNumero()"
+          [formControl]="controloNumero"
+        />
+        <button app-botao type="submit" class="procurar" [aCarregar]="aPesquisar()">Procurar</button>
+      </form>
+    </app-cartao>
+
+    <div #mensagens class="mensagens" tabindex="-1" aria-live="polite">
+      @if (sucesso(); as mensagem) {
+        <app-alerta tipo="sucesso">{{ mensagem }}</app-alerta>
+      }
+      @if (aviso(); as mensagem) {
+        <app-alerta tipo="aviso">{{ mensagem }}</app-alerta>
+      }
+    </div>
+    <app-error-banner [erro]="erro()" [mensagemDoServidor]="true" />
+
+    @if (processo(); as p) {
+      <section #cartaoProcesso class="processo" tabindex="-1" aria-labelledby="titulo-processo">
+        <app-cartao variante="elevado">
+          <div class="processo-cabecalho">
+            <h2 id="titulo-processo" class="numero">Processo n.º {{ p.numeroProcesso }}</h2>
+            <app-estado-processo-badge [estado]="p.estado" />
+          </div>
+          <dl class="dados">
+            <div>
+              <dt>Instrumento</dt>
+              <dd>{{ p.designacaoInstrumento }} · {{ p.numeroInstrumento }}</dd>
+            </div>
+            <div>
+              <dt>Dinâmica</dt>
+              <dd>{{ p.nomeDinamica }}</dd>
+            </div>
+            <div>
+              <dt>Procedimento</dt>
+              <dd>{{ p.nomeProcedimento }}</dd>
+            </div>
+            <div>
+              <dt>Entidade</dt>
+              <dd>{{ p.entidadeNome }}</dd>
+            </div>
+          </dl>
+          <p class="owner-atual">Owner atual: <strong>{{ p.autorNome }}</strong></p>
+
+          <app-seletor
+            class="novo-owner"
+            rotulo="Novo owner"
+            [obrigatorio]="true"
+            [opcoes]="opcoesOwner()"
+            [placeholder]="placeholderOwner()"
+            [erro]="erroNovoOwner()"
+            [formControl]="controloOwner"
+          />
+
+          <div class="acoes">
+            <a app-botao variante="contorno" [routerLink]="rotaProcesso()">Abrir processo</a>
+            <button app-botao type="button" class="gravar" [desativado]="!podeGravar()" [aCarregar]="aGravar()" (click)="gravar()">
+              Gravar
+            </button>
+          </div>
+        </app-cartao>
+      </section>
+    }
+  </div>
+</app-shell>

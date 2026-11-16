@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="2026-11-12-9-indice-motivos-alteracao" author="david.raposo">
+        <comment>
+            Processo: índice GIN sobre os motivos da alteração do formulário, para o filtro da listagem por motivo
+            (`dados_formulario -> 'motivosAlteracao' @> ...`). A expressão tem de ser a mesma da consulta.
+        </comment>
+
+        <sql>CREATE INDEX idx_processo_motivos_alteracao ON processo USING gin ((dados_formulario -> 'motivosAlteracao'))</sql>
+
+        <rollback>
+            <sql>DROP INDEX idx_processo_motivos_alteracao</sql>
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>

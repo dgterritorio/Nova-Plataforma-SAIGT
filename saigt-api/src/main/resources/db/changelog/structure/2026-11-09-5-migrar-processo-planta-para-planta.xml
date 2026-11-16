@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="2026-11-09-5-migrar-processo-planta-para-planta" author="pedro.paixao">
+        <comment>
+            As plantas sem GeoConform passam de processo_planta para planta, uma linha por folha. As linhas que a
+            planta já tinha dos ZIP da página das Plantas (uma por ficheiro, só com o nome do ZIP) deixam de fazer
+            sentido e saem. O ZIP de cada folha é o do tipo da linha do TXT (o tipo contido no nome do item, ou
+            o inverso, como no PlantasService); sem correspondência, o mais recente. Linhas de processos sem ZIP
+            não têm a que se ligar e ficam de fora: a associação refazia-se de qualquer forma.
+        </comment>
+
+        <sql>
+            DELETE FROM planta
+            WHERE processo_documento_id IN (
+                SELECT d.id FROM processo_documento d
+                JOIN documento_config c ON c.id = d.documento_config_id
+                WHERE c.pagina = 'PLANTAS')
+        </sql>
+
+        <sql>
+            INSERT INTO planta (id, processo_id, processo_documento_id, nome_regulamento, numero_folha, nome_tiff,
+                                nome_zip, em_vigor, criado_em, atualizado_em)
+            SELECT gen_random_uuid(), pp.processo_id, zip.id, pp.nome, pp.folha, pp.nome_tiff, zip.nome_ficheiro,
+                   false, now(), now()
+            FROM processo_planta pp
+            JOIN LATERAL (
+                SELECT d.id, d.nome_ficheiro
+                FROM processo_documento d
+                JOIN documento_config c ON c.id = d.documento_config_id
+                WHERE d.processo_id = pp.processo_id AND c.pagina = 'PLANTAS' AND c.tipo_elemento = 'PECA_GRAFICA'
+                ORDER BY (
+                    position(translate(lower(pp.tipo), 'áàâãäéèêëíìîïóòôõöúùûüç', 'aaaaaeeeeiiiiooooouuuuc')
+                             IN regexp_replace(translate(lower(c.separador), 'áàâãäéèêëíìîïóòôõöúùûüç',
+                                                         'aaaaaeeeeiiiiooooouuuuc'), '^planta de ', '')) > 0
+                    OR position(regexp_replace(translate(lower(c.separador), 'áàâãäéèêëíìîïóòôõöúùûüç',
+                                                         'aaaaaeeeeiiiiooooouuuuc'), '^planta de ', '')
+                                IN translate(lower(pp.tipo), 'áàâãäéèêëíìîïóòôõöúùûüç', 'aaaaaeeeeiiiiooooouuuuc')) > 0
+                ) DESC, d.criado_em DESC
+                LIMIT 1
+            ) zip ON true
+        </sql>
+
+        <!-- A ordem das linhas do TXT perde-se na ida: ao voltar atrás, fica por item, nome e folha. -->
+        <rollback>
+            <sql>
+                INSERT INTO processo_planta (processo_id, ordem, tipo, nome, folha, nome_tiff)
+                SELECT p.processo_id,
+                       row_number() OVER (PARTITION BY p.processo_id ORDER BY c.ordem, p.nome_regulamento, p.numero_folha),
+                       regexp_replace(c.separador, '^Planta de ', ''),
+                       p.nome_regulamento, p.numero_folha, p.nome_tiff
+                FROM planta p
+                JOIN processo_documento d ON d.id = p.processo_documento_id
+                JOIN documento_config c ON c.id = d.documento_config_id
+                WHERE c.pagina = 'PLANTAS' AND p.nome_tiff IS NOT NULL AND p.nome_regulamento IS NOT NULL
+            </sql>
+            <sql>
+                DELETE FROM planta
+                WHERE processo_documento_id IN (
+                    SELECT d.id FROM processo_documento d
+                    JOIN documento_config c ON c.id = d.documento_config_id
+                    WHERE c.pagina = 'PLANTAS')
+            </sql>
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>

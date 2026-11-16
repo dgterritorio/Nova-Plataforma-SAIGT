@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="2026-10-30-1-campos-desbloqueados-processo" author="david.raposo">
+        <comment>
+            Processo: chaves do formulário inicial que podem mudar depois da primeira submissão
+            (BL-PROC-028). Nulo ou vazio = nenhuma; só é lida, quem desbloqueia está por decidir.
+        </comment>
+
+        <addColumn tableName="processo">
+            <column name="campos_desbloqueados" type="JSONB"/>
+        </addColumn>
+
+        <rollback>
+            <dropColumn tableName="processo" columnName="campos_desbloqueados"/>
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>

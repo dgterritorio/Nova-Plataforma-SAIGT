@@ -1,0 +1,66 @@
+{
+  "name": "saigt-ui",
+  "version": "0.1.0",
+  "private": true,
+  "engines": {
+    "node": ">=22.0.0"
+  },
+  "scripts": {
+    "ng": "ng",
+    "start": "ng serve",
+    "build": "ng build --configuration production",
+    "watch": "ng build --watch --configuration development",
+    "lint": "ng lint && npm run lint:css",
+    "lint:css": "stylelint \"src/**/*.css\"",
+    "test": "ng test",
+    "e2e": "playwright test -c e2e/playwright.config.ts",
+    "e2e:demo": "playwright test -c e2e/playwright.config.ts --project=demo",
+    "e2e:visual:atualizar": "playwright test -c e2e/playwright.config.ts --project=visual --update-snapshots",
+    "e2e:figma": "playwright test -c e2e/playwright.config.ts --project=figma",
+    "e2e:harness": "playwright test -c e2e/playwright.config.ts --project=harness",
+    "catalogo": "ng run saigt-ui:storybook",
+    "catalogo:build": "ng run saigt-ui:build-storybook"
+  },
+  "dependencies": {
+    "@angular/animations": "^22.2.3",
+    "@angular/common": "^22.2.3",
+    "@angular/compiler": "^22.2.3",
+    "@angular/core": "^22.2.3",
+    "@angular/forms": "^22.2.3",
+    "@angular/platform-browser": "^22.2.3",
+    "@angular/platform-browser-dynamic": "^22.2.3",
+    "@angular/router": "^22.2.3",
+    "echarts": "6.1.0",
+    "ngx-echarts": "22.0.0",
+    "rxjs": "~7.8.0",
+    "tslib": "^2.6.0",
+    "zone.js": "~0.15.0"
+  },
+  "devDependencies": {
+    "@angular-devkit/build-angular": "~22.2.5",
+    "@angular/build": "^22.2.5",
+    "@angular/cli": "^22.2.5",
+    "@angular/compiler-cli": "^22.2.3",
+    "@axe-core/playwright": "~4.14.0",
+    "@eslint/js": "^10.0.1",
+    "@playwright/test": "~1.64.1",
+    "@storybook/addon-a11y": "~10.6.5",
+    "@storybook/addon-docs": "~10.6.5",
+    "@storybook/angular": "~10.6.5",
+    "@types/node": "^22.0.0",
+    "angular-eslint": "22.5.0",
+    "eslint": "^10.9.1",
+    "jsdom": "^25.0.0",
+    "storybook": "~10.6.5",
+    "stylelint": "~17.16.0",
+    "stylelint-config-standard": "~40.0.0",
+    "typescript": "~6.0.0",
+    "typescript-eslint": "8.69.0",
+    "vitest": "^4.0.8"
+  },
+  "overrides": {
+    "@storybook/builder-webpack5": {
+      "webpack-dev-middleware": "~7.4.6"
+    }
+  }
+}

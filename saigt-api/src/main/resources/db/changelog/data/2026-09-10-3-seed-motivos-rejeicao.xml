@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="2026-09-10-3-seed-motivos-rejeicao" author="nuno.miguel.silva">
+        <comment>
+            Issue #123 — 2 motivos de MOTIVO_REJEICAO_DGT documentados
+            (desenho v0.1, 01-motor-regras-ciclo-vida-processo.md §6). A lista completa que a
+            DGT usa não está documentada; estes dois abrem o `tipo` para que o
+            CRUD da #88 acrescente os restantes via backoffice.
+        </comment>
+
+        <loadData tableName="lista_valores" file="db/data/2026-09-10-3-lista_valores.csv"
+                  relativeToChangelogFile="false" separator=";" quotchar="&quot;" encoding="UTF-8">
+            <column name="tipo" type="STRING"/>
+            <column name="codigo" type="STRING"/>
+            <column name="descricao" type="STRING"/>
+            <column name="ordem" type="NUMERIC"/>
+            <column name="ativo" type="BOOLEAN"/>
+        </loadData>
+
+        <rollback>
+            <delete tableName="lista_valores">
+                <where>tipo = 'MOTIVO_REJEICAO_DGT' AND codigo IN ('DOC_INCOMPLETA', 'PRAZO_EXPIRADO')</where>
+            </delete>
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>

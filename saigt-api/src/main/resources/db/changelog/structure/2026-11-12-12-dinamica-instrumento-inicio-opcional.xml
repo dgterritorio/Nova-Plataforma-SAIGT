@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="2026-11-12-12-dinamica-instrumento-inicio-opcional" author="david.raposo">
+        <comment>
+            `dinamica.instrumento_id` passa a ser só o Instrumento a partir do qual a Dinâmica foi iniciada, nulo numa
+            Dinâmica iniciada sem IGT de partida (Suspensão da CCDR, Suspensão e Medidas Preventivas do Governo,
+            Ratificação, Medidas Preventivas do município). Os Instrumentos abrangidos são os de `dinamica_instrumento`.
+        </comment>
+
+        <dropNotNullConstraint tableName="dinamica" columnName="instrumento_id" columnDataType="UUID"/>
+
+        <rollback>
+            <!-- Os `preConditions` do changeSet não correm no rollback: a verificação vai no próprio SQL. -->
+            <sql splitStatements="false">
+                DO $$
+                BEGIN
+                    IF EXISTS (SELECT 1 FROM dinamica d WHERE d.instrumento_id IS NULL
+                               AND NOT EXISTS (SELECT 1 FROM dinamica_instrumento di WHERE di.dinamica_id = d.id)) THEN
+                        RAISE EXCEPTION 'Há Dinâmicas sem Instrumento de início nem Instrumentos abrangidos: associe-as ou apague-as antes de repor dinamica.instrumento_id NOT NULL.';
+                    END IF;
+                    UPDATE dinamica d SET instrumento_id = (SELECT di.instrumento_id FROM dinamica_instrumento di
+                                                            WHERE di.dinamica_id = d.id
+                                                            ORDER BY di.instrumento_id LIMIT 1)
+                    WHERE d.instrumento_id IS NULL;
+                END $$;
+            </sql>
+            <addNotNullConstraint tableName="dinamica" columnName="instrumento_id" columnDataType="UUID"/>
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>

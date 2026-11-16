@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="2026-11-03-3-create-idus-contador" author="david.raposo">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="idus_contador"/>
+            </not>
+        </preConditions>
+
+        <comment>
+            Contadores do domínio INT (DB-INT-005), um por nome. Nenhuma linha é semeada aqui: quem usa cada contador
+            cria-o e atribui os valores sob pg_advisory_xact_lock (TR-089). A pré-condição evita o erro de tabela
+            duplicada se outro changeset a tiver criado antes. O Liquibase também corre o rollback de um changeset
+            MARK_RAN, por isso o rollback só apaga a tabela se este changeset a criou.
+        </comment>
+
+        <createTable tableName="idus_contador">
+            <column name="nome" type="VARCHAR(50)">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="valor_atual" type="INTEGER">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <sql>ALTER TABLE idus_contador ADD CONSTRAINT ck_idus_contador_valor_atual CHECK (valor_atual >= 0)</sql>
+
+        <rollback>
+            <sql splitStatements="false">
+                DO $$
+                BEGIN
+                    IF EXISTS (SELECT 1 FROM databasechangelog
+                               WHERE id = '2026-11-03-3-create-idus-contador' AND exectype = 'EXECUTED') THEN
+                        DROP TABLE idus_contador;
+                    END IF;
+                END $$;
+            </sql>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="2026-11-03-3-create-idus" author="david.raposo">
+        <comment>
+            IDUS do processo (DB-INT-002), o seu histórico (DB-INT-003) e o IDUS da Dinâmica (DB-INT-004). Chaves para
+            processo e dinamica em UUID, como no resto do modelo (o LLD escreve bigint por ser anterior a essa convenção).
+            O histórico é só de inserção: o ALTER DEFAULT PRIVILEGES de 2026-08-11-8 dá à saigt_app UPDATE e DELETE em
+            tabelas novas, por isso revogam-se aqui.
+        </comment>
+
+        <createTable tableName="idus_processo">
+            <column name="processo_id" type="UUID">
+                <constraints primaryKey="true" nullable="false"
+                             foreignKeyName="fk_idus_processo_processo" references="processo(id)"/>
+            </column>
+            <column name="idus" type="VARCHAR(50)">
+                <constraints nullable="false" unique="true" uniqueConstraintName="uq_idus_processo_idus"/>
+            </column>
+            <column name="sistema_origem" type="VARCHAR(10)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="id_igt" type="VARCHAR(10)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="id_igt_definitivo" type="BOOLEAN" defaultValueBoolean="false">
+                <constraints nullable="false"/>
+            </column>
+            <column name="ordem_dinamica" type="VARCHAR(10)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="ordem_definitiva" type="BOOLEAN" defaultValueBoolean="false">
+                <constraints nullable="false"/>
+            </column>
+            <column name="tentativa" type="SMALLINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="procedimento" type="VARCHAR(3)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="submissao" type="SMALLINT" defaultValueNumeric="0">
+                <constraints nullable="false"/>
+            </column>
+            <column name="pub_incm" type="VARCHAR(20)"/>
+            <column name="atualizado_em" type="TIMESTAMP WITH TIME ZONE">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <sql>ALTER TABLE idus_processo ADD CONSTRAINT ck_idus_processo_tentativa CHECK (tentativa >= 1)</sql>
+        <sql>ALTER TABLE idus_processo ADD CONSTRAINT ck_idus_processo_procedimento
+            CHECK (procedimento ~ '^[0-9]{3}$')</sql>
+        <sql>ALTER TABLE idus_processo ADD CONSTRAINT ck_idus_processo_submissao CHECK (submissao BETWEEN 0 AND 99)</sql>
+
+        <createIndex tableName="idus_processo" indexName="idx_idus_processo_id_igt">
+            <column name="id_igt"/>
+        </createIndex>
+
+        <createTable tableName="idus_processo_historico">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="processo_id" type="UUID">
+                <constraints nullable="false"
+                             foreignKeyName="fk_idus_processo_historico_idus_processo"
+                             references="idus_processo(processo_id)"/>
+            </column>
+            <column name="segmento" type="VARCHAR(20)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="idus_anterior" type="VARCHAR(50)"/>
+            <column name="idus_novo" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="evento" type="VARCHAR(20)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="registado_em" type="TIMESTAMP WITH TIME ZONE">
+                <constraints nullable="false"/>
+            </column>
+            <column name="correlation_id" type="VARCHAR(100)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <sql>ALTER TABLE idus_processo_historico ADD CONSTRAINT ck_idus_processo_historico_segmento
+            CHECK (segmento IN ('CRIACAO', 'SUBMISSAO', 'PUB_INCM', 'ID_IGT', 'ORDEM_DINAMICA'))</sql>
+        <sql>ALTER TABLE idus_processo_historico ADD CONSTRAINT ck_idus_processo_historico_evento
+            CHECK (evento IN ('PROCESSO_CRIADO', 'SUBMISSAO', 'PUBLICACAO_INCM', 'ENTRADA_EM_VIGOR', 'ALTERACAO_MANUAL'))</sql>
+
+        <createIndex tableName="idus_processo_historico" indexName="idx_idus_processo_historico_processo_id">
+            <column name="processo_id"/>
+        </createIndex>
+
+        <sql>REVOKE UPDATE, DELETE ON idus_processo_historico FROM saigt_app</sql>
+
+        <createTable tableName="idus_dinamica">
+            <column name="dinamica_id" type="UUID">
+                <constraints primaryKey="true" nullable="false"
+                             foreignKeyName="fk_idus_dinamica_dinamica" references="dinamica(id)"/>
+            </column>
+            <column name="idus" type="VARCHAR(50)">
+                <constraints nullable="false" unique="true" uniqueConstraintName="uq_idus_dinamica_idus"/>
+            </column>
+            <column name="id_igt_snit" type="VARCHAR(20)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="ordem_snit" type="VARCHAR(10)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="gerado_em" type="TIMESTAMP WITH TIME ZONE">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <rollback>
+            <dropTable tableName="idus_dinamica"/>
+            <dropTable tableName="idus_processo_historico"/>
+            <dropTable tableName="idus_processo"/>
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>

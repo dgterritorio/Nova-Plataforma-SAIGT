@@ -1,0 +1,164 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaco-1-5);
+}
+
+.campo-texto-rotulo {
+  font-size: var(--texto-base);
+  font-weight: var(--peso-medio);
+  line-height: var(--texto-base-linha);
+  color: var(--cor-texto-rotulo);
+}
+
+.campo-texto-obrigatorio {
+  color: var(--cor-erro);
+}
+
+input,
+textarea {
+  box-sizing: border-box;
+  width: 100%;
+  padding: var(--espaco-2-5) var(--espaco-4);
+  border: var(--borda-largura) solid var(--cor-borda);
+  border-radius: var(--raio-md);
+  background: var(--cor-superficie);
+  font-family: var(--fonte-base);
+  font-size: var(--texto-base);
+  line-height: var(--texto-base-linha);
+  color: var(--cor-texto);
+}
+
+input {
+  height: var(--altura-controlo);
+}
+
+textarea {
+  resize: vertical;
+}
+
+input:focus-visible,
+textarea:focus-visible {
+  outline: var(--anel-foco);
+  outline-offset: var(--anel-foco-afastamento);
+}
+
+input:disabled,
+textarea:disabled {
+  background: var(--cor-superficie-alt);
+  color: var(--cor-texto-secundario);
+  cursor: not-allowed;
+}
+
+input[aria-invalid="true"],
+textarea[aria-invalid="true"] {
+  border-color: var(--cor-erro);
+}
+
+:host(.campo-texto-compacto) input {
+  height: var(--altura-controlo-sm);
+  padding: var(--espaco-2) var(--espaco-3);
+}
+
+.campo-texto-ajuda,
+.campo-texto-erro {
+  margin: 0;
+  font-size: var(--texto-sm);
+  line-height: var(--texto-sm-linha);
+}
+
+.campo-texto-ajuda {
+  color: var(--cor-texto-secundario);
+}
+
+.campo-texto-erro {
+  color: var(--cor-erro);
+}
+
+/* Vazia, a região do anúncio não deve somar o gap do :host. */
+.campo-texto-anuncio:empty {
+  margin-top: calc(-1 * var(--espaco-1-5));
+}
+
+:host(.campo-texto-compacto) .campo-texto-rotulo {
+  font-size: var(--texto-sm);
+  font-weight: var(--peso-semi);
+  line-height: var(--texto-sm-linha);
+  color: var(--cor-texto-cartao);
+}
+
+/* Rótulo do perfil (UI-025): maiúsculas pequenas. */
+:host(.campo-texto-rotulo-maiusculas) .campo-texto-rotulo {
+  font-size: var(--texto-rotulo);
+  font-weight: var(--peso-medio);
+  line-height: var(--texto-sm-linha);
+  letter-spacing: 0.3px;
+  text-transform: uppercase;
+  color: var(--cor-texto-secundario);
+}
+
+:host(.campo-texto-preenchido) input {
+  background: var(--cor-superficie-alt);
+}
+
+/* O Edge acrescenta o seu próprio botão de mostrar a palavra-passe, que duplicaria o da aplicação.
+   Regras separadas: um seletor desconhecido num browser invalidaria a lista inteira. */
+input::-ms-reveal {
+  display: none;
+}
+
+input::-ms-clear {
+  display: none;
+}
+
+input::placeholder {
+  color: var(--cor-texto-nav);
+}
+
+.campo-texto-caixa {
+  position: relative;
+}
+
+.campo-texto-sufixo {
+  position: absolute;
+  top: 50%;
+  right: var(--espaco-2);
+  display: flex;
+  transform: translateY(-50%);
+}
+
+.campo-texto-sufixo:empty {
+  display: none;
+}
+
+.campo-texto-caixa:has(.campo-texto-sufixo:not(:empty)) input {
+  padding-right: var(--espaco-10);
+}
+
+:host(.campo-texto-ajuda-ao-lado) {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: var(--espaco-1-5) var(--espaco-4);
+  align-items: center;
+}
+
+:host(.campo-texto-ajuda-ao-lado) .campo-texto-rotulo {
+  grid-column: 1 / -1;
+}
+
+:host(.campo-texto-ajuda-ao-lado) .campo-texto-caixa,
+:host(.campo-texto-ajuda-ao-lado) .campo-texto-erro {
+  grid-column: 1;
+}
+
+:host(.campo-texto-ajuda-ao-lado) .campo-texto-ajuda {
+  grid-column: 2;
+  grid-row: 2;
+}
+
+@media (width < 480px) {
+  :host(.campo-texto-ajuda-ao-lado) {
+    display: flex;
+    flex-direction: column;
+  }
+}

@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="2026-11-09-8-deposito-snit-manifesto" author="david.raposo">
+        <comment>
+            Manifesto do depósito no SNIT (DB-DOC-008/009, BL-DOC-028, OI-491): fixa, com commit antes do
+            POST /deposits, os ficheiros da pasta de depósito pelo versionId, para o ZIP servido ao SNIT ser sempre o
+            que foi comunicado. Um depósito novo grava um manifesto novo; os anteriores não mudam.
+        </comment>
+
+        <createTable tableName="deposito_snit_manifesto">
+            <column name="id" type="UUID">
+                <constraints primaryKey="true" primaryKeyName="pk_deposito_snit_manifesto" nullable="false"/>
+            </column>
+            <column name="processo_id" type="UUID">
+                <constraints nullable="false" foreignKeyName="fk_deposito_snit_manifesto_processo"
+                             references="processo(id)"/>
+            </column>
+            <column name="caixas_incluidas" type="VARCHAR(30)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="criado_em" type="TIMESTAMP WITH TIME ZONE">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <createIndex tableName="deposito_snit_manifesto" indexName="idx_deposito_snit_manifesto_processo_id">
+            <column name="processo_id"/>
+            <column name="criado_em"/>
+        </createIndex>
+        <sql>ALTER TABLE deposito_snit_manifesto ADD CONSTRAINT ck_deposito_snit_manifesto_caixas_incluidas
+            CHECK (caixas_incluidas IN ('DEPOSITO', 'PUBLICACAO', 'PUBLICACAO,DEPOSITO'))</sql>
+
+        <createTable tableName="deposito_snit_manifesto_linha">
+            <column name="manifesto_id" type="UUID">
+                <constraints nullable="false" foreignKeyName="fk_deposito_snit_manifesto_linha_manifesto"
+                             references="deposito_snit_manifesto(id)"/>
+            </column>
+            <column name="processo_documento_id" type="UUID">
+                <constraints nullable="false" foreignKeyName="fk_deposito_snit_manifesto_linha_processo_documento"
+                             references="processo_documento(id)"/>
+            </column>
+            <column name="chave_objeto" type="VARCHAR(500)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="versao_objeto" type="VARCHAR(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="tamanho_bytes" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="hash_sha256" type="VARCHAR(64)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="comunicado_um_a_um" type="BOOLEAN" defaultValueBoolean="false">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <addPrimaryKey tableName="deposito_snit_manifesto_linha" columnNames="manifesto_id, processo_documento_id"
+                       constraintName="pk_deposito_snit_manifesto_linha"/>
+        <createIndex tableName="deposito_snit_manifesto_linha"
+                     indexName="idx_deposito_snit_manifesto_linha_processo_documento_id">
+            <column name="processo_documento_id"/>
+        </createIndex>
+        <sql>ALTER TABLE deposito_snit_manifesto_linha ADD CONSTRAINT ck_deposito_snit_manifesto_linha_tamanho_bytes
+            CHECK (tamanho_bytes &gt;= 0)</sql>
+
+        <rollback>
+            <dropTable tableName="deposito_snit_manifesto_linha"/>
+            <dropTable tableName="deposito_snit_manifesto"/>
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>

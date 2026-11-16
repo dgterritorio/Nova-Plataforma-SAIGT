@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="2026-10-28-2-unique-id-igt-snit-instrumento" author="david.raposo">
+        <comment>
+            Instrumento (DB-PROC-012): um IGT do SNIT só dá um Instrumento. A coluna é opcional e o PostgreSQL
+            aceita vários NULL numa restrição única. Falha se já houver IGT repetidos.
+        </comment>
+
+        <dropIndex tableName="instrumento" indexName="idx_instrumento_id_igt_snit"/>
+        <addUniqueConstraint tableName="instrumento" columnNames="id_igt_snit" constraintName="uq_instrumento_id_igt_snit"/>
+
+        <rollback>
+            <dropUniqueConstraint tableName="instrumento" constraintName="uq_instrumento_id_igt_snit"/>
+            <createIndex tableName="instrumento" indexName="idx_instrumento_id_igt_snit">
+                <column name="id_igt_snit"/>
+            </createIndex>
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>

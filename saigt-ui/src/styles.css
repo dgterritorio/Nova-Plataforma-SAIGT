@@ -1,0 +1,25 @@
+/* Resets globais e variáveis CSS, sem estilos de componente. */
+:root {
+  /* Aliases antigos, mantidos até todos os componentes usarem os tokens semânticos. */
+  --color-bg: var(--cor-superficie);
+  --color-text: var(--cor-texto);
+  --color-primary: var(--cor-primaria);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: var(--fonte-base);
+  font-size: var(--texto-base);
+  line-height: var(--texto-base-linha);
+  color: var(--cor-texto);
+  background: var(--cor-fundo);
+}
+
+:focus-visible {
+  outline: var(--anel-foco);
+  outline-offset: var(--anel-foco-afastamento);
+}

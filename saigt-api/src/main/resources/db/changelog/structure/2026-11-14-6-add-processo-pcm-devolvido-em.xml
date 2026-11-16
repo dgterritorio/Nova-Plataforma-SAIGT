@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="2026-11-14-6-add-processo-pcm-devolvido-em" author="arnaldo.costa">
+        <comment>
+            Data da última devolução do processo à DGT pela PCM (DB-PROC-014, API-PCM-003; OI-313, TR-114): distingue
+            «devolvido» de «validado, nunca enviado à PCM». Nula por omissão; limpa-se na nova validação. O histórico
+            fica na auditoria.
+        </comment>
+
+        <addColumn tableName="processo">
+            <column name="pcm_devolvido_em" type="TIMESTAMP WITH TIME ZONE"/>
+        </addColumn>
+
+        <rollback>
+            <dropColumn tableName="processo" columnName="pcm_devolvido_em"/>
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>

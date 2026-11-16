@@ -1,0 +1,76 @@
+:host {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--espaco-1);
+  padding: var(--espaco-0-5) var(--espaco-2);
+  border-radius: var(--raio-sm);
+  font-size: var(--texto-sm);
+  font-weight: var(--peso-medio);
+  line-height: var(--texto-sm-linha);
+  white-space: nowrap;
+}
+
+:host(.selo-pill) {
+  border-radius: var(--raio-pill);
+}
+
+:host(.selo-pequeno) {
+  padding: var(--espaco-0-5) var(--espaco-1-5);
+  font-size: var(--texto-xs);
+  font-weight: var(--peso-negrito);
+  line-height: var(--texto-xs-linha);
+  letter-spacing: 0.3px;
+  text-transform: uppercase;
+}
+
+:host ::ng-deep [icone] {
+  width: 10px;
+  height: 10px;
+  flex-shrink: 0;
+}
+
+/* O secundário (#64748b) sobre este fundo fica abaixo de 4,5:1 (WCAG AA). */
+:host(.selo-neutro) {
+  background: var(--cor-borda-suave);
+  color: var(--cor-neutra);
+}
+
+:host(.selo-info) {
+  background: var(--cor-info-fundo);
+  color: var(--cor-info);
+}
+
+:host(.selo-aviso) {
+  background: var(--cor-selo-aviso-fundo);
+  color: var(--cor-aviso);
+}
+
+:host(.selo-sucesso) {
+  background: var(--cor-selo-sucesso-fundo);
+  color: var(--cor-selo-sucesso);
+}
+
+:host(.selo-erro) {
+  background: var(--cor-erro-fundo);
+  color: var(--cor-selo-erro);
+}
+
+:host(.selo-cinza) {
+  background: var(--cor-neutra-fundo);
+  color: var(--cor-neutra);
+}
+
+:host(.selo-laranja) {
+  background: var(--cor-selo-laranja-fundo);
+  color: var(--cor-selo-laranja);
+}
+
+:host(.selo-violeta) {
+  background: var(--cor-selo-violeta-fundo);
+  color: var(--cor-selo-violeta);
+}
+
+:host(.selo-ciano) {
+  background: var(--cor-selo-ciano-fundo);
+  color: var(--cor-selo-ciano);
+}

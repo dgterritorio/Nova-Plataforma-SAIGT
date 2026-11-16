@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="2026-11-06-4-entidade-remove-linhas-sem-codigo" author="david.raposo">
+        <comment>
+            Depois da carga, as linhas que continuam sem `codigo` (criadas pelo login com um NIF que o extrato não
+            tem) saem. Se alguma tabela as referir, a migração falha e indica o `id`: só acontece em bases de
+            desenvolvimento antigas, e `scripts/reset-all.sh` recria a base.
+        </comment>
+
+        <sql splitStatements="false">
+            DO $$
+            DECLARE
+                linha RECORD;
+            BEGIN
+                FOR linha IN SELECT id FROM entidade WHERE codigo IS NULL ORDER BY id LOOP
+                    BEGIN
+                        DELETE FROM entidade WHERE id = linha.id;
+                    EXCEPTION WHEN foreign_key_violation THEN
+                        RAISE EXCEPTION 'A entidade com id % não tem código no extrato da DGT e está referenciada por outras tabelas. Recrie a base de desenvolvimento com scripts/reset-all.sh.', linha.id;
+                    END;
+                END LOOP;
+            END $$;
+        </sql>
+
+        <rollback/>
+    </changeSet>
+
+    <changeSet id="2026-11-06-4-entidade-codigo-tipo-obrigatorios" author="david.raposo">
+        <comment>
+            Entidade (DB-IAM-002): `codigo` e `tipo_entidade` passam a obrigatórios, o CHECK do tipo perde o
+            `IS NULL` e o `dico` só existe nas CM.
+        </comment>
+
+        <addNotNullConstraint tableName="entidade" columnName="codigo" columnDataType="VARCHAR(20)"/>
+        <addNotNullConstraint tableName="entidade" columnName="tipo_entidade" columnDataType="VARCHAR(20)"/>
+
+        <sql>
+            ALTER TABLE entidade DROP CONSTRAINT ck_entidade_tipo_entidade;
+            ALTER TABLE entidade ADD CONSTRAINT ck_entidade_tipo_entidade CHECK (
+            tipo_entidade IN ('CM', 'CCDR_DR', 'AM', 'CIM', 'PCM', 'SEC_ESTADO', 'DGT', 'ICNF', 'APA', 'DGPC', 'IP'));
+            ALTER TABLE entidade ADD CONSTRAINT ck_entidade_dico_cm CHECK (dico IS NULL OR tipo_entidade = 'CM')
+        </sql>
+
+        <rollback>
+            <sql>
+                ALTER TABLE entidade DROP CONSTRAINT ck_entidade_dico_cm;
+                ALTER TABLE entidade DROP CONSTRAINT ck_entidade_tipo_entidade;
+                ALTER TABLE entidade ADD CONSTRAINT ck_entidade_tipo_entidade CHECK (tipo_entidade IS NULL OR
+                tipo_entidade IN ('CM', 'CCDR_DR', 'AM', 'CIM', 'PCM', 'SEC_ESTADO', 'DGT', 'ICNF', 'APA', 'DGPC', 'IP'))
+            </sql>
+            <dropNotNullConstraint tableName="entidade" columnName="tipo_entidade" columnDataType="VARCHAR(20)"/>
+            <dropNotNullConstraint tableName="entidade" columnName="codigo" columnDataType="VARCHAR(20)"/>
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>

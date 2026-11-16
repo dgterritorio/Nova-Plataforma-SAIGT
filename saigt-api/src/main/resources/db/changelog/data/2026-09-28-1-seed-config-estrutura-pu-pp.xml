@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="2026-09-28-1-seed-config-estrutura-pu-pp" author="nuno.miguel.silva">
+        <comment>
+            Issue #162 — instrumento_dinamica_config (13 por tipo) e
+            instrumento_procedimento_config (18 por tipo) para PP (id 2) e PU
+            (id 3). Espelho de 2026-09-10-4 (PDM §13.4-13.5) sem
+            CONSTITUICAO_CC na Elaboração e na Revisão — EF v1.4, "IGT Planos
+            - Dinâmicas": só PDM/PDIM têm a CC. Por isso todas SEGUNDA_H e
+            ordem renumerada sem buracos. Procedimentos das dinâmicas 10-13
+            pendentes do F4, como no PDM. Ids explícitos: 1.º dígito =
+            tipo_instrumento, 2.º = tabela (1 dinâmica, 2 procedimento, 3 regra,
+            4 condição, 6 permissão) — referenciados pelos -2 a -4; setval no fim.
+        </comment>
+
+        <loadData tableName="instrumento_dinamica_config" file="db/data/2026-09-28-1-instrumento_dinamica_config.csv"
+                  relativeToChangelogFile="false" separator=";" quotchar="&quot;" encoding="UTF-8">
+            <column name="id" type="NUMERIC"/>
+            <column name="tipo_instrumento_id" type="NUMERIC"/>
+            <column name="tipo_dinamica_id" type="NUMERIC"/>
+            <column name="ordem" type="NUMERIC"/>
+            <column name="ativo" type="BOOLEAN"/>
+        </loadData>
+        <sql dbms="postgresql">SELECT setval(pg_get_serial_sequence('instrumento_dinamica_config', 'id'), (SELECT MAX(id) FROM instrumento_dinamica_config))</sql>
+
+        <loadData tableName="instrumento_procedimento_config" file="db/data/2026-09-28-1-instrumento_procedimento_config.csv"
+                  relativeToChangelogFile="false" separator=";" quotchar="&quot;" encoding="UTF-8">
+            <column name="id" type="NUMERIC"/>
+            <column name="instrumento_dinamica_config_id" type="NUMERIC"/>
+            <column name="tipo_procedimento_id" type="NUMERIC"/>
+            <column name="ordem" type="NUMERIC"/>
+            <column name="serie_dr" type="STRING"/>
+            <column name="obrigatorio" type="BOOLEAN"/>
+            <column name="ativo" type="BOOLEAN"/>
+            <column name="nota" type="SKIP"/>
+        </loadData>
+
+        <sql dbms="postgresql">SELECT setval(pg_get_serial_sequence('instrumento_procedimento_config', 'id'), (SELECT MAX(id) FROM instrumento_procedimento_config))</sql>
+
+        <rollback>
+            <delete tableName="instrumento_procedimento_config">
+                <where>id BETWEEN 2201 AND 2218 OR id BETWEEN 3201 AND 3218</where>
+            </delete>
+            <delete tableName="instrumento_dinamica_config">
+                <where>id BETWEEN 2101 AND 2113 OR id BETWEEN 3101 AND 3113</where>
+            </delete>
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>

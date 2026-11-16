@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="2026-11-12-1-classificacao-srup" author="pedro.paixao">
+        <comment>
+            Classificação das servidões em Domínio, Classe e Tipologia (EF v1.5 §3.7.3; DB-PROC-011, DB-PROC-012,
+            TR-235): `lista_valores.pai_id` liga a Classe ao Domínio e a Tipologia à Classe, e
+            `instrumento.tipologia_srup_id` guarda a Tipologia da servidão. Sem CHECK entre tipos: o nível do pai
+            valida-se no serviço. O rollback retira as FK, os índices e as duas colunas.
+        </comment>
+
+        <addColumn tableName="lista_valores">
+            <column name="pai_id" type="BIGINT"/>
+        </addColumn>
+        <addForeignKeyConstraint baseTableName="lista_valores" baseColumnNames="pai_id"
+                                 constraintName="fk_lista_valores_pai"
+                                 referencedTableName="lista_valores" referencedColumnNames="id"/>
+        <createIndex tableName="lista_valores" indexName="idx_lista_valores_pai">
+            <column name="pai_id"/>
+        </createIndex>
+
+        <addColumn tableName="instrumento">
+            <column name="tipologia_srup_id" type="BIGINT"/>
+        </addColumn>
+        <addForeignKeyConstraint baseTableName="instrumento" baseColumnNames="tipologia_srup_id"
+                                 constraintName="fk_instrumento_tipologia_srup"
+                                 referencedTableName="lista_valores" referencedColumnNames="id"/>
+        <createIndex tableName="instrumento" indexName="idx_instrumento_tipologia_srup">
+            <column name="tipologia_srup_id"/>
+        </createIndex>
+
+        <rollback>
+            <dropIndex tableName="instrumento" indexName="idx_instrumento_tipologia_srup"/>
+            <dropForeignKeyConstraint baseTableName="instrumento" constraintName="fk_instrumento_tipologia_srup"/>
+            <dropColumn tableName="instrumento" columnName="tipologia_srup_id"/>
+            <dropIndex tableName="lista_valores" indexName="idx_lista_valores_pai"/>
+            <dropForeignKeyConstraint baseTableName="lista_valores" constraintName="fk_lista_valores_pai"/>
+            <dropColumn tableName="lista_valores" columnName="pai_id"/>
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>

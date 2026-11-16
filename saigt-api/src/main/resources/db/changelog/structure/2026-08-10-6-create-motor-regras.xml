@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="2026-08-10-6-create-motor-regras" author="david.raposo">
+        <comment>
+            Grupo 4 — motor de regras (só IGT — PLANO/PROGRAMA): regra,
+            condicao. Ver §6, §12. Issue #17, corrigido pela #22.
+        </comment>
+
+        <createTable tableName="regra">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="instrumento_dinamica_config_id" type="BIGINT">
+                <constraints nullable="true" foreignKeyName="fk_regra_dinamica_config" references="instrumento_dinamica_config(id)"/>
+            </column>
+            <column name="instrumento_procedimento_config_id" type="BIGINT">
+                <constraints nullable="true" foreignKeyName="fk_regra_procedimento_config" references="instrumento_procedimento_config(id)"/>
+            </column>
+            <column name="operador" type="VARCHAR(3)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="substitui_sequenciamento" type="BOOLEAN" defaultValueBoolean="false">
+                <constraints nullable="false"/>
+            </column>
+            <column name="ativo" type="BOOLEAN" defaultValueBoolean="true">
+                <constraints nullable="false"/>
+            </column>
+            <column name="descricao" type="VARCHAR(300)"/>
+        </createTable>
+        <addUniqueConstraint tableName="regra" columnNames="instrumento_procedimento_config_id"
+                             constraintName="uq_regra_procedimento_config"/>
+        <sql>ALTER TABLE regra ADD CONSTRAINT ck_regra_config_exclusiva
+            CHECK ((instrumento_dinamica_config_id IS NOT NULL) != (instrumento_procedimento_config_id IS NOT NULL))</sql>
+        <sql>CREATE INDEX idx_regra_dinamica_ativo ON regra (instrumento_dinamica_config_id) WHERE ativo</sql>
+        <sql>CREATE INDEX idx_regra_procedimento_ativo ON regra (instrumento_procedimento_config_id) WHERE ativo</sql>
+
+        <createTable tableName="condicao">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="regra_id" type="BIGINT">
+                <constraints nullable="false" foreignKeyName="fk_condicao_regra" references="regra(id)"/>
+            </column>
+            <column name="avaliador" type="VARCHAR(40)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="parametros" type="JSONB">
+                <constraints nullable="false"/>
+            </column>
+            <column name="grupo" type="SMALLINT" defaultValueNumeric="1">
+                <constraints nullable="false"/>
+            </column>
+            <column name="ativo" type="BOOLEAN" defaultValueBoolean="true">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <sql>CREATE INDEX idx_condicao_regra_ativo ON condicao (regra_id) WHERE ativo</sql>
+
+        <rollback>
+            <sql>ALTER TABLE regra DROP CONSTRAINT ck_regra_config_exclusiva</sql>
+            <sql>DROP INDEX IF EXISTS idx_regra_dinamica_ativo</sql>
+            <sql>DROP INDEX IF EXISTS idx_regra_procedimento_ativo</sql>
+            <sql>DROP INDEX IF EXISTS idx_condicao_regra_ativo</sql>
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>

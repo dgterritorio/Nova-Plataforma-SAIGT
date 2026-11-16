@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="2026-11-11-4-seed-matriz-permissao-acao" author="arnaldo.costa">
+        <comment>
+            Seed inicial da matriz de tipos de entidade por configuração de Procedimento (FR-189 e EF v1.5; OI-271):
+            a primeira regra que se aplica decide e a DGT tem sempre linha. Onde o FR-189 e a EF divergem prevalece a
+            EF, por isso o PIMOT é só da CIM. A matriz é configurável: depois deste seed muda-se no BackOffice.
+            Só insere nas configurações que já existem, pelos códigos e sem ids; o NOT EXISTS e a uq_permissao_acao
+            tornam-no idempotente, não duplica nem reativa linhas e não toca nas da PCM. O rollback apaga as linhas
+            dos tipos que só esta matriz dá (AM, CIM, SEC_ESTADO, ICNF, APA, DGPC, IP) e as CCDR_DR fora da
+            Constituição da CC; as CM e DGT ficam, são as que os seeds das configurações devem ter.
+        </comment>
+
+        <!-- 1. Constituição da Comissão Consultiva, em qualquer tipo: CCDR. -->
+        <sql>
+            INSERT INTO permissao_acao (instrumento_procedimento_config_id, tipo_entidade, ativo)
+            SELECT c.id, t.tipo, true
+            FROM instrumento_procedimento_config c
+            JOIN tipo_procedimento tp ON tp.id = c.tipo_procedimento_id
+            CROSS JOIN (VALUES ('CCDR_DR')) AS t(tipo)
+            WHERE tp.codigo = 'CONSTITUICAO_CC'
+              AND NOT EXISTS (SELECT 1 FROM permissao_acao pa
+                              WHERE pa.instrumento_procedimento_config_id = c.id AND pa.tipo_entidade = t.tipo)
+        </sql>
+
+        <!-- 2. Suspensão por iniciativa da CCDR: CCDR. -->
+        <sql>
+            INSERT INTO permissao_acao (instrumento_procedimento_config_id, tipo_entidade, ativo)
+            SELECT c.id, t.tipo, true
+            FROM instrumento_procedimento_config c
+            JOIN instrumento_dinamica_config d ON d.id = c.instrumento_dinamica_config_id
+            JOIN tipo_dinamica td ON td.id = d.tipo_dinamica_id
+            JOIN tipo_procedimento tp ON tp.id = c.tipo_procedimento_id
+            CROSS JOIN (VALUES ('CCDR_DR')) AS t(tipo)
+            WHERE td.codigo = 'SUSPENSAO_CCDR'
+              AND tp.codigo &lt;&gt; 'CONSTITUICAO_CC'
+              AND NOT EXISTS (SELECT 1 FROM permissao_acao pa
+                              WHERE pa.instrumento_procedimento_config_id = c.id AND pa.tipo_entidade = t.tipo)
+        </sql>
+
+        <!-- 3. Suspensão e medidas preventivas do Governo e Ratificação: Secretaria de Estado. -->
+        <sql>
+            INSERT INTO permissao_acao (instrumento_procedimento_config_id, tipo_entidade, ativo)
+            SELECT c.id, t.tipo, true
+            FROM instrumento_procedimento_config c
+            JOIN instrumento_dinamica_config d ON d.id = c.instrumento_dinamica_config_id
+            JOIN tipo_dinamica td ON td.id = d.tipo_dinamica_id
+            JOIN tipo_procedimento tp ON tp.id = c.tipo_procedimento_id
+            CROSS JOIN (VALUES ('SEC_ESTADO')) AS t(tipo)
+            WHERE td.codigo IN ('SUSPENSAO_GOVERNO', 'MEDIDAS_PREVENTIVAS_GOVERNO', 'RATIFICACAO')
+              AND tp.codigo &lt;&gt; 'CONSTITUICAO_CC'
+              AND NOT EXISTS (SELECT 1 FROM permissao_acao pa
+                              WHERE pa.instrumento_procedimento_config_id = c.id AND pa.tipo_entidade = t.tipo)
+        </sql>
+
+        <!-- 4 a 13. Pelo tipo de Instrumento, fora das configurações que as regras 1 a 3 já decidiram. -->
+        <sql>
+            INSERT INTO permissao_acao (instrumento_procedimento_config_id, tipo_entidade, ativo)
+            SELECT c.id, m.tipo_entidade, true
+            FROM instrumento_procedimento_config c
+            JOIN instrumento_dinamica_config d ON d.id = c.instrumento_dinamica_config_id
+            JOIN tipo_instrumento ti ON ti.id = d.tipo_instrumento_id
+            JOIN tipo_dinamica td ON td.id = d.tipo_dinamica_id
+            JOIN tipo_procedimento tp ON tp.id = c.tipo_procedimento_id
+            JOIN (VALUES ('PDM', 'CM'), ('PU', 'CM'), ('PP', 'CM'), ('PDIM', 'CM'), ('PUIM', 'CM'), ('PPIM', 'CM'),
+                         ('PNPOT', 'SEC_ESTADO'),
+                         ('PROT', 'SEC_ESTADO'), ('PROT', 'CCDR_DR'),
+                         ('PS', 'SEC_ESTADO'), ('PS', 'ICNF'), ('PS', 'APA'),
+                         ('PEOT', 'SEC_ESTADO'), ('PEOT', 'ICNF'), ('PEOT', 'APA'), ('PEOT', 'DGPC'),
+                         ('PIMOT', 'CIM'),
+                         ('PRA', 'CCDR_DR'),
+                         ('PSA', 'AM'), ('PSA', 'CIM'),
+                         ('REN', 'CCDR_DR')) AS m(tipo_instrumento, tipo_entidade)
+                 ON m.tipo_instrumento = ti.codigo
+            WHERE tp.codigo &lt;&gt; 'CONSTITUICAO_CC'
+              AND td.codigo NOT IN ('SUSPENSAO_CCDR', 'SUSPENSAO_GOVERNO', 'MEDIDAS_PREVENTIVAS_GOVERNO', 'RATIFICACAO')
+              AND NOT EXISTS (SELECT 1 FROM permissao_acao pa
+                              WHERE pa.instrumento_procedimento_config_id = c.id AND pa.tipo_entidade = m.tipo_entidade)
+        </sql>
+
+        <!-- 13. Restantes servidões e restrições de utilidade pública. -->
+        <sql>
+            INSERT INTO permissao_acao (instrumento_procedimento_config_id, tipo_entidade, ativo)
+            SELECT c.id, t.tipo, true
+            FROM instrumento_procedimento_config c
+            JOIN instrumento_dinamica_config d ON d.id = c.instrumento_dinamica_config_id
+            JOIN tipo_instrumento ti ON ti.id = d.tipo_instrumento_id
+            JOIN tipo_dinamica td ON td.id = d.tipo_dinamica_id
+            JOIN tipo_procedimento tp ON tp.id = c.tipo_procedimento_id
+            CROSS JOIN (VALUES ('CM'), ('SEC_ESTADO'), ('IP')) AS t(tipo)
+            WHERE ti.categoria = 'SRUP'
+              AND ti.codigo NOT IN ('REN', 'PRA', 'PSA')
+              AND tp.codigo &lt;&gt; 'CONSTITUICAO_CC'
+              AND td.codigo NOT IN ('SUSPENSAO_CCDR', 'SUSPENSAO_GOVERNO', 'MEDIDAS_PREVENTIVAS_GOVERNO', 'RATIFICACAO')
+              AND NOT EXISTS (SELECT 1 FROM permissao_acao pa
+                              WHERE pa.instrumento_procedimento_config_id = c.id AND pa.tipo_entidade = t.tipo)
+        </sql>
+
+        <!-- Todas: DGT. -->
+        <sql>
+            INSERT INTO permissao_acao (instrumento_procedimento_config_id, tipo_entidade, ativo)
+            SELECT c.id, 'DGT', true
+            FROM instrumento_procedimento_config c
+            WHERE NOT EXISTS (SELECT 1 FROM permissao_acao pa
+                              WHERE pa.instrumento_procedimento_config_id = c.id AND pa.tipo_entidade = 'DGT')
+        </sql>
+
+        <rollback>
+            <sql>
+                DELETE FROM permissao_acao
+                WHERE tipo_entidade IN ('AM', 'CIM', 'SEC_ESTADO', 'ICNF', 'APA', 'DGPC', 'IP')
+            </sql>
+            <sql>
+                DELETE FROM permissao_acao
+                WHERE tipo_entidade = 'CCDR_DR'
+                  AND instrumento_procedimento_config_id NOT IN (
+                      SELECT c.id FROM instrumento_procedimento_config c
+                      JOIN tipo_procedimento tp ON tp.id = c.tipo_procedimento_id
+                      WHERE tp.codigo = 'CONSTITUICAO_CC')
+            </sql>
+        </rollback>
+    </changeSet>
+</databaseChangeLog>

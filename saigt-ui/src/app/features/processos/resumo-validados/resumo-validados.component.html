@@ -1,0 +1,167 @@
+<section class="resumo" aria-labelledby="resumo-validados-titulo">
+  <h2 class="visualmente-oculto" id="resumo-validados-titulo" tabindex="-1" #titulo>Resumo do processo validado</h2>
+
+  @if (emEdicao()) {
+    <div class="voltar-linha">
+      <button type="button" class="voltar" (click)="anterior.emit()">
+        <svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
+          <path
+            fill-rule="evenodd"
+            d="M9.78 3.22a.75.75 0 010 1.06L6.06 8l3.72 3.72a.75.75 0 11-1.06 1.06l-4.25-4.25a.75.75 0 010-1.06l4.25-4.25a.75.75 0 011.06 0z"
+            clip-rule="evenodd"
+          />
+        </svg>
+        Voltar
+      </button>
+    </div>
+  }
+
+  <div class="cartoes">
+  <app-cartao titulo="Dados do processo" class="dados-processo">
+    <dl class="dados">
+      <div><dt>Designação</dt><dd class="valor-forte">{{ processo().designacaoInstrumento || '—' }}</dd></div>
+      <div><dt>Tipo de instrumento</dt><dd>{{ processo().tipoInstrumento || '—' }}</dd></div>
+      <div><dt>Tipo de procedimento</dt><dd>{{ processo().nomeProcedimento || '—' }}</dd></div>
+      <div><dt>Concelho</dt><dd>{{ concelhos() || '—' }}</dd></div>
+    </dl>
+  </app-cartao>
+  </div>
+
+  @if (emEdicao()) {
+    <p class="aviso-gravar" id="aviso-gravar">
+      Ao gravar, o processo fica validado com os campos deste resumo, que deixam de se poder alterar.
+    </p>
+  }
+
+  <form class="campos" [formGroup]="formulario" (ngSubmit)="gravar()" novalidate>
+    <div class="painel painel-largo">
+      <fieldset class="grupo" data-campo="reg-uso-solo">
+        <legend class="grupo-rotulo">Reg. Uso do Solo</legend>
+        @if (emEdicao()) {
+          <div class="opcoes-sim-nao">
+            <label class="opcao">
+              <input type="radio" formControlName="regUsoSolo" [value]="true" name="regUsoSolo" />
+              Sim
+            </label>
+            <label class="opcao">
+              <input type="radio" formControlName="regUsoSolo" [value]="false" name="regUsoSolo" />
+              Não
+            </label>
+          </div>
+        } @else {
+          <p class="valor-lido">{{ regUsoSoloLido() ?? '—' }}</p>
+        }
+      </fieldset>
+
+      @if (mostraPeot()) {
+        <div class="grupo" data-campo="alteracao-peot">
+          @if (emEdicao()) {
+            <label class="grupo-rotulo" for="resumo-alteracao-peot">Alteração PEOT's</label>
+            <select
+              id="resumo-alteracao-peot"
+              class="seletor"
+              formControlName="alteracaoPeotId"
+              [attr.aria-invalid]="erroDoCampo('alteracaoPeotId') ? true : null"
+              [attr.aria-describedby]="erroDoCampo('alteracaoPeotId') ? 'erro-alteracao-peot' : null"
+            >
+              <option [ngValue]="null">Sem alteração PEOT</option>
+              @for (opcao of opcoesPeot(); track opcao.id) {
+                <option [ngValue]="opcao.id">{{ opcao.descricao }}</option>
+              }
+            </select>
+            @if (erroDoCampo('alteracaoPeotId'); as mensagem) {
+              <p class="erro-campo" id="erro-alteracao-peot">{{ mensagem }}</p>
+            }
+          } @else {
+            <span class="grupo-rotulo">Alteração PEOT's</span>
+            <p class="valor-lido">{{ processo().alteracaoPeotDescricao ?? '—' }}</p>
+          }
+        </div>
+      }
+
+      @if (emEdicao()) {
+        <button type="submit" class="gravar" [disabled]="ocupado() || conflito()" aria-describedby="aviso-gravar">
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" aria-hidden="true">
+            <path d="M3 2h8l2 2v9a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V3a1 1 0 0 1 1-1z" />
+            <path d="M5 2v4h6V2M5 14v-4h6v4" />
+          </svg>
+          Gravar
+        </button>
+      }
+    </div>
+
+    <div class="par">
+      @for (bloco of blocos; track bloco.campo) {
+        <div class="painel" [attr.data-campo]="bloco.campo">
+          <div class="painel-cabecalho">
+            @if (emEdicao()) {
+              <label class="painel-titulo" [for]="'resumo-' + bloco.campo">{{ bloco.titulo }}</label>
+            } @else {
+              <span class="painel-titulo">{{ bloco.titulo }}</span>
+            }
+            <span class="painel-subtitulo" [id]="'subtitulo-' + bloco.campo">{{ bloco.subtitulo }}</span>
+          </div>
+          @if (emEdicao()) {
+            <div class="campo-texto">
+            <textarea
+              class="caixa-texto"
+              [id]="'resumo-' + bloco.campo"
+              [formControlName]="bloco.campo"
+              [attr.maxlength]="maximoNotas"
+              [attr.aria-invalid]="erroDoCampo(bloco.campo) ? true : null"
+              [attr.aria-describedby]="'subtitulo-' + bloco.campo + ' contador-' + bloco.campo + (erroDoCampo(bloco.campo) ? ' erro-' + bloco.campo : '')"
+            ></textarea>
+            <p class="contador" [id]="'contador-' + bloco.campo">{{ caracteres(bloco.campo) }} de {{ maximoNotas }} caracteres</p>
+            @if (erroDoCampo(bloco.campo); as mensagem) {
+              <p class="erro-campo" [id]="'erro-' + bloco.campo">{{ mensagem }}</p>
+            }
+            </div>
+            <button type="submit" class="gravar" [disabled]="ocupado() || conflito()" aria-describedby="aviso-gravar">
+              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" aria-hidden="true">
+                <path d="M3 2h8l2 2v9a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V3a1 1 0 0 1 1-1z" />
+                <path d="M5 2v4h6V2M5 14v-4h6v4" />
+              </svg>
+              Gravar
+            </button>
+          } @else {
+            <p class="valor-lido valor-texto">{{ (bloco.campo === 'notasIncm' ? processo().notasIncm : processo().notasDgt) || '—' }}</p>
+          }
+        </div>
+      }
+    </div>
+  </form>
+
+  <div class="mensagens" aria-live="polite">
+    @if (mensagemSucesso(); as mensagem) {
+      <p class="sucesso" role="status">{{ mensagem }}</p>
+    }
+  </div>
+  <app-error-banner [erro]="erro()" [mensagemDoServidor]="true" />
+  @if (conflito()) {
+    <button type="button" app-botao variante="secundario" tamanho="pequeno" class="recarregar" (click)="pedirRecarregar()">
+      Recarregar
+    </button>
+  }
+
+  @if (podeEnviarPcm() || podePublicar()) {
+    <div class="rodape">
+      @if (podeEnviarPcm()) {
+        <button type="button" app-botao variante="secundario" class="enviar-pcm" [desativado]="ocupado()" (click)="pedirEnvioPcm()">
+          Enviar PCM
+        </button>
+      }
+      @if (podePublicar()) {
+        <button
+          type="button"
+          app-botao
+          class="publicar"
+          [desativado]="ocupado() || conflito()"
+          [aCarregar]="aPublicar()"
+          (click)="publicar()"
+        >
+          Publicar
+        </button>
+      }
+    </div>
+  }
+</section>

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="2026-09-28-3-seed-motor-regras-pu-pp" author="nuno.miguel.silva">
+        <comment>
+            Issue #162 — regra (9 por tipo) + condicao (11 por tipo) para PP e
+            PU. Espelho de 2026-09-10-6 (PDM §13.6): uma regra por dinâmica com
+            pré-requisito, todas de nível Dinâmica. Ids explícitos + setval.
+        </comment>
+
+        <loadData tableName="regra" file="db/data/2026-09-28-3-regra.csv"
+                  relativeToChangelogFile="false" separator=";" quotchar="&quot;" encoding="UTF-8">
+            <column name="id" type="NUMERIC"/>
+            <column name="instrumento_dinamica_config_id" type="NUMERIC"/>
+            <column name="operador" type="STRING"/>
+            <column name="descricao" type="STRING"/>
+            <column name="substitui_sequenciamento" type="BOOLEAN"/>
+            <column name="ativo" type="BOOLEAN"/>
+        </loadData>
+        <sql dbms="postgresql">SELECT setval(pg_get_serial_sequence('regra', 'id'), (SELECT MAX(id) FROM regra))</sql>
+
+        <loadData tableName="condicao" file="db/data/2026-09-28-3-condicao.csv"
+                  relativeToChangelogFile="false" separator=";" quotchar="&quot;" encoding="UTF-8">
+            <column name="id" type="NUMERIC"/>
+            <column name="regra_id" type="NUMERIC"/>
+            <column name="avaliador" type="STRING"/>
+            <column name="parametros" type="STRING"/>
+            <column name="grupo" type="NUMERIC"/>
+            <column name="ativo" type="BOOLEAN"/>
+        </loadData>
+        <sql dbms="postgresql">SELECT setval(pg_get_serial_sequence('condicao', 'id'), (SELECT MAX(id) FROM condicao))</sql>
+
+        <rollback>
+            <delete tableName="condicao">
+                <where>id BETWEEN 2401 AND 2411 OR id BETWEEN 3401 AND 3411</where>
+            </delete>
+            <delete tableName="regra">
+                <where>id BETWEEN 2301 AND 2309 OR id BETWEEN 3301 AND 3309</where>
+            </delete>
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>

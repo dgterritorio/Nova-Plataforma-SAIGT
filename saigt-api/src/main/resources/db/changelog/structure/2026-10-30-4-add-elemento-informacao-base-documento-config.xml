@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="2026-10-30-4-add-elemento-informacao-base-documento-config" author="david.raposo">
+        <comment>
+            Documento_config: marca os itens que levam Informação Base (EF v1.5), para o procedimento
+            deixar de a fixar em código. Dentro de um procedimento, os itens do mesmo separador têm o
+            mesmo valor (ou todos nulo); a BD não o impõe.
+        </comment>
+
+        <sql>ALTER TABLE documento_config ADD COLUMN elemento_informacao_base VARCHAR(30) NULL</sql>
+        <sql>ALTER TABLE documento_config ADD CONSTRAINT ck_documento_config_elemento_informacao_base
+            CHECK (elemento_informacao_base IS NULL OR elemento_informacao_base IN ('DELIBERACAO', 'TEXTO_ATO'))</sql>
+
+        <sql>UPDATE documento_config SET elemento_informacao_base = 'DELIBERACAO'
+            WHERE codigo IN ('DELIBERACAO_PUB', 'DELIBERACAO_DEP')</sql>
+        <sql>UPDATE documento_config SET elemento_informacao_base = 'TEXTO_ATO'
+            WHERE codigo IN ('TEXTO_ATO_PUB', 'TEXTO_ATO_DEP')</sql>
+
+        <rollback>
+            <sql>ALTER TABLE documento_config DROP CONSTRAINT ck_documento_config_elemento_informacao_base</sql>
+            <sql>ALTER TABLE documento_config DROP COLUMN elemento_informacao_base</sql>
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>

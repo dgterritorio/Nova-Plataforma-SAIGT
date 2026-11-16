@@ -1,0 +1,3 @@
+ERROR 1: geotif1204_ren.tif: TIFFFetchDirectory:/vsizip//vsis3/saigt-documentos/processos/2026-000123/DEPOSITO/0b7d-plantas.zip/geotif1204_ren.tif: Can not read TIFF directory count
+ERROR 1: geotif1204_ren.tif: TIFFReadDirectory:Failed to read directory at offset 421794118
+gdalinfo failed - unable to open '/vsizip//vsis3/saigt-documentos/processos/2026-000123/DEPOSITO/0b7d-plantas.zip/geotif1204_ren.tif'.

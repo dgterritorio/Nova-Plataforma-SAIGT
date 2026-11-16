@@ -1,0 +1,41 @@
+.acoes {
+  display: contents;
+}
+
+.rejeicao {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaco-2);
+  padding: var(--espaco-2-5);
+  border: var(--borda-largura) solid var(--cor-erro);
+  border-radius: var(--raio-faixa);
+  background: var(--cor-erro-fundo);
+}
+
+.nome-item {
+  margin: 0;
+  padding: var(--espaco-2-5);
+  border: var(--borda-largura) solid var(--cor-borda-ficheiro);
+  border-radius: var(--raio-md);
+  background: var(--cor-superficie-alt);
+  color: var(--cor-texto-forte);
+  font-size: var(--texto-base);
+  line-height: var(--texto-base-linha);
+  overflow-wrap: anywhere;
+}
+
+.listas {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+  gap: var(--espaco-2);
+}
+
+.a-carregar {
+  margin: 0;
+  color: var(--cor-texto-secundario);
+  font-size: var(--texto-sm);
+}
+
+.recarregar {
+  margin-top: var(--espaco-2);
+}

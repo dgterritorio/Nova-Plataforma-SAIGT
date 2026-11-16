@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="2026-11-06-3-extensoes-pecas-graficas-so-zip" author="margarida.marques">
+        <comment>
+            Pela EF v1.5 as peças gráficas carregam-se sempre em ZIP: o de publicação só com a informação vetorial
+            (GeoPackage no interior) e o de depósito com o GeoTIFF e o TFW. Os itens de planta da Alteração de PDM
+            (procedimentos 209, 210 e 211) passam a aceitar só zip, nas duas caixas.
+        </comment>
+
+        <update tableName="documento_config">
+            <column name="extensoes_aceites" value='["zip"]'/>
+            <where>instrumento_procedimento_config_id IN (209, 210, 211) AND tipo_elemento = 'PECA_GRAFICA'</where>
+        </update>
+
+        <rollback>
+            <update tableName="documento_config">
+                <column name="extensoes_aceites" value='["gpkg","zip"]'/>
+                <where>instrumento_procedimento_config_id IN (209, 210, 211) AND tipo_elemento = 'PECA_GRAFICA'
+                    AND categoria = 'PUBLICACAO'</where>
+            </update>
+            <update tableName="documento_config">
+                <column name="extensoes_aceites" value='["tif","tiff","tfw"]'/>
+                <where>instrumento_procedimento_config_id IN (209, 210, 211) AND tipo_elemento = 'PECA_GRAFICA'
+                    AND categoria = 'DEPOSITO'</where>
+            </update>
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>

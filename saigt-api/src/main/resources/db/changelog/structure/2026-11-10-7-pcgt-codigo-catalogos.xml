@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="2026-11-10-7-pcgt-codigo-catalogos" author="david.raposo">
+        <comment>
+            Códigos da PCGT dos tipos de instrumento e de procedimento (tipoInstrumentoCodigo, tipoProcedimentoCodigo),
+            enviados na criação do processo na PCGT (OI-361). Nulo = sem correspondência: o POST não sai.
+        </comment>
+
+        <addColumn tableName="tipo_instrumento">
+            <column name="pcgt_codigo" type="VARCHAR(20)"/>
+        </addColumn>
+        <addColumn tableName="tipo_dinamica">
+            <column name="pcgt_codigo" type="VARCHAR(20)"/>
+        </addColumn>
+
+        <rollback>
+            <dropColumn tableName="tipo_dinamica" columnName="pcgt_codigo"/>
+            <dropColumn tableName="tipo_instrumento" columnName="pcgt_codigo"/>
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>

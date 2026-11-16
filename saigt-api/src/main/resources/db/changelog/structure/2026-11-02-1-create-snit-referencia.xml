@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="2026-11-02-1-create-snit-referencia" author="margarida.marques">
+        <comment>
+            Réplica local das tabelas de referência do SNIT, uma lista por endpoint lookups. Nenhuma
+            linha se apaga: um código que deixa de vir passa a inativo, porque pode haver IDUS que o refiram.
+        </comment>
+
+        <createTable tableName="snit_referencia">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="lista" type="VARCHAR(30)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="codigo" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="designacao" type="VARCHAR(500)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="dados_origem" type="JSONB">
+                <constraints nullable="false"/>
+            </column>
+            <column name="ativo" type="BOOLEAN">
+                <constraints nullable="false"/>
+            </column>
+            <column name="sincronizado_em" type="TIMESTAMP WITH TIME ZONE">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <sql>ALTER TABLE snit_referencia ADD CONSTRAINT ck_snit_referencia_lista
+            CHECK (lista IN ('INSTRUMENT_TYPES', 'PROCEDURES', 'PROCEDURE_TYPES', 'CLASSES', 'NUT2', 'MUNICIPALITIES'))</sql>
+        <addUniqueConstraint tableName="snit_referencia" columnNames="lista, codigo"
+                             constraintName="uq_snit_referencia_lista_codigo"/>
+
+        <rollback>
+            <dropTable tableName="snit_referencia"/>
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>

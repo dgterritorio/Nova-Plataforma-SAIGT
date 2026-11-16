@@ -1,0 +1,121 @@
+/* Sem mockup próprio: o cartão segue o da Informação Geral (UI-009). O espaço entre cartões é o do ecrã que o usa. */
+:host {
+  display: flex;
+  flex-direction: column;
+  gap: inherit;
+}
+
+.cartao-ratificacao {
+  overflow: hidden;
+  background: var(--cor-superficie);
+  border: var(--borda-largura) solid var(--cor-borda);
+  border-radius: var(--raio-lg);
+}
+
+.cabecalho {
+  margin: 0;
+  padding: var(--espaco-4) var(--espaco-5);
+  background: var(--cor-cabecalho-cartao);
+  border-bottom: var(--borda-largura) solid var(--cor-borda-suave);
+  font-size: var(--texto-base);
+  font-weight: var(--peso-negrito);
+  line-height: var(--texto-base-linha);
+  color: var(--cor-texto);
+}
+
+.corpo {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaco-5);
+  padding: var(--espaco-5);
+}
+
+.contexto {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--espaco-4) var(--espaco-6);
+  margin: 0;
+}
+
+.contexto .largo {
+  grid-column: 1 / -1;
+}
+
+.contexto dt {
+  font-size: var(--texto-rotulo);
+  font-weight: var(--peso-negrito);
+  letter-spacing: 0.3px;
+  text-transform: uppercase;
+  color: var(--cor-texto-secundario);
+}
+
+.contexto dd {
+  margin: var(--espaco-0-5) 0 0;
+  font-size: var(--texto-base);
+  line-height: var(--texto-base-linha);
+  color: var(--cor-texto);
+  overflow-wrap: anywhere;
+}
+
+.campo {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaco-1-5);
+  margin: 0;
+  padding: 0;
+  border: 0;
+  min-width: 0;
+}
+
+.rotulo {
+  margin: 0;
+  padding: 0;
+  font-size: var(--texto-base);
+  font-weight: var(--peso-medio);
+  line-height: var(--texto-base-linha);
+  color: var(--cor-texto-rotulo);
+}
+
+.obrigatorio {
+  color: var(--cor-erro);
+}
+
+.opcoes-radio {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--espaco-3) var(--espaco-6);
+}
+
+.opcao-radio {
+  display: flex;
+  align-items: center;
+  gap: var(--espaco-2-5);
+  font-size: var(--texto-base);
+  line-height: var(--texto-base-linha);
+  color: var(--cor-texto);
+}
+
+.opcao-radio input:focus-visible {
+  outline: var(--anel-foco);
+  outline-offset: var(--anel-foco-afastamento);
+}
+
+.erro-campo {
+  margin: 0;
+  font-size: var(--texto-sm);
+  line-height: var(--texto-sm-linha);
+  color: var(--cor-erro);
+}
+
+.aviso-bloqueado {
+  margin: 0;
+  font-size: var(--texto-sm);
+  line-height: var(--texto-sm-linha);
+  color: var(--cor-texto-secundario);
+}
+
+@media (width <= 720px) {
+  .contexto {
+    grid-template-columns: 1fr;
+  }
+}

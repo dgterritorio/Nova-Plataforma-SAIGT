@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="2026-11-05-4-create-processo-rejeicao-item" author="margarida.marques">
+        <comment>
+            Itens de cada recusa: um ficheiro ou a Informação Base de um elemento, com categoria, motivo e notas;
+            só inserção. As FK não têm ON DELETE CASCADE porque um ficheiro recusado nunca se apaga.
+            A categoria e o motivo são opcionais: as listas arrancam vazias e, enquanto uma estiver vazia, o campo
+            não aparece nem é obrigatório.
+            O ALTER DEFAULT PRIVILEGES de 2026-08-11-8 dá à saigt_app UPDATE e DELETE em tabelas novas, por isso
+            revogam-se aqui.
+        </comment>
+
+        <createTable tableName="processo_rejeicao_item">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="rejeicao_id" type="BIGINT">
+                <constraints nullable="false" foreignKeyName="fk_processo_rejeicao_item_rejeicao"
+                             references="processo_rejeicao(id)"/>
+            </column>
+            <column name="processo_documento_id" type="UUID">
+                <constraints foreignKeyName="fk_processo_rejeicao_item_documento"
+                             references="processo_documento(id)"/>
+            </column>
+            <column name="processo_informacao_base_id" type="UUID">
+                <constraints foreignKeyName="fk_processo_rejeicao_item_informacao_base"
+                             references="processo_informacao_base(id)"/>
+            </column>
+            <column name="categoria_id" type="BIGINT">
+                <constraints foreignKeyName="fk_processo_rejeicao_item_categoria"
+                             references="lista_valores(id)"/>
+            </column>
+            <column name="motivo_id" type="BIGINT">
+                <constraints foreignKeyName="fk_processo_rejeicao_item_motivo"
+                             references="lista_valores(id)"/>
+            </column>
+            <column name="notas" type="TEXT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <sql>ALTER TABLE processo_rejeicao_item ADD CONSTRAINT ck_processo_rejeicao_item_alvo
+            CHECK ((processo_documento_id IS NULL) &lt;&gt; (processo_informacao_base_id IS NULL))</sql>
+        <sql>ALTER TABLE processo_rejeicao_item ADD CONSTRAINT ck_processo_rejeicao_item_notas
+            CHECK (length(trim(notas)) &gt; 0)</sql>
+
+        <createIndex tableName="processo_rejeicao_item" indexName="idx_processo_rejeicao_item_rejeicao">
+            <column name="rejeicao_id"/>
+        </createIndex>
+
+        <sql>REVOKE UPDATE, DELETE ON processo_rejeicao_item FROM saigt_app</sql>
+
+        <rollback>
+            <dropTable tableName="processo_rejeicao_item"/>
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>

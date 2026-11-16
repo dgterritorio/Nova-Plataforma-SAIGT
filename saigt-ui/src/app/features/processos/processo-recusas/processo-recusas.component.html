@@ -1,0 +1,105 @@
+@if (aCarregar()) {
+  <p class="estado" role="status">A carregar as recusas…</p>
+} @else if (erro()) {
+  <app-alerta tipo="erro" titulo="Não foi possível carregar as recusas do processo.">
+    <button type="button" app-botao variante="secundario" tamanho="pequeno" class="tentar" (click)="carregar()">
+      Tentar de novo
+    </button>
+  </app-alerta>
+} @else if (recusas().length > 0) {
+  <section class="recusas" aria-labelledby="recusas-titulo">
+    <app-cartao espacamento="nenhum">
+      <div class="recusas-cabecalho">
+        <h2 class="recusas-titulo" id="recusas-titulo">Recusas</h2>
+      </div>
+      @if (variasRecusas()) {
+        <app-separadores rotulo="Recusas do processo" [separadores]="separadores()" [(ativo)]="ativo" />
+      }
+
+      @if (recusaAtiva(); as recusa) {
+        <div
+          class="painel"
+          [attr.role]="variasRecusas() ? 'tabpanel' : null"
+          [attr.id]="separadoresVista()?.idPainel(ativo()) ?? null"
+          [attr.aria-labelledby]="separadoresVista()?.idSeparador(ativo()) ?? null"
+        >
+          <div class="resumo">
+            @if (!variasRecusas()) {
+              <h3 class="recusa-nome" data-campo="nome">Recusa {{ recusa.sequencia }}</h3>
+            }
+            <app-selo [tom]="tomPorOrigem[recusa.origem]" forma="pill" data-campo="origem">{{ recusa.origem }}</app-selo>
+            <span class="resumo-dado" data-campo="data">{{ recusa.data | date: 'dd/MM/yyyy HH:mm' }}</span>
+            <span class="resumo-dado" data-campo="submissao">Submissão n.º {{ recusa.submissao }}</span>
+          </div>
+
+          @if (recusa.origem === 'INCM') {
+            <div class="mensagens">
+              <h3 class="subtitulo" id="mensagens-incm-titulo">Mensagens da INCM</h3>
+              @if (recusa.motivoIncm.length > 0) {
+                <ul class="lista-mensagens" aria-labelledby="mensagens-incm-titulo">
+                  @for (mensagem of recusa.motivoIncm; track $index) {
+                    <li>{{ mensagem }}</li>
+                  }
+                </ul>
+              } @else {
+                <p class="sem-dados">A INCM não indicou o motivo.</p>
+              }
+            </div>
+          } @else {
+            @if (recusa.notasGerais) {
+              <div class="notas-gerais">
+                <h3 class="subtitulo">Notas gerais</h3>
+                <p class="notas-gerais-texto">{{ recusa.notasGerais }}</p>
+              </div>
+            }
+
+            <div class="quadro">
+              <div class="quadro-cabecalho">
+                <span class="quadro-marcador" aria-hidden="true"></span>
+                <h3 class="quadro-titulo">Elementos Rejeitados</h3>
+                <span class="contagem" data-campo="contagem">{{ textoElementos() }}</span>
+              </div>
+              @if (linhas().length === 0) {
+                <p class="sem-dados sem-itens">Esta recusa não tem itens registados.</p>
+              } @else {
+                <app-tabela familia="compacta" [legenda]="'Elementos rejeitados na recusa ' + recusa.sequencia" [colunas]="colunas" [linhas]="linhas()">
+                  <ng-template appCelula="separador" let-linha><span class="separador">{{ linha.separador }}</span></ng-template>
+                  <ng-template appCelula="nomeFicheiro" let-linha>
+                    @if (linha.documentoId && linha.nomeFicheiro) {
+                      <button
+                        type="button"
+                        class="ficheiro"
+                        [attr.aria-label]="'Descarregar ' + linha.nomeFicheiro"
+                        (click)="descarregar(linha.documentoId)"
+                      >
+                        <svg class="ficheiro-icone" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                          <path d="M7 1H3a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4z" />
+                          <path d="M7 1v3h3M4.5 6.5h3M4.5 8.5h3" />
+                        </svg>
+                        {{ linha.nomeFicheiro }}
+                      </button>
+                    } @else {
+                      —
+                    }
+                  </ng-template>
+                  <ng-template appCelula="categoria" let-linha>
+                    @if (linha.categoria) {
+                      <app-selo class="categoria" tom="laranja" forma="pill">{{ linha.categoria }}</app-selo>
+                    } @else {
+                      —
+                    }
+                  </ng-template>
+                  <ng-template appCelula="motivo" let-linha><span class="motivo">{{ linha.motivo ?? '—' }}</span></ng-template>
+                  <ng-template appCelula="notas" let-linha><span class="notas">{{ linha.notas }}</span></ng-template>
+                </app-tabela>
+              }
+              @if (descargaService.erro(); as mensagemDescarga) {
+                <p class="erro-descarga" role="alert">{{ mensagemDescarga }}</p>
+              }
+            </div>
+          }
+        </div>
+      }
+    </app-cartao>
+  </section>
+}

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="2026-11-12-8-seed-motivo-alteracao-dinamicas" author="david.raposo">
+        <comment>
+            EF v1.5 §3.1.2: a conformação com uma lei, programa ou plano de hierarquia superior recolhe-se no primeiro
+            Procedimento das Alterações. Com pergunta nas Alterações Simplificadas do PDM e na Alteração e Alterações
+            Simplificadas do PU, PP, PDIM, PUIM e PPIM; sem pergunta (motivo sempre pedido) na Alteração por Adaptação
+            dos seis. A Alteração do PDM já vem do seed 2026-11-09-3; a Alteração RERAE e as restantes ficam 'NAO'.
+            As linhas escolhem-se pelos códigos, nunca pelos ids; uma combinação que não exista não é criada.
+        </comment>
+
+        <sql>UPDATE instrumento_procedimento_config SET pede_motivo_alteracao = 'COM_PERGUNTA'
+            WHERE ordem = 1
+              AND instrumento_dinamica_config_id IN (
+                  SELECT idc.id FROM instrumento_dinamica_config idc
+                  JOIN tipo_instrumento ti ON ti.id = idc.tipo_instrumento_id
+                  JOIN tipo_dinamica td ON td.id = idc.tipo_dinamica_id
+                  WHERE (ti.codigo = 'PDM' AND td.codigo IN ('ALTERACAO_SIMPLIFICADA_ART123', 'ALTERACAO_SIMPLIFICADA_DL10_2024'))
+                     OR (ti.codigo IN ('PU', 'PP', 'PDIM', 'PUIM', 'PPIM') AND td.codigo IN ('ALTERACAO',
+                             'ALTERACAO_SIMPLIFICADA_ART123', 'ALTERACAO_SIMPLIFICADA_DL10_2024')))</sql>
+
+        <sql>UPDATE instrumento_procedimento_config SET pede_motivo_alteracao = 'OBRIGATORIO'
+            WHERE ordem = 1
+              AND instrumento_dinamica_config_id IN (
+                  SELECT idc.id FROM instrumento_dinamica_config idc
+                  JOIN tipo_instrumento ti ON ti.id = idc.tipo_instrumento_id
+                  JOIN tipo_dinamica td ON td.id = idc.tipo_dinamica_id
+                  WHERE ti.codigo IN ('PDM', 'PU', 'PP', 'PDIM', 'PUIM', 'PPIM') AND td.codigo = 'ALTERACAO_ADAPTACAO')</sql>
+
+        <rollback>
+            <sql>UPDATE instrumento_procedimento_config SET pede_motivo_alteracao = 'NAO'
+                WHERE ordem = 1
+                  AND instrumento_dinamica_config_id IN (
+                      SELECT idc.id FROM instrumento_dinamica_config idc
+                      JOIN tipo_instrumento ti ON ti.id = idc.tipo_instrumento_id
+                      JOIN tipo_dinamica td ON td.id = idc.tipo_dinamica_id
+                      WHERE (ti.codigo = 'PDM' AND td.codigo IN ('ALTERACAO_SIMPLIFICADA_ART123',
+                                 'ALTERACAO_SIMPLIFICADA_DL10_2024', 'ALTERACAO_ADAPTACAO'))
+                         OR (ti.codigo IN ('PU', 'PP', 'PDIM', 'PUIM', 'PPIM') AND td.codigo IN ('ALTERACAO',
+                                 'ALTERACAO_SIMPLIFICADA_ART123', 'ALTERACAO_SIMPLIFICADA_DL10_2024', 'ALTERACAO_ADAPTACAO')))</sql>
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>

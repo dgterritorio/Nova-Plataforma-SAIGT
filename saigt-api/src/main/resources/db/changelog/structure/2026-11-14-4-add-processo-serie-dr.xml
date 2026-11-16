@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="2026-11-14-4-add-processo-serie-dr" author="arnaldo.costa">
+        <comment>
+            Série e parte do DR escolhidas no processo (DB-PROC-014; OI-196, OI-507; EF v1.5 l.1691): só nos
+            Procedimentos sem série configurada (restantes servidões); nos outros fica nula e vale a do Procedimento.
+            Os mesmos valores de instrumento_procedimento_config.serie_dr.
+        </comment>
+
+        <sql>
+            ALTER TABLE processo ADD COLUMN serie_dr VARCHAR(10) NULL
+                CONSTRAINT ck_processo_serie_dr CHECK (serie_dr IN ('PRIMEIRA', 'SEGUNDA_H', 'SEGUNDA_C'))
+        </sql>
+
+        <rollback>
+            <sql>ALTER TABLE processo DROP CONSTRAINT ck_processo_serie_dr</sql>
+            <dropColumn tableName="processo" columnName="serie_dr"/>
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>

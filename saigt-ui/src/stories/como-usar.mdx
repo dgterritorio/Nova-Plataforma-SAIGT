@@ -1,0 +1,112 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+
+<Meta title="Como usar" />
+
+# Como usar os componentes
+
+Este catálogo mostra os componentes base do SAIGT com dados fictícios, sem API nem login. Cada componente tem as
+variantes e os estados lado a lado, o painel de acessibilidade (axe) e, em `parameters.design`, o link do ecrã do
+Figma que lhe serve de referência.
+
+## Regras
+
+- **Só tokens semânticos.** Componentes e ecrãs usam apenas os tokens de `src/styles/semantica.css` (`--cor-*`,
+  `--espaco-*`, `--texto-*`, `--raio-*`, `--sombra-*`, `--peso-*`, `--fonte-*`, `--altura-*`, `--contentor-*`). Falta um
+  papel? Acrescenta-se a `semantica.css`, a apontar para um token do Figma. Nunca hex, `rgb()`, `hsl()` nem os tokens
+  brutos de `tokens.css`. O `npm run lint` bloqueia as cores escritas à mão.
+- **Componentes de `shared/ui`.** O que é comum (botões, campos, selos, tabelas, modais…) vem daqui; um ecrã não
+  redesenha nem sobrepõe o CSS de um componente partilhado. Se falta uma variante, acrescenta-se ao componente, com teste
+  e story.
+- **Acessibilidade (WCAG 2.1 AA).** Os componentes já trazem os rótulos, os papéis ARIA e o foco por teclado; quem os
+  usa dá-lhes um rótulo com sentido (por exemplo `aria-label` nos botões só com ícone).
+- **Dados fictícios.** Stories, testes e capturas nunca usam dados pessoais reais.
+
+## Importar
+
+Todos os componentes saem de `src/app/shared/ui/index.ts`:
+
+```ts
+import { BotaoComponent, CampoTextoComponent, TabelaComponent, CelulaTabelaDirective } from '../../shared/ui';
+```
+
+## Exemplos
+
+### Botão
+
+```html
+<button app-botao type="button" (click)="guardar()">Guardar</button>
+<button app-botao type="button" variante="secundario" tamanho="pequeno">Cancelar</button>
+```
+
+### Campo de texto e seletor (Reactive Forms)
+
+```html
+<app-campo-texto formControlName="designacao" rotulo="Designação" [obrigatorio]="true" [erro]="erroDesignacao()" />
+<app-seletor formControlName="estado" rotulo="Novo estado" [opcoes]="estados" [compacto]="true" />
+```
+
+### Pesquisa
+
+```html
+<app-campo-pesquisa placeholder="Pesquisar por designação…" (pesquisar)="filtrar($event)" />
+```
+
+### Selo
+
+```html
+<app-selo tom="sucesso" forma="pill">Ativa</app-selo>
+<app-estado-processo-badge [estado]="processo.estado" />
+```
+
+### Cartão e alerta
+
+```html
+<app-cartao titulo="Ficheiros remetidos" espacamento="nenhum">…</app-cartao>
+<app-alerta tipo="aviso" titulo="Dados geridos pela INCM">As alterações fazem-se no portal da INCM.</app-alerta>
+```
+
+### Tabela com paginação
+
+```html
+<app-tabela [colunas]="colunas" [linhas]="processos()" [aCarregar]="aCarregar()">
+  <ng-template appCelula="estado" let-processo>
+    <app-estado-processo-badge [estado]="processo.estado" />
+  </ng-template>
+  <app-paginacao rodape [pagina]="pagina()" [tamanhoPagina]="20" [total]="total()" (paginaMudou)="irPara($event)" />
+</app-tabela>
+```
+
+### Passos
+
+```html
+<app-passos [passos]="passos" [atual]="passoAtual()" />
+```
+
+### Modal
+
+```html
+<app-modal [aberto]="aberto()" titulo="Alterar estado" largura="md" (fechar)="aberto.set(false)">
+  <p>Conteúdo do modal.</p>
+  <!-- display: contents deixa os botões no espaçamento do rodapé do modal -->
+  <div rodape style="display: contents">
+    <button app-botao type="button" variante="secundario" tamanho="pequeno" (click)="aberto.set(false)">Cancelar</button>
+    <button app-botao type="button" tamanho="pequeno" (click)="confirmar()">Confirmar</button>
+  </div>
+</app-modal>
+```
+
+### Separadores
+
+```html
+<app-separadores #seps rotulo="Utilizadores e permissões" [separadores]="separadores" [(ativo)]="separadorAtivo" />
+<div role="tabpanel" [id]="seps.idPainel(separadorAtivo())" [attr.aria-labelledby]="seps.idSeparador(separadorAtivo())">…</div>
+```
+
+## Correr o catálogo
+
+```bash
+make catalogo         # http://localhost:6006
+make catalogo-build   # gera dist/catalogo/
+```
+
+O catálogo não entra no build da app: o `tsconfig.app.json` só compila `src/main.ts` e o que ele importa.

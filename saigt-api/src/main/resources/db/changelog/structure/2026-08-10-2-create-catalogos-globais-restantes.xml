@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="2026-08-10-2-create-catalogos-globais-restantes" author="david.raposo">
+        <comment>
+            Grupo 1 (restante) — entidade, lista_valores, auditoria, tipo_ato.
+            Ver desenho v0.1, 03-modelo-dados.md §11-12. `entidade` só serve para endereçamento de
+            notificações e referência de Instrumentos (não participa em autorização); o responsável
+            do termo de adesão identifica-se por `utilizador_email`. `auditoria.utilizador_id` é
+            opcional (vazio = ação do sistema) e ganha FK em 2026-08-10-3, depois de utilizador existir.
+        </comment>
+
+        <createTable tableName="entidade">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="nome" type="VARCHAR(200)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="nif" type="VARCHAR(20)">
+                <constraints nullable="false" unique="true" uniqueConstraintName="uq_entidade_nif"/>
+            </column>
+            <column name="utilizador_nome" type="VARCHAR(200)"/>
+            <column name="utilizador_email" type="VARCHAR(200)"/>
+            <column name="utilizador_cargo" type="VARCHAR(200)"/>
+            <column name="ativo" type="BOOLEAN" defaultValueBoolean="true">
+                <constraints nullable="false"/>
+            </column>
+            <column name="atualizado_em" type="TIMESTAMP WITH TIME ZONE"/>
+        </createTable>
+        <createIndex tableName="entidade" indexName="idx_entidade_nif">
+            <column name="nif"/>
+        </createIndex>
+
+        <createTable tableName="lista_valores">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="tipo" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="codigo" type="VARCHAR(20)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="descricao" type="VARCHAR(300)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="ordem" type="INTEGER">
+                <constraints nullable="false"/>
+            </column>
+            <column name="ativo" type="BOOLEAN" defaultValueBoolean="true">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <addUniqueConstraint tableName="lista_valores" columnNames="tipo, codigo"
+                             constraintName="uq_lista_valores_categoria_codigo"/>
+
+        <createTable tableName="auditoria">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="tipo_ocorrencia" type="VARCHAR(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="id_ocorrencia" type="VARCHAR(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="acao" type="VARCHAR(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="utilizador_id" type="UUID"/>
+            <column name="estado_antes" type="VARCHAR(30)"/>
+            <column name="estado_depois" type="VARCHAR(30)"/>
+            <column name="dados_alteracao" type="JSONB"/>
+            <column name="ip_origem" type="VARCHAR(45)"/>
+            <column name="criado_em" type="TIMESTAMP WITH TIME ZONE" defaultValueComputed="CURRENT_TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+            <column name="entidade_id" type="BIGINT">
+                <constraints foreignKeyName="fk_auditoria_entidade" references="entidade(id)"/>
+            </column>
+        </createTable>
+        <createIndex tableName="auditoria" indexName="idx_auditoria_ocorrencia">
+            <column name="tipo_ocorrencia"/>
+            <column name="id_ocorrencia"/>
+        </createIndex>
+        <createIndex tableName="auditoria" indexName="idx_auditoria_criado_em">
+            <column name="criado_em" descending="true"/>
+        </createIndex>
+        <createIndex tableName="auditoria" indexName="idx_auditoria_entidade">
+            <column name="entidade_id"/>
+            <column name="utilizador_id"/>
+            <column name="criado_em"/>
+        </createIndex>
+        <createIndex tableName="auditoria" indexName="idx_auditoria_utilizador_entidade">
+            <column name="utilizador_id"/>
+            <column name="entidade_id"/>
+            <column name="criado_em"/>
+        </createIndex>
+
+        <createTable tableName="tipo_ato">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="codigo" type="VARCHAR(10)">
+                <constraints nullable="false" unique="true" uniqueConstraintName="uq_tipo_ato_codigo"/>
+            </column>
+            <column name="nome" type="VARCHAR(200)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="incm_act_type_id_serie_1" type="BIGINT"/>
+            <column name="incm_act_type_id_serie_2" type="BIGINT"/>
+            <column name="ordem" type="INTEGER">
+                <constraints nullable="false"/>
+            </column>
+            <column name="ativo" type="BOOLEAN" defaultValueBoolean="true">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <sql>ALTER TABLE tipo_ato ADD CONSTRAINT ck_tipo_ato_incm_serie
+            CHECK (incm_act_type_id_serie_1 IS NOT NULL OR incm_act_type_id_serie_2 IS NOT NULL)</sql>
+
+        <rollback>
+            <sql>ALTER TABLE tipo_ato DROP CONSTRAINT ck_tipo_ato_incm_serie</sql>
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>

@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="2026-11-11-1-processo-entidade" author="arnaldo.costa">
+        <comment>
+            A entidade pertence ao processo e não ao Instrumento (DB-PROC-014): `processo.entidade_id` nasce
+            anulável, é preenchida com a entidade do Instrumento da Dinâmica e passa a NOT NULL.
+        </comment>
+        <addColumn tableName="processo">
+            <column name="entidade_id" type="BIGINT">
+                <constraints nullable="true" foreignKeyName="fk_processo_entidade" references="entidade(id)"/>
+            </column>
+        </addColumn>
+        <sql>UPDATE processo p SET entidade_id = i.entidade_id
+            FROM dinamica d JOIN instrumento i ON i.id = d.instrumento_id
+            WHERE d.id = p.dinamica_id</sql>
+        <addNotNullConstraint tableName="processo" columnName="entidade_id" columnDataType="BIGINT"/>
+        <createIndex tableName="processo" indexName="idx_processo_entidade">
+            <column name="entidade_id"/>
+        </createIndex>
+        <rollback>
+            <dropColumn tableName="processo" columnName="entidade_id"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="2026-11-11-2-instrumento-sem-entidade" author="arnaldo.costa">
+        <comment>
+            O Instrumento deixa de ter entidade (DB-PROC-012). O rollback repõe a coluna, o índice e a FK e
+            preenche-a a partir do primeiro processo do Instrumento; o Instrumento sem processos fica com a entidade
+            de um vínculo do utilizador que o criou. A coluna só volta a NOT NULL se todas as linhas ficarem preenchidas.
+        </comment>
+        <dropForeignKeyConstraint baseTableName="instrumento" constraintName="fk_instrumento_entidade"/>
+        <dropIndex tableName="instrumento" indexName="idx_instrumento_entidade"/>
+        <dropColumn tableName="instrumento" columnName="entidade_id"/>
+        <rollback>
+            <addColumn tableName="instrumento">
+                <column name="entidade_id" type="BIGINT"/>
+            </addColumn>
+            <sql>UPDATE instrumento i SET entidade_id = (
+                SELECT p.entidade_id FROM processo p JOIN dinamica d ON d.id = p.dinamica_id
+                WHERE d.instrumento_id = i.id ORDER BY p.criado_em ASC, p.id ASC LIMIT 1)</sql>
+            <sql>UPDATE instrumento i SET entidade_id = (
+                SELECT ue.entidade_id FROM utilizador_entidade ue
+                WHERE ue.utilizador_id = i.criado_por ORDER BY ue.entidade_id ASC LIMIT 1)
+                WHERE i.entidade_id IS NULL</sql>
+            <sql splitStatements="false">DO $$ BEGIN
+                IF NOT EXISTS (SELECT 1 FROM instrumento WHERE entidade_id IS NULL) THEN
+                    ALTER TABLE instrumento ALTER COLUMN entidade_id SET NOT NULL;
+                END IF;
+            END $$</sql>
+            <addForeignKeyConstraint baseTableName="instrumento" baseColumnNames="entidade_id"
+                                     constraintName="fk_instrumento_entidade"
+                                     referencedTableName="entidade" referencedColumnNames="id"/>
+            <createIndex tableName="instrumento" indexName="idx_instrumento_entidade">
+                <column name="entidade_id"/>
+            </createIndex>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="2026-11-11-3-visivel-na-dinamica" author="arnaldo.costa">
+        <comment>
+            O Procedimento pode ser configurado para que os seus processos sejam vistos pelas outras entidades da
+            mesma Dinâmica (TR-254, DB-PROC-005): `true` na Constituição da Comissão Consultiva de PDM, PDIM e PIMOT.
+        </comment>
+        <addColumn tableName="instrumento_procedimento_config">
+            <column name="visivel_na_dinamica" type="BOOLEAN" defaultValueBoolean="false">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+        <sql>UPDATE instrumento_procedimento_config ipc SET visivel_na_dinamica = true
+            FROM tipo_procedimento tp, instrumento_dinamica_config idc, tipo_instrumento ti
+            WHERE tp.id = ipc.tipo_procedimento_id AND tp.codigo = 'CONSTITUICAO_CC'
+              AND idc.id = ipc.instrumento_dinamica_config_id AND ti.id = idc.tipo_instrumento_id
+              AND ti.codigo IN ('PDM', 'PDIM', 'PIMOT')</sql>
+        <rollback>
+            <dropColumn tableName="instrumento_procedimento_config" columnName="visivel_na_dinamica"/>
+        </rollback>
+    </changeSet>
+</databaseChangeLog>

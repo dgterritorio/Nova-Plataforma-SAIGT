@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="2026-11-09-3-plantas-e-metadados" author="arnaldo.costa">
+        <comment>
+            Recolha das peças gráficas sem GeoConform (EF v1.5 §3.1.2, FR-170) e ficha de metadados (§3.6), como no
+            Figma da «Decisão de elaborar sem Geoconform». `documento_config.pagina` separa os itens da página das
+            Plantas (ZIP das plantas, TXT dos nomes, cartograma) dos da página dos documentos; a obrigatoriedade
+            destes itens verifica-se na página das Plantas, não na caixa de depósito. `processo_planta` guarda a
+            associação de cada linha do TXT a um TIFF; `processo_metadados` a ficha MOTU do processo.
+            Seed na Decisão de início do PDM, na Elaboração (201) e na Revisão (205): a «Planta com área de
+            intervenção» e os itens das Plantas.
+        </comment>
+
+        <addColumn tableName="documento_config">
+            <column name="pagina" type="VARCHAR(20)" defaultValue="DOCUMENTOS">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+        <sql>ALTER TABLE documento_config ADD CONSTRAINT ck_documento_config_pagina CHECK (pagina IN ('DOCUMENTOS', 'PLANTAS'))</sql>
+
+        <createTable tableName="processo_planta">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="processo_id" type="UUID">
+                <constraints nullable="false" foreignKeyName="fk_processo_planta_processo"
+                             references="processo(id)" deleteCascade="true"/>
+            </column>
+            <column name="ordem" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="tipo" type="VARCHAR(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="nome" type="VARCHAR(300)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="folha" type="VARCHAR(20)"/>
+            <column name="nome_tiff" type="VARCHAR(300)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <addUniqueConstraint tableName="processo_planta" columnNames="processo_id, ordem" constraintName="uk_processo_planta_ordem"/>
+        <addUniqueConstraint tableName="processo_planta" columnNames="processo_id, nome_tiff" constraintName="uk_processo_planta_tiff"/>
+
+        <createTable tableName="processo_metadados">
+            <column name="processo_id" type="UUID">
+                <constraints primaryKey="true" nullable="false" foreignKeyName="fk_processo_metadados_processo"
+                             references="processo(id)" deleteCascade="true"/>
+            </column>
+            <column name="dados" type="JSONB">
+                <constraints nullable="false"/>
+            </column>
+            <column name="atualizado_em" type="TIMESTAMP WITH TIME ZONE">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <sql>
+            INSERT INTO documento_config (instrumento_procedimento_config_id, codigo, separador, nome, categoria,
+                                          tipo_elemento, formato, obrigatorio, extensoes_aceites, ordem, ativo, pagina)
+            SELECT procedimento, item.codigo, item.separador, item.nome, item.categoria, item.tipo_elemento, item.formato,
+                   false, item.extensoes::jsonb, item.ordem, true, item.pagina
+            FROM (VALUES (201), (205)) AS p(procedimento)
+            CROSS JOIN (VALUES
+                ('PLANTA_AREA_INTERVENCAO_PUB', 'Planta com área de intervenção', 'Planta com área de intervenção',
+                 'PUBLICACAO', 'PECA_GRAFICA', 'EDITAVEL', '["zip"]', 5, 'DOCUMENTOS'),
+                ('PLANTA_AREA_INTERVENCAO_DEP', 'Planta com área de intervenção', 'Planta com área de intervenção',
+                 'DEPOSITO', 'PECA_GRAFICA', 'NAO_EDITAVEL', '["zip"]', 6, 'DOCUMENTOS'),
+                ('PLANTAS_ZIP_ORDENAMENTO_DEP', 'Planta de Ordenamento', 'Planta de Ordenamento',
+                 'DEPOSITO', 'PECA_GRAFICA', 'NAO_EDITAVEL', '["zip"]', 7, 'PLANTAS'),
+                ('PLANTAS_ZIP_CONDICIONANTES_DEP', 'Planta de Condicionantes', 'Planta de Condicionantes',
+                 'DEPOSITO', 'PECA_GRAFICA', 'NAO_EDITAVEL', '["zip"]', 8, 'PLANTAS'),
+                ('PLANTAS_TXT_NOMES_DEP', 'Nomes das plantas', 'Nomes das plantas conforme o regulamento',
+                 'DEPOSITO', 'OUTROS', 'NAO_EDITAVEL', '["txt"]', 9, 'PLANTAS'),
+                ('PLANTAS_CARTOGRAMA_DEP', 'Cartograma das folhas', 'Cartograma das folhas',
+                 'DEPOSITO', 'OUTROS', 'NAO_EDITAVEL', '["pdf", "jpg", "png"]', 10, 'PLANTAS')
+            ) AS item(codigo, separador, nome, categoria, tipo_elemento, formato, extensoes, ordem, pagina)
+        </sql>
+
+        <rollback>
+            <delete tableName="documento_config">
+                <where>instrumento_procedimento_config_id IN (201, 205) AND codigo IN ('PLANTA_AREA_INTERVENCAO_PUB',
+                    'PLANTA_AREA_INTERVENCAO_DEP', 'PLANTAS_ZIP_ORDENAMENTO_DEP', 'PLANTAS_ZIP_CONDICIONANTES_DEP',
+                    'PLANTAS_TXT_NOMES_DEP', 'PLANTAS_CARTOGRAMA_DEP')</where>
+            </delete>
+            <dropTable tableName="processo_metadados"/>
+            <dropTable tableName="processo_planta"/>
+            <sql>ALTER TABLE documento_config DROP CONSTRAINT ck_documento_config_pagina</sql>
+            <dropColumn tableName="documento_config" columnName="pagina"/>
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>

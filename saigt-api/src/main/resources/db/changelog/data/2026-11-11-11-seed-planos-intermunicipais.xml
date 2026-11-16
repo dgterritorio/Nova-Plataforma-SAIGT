@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <!--
+        Planos intermunicipais PDIM, PUIM e PPIM: o PDIM espelha o PDM e o PUIM e o PPIM espelham o PU e o PP, todos
+        sem a Alteração Simplificada DL 10/2024 (FR-180; premissa do OI-244). Sem ids explícitos: as linhas usam a
+        sequência de cada tabela e as FK resolvem-se pelo código, para não colidir com outros seeds. Os UPDATEs que
+        já anteciparam estes códigos (IDTYPE do SNIT, âmbito territorial, Abertura de Discussão Pública repetível,
+        Constituição da CC visível na Dinâmica e criada pela CCDR) correram antes de as linhas existirem, por isso os
+        valores ficam escritos aqui.
+    -->
+
+    <changeSet id="2026-11-11-11-seed-planos-intermunicipais-tipo-instrumento" author="david.raposo">
+        <insert tableName="tipo_instrumento">
+            <column name="codigo" value="PDIM"/>
+            <column name="nome" value="Plano Diretor Intermunicipal"/>
+            <column name="categoria" value="PLANO"/>
+            <column name="snit_codigo" value="53"/>
+            <column name="ambito_territorial" value="INTERMUNICIPAL"/>
+            <column name="ativo" valueBoolean="true"/>
+        </insert>
+        <insert tableName="tipo_instrumento">
+            <column name="codigo" value="PUIM"/>
+            <column name="nome" value="Plano de Urbanização Intermunicipal"/>
+            <column name="categoria" value="PLANO"/>
+            <column name="snit_codigo" value="54"/>
+            <column name="ambito_territorial" value="INTERMUNICIPAL"/>
+            <column name="ativo" valueBoolean="true"/>
+        </insert>
+        <insert tableName="tipo_instrumento">
+            <column name="codigo" value="PPIM"/>
+            <column name="nome" value="Plano de Pormenor Intermunicipal"/>
+            <column name="categoria" value="PLANO"/>
+            <column name="snit_codigo" value="55"/>
+            <column name="ambito_territorial" value="INTERMUNICIPAL"/>
+            <column name="ativo" valueBoolean="true"/>
+        </insert>
+
+        <rollback>
+            <sql>DELETE FROM tipo_instrumento WHERE codigo IN ('PDIM', 'PUIM', 'PPIM')</sql>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="2026-11-11-11-seed-planos-intermunicipais-dinamicas" author="david.raposo">
+        <sql>INSERT INTO instrumento_dinamica_config (tipo_instrumento_id, tipo_dinamica_id, ativo, associacao_instrumentos)
+            SELECT ti.id, td.id, true, 'UM'
+            FROM (VALUES (1, 'ELABORACAO'), (2, 'REVISAO'), (3, 'ALTERACAO'), (4, 'ALTERACAO_RERAE'),
+                         (5, 'ALTERACAO_SIMPLIFICADA_ART123'), (6, 'ALTERACAO_ADAPTACAO'), (7, 'CORRECAO_MATERIAL'),
+                         (8, 'REVOGACAO'))
+                 AS v (ordem, tipo_dinamica)
+            JOIN tipo_dinamica td ON td.codigo = v.tipo_dinamica
+            CROSS JOIN tipo_instrumento ti
+            WHERE ti.codigo IN ('PDIM', 'PUIM', 'PPIM')
+            ORDER BY ti.id, v.ordem</sql>
+
+        <rollback>
+            <sql>DELETE FROM instrumento_dinamica_config
+                WHERE tipo_instrumento_id IN (SELECT id FROM tipo_instrumento WHERE codigo IN ('PDIM', 'PUIM', 'PPIM'))</sql>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="2026-11-11-11-seed-planos-intermunicipais-procedimentos" author="david.raposo">
+        <comment>
+            PDIM com a Constituição da Comissão Consultiva na Elaboração e na Revisão (FR-146), na 2.ª série parte C;
+            PUIM e PPIM sem ela. Só a Abertura de Discussão Pública se repete (OI-406). O código IDUS de cada Procedimento
+            é o do catálogo IDUS por Dinâmica e Procedimento, o mesmo dos planos municipais.
+        </comment>
+        <sql>INSERT INTO instrumento_procedimento_config (instrumento_dinamica_config_id, tipo_procedimento_id, ordem,
+                obrigatorio, serie_dr, ativo, tamanho_maximo_processo, repetivel, ato_pontual, visivel_na_dinamica, codigo_idus)
+            SELECT idc.id, tp.id, v.ordem, true, v.serie_dr, true, 5368709120,
+                   tp.codigo = 'ABERTURA_DISCUSSAO_PUBLICA', false, tp.codigo = 'CONSTITUICAO_CC', idus.codigo_idus
+            FROM (SELECT * FROM (VALUES ('PDIM', 'ELABORACAO', 1, 'DECISAO_INICIO', 'SEGUNDA_H'),
+                         ('PDIM', 'ELABORACAO', 2, 'CONSTITUICAO_CC', 'SEGUNDA_C'),
+                         ('PDIM', 'ELABORACAO', 3, 'ABERTURA_DISCUSSAO_PUBLICA', 'SEGUNDA_H'),
+                         ('PDIM', 'ELABORACAO', 4, 'ELABORACAO', 'SEGUNDA_H'),
+                         ('PDIM', 'REVISAO', 1, 'DECISAO_INICIO', 'SEGUNDA_H'),
+                         ('PDIM', 'REVISAO', 2, 'CONSTITUICAO_CC', 'SEGUNDA_C'),
+                         ('PDIM', 'REVISAO', 3, 'ABERTURA_DISCUSSAO_PUBLICA', 'SEGUNDA_H'),
+                         ('PDIM', 'REVISAO', 4, 'REVISAO', 'SEGUNDA_H'),
+                         ('PUIM', 'ELABORACAO', 1, 'DECISAO_INICIO', 'SEGUNDA_H'),
+                         ('PUIM', 'ELABORACAO', 2, 'ABERTURA_DISCUSSAO_PUBLICA', 'SEGUNDA_H'),
+                         ('PUIM', 'ELABORACAO', 3, 'ELABORACAO', 'SEGUNDA_H'),
+                         ('PUIM', 'REVISAO', 1, 'DECISAO_INICIO', 'SEGUNDA_H'),
+                         ('PUIM', 'REVISAO', 2, 'ABERTURA_DISCUSSAO_PUBLICA', 'SEGUNDA_H'),
+                         ('PUIM', 'REVISAO', 3, 'REVISAO', 'SEGUNDA_H'),
+                         ('PPIM', 'ELABORACAO', 1, 'DECISAO_INICIO', 'SEGUNDA_H'),
+                         ('PPIM', 'ELABORACAO', 2, 'ABERTURA_DISCUSSAO_PUBLICA', 'SEGUNDA_H'),
+                         ('PPIM', 'ELABORACAO', 3, 'ELABORACAO', 'SEGUNDA_H'),
+                         ('PPIM', 'REVISAO', 1, 'DECISAO_INICIO', 'SEGUNDA_H'),
+                         ('PPIM', 'REVISAO', 2, 'ABERTURA_DISCUSSAO_PUBLICA', 'SEGUNDA_H'),
+                         ('PPIM', 'REVISAO', 3, 'REVISAO', 'SEGUNDA_H'))
+                         AS proprios (tipo_instrumento, tipo_dinamica, ordem, tipo_procedimento, serie_dr)
+                  UNION ALL
+                  SELECT planos.codigo, comuns.tipo_dinamica, comuns.ordem, comuns.tipo_procedimento, 'SEGUNDA_H'
+                  FROM (VALUES ('ALTERACAO', 1, 'DECISAO_INICIO'),
+                         ('ALTERACAO', 2, 'ABERTURA_DISCUSSAO_PUBLICA'),
+                         ('ALTERACAO', 3, 'ALTERACAO'),
+                         ('ALTERACAO_RERAE', 1, 'ABERTURA_DISCUSSAO_PUBLICA_RERAE'),
+                         ('ALTERACAO_RERAE', 2, 'ALTERACAO_RERAE'),
+                         ('ALTERACAO_SIMPLIFICADA_ART123', 1, 'DECISAO_INICIO'),
+                         ('ALTERACAO_SIMPLIFICADA_ART123', 2, 'ALTERACAO_SIMPLIFICADA'),
+                         ('ALTERACAO_ADAPTACAO', 1, 'ALTERACAO_ADAPTACAO'),
+                         ('CORRECAO_MATERIAL', 1, 'CORRECAO_MATERIAL'),
+                         ('REVOGACAO', 1, 'REVOGACAO'))
+                         AS comuns (tipo_dinamica, ordem, tipo_procedimento)
+                  CROSS JOIN (VALUES ('PDIM'), ('PUIM'), ('PPIM')) AS planos (codigo))
+                 AS v
+            JOIN tipo_instrumento ti ON ti.codigo = v.tipo_instrumento
+            JOIN tipo_dinamica td ON td.codigo = v.tipo_dinamica
+            JOIN instrumento_dinamica_config idc ON idc.tipo_instrumento_id = ti.id AND idc.tipo_dinamica_id = td.id
+            JOIN tipo_procedimento tp ON tp.codigo = v.tipo_procedimento
+            LEFT JOIN (VALUES ('ELABORACAO', 'DECISAO_INICIO', '029'), ('ELABORACAO', 'CONSTITUICAO_CC', '038'),
+                              ('ELABORACAO', 'ABERTURA_DISCUSSAO_PUBLICA', '033'), ('ELABORACAO', 'ELABORACAO', '001'),
+                              ('REVISAO', 'DECISAO_INICIO', '030'), ('REVISAO', 'CONSTITUICAO_CC', '039'),
+                              ('REVISAO', 'ABERTURA_DISCUSSAO_PUBLICA', '060'), ('REVISAO', 'REVISAO', '003'),
+                              ('ALTERACAO', 'DECISAO_INICIO', '031'), ('ALTERACAO', 'ABERTURA_DISCUSSAO_PUBLICA', '034'),
+                              ('ALTERACAO', 'ALTERACAO', '002'), ('ALTERACAO_RERAE', 'ALTERACAO_RERAE', '040'),
+                              ('ALTERACAO_SIMPLIFICADA_ART123', 'DECISAO_INICIO', '032'),
+                              ('ALTERACAO_SIMPLIFICADA_ART123', 'ALTERACAO_SIMPLIFICADA', '006'),
+                              ('ALTERACAO_ADAPTACAO', 'ALTERACAO_ADAPTACAO', '004'),
+                              ('CORRECAO_MATERIAL', 'CORRECAO_MATERIAL', '010'), ('REVOGACAO', 'REVOGACAO', '015'))
+                 AS idus (tipo_dinamica, tipo_procedimento, codigo_idus)
+                 ON idus.tipo_dinamica = v.tipo_dinamica AND idus.tipo_procedimento = v.tipo_procedimento
+            ORDER BY idc.id, v.ordem</sql>
+
+        <rollback>
+            <sql>DELETE FROM instrumento_procedimento_config
+                WHERE instrumento_dinamica_config_id IN (SELECT idc.id FROM instrumento_dinamica_config idc
+                JOIN tipo_instrumento ti ON ti.id = idc.tipo_instrumento_id WHERE ti.codigo IN ('PDIM', 'PUIM', 'PPIM'))</sql>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="2026-11-11-11-seed-planos-intermunicipais-permissoes" author="david.raposo">
+        <comment>
+            Câmara e DGT em cada Procedimento (FR-160), exceto a Constituição da Comissão Consultiva, criada pela CCDR
+            em vez da Câmara (EF v1.5 §3.5.1.3; OI-234), como no PDM.
+        </comment>
+        <sql>INSERT INTO permissao_acao (tipo_entidade, instrumento_procedimento_config_id, ativo)
+            SELECT v.tipo_entidade, ipc.id, true
+            FROM instrumento_procedimento_config ipc
+            JOIN instrumento_dinamica_config idc ON idc.id = ipc.instrumento_dinamica_config_id
+            JOIN tipo_instrumento ti ON ti.id = idc.tipo_instrumento_id
+            JOIN tipo_procedimento tp ON tp.id = ipc.tipo_procedimento_id
+            CROSS JOIN LATERAL (VALUES (1, CASE WHEN tp.codigo = 'CONSTITUICAO_CC' THEN 'CCDR_DR' ELSE 'CM' END),
+                                       (2, 'DGT')) AS v (ordem, tipo_entidade)
+            WHERE ti.codigo IN ('PDIM', 'PUIM', 'PPIM')
+            ORDER BY ipc.id, v.ordem</sql>
+
+        <rollback>
+            <sql>DELETE FROM permissao_acao
+                WHERE instrumento_procedimento_config_id IN (SELECT ipc.id FROM instrumento_procedimento_config ipc
+                JOIN instrumento_dinamica_config idc ON idc.id = ipc.instrumento_dinamica_config_id
+                JOIN tipo_instrumento ti ON ti.id = idc.tipo_instrumento_id WHERE ti.codigo IN ('PDIM', 'PUIM', 'PPIM'))</sql>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="2026-11-11-11-seed-planos-intermunicipais-regras" author="david.raposo">
+        <sql>INSERT INTO regra (instrumento_dinamica_config_id, operador, substitui_sequenciamento, descricao, ativo)
+            SELECT idc.id, 'AND', false, v.descricao, true
+            FROM (VALUES ('ELABORACAO', 'Elaboração é única'),
+                         ('REVISAO', 'Requer plano em vigor; só 1 Revisão em curso'),
+                         ('ALTERACAO', 'Requer plano em vigor'),
+                         ('ALTERACAO_RERAE', 'Requer plano em vigor'),
+                         ('ALTERACAO_SIMPLIFICADA_ART123', 'Requer plano em vigor'),
+                         ('ALTERACAO_ADAPTACAO', 'Requer plano em vigor'),
+                         ('CORRECAO_MATERIAL', 'Requer plano em vigor'),
+                         ('REVOGACAO', 'Requer plano em vigor; Revogação é única'))
+                 AS v (tipo_dinamica, descricao)
+            JOIN tipo_dinamica td ON td.codigo = v.tipo_dinamica
+            JOIN instrumento_dinamica_config idc ON idc.tipo_dinamica_id = td.id
+            JOIN tipo_instrumento ti ON ti.id = idc.tipo_instrumento_id AND ti.codigo IN ('PDIM', 'PUIM', 'PPIM')
+            ORDER BY idc.id</sql>
+
+        <rollback>
+            <sql>DELETE FROM regra
+                WHERE instrumento_dinamica_config_id IN (SELECT idc.id FROM instrumento_dinamica_config idc
+                JOIN tipo_instrumento ti ON ti.id = idc.tipo_instrumento_id WHERE ti.codigo IN ('PDIM', 'PUIM', 'PPIM'))</sql>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="2026-11-11-11-seed-planos-intermunicipais-condicoes" author="david.raposo">
+        <sql>INSERT INTO condicao (regra_id, avaliador, parametros, grupo, ativo)
+            SELECT r.id, v.avaliador, CAST(v.parametros AS jsonb), 1, true
+            FROM (VALUES ('ELABORACAO', 1, 'OCORRENCIA_NAO_EXISTE', '{"tipo_ocorrencia": "DINAMICA", "codigo": "ELABORACAO"}'),
+                         ('REVISAO', 1, 'INSTRUMENTO_EM_VIGOR', '{}'),
+                         ('REVISAO', 2, 'OCORRENCIA_NAO_EXISTE', '{"tipo_ocorrencia": "DINAMICA", "codigo": "REVISAO", "estado": "EM_CURSO"}'),
+                         ('ALTERACAO', 1, 'INSTRUMENTO_EM_VIGOR', '{}'),
+                         ('ALTERACAO_RERAE', 1, 'INSTRUMENTO_EM_VIGOR', '{}'),
+                         ('ALTERACAO_SIMPLIFICADA_ART123', 1, 'INSTRUMENTO_EM_VIGOR', '{}'),
+                         ('ALTERACAO_ADAPTACAO', 1, 'INSTRUMENTO_EM_VIGOR', '{}'),
+                         ('CORRECAO_MATERIAL', 1, 'INSTRUMENTO_EM_VIGOR', '{}'),
+                         ('REVOGACAO', 1, 'INSTRUMENTO_EM_VIGOR', '{}'),
+                         ('REVOGACAO', 2, 'OCORRENCIA_NAO_EXISTE', '{"tipo_ocorrencia": "DINAMICA", "codigo": "REVOGACAO"}'))
+                 AS v (tipo_dinamica, ordem, avaliador, parametros)
+            JOIN tipo_dinamica td ON td.codigo = v.tipo_dinamica
+            JOIN instrumento_dinamica_config idc ON idc.tipo_dinamica_id = td.id
+            JOIN tipo_instrumento ti ON ti.id = idc.tipo_instrumento_id AND ti.codigo IN ('PDIM', 'PUIM', 'PPIM')
+            JOIN regra r ON r.instrumento_dinamica_config_id = idc.id
+            ORDER BY r.id, v.ordem</sql>
+
+        <rollback>
+            <sql>DELETE FROM condicao WHERE regra_id IN (SELECT r.id FROM regra r
+                JOIN instrumento_dinamica_config idc ON idc.id = r.instrumento_dinamica_config_id
+                JOIN tipo_instrumento ti ON ti.id = idc.tipo_instrumento_id WHERE ti.codigo IN ('PDIM', 'PUIM', 'PPIM'))</sql>
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>

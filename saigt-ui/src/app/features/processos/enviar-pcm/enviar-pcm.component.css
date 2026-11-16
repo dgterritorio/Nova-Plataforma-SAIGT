@@ -1,0 +1,21 @@
+.corpo {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaco-3);
+  padding: var(--espaco-1) var(--espaco-7);
+}
+
+.contexto {
+  margin: 0;
+  font-size: var(--texto-sm);
+  line-height: var(--texto-sm-linha);
+  color: var(--cor-texto-secundario);
+}
+
+.recarregar {
+  align-self: flex-start;
+}
+
+.acoes {
+  display: contents;
+}

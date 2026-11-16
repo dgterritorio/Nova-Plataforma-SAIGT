@@ -1,0 +1,7 @@
+Warning 1: HTTP response code on http://rustfs:9000/saigt-documentos/processos/2026-000123/DEPOSITO/0b7d-plantas.zip: 0
+Warning 1: HTTP response code on http://rustfs:9000/saigt-documentos/processos/2026-000123/DEPOSITO/0b7d-plantas.zip: 0
+Warning 1: HTTP response code on http://rustfs:9000/saigt-documentos/processos/2026-000123/DEPOSITO/0b7d-plantas.zip: 0
+Warning 1: HTTP response code on http://rustfs:9000/saigt-documentos/processos/2026-000123/DEPOSITO/0b7d-plantas.zip: 0
+Warning 1: HTTP response code on http://rustfs:9000/saigt-documentos/processos/2026-000123/DEPOSITO/0b7d-plantas.zip: 0
+ERROR 4: `/vsizip//vsis3/saigt-documentos/processos/2026-000123/DEPOSITO/0b7d-plantas.zip/geotif1204_ren.tif' does not exist in the file system, and is not recognized as a supported dataset name.
+gdalinfo failed - unable to open '/vsizip//vsis3/saigt-documentos/processos/2026-000123/DEPOSITO/0b7d-plantas.zip/geotif1204_ren.tif'.

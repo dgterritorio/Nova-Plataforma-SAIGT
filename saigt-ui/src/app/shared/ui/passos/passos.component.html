@@ -1,0 +1,22 @@
+<ol class="passos" aria-label="Passos">
+  @for (passo of passos(); track $index; let i = $index) {
+    @if (i > 0) {
+      <li class="conector" [class.conector-concluido]="estado(i - 1) === 'concluido'" aria-hidden="true"></li>
+    }
+    <li [class]="'passo passo-' + estado(i)" [attr.aria-current]="estado(i) === 'atual' ? 'step' : null">
+      <span class="passo-numero" aria-hidden="true">
+        @if (estado(i) === 'concluido') {
+          <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M2.5 6.2l2.2 2.2L9.5 3.6" />
+          </svg>
+        } @else {
+          {{ i + 1 }}
+        }
+      </span>
+      <span class="passo-etiqueta">{{ passo.etiqueta }}</span>
+      @if (estado(i) === 'concluido') {
+        <span class="visualmente-oculto">(concluído)</span>
+      }
+    </li>
+  }
+</ol>

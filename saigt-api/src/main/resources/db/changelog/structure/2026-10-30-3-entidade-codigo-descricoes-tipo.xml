@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="2026-10-30-3-entidade-codigo-descricoes-tipo" author="david.raposo">
+        <comment>
+            Entidade SAIGT (DB-IAM-002): `nome` passa a `descricao_incm`; novas `descricao_saigt`, `codigo` e
+            `tipo_entidade`. `codigo` e `tipo_entidade` ficam anuláveis enquanto o login INCM ainda cria
+            entidades; as linhas existentes ficam sem eles.
+        </comment>
+
+        <renameColumn tableName="entidade" oldColumnName="nome" newColumnName="descricao_incm"
+                      columnDataType="VARCHAR(200)"/>
+
+        <addColumn tableName="entidade">
+            <column name="descricao_saigt" type="VARCHAR(200)"/>
+            <column name="codigo" type="VARCHAR(20)"/>
+            <column name="tipo_entidade" type="VARCHAR(20)"/>
+        </addColumn>
+
+        <update tableName="entidade">
+            <column name="descricao_saigt" valueComputed="descricao_incm"/>
+        </update>
+
+        <addNotNullConstraint tableName="entidade" columnName="descricao_saigt" columnDataType="VARCHAR(200)"/>
+
+        <addUniqueConstraint tableName="entidade" columnNames="codigo" constraintName="uq_entidade_codigo"/>
+
+        <sql>
+            ALTER TABLE entidade ADD CONSTRAINT ck_entidade_tipo_entidade CHECK (tipo_entidade IS NULL OR
+            tipo_entidade IN ('CM', 'CCDR_DR', 'AM', 'CIM', 'PCM', 'SEC_ESTADO', 'DGT', 'ICNF', 'APA', 'DGPC', 'IP'))
+        </sql>
+
+        <createIndex tableName="entidade" indexName="idx_entidade_tipo_entidade">
+            <column name="tipo_entidade"/>
+        </createIndex>
+
+        <rollback>
+            <dropIndex tableName="entidade" indexName="idx_entidade_tipo_entidade"/>
+            <sql>ALTER TABLE entidade DROP CONSTRAINT ck_entidade_tipo_entidade</sql>
+            <dropUniqueConstraint tableName="entidade" constraintName="uq_entidade_codigo"/>
+            <dropColumn tableName="entidade" columnName="tipo_entidade"/>
+            <dropColumn tableName="entidade" columnName="codigo"/>
+            <dropColumn tableName="entidade" columnName="descricao_saigt"/>
+            <renameColumn tableName="entidade" oldColumnName="descricao_incm" newColumnName="nome"
+                          columnDataType="VARCHAR(200)"/>
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>

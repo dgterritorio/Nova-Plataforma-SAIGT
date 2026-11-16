@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="2026-11-13-4-drop-nut-e-nut-ii-do-instrumento" author="arnaldo.costa">
+        <comment>
+            A NUT II e os concelhos vêm só da réplica do SNIT (`snit_referencia`): a NUT II do Instrumento obtém-se do
+            concelho, sem coluna própria, e a tabela `nut` deixa de ser lida. O rollback repõe a coluna e a tabela vazias.
+        </comment>
+
+        <dropColumn tableName="instrumento" columnName="nut_ii_codigo"/>
+        <dropTable tableName="nut"/>
+
+        <rollback>
+            <createTable tableName="nut">
+                <column name="id" type="BIGINT" autoIncrement="true">
+                    <constraints primaryKey="true" nullable="false"/>
+                </column>
+                <column name="codigo" type="VARCHAR(10)">
+                    <constraints nullable="false" unique="true" uniqueConstraintName="uq_nut_codigo"/>
+                </column>
+                <column name="nome" type="VARCHAR(100)">
+                    <constraints nullable="false"/>
+                </column>
+                <column name="ordem" type="INTEGER">
+                    <constraints nullable="false"/>
+                </column>
+                <column name="ativo" type="BOOLEAN" defaultValueBoolean="true">
+                    <constraints nullable="false"/>
+                </column>
+            </createTable>
+            <addColumn tableName="instrumento">
+                <column name="nut_ii_codigo" type="VARCHAR(10)"/>
+            </addColumn>
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>

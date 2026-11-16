@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="2026-10-27-8-add-id-igt-snit-instrumento" author="david.raposo">
+        <comment>Instrumento (DB-PROC-012): identificador do IGT no SNIT.</comment>
+
+        <addColumn tableName="instrumento">
+            <column name="id_igt_snit" type="VARCHAR(50)"/>
+        </addColumn>
+        <createIndex tableName="instrumento" indexName="idx_instrumento_id_igt_snit">
+            <column name="id_igt_snit"/>
+        </createIndex>
+
+        <rollback>
+            <dropIndex tableName="instrumento" indexName="idx_instrumento_id_igt_snit"/>
+            <dropColumn tableName="instrumento" columnName="id_igt_snit"/>
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="2026-11-13-1-decisao-elaborar-sem-plantas" author="david.raposo">
+        <comment>
+            A Decisão de elaborar (procedimentos 201 e 205) não tem a página das Plantas nem a ficha de metadados: o Figma
+            estava errado neste fluxo. Desativam-se os itens da página PLANTAS; sem eles o processo deixa de exigir plantas
+            e metadados. A «Planta com área de intervenção» fica nos documentos.
+        </comment>
+
+        <sql>
+            UPDATE documento_config SET ativo = FALSE
+            WHERE instrumento_procedimento_config_id IN (201, 205) AND pagina = 'PLANTAS'
+        </sql>
+
+        <rollback>
+            <sql>
+                UPDATE documento_config SET ativo = TRUE
+                WHERE instrumento_procedimento_config_id IN (201, 205) AND pagina = 'PLANTAS'
+            </sql>
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>

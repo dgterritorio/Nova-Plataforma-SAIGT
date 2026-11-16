@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="2026-11-11-5-utilizador-email-opcional-dgt" author="arnaldo.costa">
+        <comment>
+            O email passa a opcional (DB-IAM-001): o AD da DGT não devolve dados e a conta AD_DGT nasce no primeiro
+            login só com o nome de autenticação; o email é indicado depois pelo próprio no Perfil. A unicidade
+            mantém-se quando está preenchido.
+            Rollback: volta a obrigatório; falha enquanto houver contas sem email, que é preciso completar antes.
+        </comment>
+        <dropNotNullConstraint tableName="utilizador" columnName="email" columnDataType="VARCHAR(200)"/>
+
+        <rollback>
+            <addNotNullConstraint tableName="utilizador" columnName="email" columnDataType="VARCHAR(200)"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="2026-11-11-5-utilizador-dgt-nome-autenticacao" author="arnaldo.costa">
+        <comment>
+            Nas contas AD_DGT o nome passa a ser o nome de autenticação no AD (DB-IAM-001, TR-145), que é a chave de
+            correspondência do login: a parte do email antes de @ (ex.: «Ana Silva», ana.silva@dgt.pt → ana.silva).
+            Só há contas destas em desenvolvimento e teste.
+            Rollback: sem efeito. O nome anterior (o de apresentação) não fica guardado e o login AD não o volta a
+            escrever, por isso não é reposto.
+        </comment>
+        <sql>UPDATE utilizador SET nome = split_part(email, '@', 1)
+            WHERE origem_autenticacao = 'AD_DGT' AND email IS NOT NULL AND position('@' IN email) > 1</sql>
+
+        <rollback/>
+    </changeSet>
+
+</databaseChangeLog>

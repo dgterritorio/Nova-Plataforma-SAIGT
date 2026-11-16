@@ -1,0 +1,23 @@
+<p class="paginacao-resumo">Mostrando {{ quantidade() }} de {{ total() }} {{ etiquetaItens() }}</p>
+<nav class="paginacao-paginas" aria-label="Paginação">
+  <button type="button" class="paginacao-extremo" [disabled]="pagina() <= 1" (click)="irPara(pagina() - 1)">Anterior</button>
+  @for (item of itens(); track $index) {
+    @if (item === 'reticencias') {
+      <span class="paginacao-reticencias" aria-hidden="true">…</span>
+    } @else {
+      <button
+        type="button"
+        class="paginacao-numero"
+        [class.paginacao-numero-atual]="item === pagina()"
+        [attr.aria-current]="item === pagina() ? 'page' : null"
+        [attr.aria-label]="'Página ' + item"
+        (click)="irPara(item)"
+      >
+        {{ item }}
+      </button>
+    }
+  }
+  <button type="button" class="paginacao-extremo" [disabled]="pagina() >= totalPaginas()" (click)="irPara(pagina() + 1)">
+    Próximo
+  </button>
+</nav>

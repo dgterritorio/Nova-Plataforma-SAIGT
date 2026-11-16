@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="2026-11-06-1-create-processo-validacao-rejeicao" author="margarida.marques">
+        <comment>
+            Rascunho da validação DGT: uma linha por item rejeitado na validação em curso, com categoria, motivo e
+            notas, para a validação poder ser feita em várias vezes. Ao contrário de processo_rejeicao_item, altera-se
+            e apaga-se: «Confirmar Rejeição» cria a recusa a partir daqui e apaga as linhas do processo.
+            A categoria e o motivo são opcionais: as listas arrancam vazias e, enquanto uma estiver vazia, o campo
+            não aparece nem é obrigatório.
+        </comment>
+
+        <createTable tableName="processo_validacao_rejeicao">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="processo_id" type="UUID">
+                <constraints nullable="false" foreignKeyName="fk_processo_validacao_rejeicao_processo"
+                             references="processo(id)"/>
+            </column>
+            <column name="processo_documento_id" type="UUID">
+                <constraints foreignKeyName="fk_processo_validacao_rejeicao_documento"
+                             references="processo_documento(id)"
+                             unique="true" uniqueConstraintName="uq_processo_validacao_rejeicao_documento"/>
+            </column>
+            <column name="processo_informacao_base_id" type="UUID">
+                <constraints foreignKeyName="fk_processo_validacao_rejeicao_informacao_base"
+                             references="processo_informacao_base(id)"
+                             unique="true" uniqueConstraintName="uq_processo_validacao_rejeicao_informacao_base"/>
+            </column>
+            <column name="categoria_id" type="BIGINT">
+                <constraints foreignKeyName="fk_processo_validacao_rejeicao_categoria"
+                             references="lista_valores(id)"/>
+            </column>
+            <column name="motivo_id" type="BIGINT">
+                <constraints foreignKeyName="fk_processo_validacao_rejeicao_motivo"
+                             references="lista_valores(id)"/>
+            </column>
+            <column name="notas" type="TEXT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="atualizado_por" type="UUID">
+                <constraints nullable="false" foreignKeyName="fk_processo_validacao_rejeicao_atualizado_por"
+                             references="utilizador(id)"/>
+            </column>
+            <column name="atualizado_em" type="TIMESTAMP WITH TIME ZONE">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <sql>ALTER TABLE processo_validacao_rejeicao ADD CONSTRAINT ck_processo_validacao_rejeicao_alvo
+            CHECK ((processo_documento_id IS NULL) &lt;&gt; (processo_informacao_base_id IS NULL))</sql>
+        <sql>ALTER TABLE processo_validacao_rejeicao ADD CONSTRAINT ck_processo_validacao_rejeicao_notas
+            CHECK (length(trim(notas)) &gt; 0)</sql>
+
+        <createIndex tableName="processo_validacao_rejeicao" indexName="idx_processo_validacao_rejeicao_processo">
+            <column name="processo_id"/>
+        </createIndex>
+
+        <rollback>
+            <dropTable tableName="processo_validacao_rejeicao"/>
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>

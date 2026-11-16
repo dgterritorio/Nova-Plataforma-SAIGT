@@ -1,0 +1,33 @@
+<svg class="alerta-icone" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.33" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+  @switch (tipo()) {
+    @case ('sucesso') {
+      <circle cx="8" cy="8" r="6.5" />
+      <path d="M5.5 8.2l1.7 1.7 3.3-3.6" />
+    }
+    @case ('aviso') {
+      <path d="M8 2.2L1.6 13.3h12.8L8 2.2z" />
+      <path d="M8 6.5v3M8 11.5h.01" />
+    }
+    @case ('erro') {
+      <circle cx="8" cy="8" r="6.5" />
+      <path d="M8 5v3.5M8 11h.01" />
+    }
+    @default {
+      <circle cx="8" cy="8" r="6.5" />
+      <path d="M8 7.5V11M8 5h.01" />
+    }
+  }
+</svg>
+<div class="alerta-texto">
+  @if (titulo()) {
+    <p class="alerta-titulo">{{ titulo() }}</p>
+  }
+  <div class="alerta-mensagem"><ng-content /></div>
+</div>
+@if (fechavel()) {
+  <button type="button" class="alerta-fechar" aria-label="Fechar aviso" (click)="fechar.emit()">
+    <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.33" stroke-linecap="round" aria-hidden="true">
+      <path d="M12 4L4 12M4 4l8 8" />
+    </svg>
+  </button>
+}

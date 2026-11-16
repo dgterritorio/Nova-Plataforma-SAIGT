@@ -1,0 +1,2 @@
+ERROR 1: geotif1204_ren.tif: /vsizip//vsis3/saigt-documentos/processos/2026-000123/DEPOSITO/0b7d-plantas.zip/geotif1204_ren.tif:Cannot read TIFF header
+gdalinfo failed - unable to open '/vsizip//vsis3/saigt-documentos/processos/2026-000123/DEPOSITO/0b7d-plantas.zip/geotif1204_ren.tif'.

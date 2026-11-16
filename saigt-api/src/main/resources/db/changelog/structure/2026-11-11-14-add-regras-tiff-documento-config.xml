@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="2026-11-11-14-add-regras-tiff-documento-config" author="david.raposo">
+        <comment>
+            Regras do GeoTIFF configuráveis por item documental (DB-DOC-001, BL-DOC-019; OI-423, OI-442, OI-131): só nos
+            itens de peças gráficas. Os itens PECA_GRAFICA existentes ficam com a configuração inicial geral do manual
+            legado (TR-053), igual a RegrasTiff.inicialGeral(); um item criado depois por seed, com a coluna vazia, usa a
+            mesma configuração em DocumentoConfig.regrasTiffEfetivas().
+        </comment>
+
+        <addColumn tableName="documento_config">
+            <column name="regras_tiff" type="JSONB"/>
+        </addColumn>
+        <sql>ALTER TABLE documento_config ADD CONSTRAINT ck_documento_config_regras_tiff
+            CHECK (regras_tiff IS NULL OR tipo_elemento = 'PECA_GRAFICA')</sql>
+        <sql>UPDATE documento_config SET regras_tiff = '{"sistemasReferencia": ["EPSG:3763", "EPSG:5014", "EPSG:5015",
+            "EPSG:5016"], "compressoesAceites": ["NONE", "LZW"], "bandaAlfaTolerada": true, "modeloCor": null,
+            "bitsPorBanda": null, "resolucaoDpi": null, "elementosLegenda": ["ID do plano", "N.º de folha",
+            "Data de aprovação", "Identificação do procedimento"]}'::jsonb
+            WHERE tipo_elemento = 'PECA_GRAFICA' AND regras_tiff IS NULL</sql>
+
+        <rollback>
+            <sql>ALTER TABLE documento_config DROP CONSTRAINT ck_documento_config_regras_tiff</sql>
+            <dropColumn tableName="documento_config" columnName="regras_tiff"/>
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>

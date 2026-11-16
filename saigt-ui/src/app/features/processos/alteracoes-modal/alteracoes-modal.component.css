@@ -1,0 +1,188 @@
+.acoes {
+  display: contents;
+}
+
+/* Cartões de escolha (UI-068): duas colunas, traço de 2px, o escolhido a azul. */
+.cartoes {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--espaco-2);
+  padding: var(--espaco-2) 0;
+}
+
+.cartao {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--espaco-3);
+  padding: var(--espaco-3);
+  border: var(--borda-largura-opcao) solid var(--cor-borda);
+  border-radius: var(--raio-lg);
+  background: var(--cor-superficie);
+  font-family: var(--fonte-base);
+  text-align: left;
+  cursor: pointer;
+}
+
+.cartao:focus-visible {
+  outline: var(--anel-foco);
+  outline-offset: var(--anel-foco-afastamento);
+}
+
+.cartao:disabled {
+  background: var(--cor-superficie-alt);
+  cursor: not-allowed;
+}
+
+.cartao:hover:not(:disabled) {
+  border-color: var(--cor-borda-controlo);
+}
+
+.cartao.selecionado,
+.cartao.selecionado:hover {
+  border-color: var(--cor-primaria);
+  background: var(--cor-info-fundo);
+}
+
+.icone {
+  display: flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: var(--raio-md);
+  background: var(--cor-icone-opcao-fundo);
+  color: var(--cor-primaria);
+}
+
+.cartao.selecionado .icone {
+  background: transparent;
+}
+
+.cartao:disabled .icone {
+  background: var(--cor-borda-suave);
+  color: var(--cor-texto-secundario);
+}
+
+.icone svg {
+  width: 16px;
+  height: 16px;
+}
+
+.texto {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaco-0-5);
+  min-width: 0;
+}
+
+.titulo-cartao {
+  font-size: var(--texto-sm);
+  font-weight: var(--peso-semi);
+  line-height: var(--texto-sm-linha);
+  color: var(--cor-texto-rotulo);
+}
+
+.cartao:disabled .titulo-cartao {
+  color: var(--cor-texto-secundario);
+}
+
+/* O #94a3b8 do Figma fica a 2,6:1 sobre branco. */
+.contexto,
+.motivo {
+  font-size: var(--texto-xs);
+  line-height: var(--texto-xs-linha);
+  color: var(--cor-texto-nav);
+}
+
+.motivo {
+  color: var(--cor-aviso);
+}
+
+/* No UI-069 os campos têm 398px numa caixa de 503px. */
+.sub-ecra {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaco-3);
+  padding: var(--espaco-1) var(--espaco-7);
+}
+
+.estado-atual {
+  display: flex;
+  align-items: center;
+  gap: var(--espaco-1-5);
+  font-size: var(--texto-sm);
+  line-height: var(--texto-sm-linha);
+  color: var(--cor-texto-nav);
+}
+
+.estado-atual strong {
+  font-weight: var(--peso-semi);
+  color: var(--cor-texto);
+}
+
+.campo {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaco-1-5);
+}
+
+.rotulo {
+  font-size: var(--texto-sm);
+  font-weight: var(--peso-semi);
+  line-height: var(--texto-sm-linha);
+  color: var(--cor-texto-cartao);
+}
+
+.obrigatorio {
+  color: var(--cor-erro);
+}
+
+.campo textarea {
+  padding: var(--espaco-2) var(--espaco-3);
+  border: var(--borda-largura) solid var(--cor-borda);
+  border-radius: var(--raio-md);
+  background: var(--cor-superficie);
+  font-family: var(--fonte-base);
+  font-size: var(--texto-base);
+  line-height: var(--texto-base-linha);
+  color: var(--cor-texto);
+  resize: vertical;
+}
+
+.campo textarea:focus-visible {
+  outline: var(--anel-foco);
+  outline-offset: var(--anel-foco-afastamento);
+}
+
+.campo textarea:disabled {
+  background: var(--cor-superficie-alt);
+}
+
+.aviso-irreversivel {
+  margin: 0;
+  padding: var(--espaco-2-5) var(--espaco-3);
+  border-radius: var(--raio-md);
+  background: var(--cor-erro-fundo);
+  font-size: var(--texto-sm);
+  line-height: var(--texto-sm-linha);
+  color: var(--cor-selo-erro);
+}
+
+.aviso-campo {
+  margin: 0;
+  font-size: var(--texto-sm);
+  line-height: var(--texto-sm-linha);
+  color: var(--cor-aviso);
+}
+
+.recarregar {
+  align-self: flex-start;
+}
+
+.por-disponibilizar {
+  margin: 0;
+  font-size: var(--texto-base);
+  line-height: var(--texto-base-linha);
+  color: var(--cor-texto-secundario);
+}

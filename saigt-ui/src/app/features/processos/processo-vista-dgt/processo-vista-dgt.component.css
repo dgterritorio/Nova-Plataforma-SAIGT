@@ -1,0 +1,89 @@
+.conteudo {
+    max-width: 1257px;
+    margin: 0 auto;
+}
+
+.estado-carregamento {
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    color: #64748b;
+}
+
+.cabecalho {
+    margin-bottom: 16px;
+}
+
+.voltar {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
+    /* #64748b sobre o fundo da página (--cor-fundo) não chega a 4,5:1 (axe color-contrast). */
+    color: var(--cor-texto-celula);
+    text-decoration: none;
+    margin-bottom: 8px;
+}
+
+.voltar:hover {
+    color: #1a56a0;
+}
+
+.voltar svg {
+    width: 14px;
+    height: 14px;
+}
+
+.titulo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+h1 {
+    margin: 0;
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 28px;
+    color: #0f172b;
+}
+
+.etiqueta-tipo {
+    padding: 4px 10px;
+    border-radius: 9999px;
+    background: #eef2ff;
+    color: #3730a3;
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 16px;
+}
+
+.subtitulo {
+    margin: 4px 0 0;
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    color: var(--cor-texto-celula);
+}
+
+.destino-processo {
+    margin: 4px 0 0;
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    color: var(--cor-texto-celula);
+}
+
+.ver-detalhe {
+    display: inline-block;
+    margin-top: 8px;
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
+    color: #1a56a0;
+    text-decoration: none;
+}
+
+.ver-detalhe:hover {
+    text-decoration: underline;
+}

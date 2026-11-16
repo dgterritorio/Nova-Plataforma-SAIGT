@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="2026-11-12-4-seed-limite-processo-sgifr" author="david.raposo">
+        <comment>
+            Limite agregado de 5 GB por programa SGIFR (TR-068, OI-341): configuração inicial dos quatro Procedimentos
+            PUBLICACAO_SGIFR do PRA e do PSA, editável em backoffice. A verificação no carregamento é a do BL-DOC-017.
+            Configurações resolvidas pelo código, sem ids explícitos; o rollback repõe o valor nulo da configuração
+            do SGIFR.
+        </comment>
+
+        <sql>UPDATE instrumento_procedimento_config SET tamanho_maximo_processo = 5368709120
+            WHERE id IN (SELECT ipc.id FROM instrumento_procedimento_config ipc
+                JOIN tipo_procedimento tp ON tp.id = ipc.tipo_procedimento_id
+                JOIN instrumento_dinamica_config idc ON idc.id = ipc.instrumento_dinamica_config_id
+                JOIN tipo_instrumento ti ON ti.id = idc.tipo_instrumento_id
+                WHERE tp.codigo = 'PUBLICACAO_SGIFR' AND ti.codigo IN ('PRA', 'PSA'))</sql>
+
+        <rollback>
+            <sql>UPDATE instrumento_procedimento_config SET tamanho_maximo_processo = NULL
+                WHERE id IN (SELECT ipc.id FROM instrumento_procedimento_config ipc
+                    JOIN tipo_procedimento tp ON tp.id = ipc.tipo_procedimento_id
+                    JOIN instrumento_dinamica_config idc ON idc.id = ipc.instrumento_dinamica_config_id
+                    JOIN tipo_instrumento ti ON ti.id = idc.tipo_instrumento_id
+                    WHERE tp.codigo = 'PUBLICACAO_SGIFR' AND ti.codigo IN ('PRA', 'PSA'))</sql>
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>

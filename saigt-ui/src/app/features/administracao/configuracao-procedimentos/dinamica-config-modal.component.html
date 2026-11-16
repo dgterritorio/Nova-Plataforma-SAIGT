@@ -1,0 +1,30 @@
+<app-modal [titulo]="titulo()" [subtitulo]="tipoInstrumento()" largura="md" [aberto]="aberto()" (fechar)="fechar.emit()">
+  <form class="formulario" [id]="idFormulario" [formGroup]="formulario" (ngSubmit)="submeter()" novalidate>
+    @if (erroGeral(); as erro) {
+      <app-alerta tipo="erro" titulo="Não foi possível gravar a Dinâmica.">{{ erro.mensagem }}</app-alerta>
+    }
+    <app-seletor
+      formControlName="tipoDinamicaId"
+      rotulo="Tipo de Dinâmica"
+      [obrigatorio]="true"
+      [compacto]="true"
+      [opcoes]="opcoesTipo()"
+      [ajuda]="ajudaTipo()"
+      [erro]="erroDoCampo('tipoDinamicaId')"
+    />
+    <app-seletor
+      formControlName="associacaoInstrumentos"
+      rotulo="Associação de Instrumentos"
+      [obrigatorio]="true"
+      [compacto]="true"
+      [opcoes]="opcoesAssociacao"
+      [erro]="erroDoCampo('associacaoInstrumentos')"
+    />
+  </form>
+  <div rodape>
+    <button type="button" app-botao variante="secundario" tamanho="pequeno" (click)="fechar.emit()">Cancelar</button>
+    <button type="submit" app-botao tamanho="pequeno" [attr.form]="idFormulario" [aCarregar]="aGravar()" [desativado]="formulario.invalid">
+      Guardar
+    </button>
+  </div>
+</app-modal>

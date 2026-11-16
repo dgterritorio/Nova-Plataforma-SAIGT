@@ -1,0 +1,164 @@
+/* Figma UI-045: o título numa faixa de 1079px; os passos e o cartão numa coluna de 787px ao centro. */
+.criar {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--espaco-8);
+  padding-top: var(--espaco-topo-ecra);
+}
+
+h1 {
+  align-self: center;
+  width: 100%;
+  max-width: var(--contentor-titulo-assistente);
+  margin: 0;
+  font-size: var(--texto-xl);
+  font-weight: var(--peso-semi);
+  line-height: var(--texto-xl-linha);
+  color: var(--cor-texto);
+}
+
+.coluna {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaco-6);
+  width: 100%;
+  max-width: var(--contentor-assistente);
+}
+
+/* Figma UI-051 e UI-052: no Formulário, os cartões ocupam os 1050px, sem o cartão que envolve as outras páginas. */
+.coluna-formulario {
+  max-width: var(--contentor-formulario);
+}
+
+.identificacao {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--espaco-2-5) var(--espaco-8);
+  margin: 0;
+  padding: var(--espaco-2-5) var(--espaco-5);
+  background: var(--cor-superficie);
+  border: var(--borda-largura) solid var(--cor-borda);
+  border-radius: var(--raio-faixa);
+  color: var(--cor-identificacao);
+}
+
+.identificacao dt {
+  font-size: var(--texto-md);
+  font-weight: var(--peso-semi);
+  line-height: var(--texto-md-linha);
+}
+
+.identificacao dd {
+  margin: 0;
+  font-size: var(--texto-sm);
+  line-height: var(--texto-sm-linha);
+}
+
+/* O cartão projeta o conteúdo numa coluna: o espaço entre blocos é o do Figma (20px). */
+:host ::ng-deep .cartao-passo .cartao-conteudo {
+  gap: var(--espaco-5);
+}
+
+.navegacao-topo {
+  display: flex;
+  justify-content: space-between;
+}
+
+.acoes {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: var(--espaco-2);
+}
+
+.guardar-rascunho {
+  margin-right: auto;
+}
+
+/* Fica sobre o fundo da página, onde o cinza dos passos não chega a 4,5:1. */
+.dica-avancar {
+  margin: 0 auto 0 0;
+  font-size: var(--texto-sm);
+  line-height: var(--texto-sm-linha);
+  color: var(--cor-texto-passo-escolhido);
+}
+
+.banner-sucesso-acao {
+  padding: var(--espaco-2-5) var(--espaco-3);
+  border-radius: var(--raio-md);
+  background: var(--cor-sucesso-fundo);
+  font-size: var(--texto-base);
+  line-height: var(--texto-base-linha);
+  color: var(--cor-selo-sucesso);
+}
+
+/* Página dos documentos: um só cartão «Informação Geral», como no Figma da Elaboração. */
+.cartao-documentos {
+  overflow: hidden;
+  border: var(--borda-largura) solid var(--cor-borda);
+  border-radius: var(--raio-xl);
+  background: var(--cor-superficie);
+  box-shadow: var(--sombra-cartao);
+}
+
+.cartao-documentos-cabecalho {
+  margin: 0;
+  border-bottom: var(--borda-largura) solid var(--cor-borda);
+  background: var(--cor-cabecalho-cartao);
+  font-size: var(--texto-base);
+  font-weight: var(--peso-semi);
+  line-height: var(--texto-base-linha);
+  color: var(--cor-texto);
+}
+
+.cartao-documentos-alternar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: var(--espaco-6);
+  border: 0;
+  background: none;
+  font: inherit;
+  color: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.cartao-documentos-alternar:focus-visible {
+  outline: var(--anel-foco);
+  outline-offset: calc(var(--anel-foco-afastamento) * -1);
+}
+
+.cartao-documentos-alternar .chevron {
+  width: 16px;
+  height: 16px;
+  color: var(--cor-texto-secundario);
+  transition: transform 0.15s ease;
+}
+
+.cartao-documentos-alternar .chevron-recolhido {
+  transform: rotate(180deg);
+}
+
+.cartao-documentos-corpo {
+  padding: var(--espaco-6);
+}
+
+app-alerta.nota-rjigt {
+  padding: var(--espaco-5);
+  background: var(--cor-info-fundo);
+  border-color: var(--cor-nota-borda);
+  border-radius: var(--raio-lg);
+  color: var(--cor-texto-celula);
+  font-size: var(--texto-base);
+  line-height: var(--texto-base-linha-paragrafo);
+}
+
+app-alerta.aviso-documentos {
+  padding: var(--espaco-5);
+  border-width: var(--borda-largura) 0 0;
+  border-radius: var(--raio-faixa);
+}

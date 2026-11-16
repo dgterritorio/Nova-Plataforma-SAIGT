@@ -1,0 +1,25 @@
+<div class="separadores-lista" role="tablist" [attr.aria-label]="rotulo()">
+  @for (separador of separadores(); track separador.id; let i = $index) {
+    <button
+      #botao
+      type="button"
+      role="tab"
+      class="separador"
+      [class.separador-ativo]="separador.id === ativo()"
+      [id]="idSeparador(separador.id)"
+      [attr.aria-selected]="separador.id === ativo()"
+      [attr.aria-controls]="idPainel(separador.id)"
+      [attr.tabindex]="separador.id === ativo() ? 0 : -1"
+      (click)="ativar(separador.id)"
+      (keydown)="teclar($event, i)"
+    >
+      @if (separador.icone) {
+        <span class="separador-icone" aria-hidden="true" [style.--separador-icone]="'url(' + separador.icone + ')'"></span>
+      }
+      {{ separador.etiqueta }}
+      @if (separador.contador !== undefined) {
+        <span class="separador-contador">{{ separador.contador }}</span>
+      }
+    </button>
+  }
+</div>

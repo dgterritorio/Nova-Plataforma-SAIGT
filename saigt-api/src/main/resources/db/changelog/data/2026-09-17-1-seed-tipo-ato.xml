@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="2026-09-17-1-seed-tipo-ato" author="david.raposo">
+        <preConditions onFail="MARK_RAN">
+            <sqlCheck expectedResult="0">SELECT count(*) FROM tipo_ato</sqlCheck>
+        </preConditions>
+
+        <comment>
+            Catálogo `tipo_ato` — sem ele `POST /dinamicas/{id}/processos` é
+            impossível (`tipoAtoId` é @NotNull). Não está em
+            pdm-mapeamento-configuracao.md §13: os `ActTypeId` são do catálogo
+            da INCM e só a INCM os fixa. Os valores abaixo são os do mock
+            (`saigt-implementation/docker/incm-mock/mappings/`), pelo que a
+            Camada 3c passa de ponta a ponta em ambiente local — trocar pelos
+            ids de produção quando a INCM os fornecer, num changeset de
+            correcção (UPDATE das duas colunas, nunca DELETE: `processo.tipo_ato_id`
+            referencia estas linhas).
+
+            Precondição: só semeia com a tabela vazia. Ambientes que já têm
+            estas linhas inseridas à mão ficam intactos — marca como executado
+            e não toca em nada.
+        </comment>
+
+
+        <!-- 1.ª série — atos do Governo. Nenhum dos 20 procedimentos do PDM os usa
+             (são todos SEGUNDA_H/SEGUNDA_C, §13.5); ficam para Programas. -->
+        <loadData tableName="tipo_ato" file="db/data/2026-09-17-1-tipo_ato.csv"
+                  relativeToChangelogFile="false" separator=";" quotchar="&quot;" encoding="UTF-8">
+            <column name="id" type="NUMERIC"/>
+            <column name="codigo" type="STRING"/>
+            <column name="nome" type="STRING"/>
+            <column name="incm_act_type_id_serie_1" type="NUMERIC"/>
+            <column name="ordem" type="NUMERIC"/>
+            <column name="ativo" type="BOOLEAN"/>
+            <column name="incm_act_type_id_serie_2" type="NUMERIC"/>
+            <column name="nota" type="SKIP"/>
+        </loadData>
+
+        <sql dbms="postgresql">SELECT setval(pg_get_serial_sequence('tipo_ato', 'id'), (SELECT MAX(id) FROM tipo_ato))</sql>
+
+        <rollback>
+            <delete tableName="tipo_ato">
+                <where>id BETWEEN 1 AND 8</where>
+            </delete>
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>

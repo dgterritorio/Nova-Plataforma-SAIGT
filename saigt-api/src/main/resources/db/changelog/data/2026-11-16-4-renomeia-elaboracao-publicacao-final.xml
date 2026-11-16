@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="2026-11-16-4-renomeia-elaboracao-publicacao-final" author="david.raposo">
+        <comment>
+            O último Procedimento das Dinâmicas de Elaboração (tipo ELABORACAO) passa a chamar-se «Publicação final»
+            em vez de «Elaboração», o nome da própria Dinâmica. Muda só o nome: o código, o id e com eles as
+            configurações, os processos, os códigos IDUS e as regras de permissão mantêm-se. O CSV
+            tipo_procedimento.csv e o changeset 2026-09-10-2 não se alteram, para não mudar o checksum de um
+            changeset já aplicado.
+        </comment>
+        <sql>UPDATE tipo_procedimento SET nome = 'Publicação final' WHERE codigo = 'ELABORACAO'</sql>
+        <rollback>
+            <sql>UPDATE tipo_procedimento SET nome = 'Elaboração' WHERE codigo = 'ELABORACAO'</sql>
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>

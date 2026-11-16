@@ -1,0 +1,365 @@
+<app-shell breadcrumb="Utilizadores e permissões">
+  <div class="conteudo">
+    <div class="cabecalho">
+      <div>
+        <h1>Utilizadores e permissões</h1>
+        <p class="subtitulo">{{ totalRegistados() }} utilizadores registados</p>
+      </div>
+    </div>
+
+    <app-separadores
+      #seps
+      class="separadores"
+      rotulo="Utilizadores e permissões"
+      [separadores]="separadores()"
+      [(ativo)]="separadorAtivo"
+      (mudou)="limparAvisos()"
+    />
+
+    <div
+      role="tabpanel"
+      class="painel"
+      [id]="seps.idPainel(separadorAtivo())"
+      [attr.aria-labelledby]="seps.idSeparador(separadorAtivo())"
+    >
+      @if (separadorAtivo() !== 'perfis') {
+        @if (mensagemSucesso(); as mensagem) {
+          <app-alerta tipo="sucesso" class="alerta-sucesso">{{ mensagem }}</app-alerta>
+        }
+        <app-error-banner class="erro-acao" [erro]="erroAcao()" [mensagemDoServidor]="true" />
+      }
+
+      @switch (separadorAtivo()) {
+        @case ('perfis') {
+          <div class="grelha-perfis">
+            <section class="cartao-perfis" aria-labelledby="titulo-perfis-dgt">
+              <h2 id="titulo-perfis-dgt" class="perfis-titulo">Perfis DGT</h2>
+              <ul class="lista-perfis">
+                @for (perfil of perfis; track perfil) {
+                  <li>
+                    <button
+                      type="button"
+                      class="perfil"
+                      [class.perfil-selecionado]="perfilSelecionado() === perfil"
+                      [attr.aria-pressed]="perfilSelecionado() === perfil"
+                      (click)="escolherPerfil(perfil)"
+                    >
+                      <span class="perfil-linha">
+                        <span class="perfil-nome">{{ rotuloPerfil(perfil) }}</span>
+                        <span class="perfil-contador">
+                          {{ contagemPerfil()[perfil] ?? '—' }}<span class="visualmente-oculto">{{ contagemPerfil()[perfil] === 1 ? ' utilizador' : ' utilizadores' }}</span>
+                        </span>
+                      </span>
+                      <span class="perfil-descricao">{{ descricaoPerfil(perfil) }}</span>
+                    </button>
+                  </li>
+                }
+              </ul>
+              <div class="perfis-nota">
+                <p><strong>Nota:</strong> criar, continuar ou corrigir processos está reservado a utilizadores autenticados via INCM.</p>
+                <p>A matriz é informativa: a autorização é sempre verificada pelo servidor.</p>
+              </div>
+            </section>
+
+            <section class="cartao-permissoes" aria-labelledby="titulo-permissoes-perfil">
+              <div class="permissoes-cabecalho">
+                <div>
+                  <h2 id="titulo-permissoes-perfil" class="permissoes-titulo">{{ rotuloPerfil(perfilSelecionado()) }}</h2>
+                  <p class="permissoes-descricao">{{ descricaoPerfil(perfilSelecionado()) }}</p>
+                </div>
+                <p class="permissoes-contador">
+                  <span class="permissoes-contador-numero">{{ contagemPerfil()[perfilSelecionado()] ?? '—' }}</span>
+                  <span class="permissoes-contador-rotulo">{{ contagemPerfil()[perfilSelecionado()] === 1 ? 'utilizador' : 'utilizadores' }}</span>
+                </p>
+              </div>
+              @for (grupo of matriz; track grupo.titulo; let i = $index) {
+                <section class="grupo" [attr.aria-labelledby]="'grupo-permissoes-' + i">
+                  <h3 class="grupo-titulo" [id]="'grupo-permissoes-' + i">{{ grupo.titulo }}</h3>
+                  <ul class="grupo-lista">
+                    @for (permissao of grupo.permissoes; track permissao.nome) {
+                      @let acesso = permissao.acesso[perfilSelecionado()];
+                      <li class="permissao">
+                        <div class="permissao-texto">
+                          <span class="permissao-nome">{{ permissao.nome }}</span>
+                          @if (permissao.nota) {
+                            <span class="permissao-nota">{{ permissao.nota }}</span>
+                          }
+                        </div>
+                        <app-selo
+                          forma="pill"
+                          class="acesso"
+                          [class.acesso-permitido]="acesso === 'PERMITIDO'"
+                          [class.acesso-parcial]="acesso === 'PARCIAL'"
+                          [class.acesso-sem]="acesso === 'SEM_ACESSO'"
+                          [tom]="tomAcesso(acesso)"
+                        >
+                          <svg icone viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            @switch (acesso) {
+                              @case ('PERMITIDO') {
+                                <path d="M2.5 6.2l2.2 2.2 4.8-5" />
+                              }
+                              @case ('PARCIAL') {
+                                <path d="M3 6h6" />
+                              }
+                              @default {
+                                <path d="M3.5 3.5l5 5M8.5 3.5l-5 5" />
+                              }
+                            }
+                          </svg>
+                          {{ rotuloAcesso(acesso) }}
+                        </app-selo>
+                      </li>
+                    }
+                  </ul>
+                </section>
+              }
+            </section>
+          </div>
+        }
+
+        @case ('dgt') {
+          <app-cartao variante="elevado" espacamento="nenhum" class="cartao-utilizadores">
+            <div class="seccao-cabecalho">
+              <div>
+                <h2>Utilizadores DGT</h2>
+                <p class="seccao-descricao">Consulte os utilizadores e o respetivo perfil de acesso.</p>
+              </div>
+              <app-campo-pesquisa largura="cabecalho" placeholder="Pesquisar utilizador…" (pesquisar)="dgt.pesquisa.set($event)" />
+            </div>
+
+            @if (dgt.aCarregar()) {
+              <p class="estado">A carregar…</p>
+            } @else if (dgt.erro()) {
+              <div class="estado"><app-error-banner [erro]="dgt.erro()" /></div>
+            } @else {
+              <ul class="lista-utilizadores lista-dgt">
+                @for (linha of dgt.linhas(); track linha.utilizador.id) {
+                  <li class="utilizador">
+                    <div class="utilizador-quem">
+                      <span class="avatar" aria-hidden="true">{{ linha.iniciais }}</span>
+                      <div class="utilizador-info">
+                        <span class="nome">{{ linha.nome }}</span>
+                        <ng-container *ngTemplateOutlet="emailTpl; context: { $implicit: linha.utilizador.email }" />
+                      </div>
+                    </div>
+                    <div class="utilizador-meta">
+                      <span class="ultimo-acesso">
+                        Último acesso: {{ linha.utilizador.ultimoLoginEm ? (linha.utilizador.ultimoLoginEm | date: 'dd/MM/yyyy') : '—' }}
+                      </span>
+                      @if (linha.utilizador.perfilInterno; as perfil) {
+                        <app-selo class="papel">{{ rotuloPerfil(perfil) }}</app-selo>
+                      }
+                      <ng-container *ngTemplateOutlet="menuTpl; context: { $implicit: linha, dgt: true }" />
+                    </div>
+                  </li>
+                } @empty {
+                  <li class="vazio">Sem utilizadores para a pesquisa indicada.</li>
+                }
+              </ul>
+              <app-paginacao
+                [pagina]="dgt.pagina() + 1"
+                [tamanhoPagina]="tamanhoPagina"
+                [total]="dgt.totalElementos()"
+                [mostrados]="dgt.pesquisa() ? dgt.linhas().length : null"
+                etiquetaItens="utilizadores"
+                (paginaMudou)="irParaPagina(dgt, $event - 1)"
+              />
+            }
+          </app-cartao>
+        }
+
+        @case ('incm') {
+          <app-cartao variante="elevado" espacamento="nenhum" class="cartao-utilizadores">
+            <div class="seccao-cabecalho">
+              <div>
+                <h2>Utilizadores INCM</h2>
+                <p class="seccao-descricao">Consulte quem pertence a cada entidade e quem atuou por ela.</p>
+              </div>
+              <app-campo-pesquisa largura="cabecalho" placeholder="Pesquisar utilizador…" (pesquisar)="incm.pesquisa.set($event)" />
+            </div>
+
+            <form class="filtros-entidade" aria-label="Filtrar por entidade" [formGroup]="filtroEntidadeForm" (ngSubmit)="aplicarFiltroEntidade()">
+              <app-campo-texto
+                class="filtro-pesquisa-entidade"
+                rotulo="Pesquisar entidade"
+                placeholder="Escreva parte do nome…"
+                [compacto]="true"
+                [ajuda]="aPesquisarEntidade() ? 'A pesquisar…' : null"
+                [erro]="erroPesquisaEntidade()"
+                formControlName="pesquisa"
+              />
+              <app-seletor
+                class="filtro-entidade"
+                rotulo="Entidade"
+                [placeholder]="opcoesEntidade().length ? 'Escolha a entidade' : 'Pesquise primeiro a entidade'"
+                [compacto]="true"
+                [opcoes]="opcoesEntidade()"
+                formControlName="entidade"
+              />
+              <app-campo-texto
+                class="filtro-data"
+                rotulo="Atuou desde"
+                tipo="date"
+                ajuda="Opcional: só quem atuou pela entidade desde esta data."
+                [compacto]="true"
+                formControlName="atuouDesde"
+              />
+              <div class="filtros-acoes">
+                <button app-botao type="submit" tamanho="pequeno" class="botao-aplicar" [desativado]="!entidadeEscolhida()">Aplicar</button>
+                <button app-botao type="button" variante="secundario" tamanho="pequeno" class="botao-limpar" (click)="limparFiltroEntidade()">
+                  Limpar
+                </button>
+              </div>
+            </form>
+
+            @if (incm.aCarregar()) {
+              <p class="estado">A carregar…</p>
+            } @else if (incm.erro()) {
+              <div class="estado"><app-error-banner [erro]="incm.erro()" /></div>
+            } @else {
+              @if (filtroEntidade(); as filtro) {
+                <p class="filtro-resumo">
+                  @if (filtro.atuouDesde) {
+                    Quem atuou pela entidade desde {{ filtro.atuouDesde | date: 'dd/MM/yyyy' }}.
+                  } @else {
+                    Utilizadores com vínculo à entidade.
+                  }
+                </p>
+              }
+              <ul class="lista-utilizadores lista-incm">
+                @for (linha of incm.linhas(); track linha.utilizador.id) {
+                  <li class="utilizador">
+                    <div class="utilizador-quem">
+                      <span class="avatar" aria-hidden="true">{{ linha.iniciais }}</span>
+                      <div class="utilizador-info">
+                        <span class="nome">{{ linha.nome }}</span>
+                        <ng-container *ngTemplateOutlet="emailTpl; context: { $implicit: linha.utilizador.email }" />
+                        @if (linha.utilizador.cargo) {
+                          <span class="cargo">{{ linha.utilizador.cargo }}</span>
+                        }
+                        <span class="celula-entidade">
+                          @if (linha.podeExpandir) {
+                            <button
+                              type="button"
+                              class="btn-expandir-entidade"
+                              [class.aberto]="estaExpandido(linha.utilizador.id)"
+                              [attr.aria-expanded]="estaExpandido(linha.utilizador.id)"
+                              [attr.aria-label]="'Ver as entidades de ' + linha.nome"
+                              (click)="alternarExpansaoEntidades(linha.utilizador.id, $event)"
+                            >
+                              <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true">
+                                <path d="M4.5 3l3 3-3 3" />
+                              </svg>
+                            </button>
+                          }
+                          @if (linha.entidadesOrdenadas[0]; as primeira) {
+                            <span class="entidade-nome">{{ nomeEntidade(primeira) }}</span>
+                            @if (primeira.responsavel) {
+                              <app-selo tom="info" class="badge-responsavel">Responsável</app-selo>
+                            }
+                          } @else {
+                            <span class="entidade-nome">Sem entidade com vínculo</span>
+                          }
+                          @if (linha.entidadesAdicionais > 0) {
+                            <app-selo tom="neutro" forma="pill" class="badge-mais-entidades">+{{ linha.entidadesAdicionais }}</app-selo>
+                          }
+                        </span>
+                        @if (linha.podeExpandir && estaExpandido(linha.utilizador.id)) {
+                          <ul class="subitens-entidade">
+                            @for (item of linha.entidadesOrdenadas; track item.entidadeId) {
+                              <li class="subitem-entidade">
+                                {{ nomeEntidade(item) }}
+                                @if (item.responsavel) {
+                                  <app-selo tom="info" class="badge-responsavel">Responsável</app-selo>
+                                }
+                              </li>
+                            }
+                          </ul>
+                        }
+                      </div>
+                    </div>
+                    <div class="utilizador-meta utilizador-meta-incm">
+                      @if (emRoster()) {
+                        <span class="ultima-atuacao">
+                          Última atuação nesta entidade:
+                          {{ linha.utilizador.ultimaAtuacaoEm ? (linha.utilizador.ultimaAtuacaoEm | date: 'dd/MM/yyyy') : '—' }}
+                        </span>
+                      }
+                      <span class="ultimo-acesso">
+                        Último acesso: {{ linha.utilizador.ultimoLoginEm ? (linha.utilizador.ultimoLoginEm | date: 'dd/MM/yyyy') : '—' }}
+                      </span>
+                      <ng-container *ngTemplateOutlet="menuTpl; context: { $implicit: linha, dgt: false }" />
+                    </div>
+                  </li>
+                } @empty {
+                  <li class="vazio">{{ filtroEntidade() ? 'Sem utilizadores para o filtro indicado.' : 'Sem utilizadores para a pesquisa indicada.' }}</li>
+                }
+              </ul>
+              <app-paginacao
+                [pagina]="incm.pagina() + 1"
+                [tamanhoPagina]="tamanhoPagina"
+                [total]="incm.totalElementos()"
+                [mostrados]="incm.pesquisa() ? incm.linhas().length : null"
+                etiquetaItens="utilizadores"
+                (paginaMudou)="irParaPagina(incm, $event - 1)"
+              />
+            }
+          </app-cartao>
+        }
+      }
+    </div>
+  </div>
+</app-shell>
+
+<ng-template #emailTpl let-email>
+  @if (email) {
+    <span class="email">{{ email }}</span>
+  } @else {
+    <span class="email"><span aria-hidden="true">—</span><span class="visualmente-oculto">Sem email</span></span>
+  }
+</ng-template>
+
+<ng-template #menuTpl let-linha let-dgt="dgt">
+  <div class="menu-acoes">
+    <button
+      #botaoMenu
+      type="button"
+      class="btn-acoes"
+      [attr.aria-label]="'Mais opções para ' + linha.nome"
+      [attr.aria-expanded]="menuAbertoId() === linha.utilizador.id"
+      (click)="alternarMenu(linha.utilizador.id, $event)"
+    >
+      <svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
+        <circle cx="4" cy="8" r="1" /><circle cx="8" cy="8" r="1" /><circle cx="12" cy="8" r="1" />
+      </svg>
+    </button>
+    @if (menuAbertoId() === linha.utilizador.id) {
+      <!-- eslint-disable-next-line @angular-eslint/template/click-events-have-key-events, @angular-eslint/template/interactive-supports-focus -- só impede o click de fechar o próprio menu, não é uma interação do utilizador -->
+      <div class="dropdown-menu" [style.top.px]="menuPosicao().topo" [style.right.px]="menuPosicao().direita" (click)="$event.stopPropagation()">
+        @if (dgt) {
+          <button type="button" (click)="selecionarAlterarPerfil(linha.utilizador, botaoMenu)">Alterar perfil</button>
+        }
+        <button type="button" (click)="selecionarTerminarSessoes(linha.utilizador, botaoMenu)">Terminar sessões</button>
+      </div>
+    }
+  </div>
+</ng-template>
+
+<app-alterar-perfil-modal
+  [aberto]="alterarPerfilAberto()"
+  [perfilAtual]="alvo()?.perfilInterno ?? null"
+  [nome]="nomeAlvo()"
+  (confirmar)="confirmarAlterarPerfil($event)"
+  (cancelar)="alterarPerfilAberto.set(false)"
+/>
+
+<app-confirmacao-modal
+  titulo="Terminar sessões"
+  rotuloSim="Terminar sessões"
+  rotuloNao="Cancelar"
+  [aberto]="confirmarSessoesAberto()"
+  [mensagem]="mensagemTerminarSessoes()"
+  [aProcessar]="aProcessar()"
+  (sim)="confirmarTerminarSessoes()"
+  (nao)="confirmarSessoesAberto.set(false)"
+/>

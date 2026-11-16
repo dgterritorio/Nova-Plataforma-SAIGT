@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="2026-11-04-4-codigos-idus-catalogos" author="david.raposo">
+        <comment>
+            Códigos que os segmentos IGT (2 algarismos), Dinâmica (2) e Procedimento (3) do IDUS usam, um por catálogo.
+            Nulo = sem código no IDUS: o processo grava-se sem IDUS (BL-INT-007). Não são os ids da API do SNIT (OI-487),
+            que ficam no registo no SNIT ao publicar o procedimento final. O código do Procedimento fica em
+            `instrumento_procedimento_config` e não em `tipo_procedimento` porque depende da Dinâmica.
+        </comment>
+
+        <sql>ALTER TABLE tipo_instrumento ADD COLUMN codigo_idus VARCHAR(2) NULL
+            CONSTRAINT ck_tipo_instrumento_codigo_idus CHECK (codigo_idus ~ '^[0-9]{2}$')</sql>
+        <sql>ALTER TABLE tipo_dinamica ADD COLUMN codigo_idus VARCHAR(2) NULL
+            CONSTRAINT ck_tipo_dinamica_codigo_idus CHECK (codigo_idus ~ '^[0-9]{2}$')</sql>
+        <sql>ALTER TABLE instrumento_procedimento_config ADD COLUMN codigo_idus VARCHAR(3) NULL
+            CONSTRAINT ck_instrumento_procedimento_config_codigo_idus CHECK (codigo_idus ~ '^[0-9]{3}$')</sql>
+
+        <rollback>
+            <dropColumn tableName="instrumento_procedimento_config" columnName="codigo_idus"/>
+            <dropColumn tableName="tipo_dinamica" columnName="codigo_idus"/>
+            <dropColumn tableName="tipo_instrumento" columnName="codigo_idus"/>
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>

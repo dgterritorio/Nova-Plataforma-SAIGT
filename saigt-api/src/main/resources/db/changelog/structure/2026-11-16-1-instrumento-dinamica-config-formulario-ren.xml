@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="2026-11-16-1-instrumento-dinamica-config-formulario-ren" author="david.raposo">
+        <comment>
+            Campos do formulário que dependem da Dinâmica (DB-PROC-004): pede_diploma_corrigido mostra o «Diploma que
+            corrige ou retifica» (EF v1.5, REN) e tipo_informacao_fixo impõe o tipo de informação do ato (EF v1.5, a
+            Delimitação da REN em Texto integral). Ficam falsos e nulos por omissão; o seed da REN marca as suas.
+        </comment>
+
+        <sql>ALTER TABLE instrumento_dinamica_config ADD COLUMN pede_diploma_corrigido BOOLEAN NOT NULL DEFAULT false</sql>
+        <sql>ALTER TABLE instrumento_dinamica_config ADD COLUMN tipo_informacao_fixo VARCHAR(20)</sql>
+        <sql>ALTER TABLE instrumento_dinamica_config ADD CONSTRAINT ck_instrumento_dinamica_config_tipo_informacao_fixo
+            CHECK (tipo_informacao_fixo IN ('TEXTO_INTEGRAL', 'EXTRATO'))</sql>
+
+        <rollback>
+            <sql>ALTER TABLE instrumento_dinamica_config DROP CONSTRAINT ck_instrumento_dinamica_config_tipo_informacao_fixo</sql>
+            <dropColumn tableName="instrumento_dinamica_config" columnName="tipo_informacao_fixo"/>
+            <dropColumn tableName="instrumento_dinamica_config" columnName="pede_diploma_corrigido"/>
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>

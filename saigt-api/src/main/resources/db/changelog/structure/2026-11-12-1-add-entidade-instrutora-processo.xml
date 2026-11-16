@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="2026-11-12-1-add-entidade-instrutora-processo" author="david.raposo">
+        <comment>
+            Processo: «Entidade instrutora» do formulário inicial dos Programas. Texto livre, só obrigatório
+            em `submeter` nos Instrumentos de categoria PROGRAMA; nas outras categorias fica nulo.
+        </comment>
+
+        <addColumn tableName="processo">
+            <column name="entidade_instrutora" type="VARCHAR(500)"/>
+        </addColumn>
+
+        <rollback>
+            <dropColumn tableName="processo" columnName="entidade_instrutora"/>
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>

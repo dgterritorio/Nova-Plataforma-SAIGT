@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="2026-11-02-3-instrumento-em-vigor" author="david.raposo">
+        <preConditions onFail="HALT"
+                       onFailMessage="Há Instrumentos CANCELADO: o LLD não tem este estado (OI-416). Decidir o destino deles antes de migrar.">
+            <sqlCheck expectedResult="0">SELECT count(*) FROM instrumento WHERE estado = 'CANCELADO'</sqlCheck>
+        </preConditions>
+        <comment>Instrumento (DB-PROC-012, TR-119): `em_vigor` substitui `estado`.</comment>
+
+        <addColumn tableName="instrumento">
+            <column name="em_vigor" type="BOOLEAN" defaultValueBoolean="false">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+
+        <sql>
+            UPDATE instrumento i SET em_vigor = TRUE
+            WHERE (i.id_igt_snit IS NOT NULL
+                   OR EXISTS (SELECT 1 FROM dinamica_instrumento di
+                              JOIN dinamica d ON d.id = di.dinamica_id
+                              JOIN instrumento_dinamica_config c ON c.id = d.instrumento_dinamica_config_id
+                              JOIN tipo_dinamica t ON t.id = c.tipo_dinamica_id
+                              WHERE di.instrumento_id = i.id AND d.estado = 'TERMINADA'
+                                AND t.codigo IN ('ELABORACAO', 'REVISAO', 'DELIMITACAO')))
+              AND NOT EXISTS (SELECT 1 FROM dinamica_instrumento di
+                              JOIN dinamica d ON d.id = di.dinamica_id
+                              JOIN instrumento_dinamica_config c ON c.id = d.instrumento_dinamica_config_id
+                              JOIN tipo_dinamica t ON t.id = c.tipo_dinamica_id
+                              WHERE di.instrumento_id = i.id AND d.estado = 'TERMINADA'
+                                AND t.codigo = 'REVOGACAO')
+        </sql>
+
+        <dropColumn tableName="instrumento" columnName="estado"/>
+
+        <rollback>
+            <addColumn tableName="instrumento">
+                <column name="estado" type="VARCHAR(20)" defaultValue="ATIVO">
+                    <constraints nullable="false"/>
+                </column>
+            </addColumn>
+            <dropColumn tableName="instrumento" columnName="em_vigor"/>
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>

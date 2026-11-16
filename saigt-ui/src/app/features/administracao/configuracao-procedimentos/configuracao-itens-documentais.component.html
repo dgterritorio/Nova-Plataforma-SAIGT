@@ -1,0 +1,146 @@
+<div class="barra-filtros">
+  <app-seletor
+    class="seletor-tipo-instrumento"
+    rotulo="Tipo de Instrumento"
+    [compacto]="true"
+    [opcoes]="opcoesTipoInstrumento()"
+    [formControl]="tipoInstrumento"
+  />
+  <app-seletor
+    class="seletor-dinamica"
+    rotulo="Dinâmica"
+    placeholder="Sem Dinâmicas"
+    [compacto]="true"
+    [opcoes]="opcoesDinamica()"
+    [formControl]="dinamica"
+  />
+  <app-seletor
+    class="seletor-procedimento"
+    rotulo="Procedimento"
+    placeholder="Sem Procedimentos"
+    [compacto]="true"
+    [opcoes]="opcoesProcedimento()"
+    [formControl]="procedimento"
+  />
+
+  <div class="filtros-direita">
+    <div class="grupo-filtros" role="group" aria-label="Estado do item documental">
+      @for (opcao of opcoesEstado; track opcao.valor) {
+        <button
+          type="button"
+          class="filtro filtro-estado"
+          [class.ativo]="filtroEstado() === opcao.valor"
+          [attr.aria-pressed]="filtroEstado() === opcao.valor"
+          (click)="mudarFiltroEstado(opcao.valor)"
+        >
+          {{ opcao.rotulo }}
+        </button>
+      }
+    </div>
+    <span class="contador">{{ contador() }}</span>
+    <button
+      app-botao
+      type="button"
+      tamanho="pequeno"
+      class="botao-adicionar"
+      [desativado]="procedimentoConfigId() === null"
+      (click)="adicionar()"
+    >
+      Adicionar item
+    </button>
+  </div>
+</div>
+
+@if (mensagemSucesso(); as mensagem) {
+  <app-alerta tipo="sucesso">{{ mensagem }}</app-alerta>
+}
+<app-error-banner [erro]="erroAcao()" />
+
+@if (erro()) {
+  <app-error-banner [erro]="erro()" />
+} @else {
+  <app-cartao variante="elevado" espacamento="nenhum">
+    <app-tabela
+      familia="compacta"
+      [legenda]="legenda()"
+      [colunas]="colunas"
+      [linhas]="linhas()"
+      [aCarregar]="aCarregar()"
+      mensagemVazia="Este Procedimento ainda não tem itens documentais."
+    >
+      <ng-template appCelula="ordem" let-item>{{ item.ordem }}</ng-template>
+      <ng-template appCelula="separador" let-item>{{ item.separador }}</ng-template>
+      <ng-template appCelula="item" let-item>
+        <span class="celula-nome">{{ item.nome }}</span>
+      </ng-template>
+      <ng-template appCelula="caixa" let-item>{{ rotuloCaixa(item) }}</ng-template>
+      <ng-template appCelula="tipo" let-item>{{ rotuloTipo(item) }}</ng-template>
+      <ng-template appCelula="formato" let-item>{{ rotuloFormato(item) }}</ng-template>
+      <ng-template appCelula="extensoes" let-item>{{ rotuloExtensoes(item) }}</ng-template>
+      <ng-template appCelula="obrigatorio" let-item>{{ simNao(item.obrigatorio) }}</ng-template>
+      <ng-template appCelula="informacaoBase" let-item>{{ rotuloInformacaoBase(item) }}</ng-template>
+      <ng-template appCelula="estado" let-item>
+        <app-selo [tom]="item.ativo ? 'sucesso' : 'cinza'" forma="pill">
+          <span icone class="status-ponto" aria-hidden="true"></span>
+          {{ item.ativo ? 'Ativo' : 'Inativo' }}
+        </app-selo>
+      </ng-template>
+      <ng-template appCelula="acoes" let-item>
+        <div class="menu-acoes">
+          <button
+            type="button"
+            class="btn-acoes"
+            [attr.aria-label]="rotuloAcoes(item)"
+            [attr.aria-expanded]="menuAbertoId() === item.id"
+            (click)="alternarMenu(item, $event)"
+          >
+            <svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
+              <circle cx="4" cy="8" r="1" /><circle cx="8" cy="8" r="1" /><circle cx="12" cy="8" r="1" />
+            </svg>
+          </button>
+          @if (menuAbertoId() === item.id) {
+            <!-- eslint-disable-next-line @angular-eslint/template/click-events-have-key-events, @angular-eslint/template/interactive-supports-focus -- só impede o click de fechar o próprio menu, não é uma interação do utilizador -->
+            <div
+              class="dropdown-menu"
+              [style.top.px]="menuPosicao().topo"
+              [style.right.px]="menuPosicao().direita"
+              (click)="$event.stopPropagation()"
+            >
+              <button type="button" class="acao-editar" (click)="editar(item)">Editar</button>
+              <button type="button" class="acao-estado" (click)="pedirAlternarEstado(item)">
+                {{ item.ativo ? 'Desativar' : 'Reativar' }}
+              </button>
+            </div>
+          }
+        </div>
+      </ng-template>
+      <app-paginacao
+        rodape
+        [pagina]="pagina() + 1"
+        [tamanhoPagina]="tamanhoPagina"
+        [total]="total()"
+        etiquetaItens="itens"
+        (paginaMudou)="irParaPagina($event - 1)"
+      />
+    </app-tabela>
+  </app-cartao>
+}
+
+<app-documento-config-modal
+  [aberto]="modalAberto()"
+  [procedimento]="nomeProcedimento()"
+  [item]="emEdicao()"
+  [aGravar]="aGravar()"
+  [erroServidor]="erroModal()"
+  (guardar)="guardar($event)"
+  (fechar)="fecharModal()"
+/>
+
+<app-confirmacao-modal
+  [aberto]="confirmacao() !== null"
+  [titulo]="tituloConfirmacao()"
+  [mensagem]="mensagemConfirmacao()"
+  [aProcessar]="aProcessar()"
+  (sim)="confirmarAlternarEstado()"
+  (nao)="cancelarConfirmacao()"
+/>

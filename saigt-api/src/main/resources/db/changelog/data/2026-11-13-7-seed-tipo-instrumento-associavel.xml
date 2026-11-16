@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="2026-11-13-7-seed-tipo-instrumento-associavel" author="arnaldo.costa">
+        <comment>
+            Um processo da REN associa-se à Dinâmica de um PDM, PP, PU ou PEOT em curso no mesmo município (FR-014,
+            BL-PROC-062), só na Delimitação e na Alteração da REN: a Correção Material e a Retificação não têm a
+            pergunta «Processo em simultâneo com a formação de PMOT» (EF v1.5 l.1599-1600). Por códigos, sem ids;
+            um par que já exista, ou um tipo que não exista, fica de fora.
+        </comment>
+        <sql>
+            INSERT INTO tipo_instrumento_associavel (tipo_instrumento_id, tipo_instrumento_associavel_id)
+            SELECT origem.id, destino.id
+            FROM tipo_instrumento origem
+            JOIN tipo_instrumento destino ON destino.codigo IN ('PDM', 'PP', 'PU', 'PEOT')
+            WHERE origem.codigo = 'REN'
+              AND NOT EXISTS (SELECT 1 FROM tipo_instrumento_associavel a
+                              WHERE a.tipo_instrumento_id = origem.id
+                                AND a.tipo_instrumento_associavel_id = destino.id)
+            ORDER BY destino.id
+        </sql>
+        <sql>
+            UPDATE instrumento_dinamica_config SET admite_associacao_igt = true
+            WHERE tipo_instrumento_id = (SELECT id FROM tipo_instrumento WHERE codigo = 'REN')
+              AND tipo_dinamica_id IN (SELECT id FROM tipo_dinamica WHERE codigo IN ('DELIMITACAO', 'ALTERACAO'))
+        </sql>
+        <rollback>
+            <sql>
+                DELETE FROM tipo_instrumento_associavel
+                WHERE tipo_instrumento_id = (SELECT id FROM tipo_instrumento WHERE codigo = 'REN')
+                  AND tipo_instrumento_associavel_id IN
+                      (SELECT id FROM tipo_instrumento WHERE codigo IN ('PDM', 'PP', 'PU', 'PEOT'))
+            </sql>
+            <sql>
+                UPDATE instrumento_dinamica_config SET admite_associacao_igt = false
+                WHERE tipo_instrumento_id = (SELECT id FROM tipo_instrumento WHERE codigo = 'REN')
+                  AND tipo_dinamica_id IN (SELECT id FROM tipo_dinamica WHERE codigo IN ('DELIMITACAO', 'ALTERACAO'))
+            </sql>
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>

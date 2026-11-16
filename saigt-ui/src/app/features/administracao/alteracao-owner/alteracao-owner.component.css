@@ -1,0 +1,116 @@
+.pesquisa {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: var(--espaco-3);
+}
+
+.campo-numero {
+  flex: 0 1 320px;
+}
+
+/* Alinhado com a caixa do campo, abaixo do rótulo: o erro do campo cresce para baixo sem mexer no botão. */
+.procurar {
+  margin-top: calc(var(--texto-base-linha) + var(--espaco-1-5));
+}
+
+.mensagens {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaco-2);
+}
+
+/* Vazios, não ocupam o espaço da moldura; a região viva fica na árvore de acessibilidade para anunciar o que chegar. */
+.mensagens:empty,
+app-error-banner:empty {
+  margin-bottom: calc(-1 * var(--espaco-4));
+}
+
+.mensagens:focus,
+.processo:focus {
+  outline: none;
+}
+
+.mensagens:focus-visible,
+.processo:focus-visible {
+  outline: var(--anel-foco);
+  outline-offset: var(--anel-foco-afastamento);
+  border-radius: var(--raio-lg);
+}
+
+.processo-cabecalho {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--espaco-3);
+}
+
+.numero {
+  margin: 0;
+  font-size: var(--texto-md);
+  font-weight: var(--peso-semi);
+  line-height: var(--texto-md-linha);
+  color: var(--cor-titulo-pagina);
+}
+
+.dados {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--espaco-4) var(--espaco-6);
+  margin: var(--espaco-5) 0 0;
+}
+
+.dados dt {
+  font-size: var(--texto-sm);
+  line-height: var(--texto-sm-linha);
+  color: var(--cor-texto-secundario);
+}
+
+.dados dd {
+  margin: var(--espaco-0-5) 0 0;
+  font-size: var(--texto-base);
+  line-height: var(--texto-base-linha);
+  color: var(--cor-texto-celula-forte);
+  overflow-wrap: anywhere;
+}
+
+.owner-atual {
+  margin: var(--espaco-5) 0 0;
+  padding-top: var(--espaco-4);
+  border-top: var(--borda-largura) solid var(--cor-borda-suave);
+  font-size: var(--texto-base);
+  line-height: var(--texto-base-linha);
+  color: var(--cor-texto-cartao);
+}
+
+.owner-atual strong {
+  font-weight: var(--peso-semi);
+  color: var(--cor-texto-titulo);
+}
+
+.novo-owner {
+  max-width: 480px;
+  margin-top: var(--espaco-4);
+}
+
+.acoes {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: var(--espaco-3);
+  margin-top: var(--espaco-6);
+}
+
+@media (width <= 640px) {
+  .dados {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .campo-numero {
+    flex-basis: 100%;
+  }
+
+  .procurar {
+    margin-top: 0;
+  }
+}

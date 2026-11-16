@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="2026-11-10-5-limites-documento-config" author="margarida.marques">
+        <comment>
+            Limites por item documental (DB-DOC-001, BL-DOC-017): tamanho de cada ficheiro, soma dos ficheiros do item
+            e número de ficheiros do item. Vazio = sem limite desse tipo. As linhas existentes ficam com o baseline
+            legado (500 MB, 2 GB, 10 ficheiros; OI-182 fechado pelo OI-506); os seeds futuros indicam os seus valores.
+        </comment>
+
+        <addColumn tableName="documento_config">
+            <column name="tamanho_maximo_ficheiro" type="BIGINT"/>
+            <column name="tamanho_maximo_total" type="BIGINT"/>
+            <column name="numero_maximo_ficheiros" type="INTEGER"/>
+        </addColumn>
+        <sql>ALTER TABLE documento_config ADD CONSTRAINT ck_documento_config_tamanho_ficheiro
+            CHECK (tamanho_maximo_ficheiro IS NULL OR tamanho_maximo_ficheiro > 0)</sql>
+        <sql>ALTER TABLE documento_config ADD CONSTRAINT ck_documento_config_tamanho_total
+            CHECK (tamanho_maximo_total IS NULL OR tamanho_maximo_total > 0)</sql>
+        <sql>ALTER TABLE documento_config ADD CONSTRAINT ck_documento_config_numero_ficheiros
+            CHECK (numero_maximo_ficheiros IS NULL OR numero_maximo_ficheiros > 0)</sql>
+        <sql>UPDATE documento_config SET tamanho_maximo_ficheiro = 524288000, tamanho_maximo_total = 2147483648,
+            numero_maximo_ficheiros = 10</sql>
+
+        <rollback>
+            <sql>ALTER TABLE documento_config DROP CONSTRAINT ck_documento_config_numero_ficheiros</sql>
+            <sql>ALTER TABLE documento_config DROP CONSTRAINT ck_documento_config_tamanho_total</sql>
+            <sql>ALTER TABLE documento_config DROP CONSTRAINT ck_documento_config_tamanho_ficheiro</sql>
+            <dropColumn tableName="documento_config" columnName="numero_maximo_ficheiros"/>
+            <dropColumn tableName="documento_config" columnName="tamanho_maximo_total"/>
+            <dropColumn tableName="documento_config" columnName="tamanho_maximo_ficheiro"/>
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>

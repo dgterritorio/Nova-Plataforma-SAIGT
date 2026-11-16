@@ -1,0 +1,323 @@
+instrumento;dinamica;procedimento;codigo;ordem;obrigatorio;nome;descricao;separador;tipo_elemento
+PDM;SUSPENSAO;PUBLICACAO_SUSPENSAO;TEXTO_ATO_PUB;1;true;Texto do ato a publicar no Diário da República;;Texto do Ato;PECA_ESCRITA
+PDM;SUSPENSAO;PUBLICACAO_SUSPENSAO;TEXTO_ATO_DEP;2;true;Texto do ato a publicar no Diário da República;;Texto do Ato;PECA_ESCRITA
+PDM;SUSPENSAO;PUBLICACAO_SUSPENSAO;DELIBERACAO_PUB;3;true;Deliberação da AM de aprovação do procedimento de plano territorial;;Deliberação;PECA_ESCRITA
+PDM;SUSPENSAO;PUBLICACAO_SUSPENSAO;DELIBERACAO_DEP;4;true;Deliberação da AM de aprovação do procedimento de plano territorial;;Deliberação;PECA_ESCRITA
+PDM;SUSPENSAO;PUBLICACAO_SUSPENSAO;TEXTO_MEDIDAS_PREVENTIVAS_PUB;5;true;Texto das Medidas Preventivas;;Texto das Medidas Preventivas;PECA_ESCRITA
+PDM;SUSPENSAO;PUBLICACAO_SUSPENSAO;TEXTO_MEDIDAS_PREVENTIVAS_DEP;6;true;Texto das Medidas Preventivas;;Texto das Medidas Preventivas;PECA_ESCRITA
+PDM;SUSPENSAO;PUBLICACAO_SUSPENSAO;PLANTA_DELIMITACAO_PUB;7;true;Planta de delimitação da área abrangida pela suspensão - quando aplicável;;Planta de Delimitação;PECA_GRAFICA
+PDM;SUSPENSAO;PUBLICACAO_SUSPENSAO;PLANTA_DELIMITACAO_DEP;8;true;Planta de delimitação da área abrangida pela suspensão - quando aplicável;;Planta de Delimitação;PECA_GRAFICA
+PDM;SUSPENSAO;PUBLICACAO_SUSPENSAO;FUNDAMENTACAO_DEP;9;true;Fundamentação da suspensão;;Fundamentação;PECA_ESCRITA
+PDM;SUSPENSAO;PUBLICACAO_SUSPENSAO;DELIBERACAO_CM_ELABORACAO_DEP;10;true;Deliberação da CM que determina a elaboração/revisão/alteração do plano;Deliberação da Câmara Municipal (CM) que determina a elaboração/revisão/alteração do plano no qual se fundamentam a suspensão e as MP;Deliberação da CM;PECA_ESCRITA
+PDM;SUSPENSAO;PUBLICACAO_SUSPENSAO;PARECER_CCDR_DEP;11;true;Parecer da CCDR;;Parecer da CCDR;PECA_ESCRITA
+PDM;SUSPENSAO;PUBLICACAO_SUSPENSAO;DELIBERACAO_CM_SUSPENSAO_DEP;12;true;Deliberação da CM que determina a suspensão do plano e o estabelecimento de MP;Deliberação da Câmara Municipal (CM) que determina a suspensão do plano e o estabelecimento de MP;Deliberação da CM;PECA_ESCRITA
+PDM;SUSPENSAO;PRORROGACAO_SUSPENSAO;TEXTO_ATO_PUB;1;true;Texto do ato a publicar no Diário da República;;Texto do Ato;PECA_ESCRITA
+PDM;SUSPENSAO;PRORROGACAO_SUSPENSAO;TEXTO_ATO_DEP;2;true;Texto do ato a publicar no Diário da República;;Texto do Ato;PECA_ESCRITA
+PDM;SUSPENSAO;PRORROGACAO_SUSPENSAO;DELIBERACAO_PUB;3;true;Deliberação de aprovação do procedimento de plano territorial;;Deliberação;PECA_ESCRITA
+PDM;SUSPENSAO;PRORROGACAO_SUSPENSAO;DELIBERACAO_DEP;4;true;Deliberação de aprovação do procedimento de plano territorial;;Deliberação;PECA_ESCRITA
+PDM;MEDIDAS_PREVENTIVAS;PUBLICACAO_MP;TEXTO_ATO_PUB;1;true;Texto do ato a publicar no Diário da República;;Texto do Ato;PECA_ESCRITA
+PDM;MEDIDAS_PREVENTIVAS;PUBLICACAO_MP;TEXTO_ATO_DEP;2;true;Texto do ato a publicar no Diário da República;;Texto do Ato;PECA_ESCRITA
+PDM;MEDIDAS_PREVENTIVAS;PUBLICACAO_MP;DELIBERACAO_PUB;3;true;Deliberação de aprovação das Medidas Preventivas;;Deliberação;PECA_ESCRITA
+PDM;MEDIDAS_PREVENTIVAS;PUBLICACAO_MP;DELIBERACAO_DEP;4;true;Deliberação de aprovação das Medidas Preventivas;;Deliberação;PECA_ESCRITA
+PDM;MEDIDAS_PREVENTIVAS;PUBLICACAO_MP;TEXTO_MEDIDAS_PREVENTIVAS_PUB;5;true;Texto das Medidas Preventivas;;Texto das Medidas Preventivas;PECA_ESCRITA
+PDM;MEDIDAS_PREVENTIVAS;PUBLICACAO_MP;TEXTO_MEDIDAS_PREVENTIVAS_DEP;6;true;Texto das Medidas Preventivas;;Texto das Medidas Preventivas;PECA_ESCRITA
+PDM;MEDIDAS_PREVENTIVAS;PUBLICACAO_MP;PLANTA_DELIMITACAO_PUB;7;true;Planta de delimitação da área abrangida pelas Medidas Preventivas - quando aplicável;;Planta de Delimitação;PECA_GRAFICA
+PDM;MEDIDAS_PREVENTIVAS;PUBLICACAO_MP;PLANTA_DELIMITACAO_DEP;8;true;Planta de delimitação da área abrangida pelas Medidas Preventivas - quando aplicável;;Planta de Delimitação;PECA_GRAFICA
+PDM;MEDIDAS_PREVENTIVAS;PUBLICACAO_MP;FUNDAMENTACAO_DEP;9;true;Fundamentação das MP;;Fundamentação;PECA_ESCRITA
+PDM;MEDIDAS_PREVENTIVAS;PRORROGACAO_MP;TEXTO_ATO_PUB;1;true;Texto do ato a publicar no Diário da República;;Texto do Ato;PECA_ESCRITA
+PDM;MEDIDAS_PREVENTIVAS;PRORROGACAO_MP;TEXTO_ATO_DEP;2;true;Texto do ato a publicar no Diário da República;;Texto do Ato;PECA_ESCRITA
+PDM;MEDIDAS_PREVENTIVAS;PRORROGACAO_MP;DELIBERACAO_PUB;3;true;Deliberação de aprovação da prorrogação das Medidas Preventivas;;Deliberação;PECA_ESCRITA
+PDM;MEDIDAS_PREVENTIVAS;PRORROGACAO_MP;DELIBERACAO_DEP;4;true;Deliberação de aprovação da prorrogação das Medidas Preventivas;;Deliberação;PECA_ESCRITA
+PDM;RATIFICACAO;RATIFICACAO;TEXTO_ATO_PUB;1;true;Texto do ato a publicar no Diário da República;;Texto do Ato;PECA_ESCRITA
+PDM;RATIFICACAO;RATIFICACAO;TEXTO_ATO_DEP;2;true;Texto do ato a publicar no Diário da República;;Texto do Ato;PECA_ESCRITA
+PDM;RATIFICACAO;RATIFICACAO;RCM_PUB;3;true;Resolução do Conselho de Ministros que ratifica o PDM ou a sua alteração/revisão;;Resolução do Conselho de Ministros;PECA_ESCRITA
+PDM;RATIFICACAO;RATIFICACAO;RCM_DEP;4;true;Resolução do Conselho de Ministros que ratifica o PDM ou a sua alteração/revisão;;Resolução do Conselho de Ministros;PECA_ESCRITA
+PDM;RATIFICACAO;RATIFICACAO;ALTERACOES_REGULAMENTO_PUB;5;true;Texto das disposições ratificadas no Regulamento - quando tenha sido ratificado;;Alterações ao Regulamento;PECA_ESCRITA
+PDM;RATIFICACAO;RATIFICACAO;ALTERACOES_REGULAMENTO_DEP;6;true;Texto das disposições ratificadas no Regulamento - quando tenha sido ratificado;;Alterações ao Regulamento;PECA_ESCRITA
+PDM;RATIFICACAO;RATIFICACAO;REGULAMENTO_INTEGRAL_PUB;7;false;Regulamento (versão alterada integral) - quando necessário;;Regulamento Integral;PECA_ESCRITA
+PDM;RATIFICACAO;RATIFICACAO;REGULAMENTO_INTEGRAL_DEP;8;false;Regulamento (versão alterada integral) - quando necessário;;Regulamento Integral;PECA_ESCRITA
+PDM;RATIFICACAO;RATIFICACAO;PLANTA_ORDENAMENTO_PUB;9;true;Planta de Ordenamento - quando tenha sido ratificada;;Planta de Ordenamento;PECA_GRAFICA
+PDM;RATIFICACAO;RATIFICACAO;PLANTA_ORDENAMENTO_DEP;10;true;Planta de Ordenamento - quando tenha sido ratificada;;Planta de Ordenamento;PECA_GRAFICA
+PDM;RATIFICACAO;RATIFICACAO;PLANTA_CONDICIONANTES_PUB;11;true;Planta de Condicionantes - quando tenha sido ratificada;;Planta de Condicionantes;PECA_GRAFICA
+PDM;RATIFICACAO;RATIFICACAO;PLANTA_CONDICIONANTES_DEP;12;true;Planta de Condicionantes - quando tenha sido ratificada;;Planta de Condicionantes;PECA_GRAFICA
+PDM;RATIFICACAO;RATIFICACAO;DEMAIS_ELEMENTOS_DEP;13;true;Os demais elementos do plano;;Demais Elementos;OUTROS
+PDM;RATIFICACAO;RATIFICACAO;DELIBERACAO_DEP;14;true;Deliberação de aprovação do plano territorial ou da sua alteração;;Deliberação;PECA_ESCRITA
+PDM;NORMAS_PROVISORIAS;PUBLICACAO_NP;TEXTO_ATO_PUB;1;true;Texto do ato a publicar no Diário da República;;Texto do Ato;PECA_ESCRITA
+PDM;NORMAS_PROVISORIAS;PUBLICACAO_NP;TEXTO_ATO_DEP;2;true;Texto do ato a publicar no Diário da República;;Texto do Ato;PECA_ESCRITA
+PDM;NORMAS_PROVISORIAS;PUBLICACAO_NP;DELIBERACAO_PUB;3;true;Deliberação de aprovação das Normas Provisórias;;Deliberação;PECA_ESCRITA
+PDM;NORMAS_PROVISORIAS;PUBLICACAO_NP;DELIBERACAO_DEP;4;true;Deliberação de aprovação das Normas Provisórias;;Deliberação;PECA_ESCRITA
+PDM;NORMAS_PROVISORIAS;PUBLICACAO_NP;TEXTO_NORMAS_PROVISORIAS_PUB;5;true;Texto das Normas Provisórias;;Texto das Normas Provisórias;PECA_ESCRITA
+PDM;NORMAS_PROVISORIAS;PUBLICACAO_NP;TEXTO_NORMAS_PROVISORIAS_DEP;6;true;Texto das Normas Provisórias;;Texto das Normas Provisórias;PECA_ESCRITA
+PDM;NORMAS_PROVISORIAS;PUBLICACAO_NP;PLANTA_DELIMITACAO_PUB;7;true;Planta de delimitação da área abrangida pelas Normas Provisórias - quando aplicável;;Planta de Delimitação;PECA_GRAFICA
+PDM;NORMAS_PROVISORIAS;PUBLICACAO_NP;PLANTA_DELIMITACAO_DEP;8;true;Planta de delimitação da área abrangida pelas Normas Provisórias - quando aplicável;;Planta de Delimitação;PECA_GRAFICA
+PDM;NORMAS_PROVISORIAS;PRORROGACAO_NP;TEXTO_ATO_PUB;1;true;Texto do ato a publicar no Diário da República;;Texto do Ato;PECA_ESCRITA
+PDM;NORMAS_PROVISORIAS;PRORROGACAO_NP;TEXTO_ATO_DEP;2;true;Texto do ato a publicar no Diário da República;;Texto do Ato;PECA_ESCRITA
+PDM;NORMAS_PROVISORIAS;PRORROGACAO_NP;DELIBERACAO_PUB;3;true;Deliberação de aprovação das Normas Provisórias;;Deliberação;PECA_ESCRITA
+PDM;NORMAS_PROVISORIAS;PRORROGACAO_NP;DELIBERACAO_DEP;4;true;Deliberação de aprovação das Normas Provisórias;;Deliberação;PECA_ESCRITA
+PDM;SUSPENSAO_GOVERNO;PUBLICACAO_SUSPENSAO_GOVERNO;RCM_PUB;1;true;Resolução do Conselho de Ministros;;Resolução do Conselho de Ministros;PECA_ESCRITA
+PDM;SUSPENSAO_GOVERNO;PUBLICACAO_SUSPENSAO_GOVERNO;RCM_DEP;2;true;Resolução do Conselho de Ministros;;Resolução do Conselho de Ministros;PECA_ESCRITA
+PDM;SUSPENSAO_GOVERNO;PUBLICACAO_SUSPENSAO_GOVERNO;TEXTO_MEDIDAS_PREVENTIVAS_PUB;3;true;Texto das Medidas Preventivas;;Texto das Medidas Preventivas;PECA_ESCRITA
+PDM;SUSPENSAO_GOVERNO;PUBLICACAO_SUSPENSAO_GOVERNO;TEXTO_MEDIDAS_PREVENTIVAS_DEP;4;true;Texto das Medidas Preventivas;;Texto das Medidas Preventivas;PECA_ESCRITA
+PDM;SUSPENSAO_GOVERNO;PUBLICACAO_SUSPENSAO_GOVERNO;PLANTA_DELIMITACAO_PUB;5;true;Planta de delimitação da área abrangida pela suspensão - quando aplicável;;Planta de Delimitação;PECA_GRAFICA
+PDM;SUSPENSAO_GOVERNO;PUBLICACAO_SUSPENSAO_GOVERNO;PLANTA_DELIMITACAO_DEP;6;true;Planta de delimitação da área abrangida pela suspensão - quando aplicável;;Planta de Delimitação;PECA_GRAFICA
+PDM;SUSPENSAO_GOVERNO;PRORROGACAO_SUSPENSAO_GOVERNO;RCM_PUB;1;true;Resolução do Conselho de Ministros;;Resolução do Conselho de Ministros;PECA_ESCRITA
+PDM;SUSPENSAO_GOVERNO;PRORROGACAO_SUSPENSAO_GOVERNO;RCM_DEP;2;true;Resolução do Conselho de Ministros;;Resolução do Conselho de Ministros;PECA_ESCRITA
+PU;SUSPENSAO;PUBLICACAO_SUSPENSAO;TEXTO_ATO_PUB;1;true;Texto do ato a publicar no Diário da República;;Texto do Ato;PECA_ESCRITA
+PU;SUSPENSAO;PUBLICACAO_SUSPENSAO;TEXTO_ATO_DEP;2;true;Texto do ato a publicar no Diário da República;;Texto do Ato;PECA_ESCRITA
+PU;SUSPENSAO;PUBLICACAO_SUSPENSAO;DELIBERACAO_PUB;3;true;Deliberação da AM de aprovação do procedimento de plano territorial;;Deliberação;PECA_ESCRITA
+PU;SUSPENSAO;PUBLICACAO_SUSPENSAO;DELIBERACAO_DEP;4;true;Deliberação da AM de aprovação do procedimento de plano territorial;;Deliberação;PECA_ESCRITA
+PU;SUSPENSAO;PUBLICACAO_SUSPENSAO;TEXTO_MEDIDAS_PREVENTIVAS_PUB;5;true;Texto das Medidas Preventivas;;Texto das Medidas Preventivas;PECA_ESCRITA
+PU;SUSPENSAO;PUBLICACAO_SUSPENSAO;TEXTO_MEDIDAS_PREVENTIVAS_DEP;6;true;Texto das Medidas Preventivas;;Texto das Medidas Preventivas;PECA_ESCRITA
+PU;SUSPENSAO;PUBLICACAO_SUSPENSAO;PLANTA_DELIMITACAO_PUB;7;true;Planta de delimitação da área abrangida pela suspensão - quando aplicável;;Planta de Delimitação;PECA_GRAFICA
+PU;SUSPENSAO;PUBLICACAO_SUSPENSAO;PLANTA_DELIMITACAO_DEP;8;true;Planta de delimitação da área abrangida pela suspensão - quando aplicável;;Planta de Delimitação;PECA_GRAFICA
+PU;SUSPENSAO;PUBLICACAO_SUSPENSAO;FUNDAMENTACAO_DEP;9;true;Fundamentação da suspensão;;Fundamentação;PECA_ESCRITA
+PU;SUSPENSAO;PUBLICACAO_SUSPENSAO;DELIBERACAO_CM_ELABORACAO_DEP;10;true;Deliberação da CM que determina a elaboração/revisão/alteração do plano;Deliberação da Câmara Municipal (CM) que determina a elaboração/revisão/alteração do plano no qual se fundamentam a suspensão e as MP;Deliberação da CM;PECA_ESCRITA
+PU;SUSPENSAO;PUBLICACAO_SUSPENSAO;PARECER_CCDR_DEP;11;true;Parecer da CCDR;;Parecer da CCDR;PECA_ESCRITA
+PU;SUSPENSAO;PUBLICACAO_SUSPENSAO;DELIBERACAO_CM_SUSPENSAO_DEP;12;true;Deliberação da CM que determina a suspensão do plano e o estabelecimento de MP;Deliberação da Câmara Municipal (CM) que determina a suspensão do plano e o estabelecimento de MP;Deliberação da CM;PECA_ESCRITA
+PU;SUSPENSAO;PRORROGACAO_SUSPENSAO;TEXTO_ATO_PUB;1;true;Texto do ato a publicar no Diário da República;;Texto do Ato;PECA_ESCRITA
+PU;SUSPENSAO;PRORROGACAO_SUSPENSAO;TEXTO_ATO_DEP;2;true;Texto do ato a publicar no Diário da República;;Texto do Ato;PECA_ESCRITA
+PU;SUSPENSAO;PRORROGACAO_SUSPENSAO;DELIBERACAO_PUB;3;true;Deliberação de aprovação do procedimento de plano territorial;;Deliberação;PECA_ESCRITA
+PU;SUSPENSAO;PRORROGACAO_SUSPENSAO;DELIBERACAO_DEP;4;true;Deliberação de aprovação do procedimento de plano territorial;;Deliberação;PECA_ESCRITA
+PU;MEDIDAS_PREVENTIVAS;PUBLICACAO_MP;TEXTO_ATO_PUB;1;true;Texto do ato a publicar no Diário da República;;Texto do Ato;PECA_ESCRITA
+PU;MEDIDAS_PREVENTIVAS;PUBLICACAO_MP;TEXTO_ATO_DEP;2;true;Texto do ato a publicar no Diário da República;;Texto do Ato;PECA_ESCRITA
+PU;MEDIDAS_PREVENTIVAS;PUBLICACAO_MP;DELIBERACAO_PUB;3;true;Deliberação de aprovação das Medidas Preventivas;;Deliberação;PECA_ESCRITA
+PU;MEDIDAS_PREVENTIVAS;PUBLICACAO_MP;DELIBERACAO_DEP;4;true;Deliberação de aprovação das Medidas Preventivas;;Deliberação;PECA_ESCRITA
+PU;MEDIDAS_PREVENTIVAS;PUBLICACAO_MP;TEXTO_MEDIDAS_PREVENTIVAS_PUB;5;true;Texto das Medidas Preventivas;;Texto das Medidas Preventivas;PECA_ESCRITA
+PU;MEDIDAS_PREVENTIVAS;PUBLICACAO_MP;TEXTO_MEDIDAS_PREVENTIVAS_DEP;6;true;Texto das Medidas Preventivas;;Texto das Medidas Preventivas;PECA_ESCRITA
+PU;MEDIDAS_PREVENTIVAS;PUBLICACAO_MP;PLANTA_DELIMITACAO_PUB;7;true;Planta de delimitação da área abrangida pelas Medidas Preventivas - quando aplicável;;Planta de Delimitação;PECA_GRAFICA
+PU;MEDIDAS_PREVENTIVAS;PUBLICACAO_MP;PLANTA_DELIMITACAO_DEP;8;true;Planta de delimitação da área abrangida pelas Medidas Preventivas - quando aplicável;;Planta de Delimitação;PECA_GRAFICA
+PU;MEDIDAS_PREVENTIVAS;PUBLICACAO_MP;FUNDAMENTACAO_DEP;9;true;Fundamentação das MP;;Fundamentação;PECA_ESCRITA
+PU;MEDIDAS_PREVENTIVAS;PRORROGACAO_MP;TEXTO_ATO_PUB;1;true;Texto do ato a publicar no Diário da República;;Texto do Ato;PECA_ESCRITA
+PU;MEDIDAS_PREVENTIVAS;PRORROGACAO_MP;TEXTO_ATO_DEP;2;true;Texto do ato a publicar no Diário da República;;Texto do Ato;PECA_ESCRITA
+PU;MEDIDAS_PREVENTIVAS;PRORROGACAO_MP;DELIBERACAO_PUB;3;true;Deliberação de aprovação da prorrogação das Medidas Preventivas;;Deliberação;PECA_ESCRITA
+PU;MEDIDAS_PREVENTIVAS;PRORROGACAO_MP;DELIBERACAO_DEP;4;true;Deliberação de aprovação da prorrogação das Medidas Preventivas;;Deliberação;PECA_ESCRITA
+PU;NORMAS_PROVISORIAS;PUBLICACAO_NP;TEXTO_ATO_PUB;1;true;Texto do ato a publicar no Diário da República;;Texto do Ato;PECA_ESCRITA
+PU;NORMAS_PROVISORIAS;PUBLICACAO_NP;TEXTO_ATO_DEP;2;true;Texto do ato a publicar no Diário da República;;Texto do Ato;PECA_ESCRITA
+PU;NORMAS_PROVISORIAS;PUBLICACAO_NP;DELIBERACAO_PUB;3;true;Deliberação de aprovação das Normas Provisórias;;Deliberação;PECA_ESCRITA
+PU;NORMAS_PROVISORIAS;PUBLICACAO_NP;DELIBERACAO_DEP;4;true;Deliberação de aprovação das Normas Provisórias;;Deliberação;PECA_ESCRITA
+PU;NORMAS_PROVISORIAS;PUBLICACAO_NP;TEXTO_NORMAS_PROVISORIAS_PUB;5;true;Texto das Normas Provisórias;;Texto das Normas Provisórias;PECA_ESCRITA
+PU;NORMAS_PROVISORIAS;PUBLICACAO_NP;TEXTO_NORMAS_PROVISORIAS_DEP;6;true;Texto das Normas Provisórias;;Texto das Normas Provisórias;PECA_ESCRITA
+PU;NORMAS_PROVISORIAS;PUBLICACAO_NP;PLANTA_DELIMITACAO_PUB;7;true;Planta de delimitação da área abrangida pelas Normas Provisórias - quando aplicável;;Planta de Delimitação;PECA_GRAFICA
+PU;NORMAS_PROVISORIAS;PUBLICACAO_NP;PLANTA_DELIMITACAO_DEP;8;true;Planta de delimitação da área abrangida pelas Normas Provisórias - quando aplicável;;Planta de Delimitação;PECA_GRAFICA
+PU;NORMAS_PROVISORIAS;PRORROGACAO_NP;TEXTO_ATO_PUB;1;true;Texto do ato a publicar no Diário da República;;Texto do Ato;PECA_ESCRITA
+PU;NORMAS_PROVISORIAS;PRORROGACAO_NP;TEXTO_ATO_DEP;2;true;Texto do ato a publicar no Diário da República;;Texto do Ato;PECA_ESCRITA
+PU;NORMAS_PROVISORIAS;PRORROGACAO_NP;DELIBERACAO_PUB;3;true;Deliberação de aprovação das Normas Provisórias;;Deliberação;PECA_ESCRITA
+PU;NORMAS_PROVISORIAS;PRORROGACAO_NP;DELIBERACAO_DEP;4;true;Deliberação de aprovação das Normas Provisórias;;Deliberação;PECA_ESCRITA
+PU;SUSPENSAO_GOVERNO;PUBLICACAO_SUSPENSAO_GOVERNO;RCM_PUB;1;true;Resolução do Conselho de Ministros;;Resolução do Conselho de Ministros;PECA_ESCRITA
+PU;SUSPENSAO_GOVERNO;PUBLICACAO_SUSPENSAO_GOVERNO;RCM_DEP;2;true;Resolução do Conselho de Ministros;;Resolução do Conselho de Ministros;PECA_ESCRITA
+PU;SUSPENSAO_GOVERNO;PUBLICACAO_SUSPENSAO_GOVERNO;TEXTO_MEDIDAS_PREVENTIVAS_PUB;3;true;Texto das Medidas Preventivas;;Texto das Medidas Preventivas;PECA_ESCRITA
+PU;SUSPENSAO_GOVERNO;PUBLICACAO_SUSPENSAO_GOVERNO;TEXTO_MEDIDAS_PREVENTIVAS_DEP;4;true;Texto das Medidas Preventivas;;Texto das Medidas Preventivas;PECA_ESCRITA
+PU;SUSPENSAO_GOVERNO;PUBLICACAO_SUSPENSAO_GOVERNO;PLANTA_DELIMITACAO_PUB;5;true;Planta de delimitação da área abrangida pela suspensão - quando aplicável;;Planta de Delimitação;PECA_GRAFICA
+PU;SUSPENSAO_GOVERNO;PUBLICACAO_SUSPENSAO_GOVERNO;PLANTA_DELIMITACAO_DEP;6;true;Planta de delimitação da área abrangida pela suspensão - quando aplicável;;Planta de Delimitação;PECA_GRAFICA
+PU;SUSPENSAO_GOVERNO;PRORROGACAO_SUSPENSAO_GOVERNO;RCM_PUB;1;true;Resolução do Conselho de Ministros;;Resolução do Conselho de Ministros;PECA_ESCRITA
+PU;SUSPENSAO_GOVERNO;PRORROGACAO_SUSPENSAO_GOVERNO;RCM_DEP;2;true;Resolução do Conselho de Ministros;;Resolução do Conselho de Ministros;PECA_ESCRITA
+PP;SUSPENSAO;PUBLICACAO_SUSPENSAO;TEXTO_ATO_PUB;1;true;Texto do ato a publicar no Diário da República;;Texto do Ato;PECA_ESCRITA
+PP;SUSPENSAO;PUBLICACAO_SUSPENSAO;TEXTO_ATO_DEP;2;true;Texto do ato a publicar no Diário da República;;Texto do Ato;PECA_ESCRITA
+PP;SUSPENSAO;PUBLICACAO_SUSPENSAO;DELIBERACAO_PUB;3;true;Deliberação da AM de aprovação do procedimento de plano territorial;;Deliberação;PECA_ESCRITA
+PP;SUSPENSAO;PUBLICACAO_SUSPENSAO;DELIBERACAO_DEP;4;true;Deliberação da AM de aprovação do procedimento de plano territorial;;Deliberação;PECA_ESCRITA
+PP;SUSPENSAO;PUBLICACAO_SUSPENSAO;TEXTO_MEDIDAS_PREVENTIVAS_PUB;5;true;Texto das Medidas Preventivas;;Texto das Medidas Preventivas;PECA_ESCRITA
+PP;SUSPENSAO;PUBLICACAO_SUSPENSAO;TEXTO_MEDIDAS_PREVENTIVAS_DEP;6;true;Texto das Medidas Preventivas;;Texto das Medidas Preventivas;PECA_ESCRITA
+PP;SUSPENSAO;PUBLICACAO_SUSPENSAO;PLANTA_DELIMITACAO_PUB;7;true;Planta de delimitação da área abrangida pela suspensão - quando aplicável;;Planta de Delimitação;PECA_GRAFICA
+PP;SUSPENSAO;PUBLICACAO_SUSPENSAO;PLANTA_DELIMITACAO_DEP;8;true;Planta de delimitação da área abrangida pela suspensão - quando aplicável;;Planta de Delimitação;PECA_GRAFICA
+PP;SUSPENSAO;PUBLICACAO_SUSPENSAO;FUNDAMENTACAO_DEP;9;true;Fundamentação da suspensão;;Fundamentação;PECA_ESCRITA
+PP;SUSPENSAO;PUBLICACAO_SUSPENSAO;DELIBERACAO_CM_ELABORACAO_DEP;10;true;Deliberação da CM que determina a elaboração/revisão/alteração do plano;Deliberação da Câmara Municipal (CM) que determina a elaboração/revisão/alteração do plano no qual se fundamentam a suspensão e as MP;Deliberação da CM;PECA_ESCRITA
+PP;SUSPENSAO;PUBLICACAO_SUSPENSAO;PARECER_CCDR_DEP;11;true;Parecer da CCDR;;Parecer da CCDR;PECA_ESCRITA
+PP;SUSPENSAO;PUBLICACAO_SUSPENSAO;DELIBERACAO_CM_SUSPENSAO_DEP;12;true;Deliberação da CM que determina a suspensão do plano e o estabelecimento de MP;Deliberação da Câmara Municipal (CM) que determina a suspensão do plano e o estabelecimento de MP;Deliberação da CM;PECA_ESCRITA
+PP;SUSPENSAO;PRORROGACAO_SUSPENSAO;TEXTO_ATO_PUB;1;true;Texto do ato a publicar no Diário da República;;Texto do Ato;PECA_ESCRITA
+PP;SUSPENSAO;PRORROGACAO_SUSPENSAO;TEXTO_ATO_DEP;2;true;Texto do ato a publicar no Diário da República;;Texto do Ato;PECA_ESCRITA
+PP;SUSPENSAO;PRORROGACAO_SUSPENSAO;DELIBERACAO_PUB;3;true;Deliberação de aprovação do procedimento de plano territorial;;Deliberação;PECA_ESCRITA
+PP;SUSPENSAO;PRORROGACAO_SUSPENSAO;DELIBERACAO_DEP;4;true;Deliberação de aprovação do procedimento de plano territorial;;Deliberação;PECA_ESCRITA
+PP;MEDIDAS_PREVENTIVAS;PUBLICACAO_MP;TEXTO_ATO_PUB;1;true;Texto do ato a publicar no Diário da República;;Texto do Ato;PECA_ESCRITA
+PP;MEDIDAS_PREVENTIVAS;PUBLICACAO_MP;TEXTO_ATO_DEP;2;true;Texto do ato a publicar no Diário da República;;Texto do Ato;PECA_ESCRITA
+PP;MEDIDAS_PREVENTIVAS;PUBLICACAO_MP;DELIBERACAO_PUB;3;true;Deliberação de aprovação das Medidas Preventivas;;Deliberação;PECA_ESCRITA
+PP;MEDIDAS_PREVENTIVAS;PUBLICACAO_MP;DELIBERACAO_DEP;4;true;Deliberação de aprovação das Medidas Preventivas;;Deliberação;PECA_ESCRITA
+PP;MEDIDAS_PREVENTIVAS;PUBLICACAO_MP;TEXTO_MEDIDAS_PREVENTIVAS_PUB;5;true;Texto das Medidas Preventivas;;Texto das Medidas Preventivas;PECA_ESCRITA
+PP;MEDIDAS_PREVENTIVAS;PUBLICACAO_MP;TEXTO_MEDIDAS_PREVENTIVAS_DEP;6;true;Texto das Medidas Preventivas;;Texto das Medidas Preventivas;PECA_ESCRITA
+PP;MEDIDAS_PREVENTIVAS;PUBLICACAO_MP;PLANTA_DELIMITACAO_PUB;7;true;Planta de delimitação da área abrangida pelas Medidas Preventivas - quando aplicável;;Planta de Delimitação;PECA_GRAFICA
+PP;MEDIDAS_PREVENTIVAS;PUBLICACAO_MP;PLANTA_DELIMITACAO_DEP;8;true;Planta de delimitação da área abrangida pelas Medidas Preventivas - quando aplicável;;Planta de Delimitação;PECA_GRAFICA
+PP;MEDIDAS_PREVENTIVAS;PUBLICACAO_MP;FUNDAMENTACAO_DEP;9;true;Fundamentação das MP;;Fundamentação;PECA_ESCRITA
+PP;MEDIDAS_PREVENTIVAS;PRORROGACAO_MP;TEXTO_ATO_PUB;1;true;Texto do ato a publicar no Diário da República;;Texto do Ato;PECA_ESCRITA
+PP;MEDIDAS_PREVENTIVAS;PRORROGACAO_MP;TEXTO_ATO_DEP;2;true;Texto do ato a publicar no Diário da República;;Texto do Ato;PECA_ESCRITA
+PP;MEDIDAS_PREVENTIVAS;PRORROGACAO_MP;DELIBERACAO_PUB;3;true;Deliberação de aprovação da prorrogação das Medidas Preventivas;;Deliberação;PECA_ESCRITA
+PP;MEDIDAS_PREVENTIVAS;PRORROGACAO_MP;DELIBERACAO_DEP;4;true;Deliberação de aprovação da prorrogação das Medidas Preventivas;;Deliberação;PECA_ESCRITA
+PP;NORMAS_PROVISORIAS;PUBLICACAO_NP;TEXTO_ATO_PUB;1;true;Texto do ato a publicar no Diário da República;;Texto do Ato;PECA_ESCRITA
+PP;NORMAS_PROVISORIAS;PUBLICACAO_NP;TEXTO_ATO_DEP;2;true;Texto do ato a publicar no Diário da República;;Texto do Ato;PECA_ESCRITA
+PP;NORMAS_PROVISORIAS;PUBLICACAO_NP;DELIBERACAO_PUB;3;true;Deliberação de aprovação das Normas Provisórias;;Deliberação;PECA_ESCRITA
+PP;NORMAS_PROVISORIAS;PUBLICACAO_NP;DELIBERACAO_DEP;4;true;Deliberação de aprovação das Normas Provisórias;;Deliberação;PECA_ESCRITA
+PP;NORMAS_PROVISORIAS;PUBLICACAO_NP;TEXTO_NORMAS_PROVISORIAS_PUB;5;true;Texto das Normas Provisórias;;Texto das Normas Provisórias;PECA_ESCRITA
+PP;NORMAS_PROVISORIAS;PUBLICACAO_NP;TEXTO_NORMAS_PROVISORIAS_DEP;6;true;Texto das Normas Provisórias;;Texto das Normas Provisórias;PECA_ESCRITA
+PP;NORMAS_PROVISORIAS;PUBLICACAO_NP;PLANTA_DELIMITACAO_PUB;7;true;Planta de delimitação da área abrangida pelas Normas Provisórias - quando aplicável;;Planta de Delimitação;PECA_GRAFICA
+PP;NORMAS_PROVISORIAS;PUBLICACAO_NP;PLANTA_DELIMITACAO_DEP;8;true;Planta de delimitação da área abrangida pelas Normas Provisórias - quando aplicável;;Planta de Delimitação;PECA_GRAFICA
+PP;NORMAS_PROVISORIAS;PRORROGACAO_NP;TEXTO_ATO_PUB;1;true;Texto do ato a publicar no Diário da República;;Texto do Ato;PECA_ESCRITA
+PP;NORMAS_PROVISORIAS;PRORROGACAO_NP;TEXTO_ATO_DEP;2;true;Texto do ato a publicar no Diário da República;;Texto do Ato;PECA_ESCRITA
+PP;NORMAS_PROVISORIAS;PRORROGACAO_NP;DELIBERACAO_PUB;3;true;Deliberação de aprovação das Normas Provisórias;;Deliberação;PECA_ESCRITA
+PP;NORMAS_PROVISORIAS;PRORROGACAO_NP;DELIBERACAO_DEP;4;true;Deliberação de aprovação das Normas Provisórias;;Deliberação;PECA_ESCRITA
+PP;SUSPENSAO_GOVERNO;PUBLICACAO_SUSPENSAO_GOVERNO;RCM_PUB;1;true;Resolução do Conselho de Ministros;;Resolução do Conselho de Ministros;PECA_ESCRITA
+PP;SUSPENSAO_GOVERNO;PUBLICACAO_SUSPENSAO_GOVERNO;RCM_DEP;2;true;Resolução do Conselho de Ministros;;Resolução do Conselho de Ministros;PECA_ESCRITA
+PP;SUSPENSAO_GOVERNO;PUBLICACAO_SUSPENSAO_GOVERNO;TEXTO_MEDIDAS_PREVENTIVAS_PUB;3;true;Texto das Medidas Preventivas;;Texto das Medidas Preventivas;PECA_ESCRITA
+PP;SUSPENSAO_GOVERNO;PUBLICACAO_SUSPENSAO_GOVERNO;TEXTO_MEDIDAS_PREVENTIVAS_DEP;4;true;Texto das Medidas Preventivas;;Texto das Medidas Preventivas;PECA_ESCRITA
+PP;SUSPENSAO_GOVERNO;PUBLICACAO_SUSPENSAO_GOVERNO;PLANTA_DELIMITACAO_PUB;5;true;Planta de delimitação da área abrangida pela suspensão - quando aplicável;;Planta de Delimitação;PECA_GRAFICA
+PP;SUSPENSAO_GOVERNO;PUBLICACAO_SUSPENSAO_GOVERNO;PLANTA_DELIMITACAO_DEP;6;true;Planta de delimitação da área abrangida pela suspensão - quando aplicável;;Planta de Delimitação;PECA_GRAFICA
+PP;SUSPENSAO_GOVERNO;PRORROGACAO_SUSPENSAO_GOVERNO;RCM_PUB;1;true;Resolução do Conselho de Ministros;;Resolução do Conselho de Ministros;PECA_ESCRITA
+PP;SUSPENSAO_GOVERNO;PRORROGACAO_SUSPENSAO_GOVERNO;RCM_DEP;2;true;Resolução do Conselho de Ministros;;Resolução do Conselho de Ministros;PECA_ESCRITA
+PDIM;SUSPENSAO;PUBLICACAO_SUSPENSAO;TEXTO_ATO_PUB;1;true;Texto do ato a publicar no Diário da República;;Texto do Ato;PECA_ESCRITA
+PDIM;SUSPENSAO;PUBLICACAO_SUSPENSAO;TEXTO_ATO_DEP;2;true;Texto do ato a publicar no Diário da República;;Texto do Ato;PECA_ESCRITA
+PDIM;SUSPENSAO;PUBLICACAO_SUSPENSAO;DELIBERACAO_PUB;3;true;Deliberação da AM de aprovação do procedimento de plano territorial;;Deliberação;PECA_ESCRITA
+PDIM;SUSPENSAO;PUBLICACAO_SUSPENSAO;DELIBERACAO_DEP;4;true;Deliberação da AM de aprovação do procedimento de plano territorial;;Deliberação;PECA_ESCRITA
+PDIM;SUSPENSAO;PUBLICACAO_SUSPENSAO;TEXTO_MEDIDAS_PREVENTIVAS_PUB;5;true;Texto das Medidas Preventivas;;Texto das Medidas Preventivas;PECA_ESCRITA
+PDIM;SUSPENSAO;PUBLICACAO_SUSPENSAO;TEXTO_MEDIDAS_PREVENTIVAS_DEP;6;true;Texto das Medidas Preventivas;;Texto das Medidas Preventivas;PECA_ESCRITA
+PDIM;SUSPENSAO;PUBLICACAO_SUSPENSAO;PLANTA_DELIMITACAO_PUB;7;true;Planta de delimitação da área abrangida pela suspensão - quando aplicável;;Planta de Delimitação;PECA_GRAFICA
+PDIM;SUSPENSAO;PUBLICACAO_SUSPENSAO;PLANTA_DELIMITACAO_DEP;8;true;Planta de delimitação da área abrangida pela suspensão - quando aplicável;;Planta de Delimitação;PECA_GRAFICA
+PDIM;SUSPENSAO;PUBLICACAO_SUSPENSAO;FUNDAMENTACAO_DEP;9;true;Fundamentação da suspensão;;Fundamentação;PECA_ESCRITA
+PDIM;SUSPENSAO;PUBLICACAO_SUSPENSAO;DELIBERACAO_CM_ELABORACAO_DEP;10;true;Deliberação da CM que determina a elaboração/revisão/alteração do plano;Deliberação da Câmara Municipal (CM) que determina a elaboração/revisão/alteração do plano no qual se fundamentam a suspensão e as MP;Deliberação da CM;PECA_ESCRITA
+PDIM;SUSPENSAO;PUBLICACAO_SUSPENSAO;PARECER_CCDR_DEP;11;true;Parecer da CCDR;;Parecer da CCDR;PECA_ESCRITA
+PDIM;SUSPENSAO;PUBLICACAO_SUSPENSAO;DELIBERACAO_CM_SUSPENSAO_DEP;12;true;Deliberação da CM que determina a suspensão do plano e o estabelecimento de MP;Deliberação da Câmara Municipal (CM) que determina a suspensão do plano e o estabelecimento de MP;Deliberação da CM;PECA_ESCRITA
+PDIM;SUSPENSAO;PRORROGACAO_SUSPENSAO;TEXTO_ATO_PUB;1;true;Texto do ato a publicar no Diário da República;;Texto do Ato;PECA_ESCRITA
+PDIM;SUSPENSAO;PRORROGACAO_SUSPENSAO;TEXTO_ATO_DEP;2;true;Texto do ato a publicar no Diário da República;;Texto do Ato;PECA_ESCRITA
+PDIM;SUSPENSAO;PRORROGACAO_SUSPENSAO;DELIBERACAO_PUB;3;true;Deliberação de aprovação do procedimento de plano territorial;;Deliberação;PECA_ESCRITA
+PDIM;SUSPENSAO;PRORROGACAO_SUSPENSAO;DELIBERACAO_DEP;4;true;Deliberação de aprovação do procedimento de plano territorial;;Deliberação;PECA_ESCRITA
+PDIM;MEDIDAS_PREVENTIVAS;PUBLICACAO_MP;TEXTO_ATO_PUB;1;true;Texto do ato a publicar no Diário da República;;Texto do Ato;PECA_ESCRITA
+PDIM;MEDIDAS_PREVENTIVAS;PUBLICACAO_MP;TEXTO_ATO_DEP;2;true;Texto do ato a publicar no Diário da República;;Texto do Ato;PECA_ESCRITA
+PDIM;MEDIDAS_PREVENTIVAS;PUBLICACAO_MP;DELIBERACAO_PUB;3;true;Deliberação de aprovação das Medidas Preventivas;;Deliberação;PECA_ESCRITA
+PDIM;MEDIDAS_PREVENTIVAS;PUBLICACAO_MP;DELIBERACAO_DEP;4;true;Deliberação de aprovação das Medidas Preventivas;;Deliberação;PECA_ESCRITA
+PDIM;MEDIDAS_PREVENTIVAS;PUBLICACAO_MP;TEXTO_MEDIDAS_PREVENTIVAS_PUB;5;true;Texto das Medidas Preventivas;;Texto das Medidas Preventivas;PECA_ESCRITA
+PDIM;MEDIDAS_PREVENTIVAS;PUBLICACAO_MP;TEXTO_MEDIDAS_PREVENTIVAS_DEP;6;true;Texto das Medidas Preventivas;;Texto das Medidas Preventivas;PECA_ESCRITA
+PDIM;MEDIDAS_PREVENTIVAS;PUBLICACAO_MP;PLANTA_DELIMITACAO_PUB;7;true;Planta de delimitação da área abrangida pelas Medidas Preventivas - quando aplicável;;Planta de Delimitação;PECA_GRAFICA
+PDIM;MEDIDAS_PREVENTIVAS;PUBLICACAO_MP;PLANTA_DELIMITACAO_DEP;8;true;Planta de delimitação da área abrangida pelas Medidas Preventivas - quando aplicável;;Planta de Delimitação;PECA_GRAFICA
+PDIM;MEDIDAS_PREVENTIVAS;PUBLICACAO_MP;FUNDAMENTACAO_DEP;9;true;Fundamentação das MP;;Fundamentação;PECA_ESCRITA
+PDIM;MEDIDAS_PREVENTIVAS;PRORROGACAO_MP;TEXTO_ATO_PUB;1;true;Texto do ato a publicar no Diário da República;;Texto do Ato;PECA_ESCRITA
+PDIM;MEDIDAS_PREVENTIVAS;PRORROGACAO_MP;TEXTO_ATO_DEP;2;true;Texto do ato a publicar no Diário da República;;Texto do Ato;PECA_ESCRITA
+PDIM;MEDIDAS_PREVENTIVAS;PRORROGACAO_MP;DELIBERACAO_PUB;3;true;Deliberação de aprovação da prorrogação das Medidas Preventivas;;Deliberação;PECA_ESCRITA
+PDIM;MEDIDAS_PREVENTIVAS;PRORROGACAO_MP;DELIBERACAO_DEP;4;true;Deliberação de aprovação da prorrogação das Medidas Preventivas;;Deliberação;PECA_ESCRITA
+PDIM;RATIFICACAO;RATIFICACAO;TEXTO_ATO_PUB;1;true;Texto do ato a publicar no Diário da República;;Texto do Ato;PECA_ESCRITA
+PDIM;RATIFICACAO;RATIFICACAO;TEXTO_ATO_DEP;2;true;Texto do ato a publicar no Diário da República;;Texto do Ato;PECA_ESCRITA
+PDIM;RATIFICACAO;RATIFICACAO;RCM_PUB;3;true;Resolução do Conselho de Ministros que ratifica o PDM ou a sua alteração/revisão;;Resolução do Conselho de Ministros;PECA_ESCRITA
+PDIM;RATIFICACAO;RATIFICACAO;RCM_DEP;4;true;Resolução do Conselho de Ministros que ratifica o PDM ou a sua alteração/revisão;;Resolução do Conselho de Ministros;PECA_ESCRITA
+PDIM;RATIFICACAO;RATIFICACAO;ALTERACOES_REGULAMENTO_PUB;5;true;Texto das disposições ratificadas no Regulamento - quando tenha sido ratificado;;Alterações ao Regulamento;PECA_ESCRITA
+PDIM;RATIFICACAO;RATIFICACAO;ALTERACOES_REGULAMENTO_DEP;6;true;Texto das disposições ratificadas no Regulamento - quando tenha sido ratificado;;Alterações ao Regulamento;PECA_ESCRITA
+PDIM;RATIFICACAO;RATIFICACAO;REGULAMENTO_INTEGRAL_PUB;7;false;Regulamento (versão alterada integral) - quando necessário;;Regulamento Integral;PECA_ESCRITA
+PDIM;RATIFICACAO;RATIFICACAO;REGULAMENTO_INTEGRAL_DEP;8;false;Regulamento (versão alterada integral) - quando necessário;;Regulamento Integral;PECA_ESCRITA
+PDIM;RATIFICACAO;RATIFICACAO;PLANTA_ORDENAMENTO_PUB;9;true;Planta de Ordenamento - quando tenha sido ratificada;;Planta de Ordenamento;PECA_GRAFICA
+PDIM;RATIFICACAO;RATIFICACAO;PLANTA_ORDENAMENTO_DEP;10;true;Planta de Ordenamento - quando tenha sido ratificada;;Planta de Ordenamento;PECA_GRAFICA
+PDIM;RATIFICACAO;RATIFICACAO;PLANTA_CONDICIONANTES_PUB;11;true;Planta de Condicionantes - quando tenha sido ratificada;;Planta de Condicionantes;PECA_GRAFICA
+PDIM;RATIFICACAO;RATIFICACAO;PLANTA_CONDICIONANTES_DEP;12;true;Planta de Condicionantes - quando tenha sido ratificada;;Planta de Condicionantes;PECA_GRAFICA
+PDIM;RATIFICACAO;RATIFICACAO;DEMAIS_ELEMENTOS_DEP;13;true;Os demais elementos do plano;;Demais Elementos;OUTROS
+PDIM;RATIFICACAO;RATIFICACAO;DELIBERACAO_DEP;14;true;Deliberação de aprovação do plano territorial ou da sua alteração;;Deliberação;PECA_ESCRITA
+PDIM;NORMAS_PROVISORIAS;PUBLICACAO_NP;TEXTO_ATO_PUB;1;true;Texto do ato a publicar no Diário da República;;Texto do Ato;PECA_ESCRITA
+PDIM;NORMAS_PROVISORIAS;PUBLICACAO_NP;TEXTO_ATO_DEP;2;true;Texto do ato a publicar no Diário da República;;Texto do Ato;PECA_ESCRITA
+PDIM;NORMAS_PROVISORIAS;PUBLICACAO_NP;DELIBERACAO_PUB;3;true;Deliberação de aprovação das Normas Provisórias;;Deliberação;PECA_ESCRITA
+PDIM;NORMAS_PROVISORIAS;PUBLICACAO_NP;DELIBERACAO_DEP;4;true;Deliberação de aprovação das Normas Provisórias;;Deliberação;PECA_ESCRITA
+PDIM;NORMAS_PROVISORIAS;PUBLICACAO_NP;TEXTO_NORMAS_PROVISORIAS_PUB;5;true;Texto das Normas Provisórias;;Texto das Normas Provisórias;PECA_ESCRITA
+PDIM;NORMAS_PROVISORIAS;PUBLICACAO_NP;TEXTO_NORMAS_PROVISORIAS_DEP;6;true;Texto das Normas Provisórias;;Texto das Normas Provisórias;PECA_ESCRITA
+PDIM;NORMAS_PROVISORIAS;PUBLICACAO_NP;PLANTA_DELIMITACAO_PUB;7;true;Planta de delimitação da área abrangida pelas Normas Provisórias - quando aplicável;;Planta de Delimitação;PECA_GRAFICA
+PDIM;NORMAS_PROVISORIAS;PUBLICACAO_NP;PLANTA_DELIMITACAO_DEP;8;true;Planta de delimitação da área abrangida pelas Normas Provisórias - quando aplicável;;Planta de Delimitação;PECA_GRAFICA
+PDIM;NORMAS_PROVISORIAS;PRORROGACAO_NP;TEXTO_ATO_PUB;1;true;Texto do ato a publicar no Diário da República;;Texto do Ato;PECA_ESCRITA
+PDIM;NORMAS_PROVISORIAS;PRORROGACAO_NP;TEXTO_ATO_DEP;2;true;Texto do ato a publicar no Diário da República;;Texto do Ato;PECA_ESCRITA
+PDIM;NORMAS_PROVISORIAS;PRORROGACAO_NP;DELIBERACAO_PUB;3;true;Deliberação de aprovação das Normas Provisórias;;Deliberação;PECA_ESCRITA
+PDIM;NORMAS_PROVISORIAS;PRORROGACAO_NP;DELIBERACAO_DEP;4;true;Deliberação de aprovação das Normas Provisórias;;Deliberação;PECA_ESCRITA
+PDIM;SUSPENSAO_GOVERNO;PUBLICACAO_SUSPENSAO_GOVERNO;RCM_PUB;1;true;Resolução do Conselho de Ministros;;Resolução do Conselho de Ministros;PECA_ESCRITA
+PDIM;SUSPENSAO_GOVERNO;PUBLICACAO_SUSPENSAO_GOVERNO;RCM_DEP;2;true;Resolução do Conselho de Ministros;;Resolução do Conselho de Ministros;PECA_ESCRITA
+PDIM;SUSPENSAO_GOVERNO;PUBLICACAO_SUSPENSAO_GOVERNO;TEXTO_MEDIDAS_PREVENTIVAS_PUB;3;true;Texto das Medidas Preventivas;;Texto das Medidas Preventivas;PECA_ESCRITA
+PDIM;SUSPENSAO_GOVERNO;PUBLICACAO_SUSPENSAO_GOVERNO;TEXTO_MEDIDAS_PREVENTIVAS_DEP;4;true;Texto das Medidas Preventivas;;Texto das Medidas Preventivas;PECA_ESCRITA
+PDIM;SUSPENSAO_GOVERNO;PUBLICACAO_SUSPENSAO_GOVERNO;PLANTA_DELIMITACAO_PUB;5;true;Planta de delimitação da área abrangida pela suspensão - quando aplicável;;Planta de Delimitação;PECA_GRAFICA
+PDIM;SUSPENSAO_GOVERNO;PUBLICACAO_SUSPENSAO_GOVERNO;PLANTA_DELIMITACAO_DEP;6;true;Planta de delimitação da área abrangida pela suspensão - quando aplicável;;Planta de Delimitação;PECA_GRAFICA
+PDIM;SUSPENSAO_GOVERNO;PRORROGACAO_SUSPENSAO_GOVERNO;RCM_PUB;1;true;Resolução do Conselho de Ministros;;Resolução do Conselho de Ministros;PECA_ESCRITA
+PDIM;SUSPENSAO_GOVERNO;PRORROGACAO_SUSPENSAO_GOVERNO;RCM_DEP;2;true;Resolução do Conselho de Ministros;;Resolução do Conselho de Ministros;PECA_ESCRITA
+PUIM;SUSPENSAO;PUBLICACAO_SUSPENSAO;TEXTO_ATO_PUB;1;true;Texto do ato a publicar no Diário da República;;Texto do Ato;PECA_ESCRITA
+PUIM;SUSPENSAO;PUBLICACAO_SUSPENSAO;TEXTO_ATO_DEP;2;true;Texto do ato a publicar no Diário da República;;Texto do Ato;PECA_ESCRITA
+PUIM;SUSPENSAO;PUBLICACAO_SUSPENSAO;DELIBERACAO_PUB;3;true;Deliberação da AM de aprovação do procedimento de plano territorial;;Deliberação;PECA_ESCRITA
+PUIM;SUSPENSAO;PUBLICACAO_SUSPENSAO;DELIBERACAO_DEP;4;true;Deliberação da AM de aprovação do procedimento de plano territorial;;Deliberação;PECA_ESCRITA
+PUIM;SUSPENSAO;PUBLICACAO_SUSPENSAO;TEXTO_MEDIDAS_PREVENTIVAS_PUB;5;true;Texto das Medidas Preventivas;;Texto das Medidas Preventivas;PECA_ESCRITA
+PUIM;SUSPENSAO;PUBLICACAO_SUSPENSAO;TEXTO_MEDIDAS_PREVENTIVAS_DEP;6;true;Texto das Medidas Preventivas;;Texto das Medidas Preventivas;PECA_ESCRITA
+PUIM;SUSPENSAO;PUBLICACAO_SUSPENSAO;PLANTA_DELIMITACAO_PUB;7;true;Planta de delimitação da área abrangida pela suspensão - quando aplicável;;Planta de Delimitação;PECA_GRAFICA
+PUIM;SUSPENSAO;PUBLICACAO_SUSPENSAO;PLANTA_DELIMITACAO_DEP;8;true;Planta de delimitação da área abrangida pela suspensão - quando aplicável;;Planta de Delimitação;PECA_GRAFICA
+PUIM;SUSPENSAO;PUBLICACAO_SUSPENSAO;FUNDAMENTACAO_DEP;9;true;Fundamentação da suspensão;;Fundamentação;PECA_ESCRITA
+PUIM;SUSPENSAO;PUBLICACAO_SUSPENSAO;DELIBERACAO_CM_ELABORACAO_DEP;10;true;Deliberação da CM que determina a elaboração/revisão/alteração do plano;Deliberação da Câmara Municipal (CM) que determina a elaboração/revisão/alteração do plano no qual se fundamentam a suspensão e as MP;Deliberação da CM;PECA_ESCRITA
+PUIM;SUSPENSAO;PUBLICACAO_SUSPENSAO;PARECER_CCDR_DEP;11;true;Parecer da CCDR;;Parecer da CCDR;PECA_ESCRITA
+PUIM;SUSPENSAO;PUBLICACAO_SUSPENSAO;DELIBERACAO_CM_SUSPENSAO_DEP;12;true;Deliberação da CM que determina a suspensão do plano e o estabelecimento de MP;Deliberação da Câmara Municipal (CM) que determina a suspensão do plano e o estabelecimento de MP;Deliberação da CM;PECA_ESCRITA
+PUIM;SUSPENSAO;PRORROGACAO_SUSPENSAO;TEXTO_ATO_PUB;1;true;Texto do ato a publicar no Diário da República;;Texto do Ato;PECA_ESCRITA
+PUIM;SUSPENSAO;PRORROGACAO_SUSPENSAO;TEXTO_ATO_DEP;2;true;Texto do ato a publicar no Diário da República;;Texto do Ato;PECA_ESCRITA
+PUIM;SUSPENSAO;PRORROGACAO_SUSPENSAO;DELIBERACAO_PUB;3;true;Deliberação de aprovação do procedimento de plano territorial;;Deliberação;PECA_ESCRITA
+PUIM;SUSPENSAO;PRORROGACAO_SUSPENSAO;DELIBERACAO_DEP;4;true;Deliberação de aprovação do procedimento de plano territorial;;Deliberação;PECA_ESCRITA
+PUIM;MEDIDAS_PREVENTIVAS;PUBLICACAO_MP;TEXTO_ATO_PUB;1;true;Texto do ato a publicar no Diário da República;;Texto do Ato;PECA_ESCRITA
+PUIM;MEDIDAS_PREVENTIVAS;PUBLICACAO_MP;TEXTO_ATO_DEP;2;true;Texto do ato a publicar no Diário da República;;Texto do Ato;PECA_ESCRITA
+PUIM;MEDIDAS_PREVENTIVAS;PUBLICACAO_MP;DELIBERACAO_PUB;3;true;Deliberação de aprovação das Medidas Preventivas;;Deliberação;PECA_ESCRITA
+PUIM;MEDIDAS_PREVENTIVAS;PUBLICACAO_MP;DELIBERACAO_DEP;4;true;Deliberação de aprovação das Medidas Preventivas;;Deliberação;PECA_ESCRITA
+PUIM;MEDIDAS_PREVENTIVAS;PUBLICACAO_MP;TEXTO_MEDIDAS_PREVENTIVAS_PUB;5;true;Texto das Medidas Preventivas;;Texto das Medidas Preventivas;PECA_ESCRITA
+PUIM;MEDIDAS_PREVENTIVAS;PUBLICACAO_MP;TEXTO_MEDIDAS_PREVENTIVAS_DEP;6;true;Texto das Medidas Preventivas;;Texto das Medidas Preventivas;PECA_ESCRITA
+PUIM;MEDIDAS_PREVENTIVAS;PUBLICACAO_MP;PLANTA_DELIMITACAO_PUB;7;true;Planta de delimitação da área abrangida pelas Medidas Preventivas - quando aplicável;;Planta de Delimitação;PECA_GRAFICA
+PUIM;MEDIDAS_PREVENTIVAS;PUBLICACAO_MP;PLANTA_DELIMITACAO_DEP;8;true;Planta de delimitação da área abrangida pelas Medidas Preventivas - quando aplicável;;Planta de Delimitação;PECA_GRAFICA
+PUIM;MEDIDAS_PREVENTIVAS;PUBLICACAO_MP;FUNDAMENTACAO_DEP;9;true;Fundamentação das MP;;Fundamentação;PECA_ESCRITA
+PUIM;MEDIDAS_PREVENTIVAS;PRORROGACAO_MP;TEXTO_ATO_PUB;1;true;Texto do ato a publicar no Diário da República;;Texto do Ato;PECA_ESCRITA
+PUIM;MEDIDAS_PREVENTIVAS;PRORROGACAO_MP;TEXTO_ATO_DEP;2;true;Texto do ato a publicar no Diário da República;;Texto do Ato;PECA_ESCRITA
+PUIM;MEDIDAS_PREVENTIVAS;PRORROGACAO_MP;DELIBERACAO_PUB;3;true;Deliberação de aprovação da prorrogação das Medidas Preventivas;;Deliberação;PECA_ESCRITA
+PUIM;MEDIDAS_PREVENTIVAS;PRORROGACAO_MP;DELIBERACAO_DEP;4;true;Deliberação de aprovação da prorrogação das Medidas Preventivas;;Deliberação;PECA_ESCRITA
+PUIM;NORMAS_PROVISORIAS;PUBLICACAO_NP;TEXTO_ATO_PUB;1;true;Texto do ato a publicar no Diário da República;;Texto do Ato;PECA_ESCRITA
+PUIM;NORMAS_PROVISORIAS;PUBLICACAO_NP;TEXTO_ATO_DEP;2;true;Texto do ato a publicar no Diário da República;;Texto do Ato;PECA_ESCRITA
+PUIM;NORMAS_PROVISORIAS;PUBLICACAO_NP;DELIBERACAO_PUB;3;true;Deliberação de aprovação das Normas Provisórias;;Deliberação;PECA_ESCRITA
+PUIM;NORMAS_PROVISORIAS;PUBLICACAO_NP;DELIBERACAO_DEP;4;true;Deliberação de aprovação das Normas Provisórias;;Deliberação;PECA_ESCRITA
+PUIM;NORMAS_PROVISORIAS;PUBLICACAO_NP;TEXTO_NORMAS_PROVISORIAS_PUB;5;true;Texto das Normas Provisórias;;Texto das Normas Provisórias;PECA_ESCRITA
+PUIM;NORMAS_PROVISORIAS;PUBLICACAO_NP;TEXTO_NORMAS_PROVISORIAS_DEP;6;true;Texto das Normas Provisórias;;Texto das Normas Provisórias;PECA_ESCRITA
+PUIM;NORMAS_PROVISORIAS;PUBLICACAO_NP;PLANTA_DELIMITACAO_PUB;7;true;Planta de delimitação da área abrangida pelas Normas Provisórias - quando aplicável;;Planta de Delimitação;PECA_GRAFICA
+PUIM;NORMAS_PROVISORIAS;PUBLICACAO_NP;PLANTA_DELIMITACAO_DEP;8;true;Planta de delimitação da área abrangida pelas Normas Provisórias - quando aplicável;;Planta de Delimitação;PECA_GRAFICA
+PUIM;NORMAS_PROVISORIAS;PRORROGACAO_NP;TEXTO_ATO_PUB;1;true;Texto do ato a publicar no Diário da República;;Texto do Ato;PECA_ESCRITA
+PUIM;NORMAS_PROVISORIAS;PRORROGACAO_NP;TEXTO_ATO_DEP;2;true;Texto do ato a publicar no Diário da República;;Texto do Ato;PECA_ESCRITA
+PUIM;NORMAS_PROVISORIAS;PRORROGACAO_NP;DELIBERACAO_PUB;3;true;Deliberação de aprovação das Normas Provisórias;;Deliberação;PECA_ESCRITA
+PUIM;NORMAS_PROVISORIAS;PRORROGACAO_NP;DELIBERACAO_DEP;4;true;Deliberação de aprovação das Normas Provisórias;;Deliberação;PECA_ESCRITA
+PUIM;SUSPENSAO_GOVERNO;PUBLICACAO_SUSPENSAO_GOVERNO;RCM_PUB;1;true;Resolução do Conselho de Ministros;;Resolução do Conselho de Ministros;PECA_ESCRITA
+PUIM;SUSPENSAO_GOVERNO;PUBLICACAO_SUSPENSAO_GOVERNO;RCM_DEP;2;true;Resolução do Conselho de Ministros;;Resolução do Conselho de Ministros;PECA_ESCRITA
+PUIM;SUSPENSAO_GOVERNO;PUBLICACAO_SUSPENSAO_GOVERNO;TEXTO_MEDIDAS_PREVENTIVAS_PUB;3;true;Texto das Medidas Preventivas;;Texto das Medidas Preventivas;PECA_ESCRITA
+PUIM;SUSPENSAO_GOVERNO;PUBLICACAO_SUSPENSAO_GOVERNO;TEXTO_MEDIDAS_PREVENTIVAS_DEP;4;true;Texto das Medidas Preventivas;;Texto das Medidas Preventivas;PECA_ESCRITA
+PUIM;SUSPENSAO_GOVERNO;PUBLICACAO_SUSPENSAO_GOVERNO;PLANTA_DELIMITACAO_PUB;5;true;Planta de delimitação da área abrangida pela suspensão - quando aplicável;;Planta de Delimitação;PECA_GRAFICA
+PUIM;SUSPENSAO_GOVERNO;PUBLICACAO_SUSPENSAO_GOVERNO;PLANTA_DELIMITACAO_DEP;6;true;Planta de delimitação da área abrangida pela suspensão - quando aplicável;;Planta de Delimitação;PECA_GRAFICA
+PUIM;SUSPENSAO_GOVERNO;PRORROGACAO_SUSPENSAO_GOVERNO;RCM_PUB;1;true;Resolução do Conselho de Ministros;;Resolução do Conselho de Ministros;PECA_ESCRITA
+PUIM;SUSPENSAO_GOVERNO;PRORROGACAO_SUSPENSAO_GOVERNO;RCM_DEP;2;true;Resolução do Conselho de Ministros;;Resolução do Conselho de Ministros;PECA_ESCRITA
+PPIM;SUSPENSAO;PUBLICACAO_SUSPENSAO;TEXTO_ATO_PUB;1;true;Texto do ato a publicar no Diário da República;;Texto do Ato;PECA_ESCRITA
+PPIM;SUSPENSAO;PUBLICACAO_SUSPENSAO;TEXTO_ATO_DEP;2;true;Texto do ato a publicar no Diário da República;;Texto do Ato;PECA_ESCRITA
+PPIM;SUSPENSAO;PUBLICACAO_SUSPENSAO;DELIBERACAO_PUB;3;true;Deliberação da AM de aprovação do procedimento de plano territorial;;Deliberação;PECA_ESCRITA
+PPIM;SUSPENSAO;PUBLICACAO_SUSPENSAO;DELIBERACAO_DEP;4;true;Deliberação da AM de aprovação do procedimento de plano territorial;;Deliberação;PECA_ESCRITA
+PPIM;SUSPENSAO;PUBLICACAO_SUSPENSAO;TEXTO_MEDIDAS_PREVENTIVAS_PUB;5;true;Texto das Medidas Preventivas;;Texto das Medidas Preventivas;PECA_ESCRITA
+PPIM;SUSPENSAO;PUBLICACAO_SUSPENSAO;TEXTO_MEDIDAS_PREVENTIVAS_DEP;6;true;Texto das Medidas Preventivas;;Texto das Medidas Preventivas;PECA_ESCRITA
+PPIM;SUSPENSAO;PUBLICACAO_SUSPENSAO;PLANTA_DELIMITACAO_PUB;7;true;Planta de delimitação da área abrangida pela suspensão - quando aplicável;;Planta de Delimitação;PECA_GRAFICA
+PPIM;SUSPENSAO;PUBLICACAO_SUSPENSAO;PLANTA_DELIMITACAO_DEP;8;true;Planta de delimitação da área abrangida pela suspensão - quando aplicável;;Planta de Delimitação;PECA_GRAFICA
+PPIM;SUSPENSAO;PUBLICACAO_SUSPENSAO;FUNDAMENTACAO_DEP;9;true;Fundamentação da suspensão;;Fundamentação;PECA_ESCRITA
+PPIM;SUSPENSAO;PUBLICACAO_SUSPENSAO;DELIBERACAO_CM_ELABORACAO_DEP;10;true;Deliberação da CM que determina a elaboração/revisão/alteração do plano;Deliberação da Câmara Municipal (CM) que determina a elaboração/revisão/alteração do plano no qual se fundamentam a suspensão e as MP;Deliberação da CM;PECA_ESCRITA
+PPIM;SUSPENSAO;PUBLICACAO_SUSPENSAO;PARECER_CCDR_DEP;11;true;Parecer da CCDR;;Parecer da CCDR;PECA_ESCRITA
+PPIM;SUSPENSAO;PUBLICACAO_SUSPENSAO;DELIBERACAO_CM_SUSPENSAO_DEP;12;true;Deliberação da CM que determina a suspensão do plano e o estabelecimento de MP;Deliberação da Câmara Municipal (CM) que determina a suspensão do plano e o estabelecimento de MP;Deliberação da CM;PECA_ESCRITA
+PPIM;SUSPENSAO;PRORROGACAO_SUSPENSAO;TEXTO_ATO_PUB;1;true;Texto do ato a publicar no Diário da República;;Texto do Ato;PECA_ESCRITA
+PPIM;SUSPENSAO;PRORROGACAO_SUSPENSAO;TEXTO_ATO_DEP;2;true;Texto do ato a publicar no Diário da República;;Texto do Ato;PECA_ESCRITA
+PPIM;SUSPENSAO;PRORROGACAO_SUSPENSAO;DELIBERACAO_PUB;3;true;Deliberação de aprovação do procedimento de plano territorial;;Deliberação;PECA_ESCRITA
+PPIM;SUSPENSAO;PRORROGACAO_SUSPENSAO;DELIBERACAO_DEP;4;true;Deliberação de aprovação do procedimento de plano territorial;;Deliberação;PECA_ESCRITA
+PPIM;MEDIDAS_PREVENTIVAS;PUBLICACAO_MP;TEXTO_ATO_PUB;1;true;Texto do ato a publicar no Diário da República;;Texto do Ato;PECA_ESCRITA
+PPIM;MEDIDAS_PREVENTIVAS;PUBLICACAO_MP;TEXTO_ATO_DEP;2;true;Texto do ato a publicar no Diário da República;;Texto do Ato;PECA_ESCRITA
+PPIM;MEDIDAS_PREVENTIVAS;PUBLICACAO_MP;DELIBERACAO_PUB;3;true;Deliberação de aprovação das Medidas Preventivas;;Deliberação;PECA_ESCRITA
+PPIM;MEDIDAS_PREVENTIVAS;PUBLICACAO_MP;DELIBERACAO_DEP;4;true;Deliberação de aprovação das Medidas Preventivas;;Deliberação;PECA_ESCRITA
+PPIM;MEDIDAS_PREVENTIVAS;PUBLICACAO_MP;TEXTO_MEDIDAS_PREVENTIVAS_PUB;5;true;Texto das Medidas Preventivas;;Texto das Medidas Preventivas;PECA_ESCRITA
+PPIM;MEDIDAS_PREVENTIVAS;PUBLICACAO_MP;TEXTO_MEDIDAS_PREVENTIVAS_DEP;6;true;Texto das Medidas Preventivas;;Texto das Medidas Preventivas;PECA_ESCRITA
+PPIM;MEDIDAS_PREVENTIVAS;PUBLICACAO_MP;PLANTA_DELIMITACAO_PUB;7;true;Planta de delimitação da área abrangida pelas Medidas Preventivas - quando aplicável;;Planta de Delimitação;PECA_GRAFICA
+PPIM;MEDIDAS_PREVENTIVAS;PUBLICACAO_MP;PLANTA_DELIMITACAO_DEP;8;true;Planta de delimitação da área abrangida pelas Medidas Preventivas - quando aplicável;;Planta de Delimitação;PECA_GRAFICA
+PPIM;MEDIDAS_PREVENTIVAS;PUBLICACAO_MP;FUNDAMENTACAO_DEP;9;true;Fundamentação das MP;;Fundamentação;PECA_ESCRITA
+PPIM;MEDIDAS_PREVENTIVAS;PRORROGACAO_MP;TEXTO_ATO_PUB;1;true;Texto do ato a publicar no Diário da República;;Texto do Ato;PECA_ESCRITA
+PPIM;MEDIDAS_PREVENTIVAS;PRORROGACAO_MP;TEXTO_ATO_DEP;2;true;Texto do ato a publicar no Diário da República;;Texto do Ato;PECA_ESCRITA
+PPIM;MEDIDAS_PREVENTIVAS;PRORROGACAO_MP;DELIBERACAO_PUB;3;true;Deliberação de aprovação da prorrogação das Medidas Preventivas;;Deliberação;PECA_ESCRITA
+PPIM;MEDIDAS_PREVENTIVAS;PRORROGACAO_MP;DELIBERACAO_DEP;4;true;Deliberação de aprovação da prorrogação das Medidas Preventivas;;Deliberação;PECA_ESCRITA
+PPIM;NORMAS_PROVISORIAS;PUBLICACAO_NP;TEXTO_ATO_PUB;1;true;Texto do ato a publicar no Diário da República;;Texto do Ato;PECA_ESCRITA
+PPIM;NORMAS_PROVISORIAS;PUBLICACAO_NP;TEXTO_ATO_DEP;2;true;Texto do ato a publicar no Diário da República;;Texto do Ato;PECA_ESCRITA
+PPIM;NORMAS_PROVISORIAS;PUBLICACAO_NP;DELIBERACAO_PUB;3;true;Deliberação de aprovação das Normas Provisórias;;Deliberação;PECA_ESCRITA
+PPIM;NORMAS_PROVISORIAS;PUBLICACAO_NP;DELIBERACAO_DEP;4;true;Deliberação de aprovação das Normas Provisórias;;Deliberação;PECA_ESCRITA
+PPIM;NORMAS_PROVISORIAS;PUBLICACAO_NP;TEXTO_NORMAS_PROVISORIAS_PUB;5;true;Texto das Normas Provisórias;;Texto das Normas Provisórias;PECA_ESCRITA
+PPIM;NORMAS_PROVISORIAS;PUBLICACAO_NP;TEXTO_NORMAS_PROVISORIAS_DEP;6;true;Texto das Normas Provisórias;;Texto das Normas Provisórias;PECA_ESCRITA
+PPIM;NORMAS_PROVISORIAS;PUBLICACAO_NP;PLANTA_DELIMITACAO_PUB;7;true;Planta de delimitação da área abrangida pelas Normas Provisórias - quando aplicável;;Planta de Delimitação;PECA_GRAFICA
+PPIM;NORMAS_PROVISORIAS;PUBLICACAO_NP;PLANTA_DELIMITACAO_DEP;8;true;Planta de delimitação da área abrangida pelas Normas Provisórias - quando aplicável;;Planta de Delimitação;PECA_GRAFICA
+PPIM;NORMAS_PROVISORIAS;PRORROGACAO_NP;TEXTO_ATO_PUB;1;true;Texto do ato a publicar no Diário da República;;Texto do Ato;PECA_ESCRITA
+PPIM;NORMAS_PROVISORIAS;PRORROGACAO_NP;TEXTO_ATO_DEP;2;true;Texto do ato a publicar no Diário da República;;Texto do Ato;PECA_ESCRITA
+PPIM;NORMAS_PROVISORIAS;PRORROGACAO_NP;DELIBERACAO_PUB;3;true;Deliberação de aprovação das Normas Provisórias;;Deliberação;PECA_ESCRITA
+PPIM;NORMAS_PROVISORIAS;PRORROGACAO_NP;DELIBERACAO_DEP;4;true;Deliberação de aprovação das Normas Provisórias;;Deliberação;PECA_ESCRITA
+PPIM;SUSPENSAO_GOVERNO;PUBLICACAO_SUSPENSAO_GOVERNO;RCM_PUB;1;true;Resolução do Conselho de Ministros;;Resolução do Conselho de Ministros;PECA_ESCRITA
+PPIM;SUSPENSAO_GOVERNO;PUBLICACAO_SUSPENSAO_GOVERNO;RCM_DEP;2;true;Resolução do Conselho de Ministros;;Resolução do Conselho de Ministros;PECA_ESCRITA
+PPIM;SUSPENSAO_GOVERNO;PUBLICACAO_SUSPENSAO_GOVERNO;TEXTO_MEDIDAS_PREVENTIVAS_PUB;3;true;Texto das Medidas Preventivas;;Texto das Medidas Preventivas;PECA_ESCRITA
+PPIM;SUSPENSAO_GOVERNO;PUBLICACAO_SUSPENSAO_GOVERNO;TEXTO_MEDIDAS_PREVENTIVAS_DEP;4;true;Texto das Medidas Preventivas;;Texto das Medidas Preventivas;PECA_ESCRITA
+PPIM;SUSPENSAO_GOVERNO;PUBLICACAO_SUSPENSAO_GOVERNO;PLANTA_DELIMITACAO_PUB;5;true;Planta de delimitação da área abrangida pela suspensão - quando aplicável;;Planta de Delimitação;PECA_GRAFICA
+PPIM;SUSPENSAO_GOVERNO;PUBLICACAO_SUSPENSAO_GOVERNO;PLANTA_DELIMITACAO_DEP;6;true;Planta de delimitação da área abrangida pela suspensão - quando aplicável;;Planta de Delimitação;PECA_GRAFICA
+PPIM;SUSPENSAO_GOVERNO;PRORROGACAO_SUSPENSAO_GOVERNO;RCM_PUB;1;true;Resolução do Conselho de Ministros;;Resolução do Conselho de Ministros;PECA_ESCRITA
+PPIM;SUSPENSAO_GOVERNO;PRORROGACAO_SUSPENSAO_GOVERNO;RCM_DEP;2;true;Resolução do Conselho de Ministros;;Resolução do Conselho de Ministros;PECA_ESCRITA

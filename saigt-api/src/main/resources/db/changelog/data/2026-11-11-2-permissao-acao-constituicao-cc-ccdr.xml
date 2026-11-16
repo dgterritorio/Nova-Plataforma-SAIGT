@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="2026-11-11-2-permissao-acao-constituicao-cc-ccdr" author="arnaldo.costa">
+        <comment>
+            A Constituição da Comissão Consultiva é criada e submetida pela CCDR, não pela Câmara (EF v1.5 §3.5.1.3,
+            Procedimento #2; OI-234): nas configurações cujo Procedimento é `CONSTITUICAO_CC` (hoje a Elaboração e a
+            Revisão do PDM), a linha `CM` passa a `CCDR_DR` e a `DGT` mantém-se. Só pelo código do Procedimento, sem
+            ids nem tipos de Instrumento, por isso a CC de PDIM e de PIMOT, quando semeada, segue a mesma regra. O
+            rollback devolve `CCDR_DR` a `CM` nas mesmas configurações.
+        </comment>
+        <sql>
+            UPDATE permissao_acao pa SET tipo_entidade = 'CCDR_DR'
+            WHERE pa.tipo_entidade = 'CM'
+              AND pa.instrumento_procedimento_config_id IN (
+                  SELECT ipc.id FROM instrumento_procedimento_config ipc
+                  JOIN tipo_procedimento tp ON tp.id = ipc.tipo_procedimento_id
+                  WHERE tp.codigo = 'CONSTITUICAO_CC')
+              AND NOT EXISTS (
+                  SELECT 1 FROM permissao_acao existente
+                  WHERE existente.instrumento_procedimento_config_id = pa.instrumento_procedimento_config_id
+                    AND existente.tipo_entidade = 'CCDR_DR')
+        </sql>
+        <sql>
+            DELETE FROM permissao_acao
+            WHERE tipo_entidade = 'CM'
+              AND instrumento_procedimento_config_id IN (
+                  SELECT ipc.id FROM instrumento_procedimento_config ipc
+                  JOIN tipo_procedimento tp ON tp.id = ipc.tipo_procedimento_id
+                  WHERE tp.codigo = 'CONSTITUICAO_CC')
+        </sql>
+        <sql>
+            INSERT INTO permissao_acao (tipo_entidade, instrumento_procedimento_config_id, ativo)
+            SELECT 'CCDR_DR', ipc.id, true
+            FROM instrumento_procedimento_config ipc
+            JOIN tipo_procedimento tp ON tp.id = ipc.tipo_procedimento_id
+            WHERE tp.codigo = 'CONSTITUICAO_CC'
+              AND NOT EXISTS (
+                  SELECT 1 FROM permissao_acao existente
+                  WHERE existente.instrumento_procedimento_config_id = ipc.id
+                    AND existente.tipo_entidade = 'CCDR_DR')
+        </sql>
+        <rollback>
+            <sql>
+                UPDATE permissao_acao pa SET tipo_entidade = 'CM'
+                WHERE pa.tipo_entidade = 'CCDR_DR'
+                  AND pa.instrumento_procedimento_config_id IN (
+                      SELECT ipc.id FROM instrumento_procedimento_config ipc
+                      JOIN tipo_procedimento tp ON tp.id = ipc.tipo_procedimento_id
+                      WHERE tp.codigo = 'CONSTITUICAO_CC')
+                  AND NOT EXISTS (
+                      SELECT 1 FROM permissao_acao existente
+                      WHERE existente.instrumento_procedimento_config_id = pa.instrumento_procedimento_config_id
+                        AND existente.tipo_entidade = 'CM')
+            </sql>
+        </rollback>
+    </changeSet>
+</databaseChangeLog>

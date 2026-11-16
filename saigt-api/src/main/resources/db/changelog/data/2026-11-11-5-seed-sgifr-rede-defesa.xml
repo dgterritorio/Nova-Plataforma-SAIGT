@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="2026-11-11-5-seed-sgifr-rede-defesa" author="david.raposo">
+        <comment>
+            As 8 redes do art. 46.º do DL 82/2021, com os nomes da EF v1.5 (SGIFR). O PRA só usa a rede primária; o
+            PSA usa as restantes menos a terciária, que nunca é publicada (FR-113). Configuração de produção, sem
+            context: mudar um indicador é um changeset novo. O rollback apaga as 8 linhas pelo código.
+        </comment>
+
+        <insert tableName="sgifr_rede_defesa">
+            <column name="codigo" value="RPFGC"/>
+            <column name="nome" value="Rede primária de faixas de gestão de combustível"/>
+            <column name="aplica_pra" valueBoolean="true"/>
+            <column name="aplica_psa" valueBoolean="false"/>
+            <column name="publicavel" valueBoolean="true"/>
+        </insert>
+        <insert tableName="sgifr_rede_defesa">
+            <column name="codigo" value="RSFGC"/>
+            <column name="nome" value="Rede secundária de faixas de gestão de combustível"/>
+            <column name="aplica_pra" valueBoolean="false"/>
+            <column name="aplica_psa" valueBoolean="true"/>
+            <column name="publicavel" valueBoolean="true"/>
+        </insert>
+        <insert tableName="sgifr_rede_defesa">
+            <column name="codigo" value="RTFGC"/>
+            <column name="nome" value="Rede terciária de faixas de gestão de combustível"/>
+            <column name="aplica_pra" valueBoolean="false"/>
+            <column name="aplica_psa" valueBoolean="false"/>
+            <column name="publicavel" valueBoolean="false"/>
+        </insert>
+        <insert tableName="sgifr_rede_defesa">
+            <column name="codigo" value="APPS"/>
+            <column name="nome" value="Áreas prioritárias de prevenção e segurança"/>
+            <column name="aplica_pra" valueBoolean="false"/>
+            <column name="aplica_psa" valueBoolean="true"/>
+            <column name="publicavel" valueBoolean="true"/>
+        </insert>
+        <insert tableName="sgifr_rede_defesa">
+            <column name="codigo" value="RVDI"/>
+            <column name="nome" value="Rede nacional de postos de vigia - rede de Vigilância e Deteção de Incêndios"/>
+            <column name="aplica_pra" valueBoolean="false"/>
+            <column name="aplica_psa" valueBoolean="true"/>
+            <column name="publicavel" valueBoolean="true"/>
+        </insert>
+        <insert tableName="sgifr_rede_defesa">
+            <column name="codigo" value="AEMGC"/>
+            <column name="nome" value="Áreas estratégicas de mosaicos de gestão de combustível"/>
+            <column name="aplica_pra" valueBoolean="false"/>
+            <column name="aplica_psa" valueBoolean="true"/>
+            <column name="publicavel" valueBoolean="true"/>
+        </insert>
+        <insert tableName="sgifr_rede_defesa">
+            <column name="codigo" value="RVF"/>
+            <column name="nome" value="Rede viária florestal"/>
+            <column name="aplica_pra" valueBoolean="false"/>
+            <column name="aplica_psa" valueBoolean="true"/>
+            <column name="publicavel" valueBoolean="true"/>
+        </insert>
+        <insert tableName="sgifr_rede_defesa">
+            <column name="codigo" value="RPA"/>
+            <column name="nome" value="Rede de pontos de água"/>
+            <column name="aplica_pra" valueBoolean="false"/>
+            <column name="aplica_psa" valueBoolean="true"/>
+            <column name="publicavel" valueBoolean="true"/>
+        </insert>
+
+        <rollback>
+            <delete tableName="sgifr_rede_defesa">
+                <where>codigo IN ('RPFGC', 'RSFGC', 'RTFGC', 'APPS', 'RVDI', 'AEMGC', 'RVF', 'RPA')</where>
+            </delete>
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>

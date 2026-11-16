@@ -1,0 +1,185 @@
+:host {
+  position: relative;
+  display: inline-flex;
+}
+
+.botao-sino {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--altura-controlo-sm);
+  height: var(--altura-controlo-sm);
+  padding: 0;
+  border: 0;
+  border-radius: var(--raio-md);
+  background: none;
+  color: var(--cor-texto-nav);
+  cursor: pointer;
+}
+
+.botao-sino:hover,
+.botao-sino[aria-expanded='true'] {
+  background: var(--cor-superficie-alt);
+}
+
+.botao-sino svg {
+  width: 18px;
+  height: 18px;
+}
+
+/* Posição do Figma (UI-056, cabeçalho): 8×8px a 22px da esquerda e 6px do topo do botão de 36px. */
+.ponto-sino {
+  position: absolute;
+  top: 6px;
+  left: 22px;
+  width: 8px;
+  height: 8px;
+  border-radius: var(--raio-pill);
+  background: var(--cor-destaque);
+}
+
+.botao-sino:focus-visible {
+  outline: var(--anel-foco);
+  outline-offset: calc(-1 * var(--anel-foco-afastamento));
+}
+
+.painel {
+  position: absolute;
+  top: calc(100% + var(--espaco-1));
+  right: 0;
+  z-index: 20;
+  display: flex;
+  flex-direction: column;
+  width: 397px;
+  max-width: calc(100vw - var(--espaco-8));
+  overflow: hidden;
+  border: var(--borda-largura) solid var(--cor-borda);
+  border-radius: var(--raio-lg);
+  background: var(--cor-superficie);
+  box-shadow: var(--sombra-dropdown);
+}
+
+.painel[hidden] {
+  display: none;
+}
+
+.painel-titulo {
+  margin: 0;
+  padding: var(--espaco-3) var(--espaco-4);
+  border-bottom: var(--borda-largura) solid var(--cor-borda);
+  font-size: var(--texto-base);
+  font-weight: var(--peso-medio);
+  line-height: var(--texto-base-linha);
+  color: var(--cor-texto);
+}
+
+.linhas {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.linha {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--espaco-3);
+  padding: var(--espaco-3) var(--espaco-4);
+  border-bottom: var(--borda-largura) solid var(--cor-borda-suave);
+  text-decoration: none;
+}
+
+.linha:hover {
+  background: var(--cor-superficie-alt);
+}
+
+.linha-nao-lida {
+  background: var(--cor-notificacao-nao-lida-fundo);
+}
+
+.ponto {
+  flex-shrink: 0;
+  width: 8px;
+  height: 8px;
+  margin-top: var(--espaco-1-5);
+  border-radius: var(--raio-pill);
+  background: var(--cor-borda);
+}
+
+.ponto-nao-lida {
+  background: var(--cor-primaria);
+}
+
+.linha-corpo {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.linha-titulo,
+.linha-texto {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.linha-titulo {
+  font-size: var(--texto-base);
+  font-weight: var(--peso-medio);
+  line-height: var(--texto-base-linha);
+  color: var(--cor-texto);
+}
+
+.linha-texto {
+  padding-top: var(--espaco-0-5);
+  font-size: var(--texto-sm);
+  line-height: var(--texto-sm-linha);
+  color: var(--cor-texto-secundario);
+}
+
+/* O Figma usa #94a3b8, que fica abaixo de 4,5:1 sobre branco. */
+.linha-tempo {
+  padding-top: var(--espaco-1);
+  font-size: var(--texto-sm);
+  line-height: var(--texto-sm-linha);
+  color: var(--cor-texto-secundario);
+}
+
+.painel-estado {
+  margin: 0;
+  padding: var(--espaco-4);
+  font-size: var(--texto-base);
+  line-height: var(--texto-base-linha);
+  color: var(--cor-texto-secundario);
+}
+
+.ver-todas {
+  display: block;
+  padding: var(--espaco-3) var(--espaco-4);
+  font-size: var(--texto-base);
+  font-weight: var(--peso-medio);
+  line-height: var(--texto-base-linha);
+  color: var(--cor-primaria);
+  text-align: center;
+  text-decoration: none;
+}
+
+.ver-todas:hover {
+  background: var(--cor-superficie-alt);
+}
+
+.linha:focus-visible,
+.ver-todas:focus-visible {
+  outline: var(--anel-foco);
+  outline-offset: calc(-1 * var(--anel-foco-afastamento));
+}
+
+.visualmente-oculto {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}

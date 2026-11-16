@@ -1,0 +1,63 @@
+.mensagem {
+  margin: 0;
+  padding: var(--espaco-4) var(--espaco-5);
+}
+
+.estado {
+  font-size: var(--texto-base);
+  line-height: var(--texto-base-linha);
+  color: var(--cor-texto-secundario);
+}
+
+.ficheiro {
+  display: flex;
+  align-items: center;
+  gap: var(--espaco-3);
+}
+
+.ficheiro-icone {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: var(--raio-md);
+  background: var(--cor-info-fundo);
+  color: var(--cor-primaria);
+}
+
+.ficheiro-icone svg {
+  width: 16px;
+  height: 16px;
+}
+
+/* Nomes, tipos e datas a monoespaçado, como no Figma. */
+.ficheiro-nome,
+.ficheiro-tipo,
+.ficheiro-data {
+  font-family: var(--fonte-mono);
+}
+
+.ficheiro-nome {
+  font-size: var(--texto-base);
+  line-height: var(--texto-base-linha);
+  color: var(--cor-texto-celula-forte);
+  overflow-wrap: anywhere;
+}
+
+.ficheiro-tipo {
+  padding: 0 var(--espaco-1-5);
+  border-radius: var(--raio-sm);
+  background: var(--cor-borda-suave);
+  font-size: var(--texto-xs);
+  font-weight: var(--peso-negrito);
+  line-height: var(--texto-xs-linha);
+  color: var(--cor-texto-celula);
+}
+
+.ficheiro-data {
+  font-size: var(--texto-sm);
+  line-height: var(--texto-sm-linha);
+  color: var(--cor-texto-secundario);
+}

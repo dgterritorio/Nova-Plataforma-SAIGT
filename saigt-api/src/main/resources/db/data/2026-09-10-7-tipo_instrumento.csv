@@ -1,0 +1,5 @@
+id;codigo;nome;categoria;ativo
+2;"PP";"Plano de Pormenor";"PLANO";true
+3;"PU";"Plano de Urbanização";"PLANO";true
+4;"PROT";"Programa Regional de Ordenamento do Território";"PROGRAMA";true
+5;"PEOT";"Programa Especial de Ordenamento do Território";"PROGRAMA";true

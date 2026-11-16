@@ -1,0 +1,119 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaco-4);
+}
+
+.pergunta {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaco-3);
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.rotulo {
+  margin: 0;
+  padding: 0;
+  font-size: var(--texto-base);
+  font-weight: var(--peso-medio);
+  line-height: var(--texto-base-linha);
+  color: var(--cor-texto-forte);
+}
+
+/* As mesmas opções em cartões das outras perguntas Sim/Não do formulário. */
+.opcoes {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--espaco-2);
+}
+
+.opcao {
+  display: flex;
+  gap: var(--espaco-2-5);
+  align-items: center;
+  padding: var(--espaco-3);
+  border: var(--borda-largura) solid var(--cor-borda);
+  border-radius: var(--raio-md);
+  background: var(--cor-superficie);
+  font-size: var(--texto-base);
+  font-weight: var(--peso-medio);
+  line-height: var(--texto-base-linha);
+  color: var(--cor-texto);
+  cursor: pointer;
+}
+
+/* O botão de opção fica visível: a escolha não pode depender só da cor da borda (WCAG 1.4.1). */
+.opcao input {
+  width: 16px;
+  height: 16px;
+  margin: 0;
+  accent-color: var(--cor-primaria);
+}
+
+.opcao-escolhida {
+  border-color: var(--cor-primaria);
+}
+
+.opcao input:focus-visible {
+  outline: none;
+}
+
+.opcao:has(input:focus-visible) {
+  outline: var(--anel-foco);
+  outline-offset: var(--anel-foco-afastamento);
+}
+
+.opcao:has(input:disabled) {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.ajuda,
+.erro {
+  margin: 0;
+  font-size: var(--texto-sm);
+  line-height: var(--texto-sm-linha);
+  color: var(--cor-texto-secundario);
+}
+
+.erro {
+  color: var(--cor-erro);
+}
+
+.erro-lista {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--espaco-2);
+}
+
+.mostrar-mais {
+  align-self: flex-start;
+}
+
+.carregamento {
+  margin: 0;
+  font-size: var(--texto-sm);
+  line-height: var(--texto-sm-linha);
+  color: var(--cor-texto-secundario);
+}
+
+/* Vazia, a região sai do ecrã mas continua na árvore de acessibilidade, para o anúncio seguinte ser lido. */
+.carregamento-vazio {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+@media (width <= 720px) {
+  .opcoes {
+    grid-template-columns: 1fr;
+  }
+}

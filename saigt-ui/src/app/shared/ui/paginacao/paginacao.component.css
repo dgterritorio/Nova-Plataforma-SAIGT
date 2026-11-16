@@ -1,0 +1,72 @@
+:host {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--espaco-4);
+  min-height: 41px;
+  padding: var(--espaco-0-5) var(--espaco-4);
+  border-top: var(--borda-largura) solid var(--cor-borda-suave);
+}
+
+.paginacao-resumo {
+  margin: 0;
+  font-size: var(--texto-base);
+  line-height: var(--texto-base-linha);
+  color: var(--cor-texto-secundario);
+}
+
+.paginacao-paginas {
+  display: flex;
+  align-items: center;
+  gap: var(--espaco-1);
+}
+
+button {
+  box-sizing: border-box;
+  border: var(--borda-largura) solid var(--cor-borda);
+  border-radius: var(--raio-md);
+  background: transparent;
+  font-family: var(--fonte-base);
+  font-size: var(--texto-base);
+  font-weight: var(--peso-medio);
+  line-height: var(--texto-base-linha);
+  color: var(--cor-texto-secundario);
+  cursor: pointer;
+}
+
+button:focus-visible {
+  outline: var(--anel-foco);
+  outline-offset: var(--anel-foco-afastamento);
+}
+
+button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+button:hover:not(:disabled, .paginacao-numero-atual) {
+  background: var(--cor-superficie-alt);
+}
+
+.paginacao-extremo {
+  height: 34px;
+  padding: 0 var(--espaco-3);
+}
+
+.paginacao-numero {
+  width: var(--altura-controlo-sm);
+  height: var(--altura-controlo-sm);
+  padding: 0;
+}
+
+.paginacao-numero-atual {
+  border-color: transparent;
+  background: var(--cor-primaria);
+  color: var(--cor-primaria-contraste);
+}
+
+.paginacao-reticencias {
+  min-width: 20px;
+  text-align: center;
+  color: var(--cor-texto-secundario);
+}

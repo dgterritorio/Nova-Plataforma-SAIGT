@@ -1,0 +1,201 @@
+/* Faixa branca do título por baixo do cabeçalho, de ponta a ponta (desfaz o padding do conteúdo). */
+.cabecalho-pagina {
+  margin: calc(var(--espaco-6) * -1) calc(var(--espaco-6) * -1) 0;
+  padding: var(--espaco-5) var(--espaco-6);
+  border-bottom: var(--borda-largura) solid var(--cor-borda);
+  background: var(--cor-superficie);
+}
+
+h1 {
+  margin: 0;
+  font-size: var(--texto-lg);
+  font-weight: var(--peso-negrito);
+  line-height: var(--texto-lg-linha);
+  color: var(--cor-texto);
+}
+
+.subtitulo-pagina {
+  margin: var(--espaco-1) 0 0;
+  font-size: var(--texto-base);
+  line-height: var(--texto-base-linha);
+  color: var(--cor-texto-secundario);
+}
+
+.corpo-pagina {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaco-4);
+  max-width: var(--contentor-perfil);
+  margin: var(--espaco-6) auto 0;
+}
+
+.cartao-cabecalho {
+  display: flex;
+  align-items: center;
+  gap: var(--espaco-2);
+  padding: var(--espaco-3-5) var(--espaco-5);
+  border-bottom: var(--borda-largura) solid var(--cor-borda-suave);
+  background: var(--cor-cabecalho-cartao);
+  color: var(--cor-primaria);
+}
+
+.cartao-cabecalho svg {
+  width: 16px;
+  height: 16px;
+}
+
+.cartao-cabecalho h2 {
+  margin: 0;
+  font-size: var(--texto-base);
+  font-weight: var(--peso-semi);
+  line-height: var(--texto-base-linha);
+  color: var(--cor-texto-rotulo);
+}
+
+.grelha {
+  display: grid;
+  gap: var(--espaco-4);
+  margin: 0;
+  padding: var(--espaco-5);
+}
+
+.grelha-2 {
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.grelha-3 {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+/* Listas de definição: sem as margens do browser; o espaço entre rótulo e valor é o de `.valor`. */
+.grelha dd {
+  margin-inline-start: 0;
+}
+
+/* O #94a3b8 do Figma fica a 2,6:1 sobre branco: usa-se o #64748b dos rótulos dos campos editáveis (UI-025). */
+.rotulo {
+  display: block;
+  font-size: var(--texto-rotulo);
+  font-weight: var(--peso-medio);
+  line-height: var(--texto-sm-linha);
+  letter-spacing: 0.3px;
+  text-transform: uppercase;
+  color: var(--cor-texto-secundario);
+}
+
+.valor {
+  display: block;
+  margin-top: var(--espaco-1-5);
+  font-size: var(--texto-base);
+  line-height: var(--texto-base-linha);
+  color: var(--cor-texto-rotulo);
+  overflow-wrap: anywhere;
+}
+
+.perfil-acesso {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--espaco-3);
+  padding: var(--espaco-5);
+}
+
+.perfil-acesso-grupo {
+  display: flex;
+  align-items: center;
+  gap: var(--espaco-3);
+}
+
+.perfil-acesso-icone {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: var(--raio-md);
+  background: var(--cor-info-fundo);
+  color: var(--cor-primaria);
+}
+
+.perfil-acesso-icone svg {
+  width: 14px;
+  height: 17px;
+}
+
+.perfil-acesso-texto {
+  display: flex;
+  flex-direction: column;
+}
+
+.valor-destaque {
+  font-size: var(--texto-md);
+  font-weight: var(--peso-semi);
+  line-height: var(--texto-md-linha);
+  color: var(--cor-texto);
+}
+
+.badge-gerido {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--espaco-1-5);
+  padding: var(--espaco-1) var(--espaco-3);
+  border-radius: var(--raio-md);
+  background: var(--cor-borda-suave);
+  font-size: var(--texto-sm);
+  line-height: var(--texto-sm-linha);
+  color: var(--cor-neutra);
+}
+
+.badge-gerido svg {
+  flex-shrink: 0;
+  width: 12px;
+  height: 12px;
+}
+
+.formulario {
+  padding: var(--espaco-5);
+}
+
+.cartao-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaco-4);
+}
+
+.grelha-form {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--espaco-4);
+}
+
+/* O #94a3b8 do Figma fica a 2,6:1 sobre branco. */
+.nota {
+  margin: var(--espaco-4) 0 0;
+  font-size: var(--texto-rotulo);
+  line-height: var(--texto-sm-linha);
+  color: var(--cor-texto-secundario);
+}
+
+.barra-gravacao-conteudo {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--espaco-3);
+  color: var(--cor-texto-nav);
+}
+
+/* No cartão do perfil de acesso o rótulo é um pouco maior (UI-025). */
+.perfil-acesso-texto .rotulo {
+  font-size: var(--texto-sm);
+}
+
+/* Em ecrãs estreitos, uma coluna. */
+@media (width <= 640px) {
+  .grelha-2,
+  .grelha-3,
+  .grelha-form {
+    grid-template-columns: 1fr;
+  }
+}

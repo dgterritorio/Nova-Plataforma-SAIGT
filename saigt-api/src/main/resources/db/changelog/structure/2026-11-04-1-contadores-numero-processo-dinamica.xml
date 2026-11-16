@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="2026-11-04-1-contadores-numero-processo-dinamica" author="david.raposo">
+        <comment>
+            O n.º de processo e o n.º de dinâmica passam das sequências para idus_contador (DB-INT-005, BL-PROC-052),
+            atribuídos pela aplicação sob pg_advisory_xact_lock (TR-089). Cada contador arranca no último valor já
+            atribuído, que é o maior entre a sequência e os números existentes.
+        </comment>
+
+        <sql>
+            INSERT INTO idus_contador (nome, valor_atual)
+            SELECT 'NUMERO_PROCESSO', GREATEST(
+                (SELECT CASE WHEN is_called THEN last_value ELSE last_value - 1 END FROM seq_processo_numero),
+                COALESCE((SELECT max(CAST(numero_processo AS INTEGER)) FROM processo
+                          WHERE numero_processo ~ '^[0-9]{1,9}$'), 0))
+            ON CONFLICT (nome) DO UPDATE SET valor_atual = GREATEST(idus_contador.valor_atual, EXCLUDED.valor_atual)
+        </sql>
+        <sql>
+            INSERT INTO idus_contador (nome, valor_atual)
+            SELECT 'NUMERO_DINAMICA', GREATEST(
+                (SELECT CASE WHEN is_called THEN last_value ELSE last_value - 1 END FROM seq_dinamica_numero),
+                COALESCE((SELECT max(CAST(numero_dinamica AS INTEGER)) FROM dinamica
+                          WHERE numero_dinamica ~ '^[0-9]{1,9}$'), 0))
+            ON CONFLICT (nome) DO UPDATE SET valor_atual = GREATEST(idus_contador.valor_atual, EXCLUDED.valor_atual)
+        </sql>
+
+        <dropDefaultValue tableName="processo" columnName="numero_processo"/>
+        <dropDefaultValue tableName="dinamica" columnName="numero_dinamica"/>
+        <dropSequence sequenceName="seq_processo_numero"/>
+        <dropSequence sequenceName="seq_dinamica_numero"/>
+
+        <rollback>
+            <createSequence sequenceName="seq_processo_numero" startValue="1" incrementBy="1"/>
+            <createSequence sequenceName="seq_dinamica_numero" startValue="1" incrementBy="1"/>
+            <sql>SELECT setval('seq_processo_numero',
+                (SELECT COALESCE(max(valor_atual), 0) FROM idus_contador WHERE nome = 'NUMERO_PROCESSO') + 1, false)</sql>
+            <sql>SELECT setval('seq_dinamica_numero',
+                (SELECT COALESCE(max(valor_atual), 0) FROM idus_contador WHERE nome = 'NUMERO_DINAMICA') + 1, false)</sql>
+            <addDefaultValue tableName="processo" columnName="numero_processo"
+                             defaultValueComputed="lpad(CAST(nextval('seq_processo_numero') AS VARCHAR), 5, '0')"/>
+            <addDefaultValue tableName="dinamica" columnName="numero_dinamica"
+                             defaultValueComputed="lpad(CAST(nextval('seq_dinamica_numero') AS VARCHAR), 5, '0')"/>
+            <sql>DELETE FROM idus_contador WHERE nome IN ('NUMERO_PROCESSO', 'NUMERO_DINAMICA')</sql>
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>

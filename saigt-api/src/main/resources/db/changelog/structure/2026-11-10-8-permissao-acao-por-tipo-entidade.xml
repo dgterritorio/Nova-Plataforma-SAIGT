@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="2026-11-10-8-permissao-acao-por-tipo-entidade" author="arnaldo.costa">
+        <comment>
+            A permissão passa a ser por tipo de entidade e não por ator: `ator` vira `tipo_entidade`, `ENTIDADE`
+            passa a `CM` e `DGT` mantém-se. A unique `uq_permissao_acao` acompanha a coluna renomeada, por isso
+            cobre (instrumento_procedimento_config_id, tipo_entidade). O rollback apaga as linhas de tipos que o
+            ator não conhecia, que não cabem no CHECK antigo.
+        </comment>
+        <sql>ALTER TABLE permissao_acao DROP CONSTRAINT ck_permissao_acao_ator</sql>
+        <sql>UPDATE permissao_acao SET ator = 'CM' WHERE ator = 'ENTIDADE'</sql>
+        <renameColumn tableName="permissao_acao" oldColumnName="ator" newColumnName="tipo_entidade"
+                      columnDataType="VARCHAR(30)"/>
+        <sql>ALTER TABLE permissao_acao ADD CONSTRAINT ck_permissao_acao_tipo_entidade
+            CHECK (tipo_entidade IN ('CM', 'CCDR_DR', 'AM', 'CIM', 'PCM', 'SEC_ESTADO', 'DGT', 'ICNF', 'APA', 'DGPC', 'IP'))</sql>
+        <rollback>
+            <sql>ALTER TABLE permissao_acao DROP CONSTRAINT ck_permissao_acao_tipo_entidade</sql>
+            <sql>DELETE FROM permissao_acao WHERE tipo_entidade NOT IN ('CM', 'PCM', 'DGT')</sql>
+            <sql>UPDATE permissao_acao SET tipo_entidade = 'ENTIDADE' WHERE tipo_entidade = 'CM'</sql>
+            <renameColumn tableName="permissao_acao" oldColumnName="tipo_entidade" newColumnName="ator"
+                          columnDataType="VARCHAR(30)"/>
+            <sql>ALTER TABLE permissao_acao ADD CONSTRAINT ck_permissao_acao_ator
+                CHECK (ator IN ('ENTIDADE', 'PCM', 'DGT'))</sql>
+        </rollback>
+    </changeSet>
+</databaseChangeLog>

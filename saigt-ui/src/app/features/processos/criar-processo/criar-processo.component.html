@@ -1,0 +1,481 @@
+<app-shell breadcrumb="Processos">
+  <div class="criar">
+    <h1>Criar Processo</h1>
+
+    <div class="coluna" [class.coluna-formulario]="passoAtual() === 2">
+      @if (!submissaoConcluida() && passoAtual() !== 3) {
+        <app-passos [passos]="estadoPassos().passos" [atual]="estadoPassos().atual" />
+      }
+
+      @if (erro() && !erroAtoReferido() && !erroOpcaoGeoconform() && !erroConfirmacao() && !erroDeclaracaoTermino() && errosFormularioSubmissao().length === 0 && !(paginaInicial() === 'semIgt' && erroDescritivoSemIgt())) {
+        <app-error-banner [erro]="erro()" />
+      }
+      @if (erroAtoReferido(); as mensagem) {
+        <app-alerta tipo="erro" class="erro-ato-referido">{{ mensagem }}</app-alerta>
+      }
+      @if (avisoProcedimentoIndisponivel()) {
+        <app-alerta tipo="aviso">O Procedimento escolhido já não está disponível. Escolha outro.</app-alerta>
+      }
+      @if (mensagemSucesso()) {
+        <div class="banner-sucesso-acao" role="status">{{ mensagemSucesso() }}</div>
+      }
+
+      @if (submissaoConcluida(); as submetido) {
+        <app-recibo-submissao
+          [processo]="submetido"
+          [tipoProcedimento]="tipoProcedimento()"
+          [designacao]="referenciaPlano()"
+          [tipoInstrumento]="nomeTipoInstrumento()"
+          [concelho]="concelhos()"
+          (voltar)="voltarAoMenu()"
+        />
+      } @else {
+        @if ((passoAtual() === 1 && paginaInicial() !== 'tipo') || (passoAtual() === 2 && podeEditar())) {
+          <div class="navegacao-topo">
+            <button type="button" app-botao variante="texto" tamanho="pequeno" [desativado]="ocupado()" (click)="voltarPasso()">‹ Voltar</button>
+            @if (passoAtual() !== 2 || temFormulario()) {
+              <button
+                type="button"
+                app-botao
+                variante="texto"
+                tamanho="pequeno"
+                [desativado]="seguinteDesativado()"
+                (click)="seguinte()"
+              >
+                Seguinte ›
+              </button>
+            }
+          </div>
+        }
+
+        @if (passoAtual() === 2 && podeEditar()) {
+          @if (processoCriado(); as criado) {
+            <dl class="identificacao">
+              @if (idus(); as valorIdus) {
+                <div>
+                  <dt>IDUS</dt>
+                  <dd>{{ valorIdus }}</dd>
+                </div>
+              }
+              <div>
+                <dt>Nº Processo SAIGT</dt>
+                <dd>{{ criado.numeroProcesso || '—' }}</dd>
+              </div>
+              @if (resumoAtoReferido(); as atoReferido) {
+                <div class="ato-referido">
+                  <dt>Ato a que respeita</dt>
+                  <dd>{{ atoReferido }}</dd>
+                </div>
+              }
+            </dl>
+          }
+
+          @switch (formulario()) {
+            @case ('INFORMACAO_GERAL') {
+              <ng-container [ngTemplateOutlet]="formularioInicial" />
+            }
+            @case ('DISCUSSAO_PUBLICA') {
+              <ng-container [ngTemplateOutlet]="formularioInicial" />
+            }
+            @case ('PUBLICACAO_ALTERACAO') {
+              <ng-container [ngTemplateOutlet]="formularioInicial" />
+            }
+            @case ('SRUP') {
+              <app-processo-formulario-srup
+                [tipoInstrumento]="nomeTipoInstrumento()"
+                [dinamica]="nomeDinamica()"
+                [servidaoVisivel]="subpagina() === 'cabecalho'"
+              >
+                <ng-container [ngTemplateOutlet]="formularioInicial" />
+              </app-processo-formulario-srup>
+            }
+            @case ('RATIFICACAO') {
+              <app-formulario-ratificacao
+                [tipoInstrumento]="nomeTipoInstrumento()"
+                [territorio]="territorio()"
+                [designacao]="referenciaPlano()"
+                [instrumentosAbrangidos]="detalheDoFormulario()?.instrumentosAbrangidos ?? null"
+                [valorInicial]="detalheDoFormulario()?.modalidadeRatificacao ?? null"
+                [bloqueado]="(processoCriado()?.camposBloqueados ?? []).includes('modalidadeRatificacao')"
+                [aCarregar]="aGuardar()"
+                [erroServidor]="erroModalidadeRatificacao()"
+                [seccaoVisivel]="subpagina() === 'cabecalho'"
+              >
+                <ng-container [ngTemplateOutlet]="formularioInicial" />
+              </app-formulario-ratificacao>
+            }
+            @case ('SUSPENSAO_CCDR') {
+              <app-formulario-suspensao-ccdr
+                [tipoInstrumento]="nomeTipoInstrumento()"
+                [tipoProcedimento]="tipoProcedimento()"
+                [designacao]="referenciaPlano()"
+                [instrumentosAbrangidos]="detalheDoFormulario()?.instrumentosAbrangidos ?? null"
+                [nomesTipos]="nomesTiposInstrumento()"
+                [seccaoVisivel]="subpagina() === 'cabecalho'"
+              >
+                <ng-container [ngTemplateOutlet]="formularioInicial" />
+              </app-formulario-suspensao-ccdr>
+            }
+            @case ('SUSPENSAO_MP_GOVERNO') {
+              <app-formulario-governo
+                variante="PUBLICACAO"
+                [tipoInstrumento]="nomeTipoInstrumento()"
+                [tipoProcedimento]="tipoProcedimento()"
+                [designacao]="referenciaPlano()"
+                [instrumentosAbrangidos]="detalheDoFormulario()?.instrumentosAbrangidos ?? null"
+                [nomesTipos]="nomesTiposInstrumento()"
+                [seccaoVisivel]="subpagina() === 'cabecalho'"
+              >
+                <ng-container [ngTemplateOutlet]="formularioInicial" />
+              </app-formulario-governo>
+            }
+            @case ('PRORROGACAO_GOVERNO') {
+              <app-formulario-governo
+                variante="PRORROGACAO"
+                [tipoInstrumento]="nomeTipoInstrumento()"
+                [tipoProcedimento]="tipoProcedimento()"
+                [designacao]="referenciaPlano()"
+                [instrumentosAbrangidos]="detalheDoFormulario()?.instrumentosAbrangidos ?? null"
+                [nomesTipos]="nomesTiposInstrumento()"
+                [seccaoVisivel]="subpagina() === 'cabecalho'"
+              >
+                <ng-container [ngTemplateOutlet]="formularioInicial" />
+              </app-formulario-governo>
+            }
+            @case ('SGIFR') {
+              <ng-container [ngTemplateOutlet]="formularioInicial" />
+            }
+            @case ('REN') {
+              <ng-container [ngTemplateOutlet]="formularioInicial" />
+            }
+            @default {
+              <app-cartao class="cartao-passo">
+                <app-alerta tipo="aviso">{{ avisoSemFormulario }}</app-alerta>
+              </app-cartao>
+            }
+          }
+          <ng-template #formularioInicial>
+            <div [hidden]="subpagina() !== 'cabecalho'">
+              <app-processo-formulario-inicial
+                [formulario]="formulario()"
+                [dataAssinaturaNoFormulario]="detalheDoFormulario()?.dataAssinaturaNoFormulario ?? false"
+                [serieDr]="serieDrEscolhida()"
+                [seriesDrEscolhiveis]="detalheDoFormulario()?.seriesDrEscolhiveis"
+                (serieEscolhida)="aoEscolherSerie()"
+                [valoresIniciais]="valoresIniciais()"
+                [tipoInstrumento]="nomeTipoInstrumento()"
+                [categoriaInstrumento]="categoriaInstrumento()"
+                [entidadeInstrutoraObrigatoria]="entidadeInstrutoraObrigatoria()"
+                [tipoProcedimento]="tipoProcedimentoDoFormulario()"
+                [modalidadeRatificacao]="detalheDoFormulario()?.modalidadeRatificacao ?? null"
+                [designacaoInstrumento]="referenciaPlano()"
+                [instrumentosAbrangidos]="detalheDoFormulario()?.instrumentosAbrangidos ?? null"
+                [territorio]="territorio()"
+                [tipoAtoNome]="nomeTipoAtoGravado()"
+                [tiposAtoDisponiveis]="tiposAtoDoCabecalho()"
+                [aCarregar]="aGuardar()"
+                [camposBloqueados]="processoCriado()?.camposBloqueados ?? []"
+                [pedeFundamentacaoRjigt]="detalheDoFormulario()?.pedeFundamentacaoRjigt ?? false"
+                [opcoesFundamentacaoRjigt]="detalheDoFormulario()?.opcoesFundamentacaoRjigt ?? []"
+                [pedeLocalizacao]="detalheDoFormulario()?.pedeLocalizacao ?? elaboracaoNova()?.pedeLocalizacao ?? 'NAO'"
+                [pedeMotivoAlteracao]="detalheDoFormulario()?.pedeMotivoAlteracao ?? 'NAO'"
+                [exigeOpcaoGeoconform]="exigeOpcaoGeoconform()"
+                [perguntaGeoconform]="detalheDoFormulario()?.perguntaGeoconform ?? null"
+                [comGeoconform]="comGeoconformGravado()"
+                [erroComGeoconform]="erroOpcaoGeoconform()"
+                [errosServidor]="errosFormularioSubmissao()"
+                [elaboracaoNova]="processoCriado() ? null : elaboracaoNova()"
+                [pedeElementosAfetados]="pedeElementosAfetados()"
+                [aceitaDinamicaAssociada]="detalheDoFormulario()?.aceitaDinamicaAssociada ?? false"
+                [dinamicaAssociada]="detalheDoFormulario()?.dinamicaAssociada ?? null"
+                [processoId]="processoCriado()?.id ?? null"
+                [redesDefesaDisponiveis]="detalheDoFormulario()?.redesDefesaDisponiveis ?? []"
+                [motivosProcedimentoDisponiveis]="detalheDoFormulario()?.motivosProcedimentoDisponiveis ?? []"
+                [pedeDiplomaCorrigido]="detalheDoFormulario()?.pedeDiplomaCorrigido ?? false"
+                [tipoInformacaoFixo]="detalheDoFormulario()?.tipoInformacaoFixo ?? null"
+              />
+            </div>
+
+            @if (subpagina() === 'plantas' && processoCriado(); as criado) {
+              <app-processo-plantas [processoId]="criado.id" [editavel]="true" [errosSubmissao]="errosMetadados()" />
+            }
+
+            @if (subpagina() === 'metadados' && processoCriado(); as criado) {
+              @if (aplicaFichaMotu() === true) {
+                <app-processo-metadados-motu [processoId]="criado.id" [editavel]="true" />
+              } @else if (aplicaFichaMotu() === false) {
+                <app-processo-metadados [processoId]="criado.id" [editavel]="true" [errosSubmissao]="errosMetadados()" />
+              }
+            }
+
+            @if (subpagina() === 'documentos') {
+              <app-alerta tipo="info" class="nota-rjigt">
+                <strong>Nota:</strong> Caso não pretenda publicar e depositar algum dos elementos referidos nos artigos 191º e 194º do RJIGT,
+                indique a respetiva justificação no campo “observações”.
+              </app-alerta>
+              @if (processoCriado(); as criado) {
+                <section class="cartao-documentos" aria-labelledby="titulo-documentos">
+                  <h2 class="cartao-documentos-cabecalho">
+                    <button
+                      type="button"
+                      id="titulo-documentos"
+                      class="cartao-documentos-alternar"
+                      [attr.aria-expanded]="!documentosRecolhidos()"
+                      aria-controls="cartao-documentos-corpo"
+                      (click)="documentosRecolhidos.set(!documentosRecolhidos())"
+                    >
+                      Informação Geral
+                      <svg class="chevron" [class.chevron-recolhido]="documentosRecolhidos()" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.33" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <path d="M4 10l4-4 4 4" />
+                      </svg>
+                    </button>
+                  </h2>
+                  <div class="cartao-documentos-corpo" id="cartao-documentos-corpo" [hidden]="documentosRecolhidos()">
+                    <app-processo-documentos
+                      [processoId]="criado.id"
+                      [editavel]="true"
+                      [embutido]="true"
+                      [semTitulosDeGrupo]="true"
+                      [informacaoBase]="informacaoBaseGravada().informacaoBase"
+                      [dataAssinatura]="informacaoBaseGravada().dataAssinatura"
+                      [errosCampo]="errosInformacaoBase()"
+                      [camposBloqueados]="criado.camposBloqueados"
+                      [dataLimiteDinamica]="detalheDoFormulario()?.dataCaducidadeDinamica ?? null"
+                      [processo]="detalheDoFormulario()"
+                      [pedidoRascunho]="pedidoRascunho"
+                      (informacaoBaseAlterada)="informacaoBaseEmEdicao.set($event)"
+                      (destinoGravado)="aoGravarDestino($event)"
+                      (associacaoGravada)="aoAssociarInstrumentos($event)"
+                    />
+                  </div>
+                </section>
+              }
+            }
+          </ng-template>
+        } @else if (passoAtual() === 3) {
+          <app-pagina-resumo
+            [designacao]="referenciaPlano()"
+            [tipoInstrumento]="nomeTipoInstrumento()"
+            [tipoProcedimento]="tipoProcedimento()"
+            [concelho]="concelhos()"
+            [submissao]="detalheDoFormulario()?.submissao ?? null"
+            [atoReferido]="resumoAtoReferido()"
+            [destino]="detalheDoFormulario()?.destino ?? null"
+            [processoId]="processoCriado()?.id ?? null"
+            [submeterDisponivel]="submeterDisponivel()"
+            [podeSubmeter]="podeSubmeter()"
+            [pendencias]="pendenciasSubmissao()"
+            [confirmado]="confirmado()"
+            [erroConfirmacao]="erroConfirmacao()"
+            (confirmacaoAlterada)="definirConfirmacao($event)"
+            (irParaPagina)="irParaPagina($event)"
+          >
+            @if (submeterDisponivel() && exigeDeclaracaoTermino()) {
+              <app-declaracao-termino
+                [dinamicas]="dinamicasATerminar()"
+                [declarado]="declaracaoTermino()"
+                [erro]="erroDeclaracaoTermino()"
+                (alterado)="definirDeclaracaoTermino($event)"
+              />
+            }
+          </app-pagina-resumo>
+        } @else {
+          <app-cartao class="cartao-passo">
+            @if (passoAtual() === 1) {
+              @switch (paginaInicial()) {
+                @case ('tipo') {
+                  <app-pagina-tipo-igt
+                    [tipos]="tiposComAssociacao()"
+                    [semIgt]="tiposSemAssociacao()"
+                    [tipoEscolhidoId]="tipoEscolhidoId()"
+                    [semIgtEscolhido]="tipoSemIgtEscolhido()"
+                    [podeContinuarSemIgt]="dinamicasSemIgt().length > 0"
+                    [aCarregar]="aCarregarTipos()"
+                    (escolher)="selecionarTipo($event)"
+                    (escolherSemIgt)="selecionarTipoSemIgt($event)"
+                    (continuarSemIgt)="abrirContinuarSemIgt()"
+                  />
+                }
+                @case ('semIgt') {
+                  @if (tipoSemIgt(); as tipo) {
+                    <app-pagina-dados-dinamica-sem-igt
+                      [tipo]="tipo"
+                      [configuracaoId]="configuracaoSemIgtId()"
+                      [descritivo]="descritivoSemIgt()"
+                      [erroDescritivo]="erroDescritivoSemIgt()"
+                      (escolherConfiguracao)="selecionarConfiguracaoSemIgt($event)"
+                      (alterarDescritivo)="alterarDescritivoSemIgt($event)"
+                    />
+                  }
+                }
+                @case ('continuarSemIgt') {
+                  <app-pagina-continuar-sem-igt
+                    [dinamicas]="dinamicasSemIgt()"
+                    [nomesConcelhos]="concelhosNovoIgt()"
+                    [dinamicaId]="dinamicaEscolhida()?.dinamicaId ?? null"
+                    [procedimentos]="procedimentosDaDinamica()"
+                    [procedimentoId]="procedimentoEscolhidoValor()"
+                    [tentativaEmCurso]="procedimentoEscolhido()?.tentativaEmCurso ?? null"
+                    (escolherDinamica)="selecionarDinamica($event)"
+                    (escolherProcedimento)="selecionarProcedimento($event)"
+                  />
+                  <ng-container [ngTemplateOutlet]="campoAtoReferido" />
+                }
+                @case ('origem') {
+                  <app-pagina-origem-igt
+                    [tipoCodigo]="tipoEscolhido()?.codigo ?? ''"
+                    [origem]="origemIgt()"
+                    [podeNovo]="podeNovoIgt()"
+                    (escolher)="escolherOrigem($event)"
+                  />
+                }
+                @case ('novo') {
+                  <app-pagina-novo-igt
+                    [tipoCodigo]="tipoEscolhido()?.codigo ?? ''"
+                    [entidade]="nomeEntidade()"
+                    [designacao]="designacaoNovoIgt()"
+                    [erro]="erroDesignacao()"
+                    [aCriar]="aCriarIgt()"
+                    [concelhos]="concelhosNovoIgt()"
+                    [concelho]="concelhoNovoIgt()"
+                    [erroConcelho]="erroConcelho()"
+                    (alterarDesignacao)="alterarDesignacaoNovoIgt($event)"
+                    (alterarConcelho)="alterarConcelhoNovoIgt($event)"
+                  />
+                }
+                @case ('igt') {
+                  <app-pagina-igt-existente
+                    [tipoCodigo]="tipoEscolhido()?.codigo ?? ''"
+                    [instrumentos]="instrumentosDoTipo()"
+                    [instrumentoId]="instrumentoEscolhidoId()"
+                    [igtSnit]="igtSnitPorCriar()"
+                    [idIgtSnit]="igtSnitEscolhido()?.idIgtSnit ?? null"
+                    [aPesquisarSnit]="aPesquisarSnit()"
+                    [erroSnit]="erroSnit()"
+                    [aCarregar]="aCarregarDisponibilidade()"
+                    (escolher)="selecionarInstrumento($event)"
+                  />
+                }
+                @case ('acao') {
+                  <app-pagina-acao
+                    [designacao]="instrumentoEscolhido()?.designacao ?? ''"
+                    [modo]="modo()"
+                    [podeNova]="(disponibilidade()?.dinamicasDisponiveis?.length ?? 0) > 0"
+                    [podeContinuar]="dinamicasAbertas().length > 0"
+                    (escolher)="escolherModo($event)"
+                  />
+                }
+                @case ('continuar') {
+                  <app-pagina-continuar-dinamica
+                    [dinamicas]="dinamicasAbertas()"
+                    [caducadas]="dinamicasCaducadas()"
+                    [ultimosConcluidos]="ultimosConcluidos()"
+                    [dinamicaId]="dinamicaEscolhida()?.dinamicaId ?? null"
+                    [procedimentos]="procedimentosDaDinamica()"
+                    [procedimentoId]="procedimentoEscolhidoValor()"
+                    [tentativaEmCurso]="procedimentoEscolhido()?.tentativaEmCurso ?? null"
+                    (escolherDinamica)="selecionarDinamica($event)"
+                    (escolherProcedimento)="selecionarProcedimento($event)"
+                  />
+                  <ng-container [ngTemplateOutlet]="campoAtoReferido" />
+                }
+                @case ('nova') {
+                  <app-pagina-nova-dinamica
+                    [dinamicas]="disponibilidade()?.dinamicasDisponiveis ?? []"
+                    [dinamicaId]="dinamicaNovaId()"
+                    [descritivo]="descritivoNovo()"
+                    (escolher)="selecionarDinamicaNova($event)"
+                    (alterarDescritivo)="alterarDescritivoNovo($event)"
+                  />
+                }
+              }
+            }
+
+            <ng-template #campoAtoReferido>
+              @if (pedeAtoReferido()) {
+                <app-campo-ato-referido
+                  class="campo-ato-referido"
+                  [atos]="opcoesAtoReferido()"
+                  [valor]="atoReferido()?.processoId ?? null"
+                  [nomesTipos]="nomesTiposProcedimento()"
+                  (escolher)="escolherAtoReferido($event)"
+                />
+              }
+            </ng-template>
+
+            @if (passoAtual() === 2) {
+              <app-alerta tipo="aviso">{{ temFormulario() ? 'Não pode editar este processo.' : avisoSemFormulario }}</app-alerta>
+            }
+
+          </app-cartao>
+        }
+
+        @if (passoAtual() === 2 && podeEditar() && subpagina() === 'documentos') {
+          <app-alerta tipo="aviso" class="aviso-documentos">
+            <strong>AVISO!</strong> Antes de prosseguir com a submissão verifique se todos os itens com ficheiros carregados estão marcados
+            para depósito e/ou publicação e se todos os itens marcados para depósito e/ou publicação têm ficheiros carregados.
+            Caso continue com a acção "Guardar" e estas condições não estejam garantidas, os últimos ficheiros introduzidos serão
+            removidos e terão que ser carregados novamente.
+          </app-alerta>
+        }
+
+        @if (pendenciasDaPaginaAtual().length > 0) {
+          <app-alerta tipo="erro" class="pendencias-pagina">
+            <strong>Preencha o que falta nesta página antes de avançar:</strong>
+            <ul>
+              @for (pendencia of pendenciasDaPaginaAtual(); track $index) {
+                <li>{{ pendencia.erro }}</li>
+              }
+            </ul>
+          </app-alerta>
+        }
+
+        <div class="acoes">
+          @if (dicaAvancar(); as dica) {
+            <p class="dica-avancar" role="status">{{ dica }}</p>
+          }
+          @if (passoAtual() === 2 && podeEditar() && temFormulario()) {
+            <button type="button" class="guardar-rascunho" app-botao variante="texto" [desativado]="ocupado()" (click)="guardarRascunho()">
+              {{ aGuardar() ? 'A guardar…' : 'Guardar rascunho' }}
+            </button>
+            <button type="button" app-botao variante="secundario" [desativado]="ocupado()" (click)="voltarPasso()">Anterior</button>
+            <button type="button" app-botao [desativado]="ocupado()" (click)="seguinte()">Seguinte</button>
+          }
+          @if (passoAtual() === 3) {
+            <button type="button" app-botao variante="secundario" [desativado]="ocupado()" (click)="voltarPasso()">Anterior</button>
+          }
+          @if (passoAtual() === 1) {
+            <button type="button" app-botao [desativado]="!podeAvancar()" [aCarregar]="aCarregarAvancar()" (click)="avancar()">
+              {{ rotuloAvancar() }}
+            </button>
+          } @else if (passoAtual() === 3 && submeterDisponivel()) {
+            <button
+              type="button"
+              app-botao
+              [desativado]="!podeSubmeter() || !confirmacoesFeitas()"
+              [aCarregar]="aSubmeter()"
+              [attr.aria-describedby]="podeSubmeter() ? null : 'aviso-pode-submeter'"
+              (click)="submeter()"
+            >
+              <svg icone viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.33" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M10.13 2c.35 0 .69.15.94.4l2.53 2.53c.25.25.4.59.4.94v6.8A1.33 1.33 0 0112.67 14H3.33A1.33 1.33 0 012 12.67V3.33A1.33 1.33 0 013.33 2h6.8z" />
+                <path d="M11.33 14V9.33a.67.67 0 00-.66-.66H5.33a.67.67 0 00-.66.66V14M4.67 2v2.67c0 .36.3.66.66.66H10" />
+              </svg>
+              {{ aSubmeter() ? 'A submeter…' : 'Submeter' }}
+            </button>
+          }
+        </div>
+      }
+    </div>
+  </div>
+</app-shell>
+
+<app-confirmacao-modal
+  [aberto]="confirmacaoAberta()"
+  titulo="Confirmar Pedido"
+  [mensagem]="mensagemConfirmacao()"
+  [aProcessar]="aCriar() || aIniciar()"
+  (sim)="confirmarPedido()"
+  (nao)="fecharConfirmacao()"
+/>
+<app-desbloquear-campo-modal />

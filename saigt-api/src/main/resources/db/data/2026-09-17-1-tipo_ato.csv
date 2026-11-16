@@ -1,0 +1,9 @@
+id;codigo;nome;incm_act_type_id_serie_1;ordem;ativo;incm_act_type_id_serie_2;nota
+1;"DL";"Decreto-Lei";1;1;true;NULL;
+2;"PORT";"Portaria";2;2;true;NULL;
+3;"RCM";"Resolução do Conselho de Ministros";3;3;true;NULL;
+4;"AVISO";"Aviso";NULL;4;true;10;"2.ª série — os que um município usa para publicar um PDM."
+5;"DESP";"Despacho";NULL;5;true;11;"2.ª série — os que um município usa para publicar um PDM."
+6;"DECL";"Declaração";NULL;6;true;20;"2.ª série — os que um município usa para publicar um PDM."
+7;"EDITAL";"Edital";NULL;7;true;21;"2.ª série — os que um município usa para publicar um PDM."
+8;"REGUL";"Regulamento";NULL;8;true;22;"2.ª série — os que um município usa para publicar um PDM."

@@ -1,0 +1,191 @@
+/* Comum aos separadores da Configuração de Procedimentos: barra de filtros, menu de ações e formulários dos modais. */
+:host {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaco-4);
+}
+
+.barra-filtros {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: var(--espaco-3);
+}
+
+.seletor-tipo-instrumento {
+  flex: 0 1 380px;
+  min-width: 240px;
+}
+
+.seletor-dinamica {
+  flex: 0 1 260px;
+  min-width: 200px;
+}
+
+.seletor-procedimento {
+  flex: 0 1 300px;
+  min-width: 220px;
+}
+
+.filtros-direita {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--espaco-3);
+  margin-left: auto;
+}
+
+.grupo-filtros {
+  display: flex;
+  gap: var(--espaco-1);
+  padding: var(--espaco-1);
+  border: var(--borda-largura) solid var(--cor-borda-filtro);
+  border-radius: var(--raio-md);
+  background: var(--cor-superficie);
+  box-shadow: var(--sombra-cartao);
+}
+
+.filtro {
+  padding: var(--espaco-1-5) var(--espaco-3);
+  border: 0;
+  border-radius: var(--raio-sm);
+  background: none;
+  font-family: var(--fonte-base);
+  font-size: var(--texto-sm);
+  font-weight: var(--peso-semi);
+  line-height: var(--texto-sm-linha);
+  color: var(--cor-texto-data);
+  cursor: pointer;
+}
+
+.filtro:hover {
+  color: var(--cor-filtro-ativo);
+}
+
+.filtro.ativo {
+  background: var(--cor-filtro-ativo);
+  color: var(--cor-primaria-contraste);
+}
+
+.contador {
+  font-size: var(--texto-sm);
+  line-height: var(--texto-sm-linha);
+  color: var(--cor-texto-celula);
+  white-space: nowrap;
+}
+
+.celula-codigo {
+  font-family: var(--fonte-mono);
+  font-size: var(--texto-sm);
+  line-height: var(--texto-sm-linha);
+  color: var(--cor-texto-cartao);
+}
+
+.celula-nome {
+  font-weight: var(--peso-semi);
+  color: var(--cor-texto-titulo);
+}
+
+.status-ponto {
+  width: 6px;
+  height: 6px;
+  border-radius: var(--raio-pill);
+  background: currentcolor;
+}
+
+.menu-acoes {
+  position: relative;
+}
+
+.btn-acoes {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  border: 0;
+  border-radius: var(--raio-md);
+  background: none;
+  color: var(--cor-texto-data);
+  cursor: pointer;
+}
+
+.btn-acoes svg {
+  width: 16px;
+  height: 16px;
+}
+
+.btn-acoes:hover {
+  background: var(--cor-borda-suave);
+}
+
+.dropdown-menu {
+  position: fixed;
+  z-index: 10;
+  min-width: 140px;
+  padding: var(--espaco-1);
+  border: var(--borda-largura) solid var(--cor-borda);
+  border-radius: var(--raio-md);
+  background: var(--cor-superficie);
+  box-shadow: var(--sombra-dropdown);
+}
+
+.dropdown-menu button {
+  display: block;
+  width: 100%;
+  padding: var(--espaco-2) var(--espaco-2-5);
+  border: 0;
+  border-radius: var(--raio-sm-md);
+  background: none;
+  font-family: var(--fonte-base);
+  font-size: var(--texto-sm);
+  line-height: var(--texto-sm-linha);
+  color: var(--cor-texto-rotulo);
+  text-align: left;
+  cursor: pointer;
+}
+
+.dropdown-menu button:hover {
+  background: var(--cor-borda-suave);
+}
+
+.filtro:focus-visible,
+.btn-acoes:focus-visible,
+.dropdown-menu button:focus-visible {
+  outline: var(--anel-foco);
+  outline-offset: var(--anel-foco-afastamento);
+}
+
+/* Os títulos das tabelas com muitas colunas (Procedimentos) quebram em vez de se sobreporem. */
+:host ::ng-deep app-tabela th {
+  white-space: normal;
+}
+
+.conteudo-cartao {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaco-3);
+}
+
+.acao-editar-rede {
+  padding: var(--espaco-1) var(--espaco-2);
+  border: 0;
+  border-radius: var(--raio-sm);
+  background: none;
+  font-family: var(--fonte-base);
+  font-size: var(--texto-sm);
+  font-weight: var(--peso-semi);
+  line-height: var(--texto-sm-linha);
+  color: var(--cor-filtro-ativo);
+  cursor: pointer;
+}
+
+.acao-editar-rede:hover {
+  background: var(--cor-borda-suave);
+}
+
+.acao-editar-rede:focus-visible {
+  outline: var(--anel-foco);
+  outline-offset: var(--anel-foco-afastamento);
+}

@@ -1,0 +1,3 @@
+Warning 1: HTTP response code on http://rustfs:9000/saigt-documentos/processos/2026-000123/DEPOSITO/0b7d-plantas.zip: 403
+ERROR 17: The Access Key Id you provided does not exist in our records.
+gdalinfo failed - unable to open '/vsizip//vsis3/saigt-documentos/processos/2026-000123/DEPOSITO/0b7d-plantas.zip/geotif1204_ren.tif'.

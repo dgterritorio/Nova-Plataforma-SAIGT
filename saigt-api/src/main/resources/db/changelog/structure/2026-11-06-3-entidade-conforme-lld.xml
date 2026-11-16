@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="2026-11-06-3-entidade-renomeia-colunas-do-responsavel" author="david.raposo">
+        <comment>
+            Entidade (DB-IAM-002): `utilizador_nome`, `utilizador_email` e `utilizador_cargo` passam a
+            `responsavel_*`, o nome que o LLD dá ao responsável do termo de adesão.
+        </comment>
+
+        <renameColumn tableName="entidade" oldColumnName="utilizador_nome" newColumnName="responsavel_nome"
+                      columnDataType="VARCHAR(200)"/>
+        <renameColumn tableName="entidade" oldColumnName="utilizador_email" newColumnName="responsavel_email"
+                      columnDataType="VARCHAR(200)"/>
+        <renameColumn tableName="entidade" oldColumnName="utilizador_cargo" newColumnName="responsavel_cargo"
+                      columnDataType="VARCHAR(200)"/>
+
+        <rollback>
+            <renameColumn tableName="entidade" oldColumnName="responsavel_cargo" newColumnName="utilizador_cargo"
+                          columnDataType="VARCHAR(200)"/>
+            <renameColumn tableName="entidade" oldColumnName="responsavel_email" newColumnName="utilizador_email"
+                          columnDataType="VARCHAR(200)"/>
+            <renameColumn tableName="entidade" oldColumnName="responsavel_nome" newColumnName="utilizador_nome"
+                          columnDataType="VARCHAR(200)"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="2026-11-06-3-entidade-telefone-email-dico" author="david.raposo">
+        <comment>
+            Entidade (DB-IAM-002): novas `telefone`, `email` e `dico` (DTCC do concelho da câmara, 4 algarismos).
+            O CHECK que limita o `dico` às CM entra depois da carga, quando todas as linhas têm `tipo_entidade`.
+        </comment>
+
+        <addColumn tableName="entidade">
+            <column name="telefone" type="VARCHAR(30)"/>
+            <column name="email" type="VARCHAR(200)"/>
+            <column name="dico" type="VARCHAR(4)"/>
+        </addColumn>
+
+        <sql>
+            ALTER TABLE entidade ADD CONSTRAINT ck_entidade_dico CHECK (dico IS NULL OR dico ~ '^[0-9]{4}$')
+        </sql>
+
+        <rollback>
+            <sql>ALTER TABLE entidade DROP CONSTRAINT ck_entidade_dico</sql>
+            <dropColumn tableName="entidade" columnName="dico"/>
+            <dropColumn tableName="entidade" columnName="email"/>
+            <dropColumn tableName="entidade" columnName="telefone"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="2026-11-06-3-entidade-nif-passa-a-nipc-nao-unico" author="david.raposo">
+        <comment>
+            Entidade (DB-IAM-002): `nif` passa a `nipc`, anulável e não único (o NIPC 600025861 serve os códigos
+            3001 e 3007). O índice `idx_entidade_nif` sai com o nome antigo e entra `idx_entidade_nipc`.
+        </comment>
+
+        <dropNotNullConstraint tableName="entidade" columnName="nif" columnDataType="VARCHAR(20)"/>
+        <dropUniqueConstraint tableName="entidade" constraintName="uq_entidade_nif"/>
+        <dropIndex tableName="entidade" indexName="idx_entidade_nif"/>
+        <renameColumn tableName="entidade" oldColumnName="nif" newColumnName="nipc" columnDataType="VARCHAR(20)"/>
+        <createIndex tableName="entidade" indexName="idx_entidade_nipc">
+            <column name="nipc"/>
+        </createIndex>
+
+        <rollback>
+            <dropIndex tableName="entidade" indexName="idx_entidade_nipc"/>
+            <renameColumn tableName="entidade" oldColumnName="nipc" newColumnName="nif" columnDataType="VARCHAR(20)"/>
+            <createIndex tableName="entidade" indexName="idx_entidade_nif">
+                <column name="nif"/>
+            </createIndex>
+            <addUniqueConstraint tableName="entidade" columnNames="nif" constraintName="uq_entidade_nif"/>
+            <addNotNullConstraint tableName="entidade" columnName="nif" columnDataType="VARCHAR(20)"/>
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>

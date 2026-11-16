@@ -1,0 +1,110 @@
+.bloco-conjunto {
+    display: flex;
+    flex-direction: column;
+    gap: var(--espaco-6);
+    margin-top: var(--espaco-8);
+}
+
+.cabecalho-conjunto {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--espaco-3);
+    align-items: center;
+}
+
+.titulo-conjunto {
+    margin: 0;
+    font-size: var(--texto-base);
+    font-weight: var(--peso-negrito);
+    line-height: var(--texto-base-linha);
+    color: var(--cor-titulo-metadados);
+}
+
+.zip-conjunto {
+    font-size: var(--texto-sm);
+    line-height: var(--texto-sm-linha);
+    color: var(--cor-texto-secundario);
+}
+
+.coluna-inteira {
+    grid-column: 1 / -1;
+}
+
+.cabecalho-plantas {
+    display: flex;
+    gap: var(--espaco-3);
+    align-items: center;
+    justify-content: space-between;
+    padding-right: var(--espaco-6);
+}
+
+.editar {
+    padding: var(--espaco-2) var(--espaco-4);
+    background: var(--cor-superficie);
+    border: var(--borda-largura) solid var(--cor-borda);
+    border-radius: var(--raio-md);
+    font: inherit;
+    font-size: var(--texto-sm);
+    font-weight: var(--peso-semi);
+    color: var(--cor-texto);
+    cursor: pointer;
+}
+
+.editar:focus-visible {
+    outline: var(--anel-foco);
+    outline-offset: var(--anel-foco-afastamento);
+}
+
+.sem-folhas {
+    margin: 0;
+    padding: 0 var(--espaco-6) var(--espaco-6);
+}
+
+.tabela {
+    width: calc(100% - 2 * var(--espaco-6));
+    margin: 0 var(--espaco-6) var(--espaco-6);
+    border: var(--borda-largura-fina) solid var(--cor-borda-elevado);
+    border-radius: var(--raio-lg);
+    border-collapse: separate;
+    border-spacing: 0;
+    overflow: hidden;
+}
+
+.tabela th {
+    height: 34px;
+    padding: 0 var(--espaco-4);
+    background: var(--cor-superficie-tabela);
+    border-bottom: var(--borda-largura-fina) solid var(--cor-borda-elevado);
+    font-size: var(--texto-xs);
+    font-weight: var(--peso-semi);
+    letter-spacing: 0.5px;
+    text-align: left;
+    text-transform: uppercase;
+    color: var(--cor-texto-secundario);
+}
+
+.tabela td {
+    padding: var(--espaco-2) var(--espaco-4);
+    border-bottom: var(--borda-largura-fina) solid var(--cor-superficie-tabela);
+    font-size: var(--texto-sm);
+    font-weight: var(--peso-semi);
+    line-height: var(--texto-sm-linha);
+    color: var(--cor-texto-celula-forte);
+}
+
+.tabela tr:last-child td {
+    border-bottom: 0;
+}
+
+.coluna-folha {
+    width: 140px;
+}
+
+.ajuda-campo {
+    font-size: var(--texto-xs);
+    color: var(--cor-texto-secundario);
+}
+
+.remover-ficha {
+    margin-left: auto;
+}

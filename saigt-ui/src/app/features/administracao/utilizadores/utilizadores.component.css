@@ -1,0 +1,565 @@
+.painel {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaco-4);
+  padding-top: var(--espaco-1);
+}
+
+.alerta-sucesso {
+  display: flex;
+}
+
+.seccao-cabecalho {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--espaco-4);
+  padding: var(--espaco-4) var(--espaco-5);
+  border-bottom: var(--borda-largura) solid var(--cor-borda-controlo);
+}
+
+.seccao-cabecalho h2 {
+  margin: 0;
+  font-size: var(--texto-md);
+  font-weight: var(--peso-negrito);
+  line-height: var(--texto-md-linha);
+  color: var(--cor-texto-seccao);
+}
+
+/* O #6b7a9b do Figma fica a 4,29:1 sobre branco: usa-se o cinza acessível dos passos. */
+.seccao-descricao {
+  margin: 0;
+  padding-top: var(--espaco-1);
+  font-size: var(--texto-sm);
+  line-height: var(--texto-sm-linha);
+  color: var(--cor-texto-passo);
+}
+
+.lista-utilizadores {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.utilizador {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--espaco-4);
+  padding: var(--espaco-3-5) var(--espaco-5);
+  border-bottom: var(--borda-largura) solid var(--cor-borda-controlo);
+}
+
+.utilizador:last-child {
+  border-bottom: 0;
+}
+
+.utilizador-quem,
+.utilizador-meta {
+  display: flex;
+  align-items: center;
+  gap: var(--espaco-3);
+}
+
+.utilizador-quem {
+  min-width: 0;
+}
+
+.avatar {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: var(--raio-pill);
+  background: var(--cor-avatar-fundo);
+  font-size: var(--texto-sm);
+  font-weight: var(--peso-negrito);
+  line-height: var(--texto-sm-linha);
+  color: var(--cor-primaria-variante);
+}
+
+.utilizador-info {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.nome {
+  font-size: var(--texto-base);
+  font-weight: var(--peso-semi);
+  line-height: var(--texto-base-linha);
+  color: var(--cor-texto-seccao);
+}
+
+/* O #6b7a9b do Figma fica a 4,29:1 sobre branco. */
+.email,
+.ultimo-acesso,
+.ultima-atuacao {
+  font-size: var(--texto-rotulo);
+  line-height: var(--texto-sm-linha);
+  color: var(--cor-texto-passo);
+}
+
+.cargo {
+  font-size: var(--texto-rotulo);
+  line-height: var(--texto-sm-linha);
+  color: var(--cor-texto-celula);
+}
+
+.ultima-atuacao {
+  font-weight: var(--peso-medio);
+  color: var(--cor-texto-celula);
+}
+
+.celula-entidade {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--espaco-1-5);
+  padding-top: var(--espaco-1);
+  font-size: var(--texto-sm);
+  line-height: var(--texto-sm-linha);
+  color: var(--cor-texto-celula);
+}
+
+.subitens-entidade {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaco-1);
+  margin: var(--espaco-1-5) 0 0;
+  padding: 0 0 0 var(--espaco-6);
+  list-style: none;
+}
+
+.subitem-entidade {
+  display: flex;
+  align-items: center;
+  gap: var(--espaco-1-5);
+  font-size: var(--texto-sm);
+  line-height: var(--texto-sm-linha);
+  color: var(--cor-texto-celula);
+}
+
+.utilizador-meta {
+  flex-shrink: 0;
+}
+
+.utilizador-meta-incm {
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
+/* Selo do perfil na lista, com o fundo, a borda e os cantos do Figma (UI-060). */
+app-selo.papel {
+  padding: var(--espaco-1) var(--espaco-2-5);
+  border: var(--borda-largura) solid var(--cor-borda-controlo);
+  border-radius: var(--raio-sm-md);
+  background: var(--cor-etiqueta-fundo);
+  font-size: var(--texto-rotulo);
+  font-weight: var(--peso-medio);
+  line-height: var(--texto-sm-linha);
+  color: var(--cor-texto-papel);
+}
+
+.menu-acoes {
+  position: relative;
+}
+
+.btn-acoes {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--espaco-1-5);
+  border: 0;
+  border-radius: var(--raio-sm-md);
+  background: none;
+  color: var(--cor-texto-passo);
+  cursor: pointer;
+}
+
+.btn-acoes svg {
+  width: 16px;
+  height: 16px;
+}
+
+.btn-acoes:hover {
+  background: var(--cor-borda-suave);
+}
+
+.btn-expandir-entidade {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  padding: 0;
+  border: 0;
+  border-radius: var(--raio-sm);
+  background: none;
+  color: var(--cor-texto-celula);
+  cursor: pointer;
+}
+
+.btn-expandir-entidade svg {
+  width: 12px;
+  height: 12px;
+  transition: transform 0.15s;
+}
+
+.btn-expandir-entidade.aberto svg {
+  transform: rotate(90deg);
+}
+
+.dropdown-menu {
+  position: fixed;
+  z-index: 10;
+  min-width: 160px;
+  padding: var(--espaco-1);
+  border: var(--borda-largura) solid var(--cor-borda);
+  border-radius: var(--raio-md);
+  background: var(--cor-superficie);
+  box-shadow: var(--sombra-dropdown);
+}
+
+.dropdown-menu button {
+  display: block;
+  width: 100%;
+  padding: var(--espaco-2) var(--espaco-2-5);
+  border: 0;
+  border-radius: var(--raio-sm-md);
+  background: none;
+  font-family: var(--fonte-base);
+  font-size: var(--texto-sm);
+  line-height: var(--texto-sm-linha);
+  color: var(--cor-texto-rotulo);
+  text-align: left;
+  cursor: pointer;
+}
+
+.dropdown-menu button:hover {
+  background: var(--cor-borda-suave);
+}
+
+.vazio {
+  padding: var(--espaco-6) var(--espaco-5);
+  font-size: var(--texto-base);
+  line-height: var(--texto-base-linha);
+  color: var(--cor-texto-celula);
+  text-align: center;
+}
+
+/* Filtro por entidade e roster: sem mockup, segue os campos compactos dos modais. */
+.filtros-entidade {
+  display: grid;
+  grid-template-columns: minmax(180px, 1fr) minmax(220px, 1.4fr) minmax(150px, 0.8fr) auto;
+  align-items: start;
+  gap: var(--espaco-3);
+  padding: var(--espaco-4) var(--espaco-5);
+  border-bottom: var(--borda-largura) solid var(--cor-borda-controlo);
+  background: var(--cor-superficie-alt);
+}
+
+.filtros-acoes {
+  display: flex;
+  gap: var(--espaco-2);
+  padding-top: var(--espaco-5);
+}
+
+.filtro-resumo {
+  margin: 0;
+  padding: var(--espaco-2-5) var(--espaco-5);
+  border-bottom: var(--borda-largura) solid var(--cor-borda-controlo);
+  font-size: var(--texto-sm);
+  line-height: var(--texto-sm-linha);
+  color: var(--cor-texto-celula);
+}
+
+/* Perfis e permissões (UI-059). */
+.grelha-perfis {
+  display: grid;
+  grid-template-columns: 272px minmax(0, 1fr);
+  align-items: start;
+  gap: var(--espaco-5);
+}
+
+.cartao-perfis,
+.cartao-permissoes {
+  overflow: hidden;
+  border: var(--borda-largura) solid var(--cor-borda-controlo);
+  border-radius: var(--raio-lg);
+  background: var(--cor-superficie);
+  box-shadow: var(--sombra-cartao);
+}
+
+.perfis-titulo {
+  margin: 0;
+  padding: var(--espaco-4);
+  border-bottom: var(--borda-largura) solid var(--cor-borda-controlo);
+  font-size: var(--texto-sm);
+  font-weight: var(--peso-semi);
+  line-height: var(--texto-sm-linha);
+  letter-spacing: 0.3px;
+  text-transform: uppercase;
+  color: var(--cor-texto-passo);
+}
+
+.lista-perfis {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaco-1);
+  margin: 0;
+  padding: var(--espaco-2);
+  list-style: none;
+}
+
+.perfil {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaco-1);
+  width: 100%;
+  padding: var(--espaco-3);
+  border: 0;
+  border-radius: var(--raio-md);
+  background: none;
+  font-family: var(--fonte-base);
+  text-align: left;
+  cursor: pointer;
+}
+
+.perfil:hover {
+  background: var(--cor-superficie-alt);
+}
+
+.perfil.perfil-selecionado {
+  background: var(--cor-info-fundo);
+}
+
+.perfil:focus-visible {
+  outline: var(--anel-foco);
+  outline-offset: var(--anel-foco-afastamento);
+}
+
+.perfil-linha {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--espaco-2);
+}
+
+.perfil-nome {
+  font-size: var(--texto-base);
+  font-weight: var(--peso-medio);
+  line-height: var(--texto-base-linha);
+  color: var(--cor-texto-seccao);
+}
+
+.perfil-selecionado .perfil-nome {
+  color: var(--cor-primaria-variante);
+}
+
+.perfil-contador {
+  padding: var(--espaco-0-5) var(--espaco-2);
+  border-radius: var(--raio-pill);
+  background: var(--cor-superficie);
+  filter: var(--sombra-menu);
+  font-size: var(--texto-xs);
+  font-weight: var(--peso-semi);
+  line-height: var(--texto-xs-linha);
+  color: var(--cor-texto-passo);
+}
+
+/* Sobre o azul e o cinza claros dos fundos, o cinza dos passos fica abaixo de 4,5:1: usa-se o da célula. */
+.perfil-descricao {
+  font-size: var(--texto-rotulo);
+  line-height: var(--texto-rotulo-linha);
+  color: var(--cor-texto-celula);
+}
+
+.perfis-nota {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaco-1-5);
+  padding: var(--espaco-4);
+  border-top: var(--borda-largura) solid var(--cor-borda-controlo);
+  background: var(--cor-etiqueta-fundo);
+}
+
+.perfis-nota p {
+  margin: 0;
+  font-size: var(--texto-rotulo);
+  line-height: var(--texto-rotulo-linha);
+  color: var(--cor-texto-celula);
+}
+
+.perfis-nota strong {
+  font-weight: var(--peso-semi);
+  color: var(--cor-texto-seccao);
+}
+
+.permissoes-cabecalho {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--espaco-4);
+  padding: var(--espaco-4) var(--espaco-5);
+  border-bottom: var(--borda-largura) solid var(--cor-borda-controlo);
+}
+
+.permissoes-titulo {
+  margin: 0;
+  font-size: var(--texto-md);
+  font-weight: var(--peso-semi);
+  line-height: var(--texto-md-linha);
+  color: var(--cor-texto-seccao);
+}
+
+.permissoes-descricao {
+  margin: 0;
+  padding-top: var(--espaco-1);
+  font-size: var(--texto-sm);
+  line-height: var(--texto-sm-linha);
+  color: var(--cor-texto-passo);
+}
+
+.permissoes-contador {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  margin: 0;
+  padding: var(--espaco-2) var(--espaco-3);
+  border-radius: var(--raio-md);
+  background: var(--cor-etiqueta-fundo);
+}
+
+.permissoes-contador-numero {
+  font-size: var(--texto-lg);
+  font-weight: var(--peso-semi);
+  line-height: var(--texto-lg-linha);
+  color: var(--cor-texto-seccao);
+}
+
+.permissoes-contador-rotulo {
+  font-size: var(--texto-xs);
+  line-height: var(--texto-xs-linha);
+  color: var(--cor-texto-celula);
+}
+
+.grupo {
+  padding: var(--espaco-5);
+  border-bottom: var(--borda-largura) solid var(--cor-borda-controlo);
+}
+
+.grupo:last-child {
+  border-bottom: 0;
+}
+
+.grupo-titulo {
+  margin: 0;
+  font-size: var(--texto-rotulo);
+  font-weight: var(--peso-semi);
+  line-height: var(--texto-rotulo-linha);
+  letter-spacing: 0.275px;
+  text-transform: uppercase;
+  color: var(--cor-primaria-variante);
+}
+
+.grupo-lista {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaco-1);
+  margin: 0;
+  padding: var(--espaco-3) 0 0;
+  list-style: none;
+}
+
+.permissao {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--espaco-4);
+  padding: var(--espaco-2-5) var(--espaco-3);
+  border-radius: var(--raio-md);
+}
+
+.permissao-texto {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaco-0-5);
+  min-width: 0;
+}
+
+.permissao-nome {
+  font-size: var(--texto-base);
+  line-height: var(--texto-base-linha);
+  color: var(--cor-texto-seccao);
+}
+
+.permissao-nota {
+  font-size: var(--texto-rotulo);
+  line-height: var(--texto-rotulo-linha);
+  color: var(--cor-texto-passo);
+}
+
+/* Selo de acesso do Figma: pill com borda e 96px de largura mínima. */
+app-selo.acesso {
+  flex-shrink: 0;
+  justify-content: center;
+  gap: var(--espaco-1-5);
+  min-width: 96px;
+  padding: var(--espaco-1) var(--espaco-2-5);
+  border: var(--borda-largura) solid;
+  font-size: var(--texto-xs);
+  font-weight: var(--peso-medio);
+  line-height: var(--texto-xs-linha);
+}
+
+app-selo.acesso-permitido {
+  border-color: var(--cor-acesso-permitido-borda);
+  background: var(--cor-acesso-permitido-fundo);
+  color: var(--cor-sucesso);
+}
+
+app-selo.acesso-parcial {
+  border-color: var(--cor-aviso-borda);
+  background: var(--cor-aviso-fundo);
+  color: var(--cor-aviso);
+}
+
+/* O #90a1b9 do Figma fica a 2,6:1 sobre o fundo: usa-se o cinza secundário. */
+app-selo.acesso-sem {
+  border-color: var(--cor-borda);
+  background: var(--cor-superficie-alt);
+  color: var(--cor-texto-secundario);
+}
+
+@media (width <= 1024px) {
+  .grelha-perfis {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .filtros-entidade {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  }
+}
+
+@media (width <= 768px) {
+  .utilizador {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .utilizador-meta-incm {
+    justify-content: flex-start;
+  }
+
+  .filtros-entidade {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .filtros-acoes {
+    padding-top: 0;
+  }
+}

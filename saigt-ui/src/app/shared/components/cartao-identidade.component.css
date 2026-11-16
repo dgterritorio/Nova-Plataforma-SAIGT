@@ -1,0 +1,80 @@
+.cartao-identidade {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--espaco-4);
+  padding: var(--espaco-5);
+  border: var(--borda-largura) solid var(--cor-borda);
+  border-radius: var(--raio-lg);
+  background: var(--cor-superficie);
+}
+
+.identidade {
+  display: flex;
+  align-items: center;
+  gap: var(--espaco-5);
+}
+
+.avatar {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: 64px;
+  height: 64px;
+  border-radius: var(--raio-lg);
+  background: var(--cor-acao-cartao);
+  font-size: var(--texto-lg);
+  font-weight: var(--peso-negrito);
+  color: var(--cor-primaria-contraste);
+}
+
+.nome {
+  margin: 0;
+  font-size: var(--texto-lg);
+  font-weight: var(--peso-semi);
+  line-height: var(--texto-lg-linha);
+  color: var(--cor-texto);
+}
+
+.subtitulo {
+  margin: var(--espaco-0-5) 0 0;
+  font-size: var(--texto-base);
+  line-height: var(--texto-base-linha);
+  color: var(--cor-texto-secundario);
+}
+
+/* O #94a3b8 do Figma fica a 2,6:1 sobre branco. */
+.email {
+  margin: var(--espaco-0-5) 0 0;
+  font-size: var(--texto-sm);
+  line-height: var(--texto-sm-linha);
+  color: var(--cor-texto-nav);
+}
+
+.estado {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--espaco-1-5);
+  padding: var(--espaco-1-5) var(--espaco-3);
+  border-radius: var(--raio-md);
+  background: var(--cor-info-fundo);
+  font-size: var(--texto-sm);
+  font-weight: var(--peso-semi);
+  line-height: var(--texto-sm-linha);
+  color: var(--cor-primaria);
+}
+
+.ponto {
+  width: 8px;
+  height: 8px;
+  border-radius: var(--raio-pill);
+  background: currentcolor;
+}
+
+/* O verde do Figma (#059669) fica abaixo de 4,5:1 sobre o fundo claro. */
+.estado-verde {
+  background: var(--cor-alerta-sucesso-fundo);
+  color: var(--cor-sucesso);
+}

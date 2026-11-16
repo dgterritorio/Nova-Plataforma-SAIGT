@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="2026-11-10-9-sessao-unica" author="david.raposo">
+        <comment>
+            Sessão única na base de dados (TR-150, DB-IAM-004): no máximo uma linha ATIVA não revogada por
+            utilizador. As linhas ATIVA em vigor são revogadas antes de criar o índice: a chave delas é o próprio
+            refresh token opaco do emissor antigo, e os utilizadores voltam a entrar.
+            Rollback: apaga o índice. As sessões revogadas não são repostas, porque os seus refresh tokens já não
+            devem voltar a valer.
+        </comment>
+        <sql>UPDATE sessao SET revogado_em = now() WHERE tipo = 'ATIVA' AND revogado_em IS NULL</sql>
+        <sql>CREATE UNIQUE INDEX uq_sessao_ativa_utilizador ON sessao (utilizador_id)
+            WHERE tipo = 'ATIVA' AND revogado_em IS NULL</sql>
+
+        <rollback>
+            <sql>DROP INDEX IF EXISTS uq_sessao_ativa_utilizador</sql>
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>

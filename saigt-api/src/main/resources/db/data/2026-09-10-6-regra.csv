@@ -1,0 +1,10 @@
+id;instrumento_dinamica_config_id;operador;descricao;substitui_sequenciamento;ativo
+301;101;"AND";"Elaboração é única";false;true
+302;102;"AND";"Requer plano em vigor; só 1 Revisão em curso";false;true
+303;103;"AND";"Requer plano em vigor";false;true
+304;104;"AND";"Requer plano em vigor";false;true
+305;105;"AND";"Requer plano em vigor";false;true
+306;106;"AND";"Requer plano em vigor";false;true
+307;107;"AND";"Requer plano em vigor";false;true
+308;108;"AND";"Requer plano em vigor";false;true
+309;109;"AND";"Requer plano em vigor; Revogação é única";false;true

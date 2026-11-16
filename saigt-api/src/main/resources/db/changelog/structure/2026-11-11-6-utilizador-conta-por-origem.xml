@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="2026-11-11-6-utilizador-conta-por-origem" author="arnaldo.costa">
+        <comment>
+            Uma conta por pessoa e por origem (DB-IAM-001, OI-345, TR-175): o email passa a ser único por
+            (email, origem_autenticacao), para a mesma pessoa poder ter uma conta INCM e outra AD_DGT; continua
+            opcional nas contas AD_DGT (os NULL não colidem). O nome é a chave da conta AD_DGT (índice único parcial).
+            A desativação saiu da solução (OI-440): desativado_em é retirada; as linhas mantêm-se.
+            Rollback: repõe desativado_em vazia e a unicidade só do email; falha enquanto houver o mesmo email nas
+            duas origens, que é preciso resolver antes.
+        </comment>
+        <dropColumn tableName="utilizador" columnName="desativado_em"/>
+        <dropUniqueConstraint tableName="utilizador" constraintName="uq_utilizador_email"/>
+        <addUniqueConstraint tableName="utilizador" columnNames="email, origem_autenticacao"
+                             constraintName="uq_utilizador_email_origem"/>
+        <sql>CREATE UNIQUE INDEX uq_utilizador_nome_ad ON utilizador (nome) WHERE origem_autenticacao = 'AD_DGT'</sql>
+
+        <rollback>
+            <sql>DROP INDEX IF EXISTS uq_utilizador_nome_ad</sql>
+            <dropUniqueConstraint tableName="utilizador" constraintName="uq_utilizador_email_origem"/>
+            <addUniqueConstraint tableName="utilizador" columnNames="email" constraintName="uq_utilizador_email"/>
+            <addColumn tableName="utilizador">
+                <column name="desativado_em" type="TIMESTAMP WITH TIME ZONE"/>
+            </addColumn>
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>

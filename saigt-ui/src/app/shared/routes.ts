@@ -1,0 +1,23 @@
+/** Caminhos de rota tipados, nunca literais de string dispersos pelos componentes. */
+export const ROUTES = {
+  LOGIN: '/login',
+  PAINEL: '/painel',
+  PROCESSOS: '/processos',
+  PROCESSOS_CONTINUAR: '/processos/continuar',
+  PROCESSOS_CORRIGIR: '/processos/corrigir',
+  PROCESSOS_CRIAR: '/processos/criar',
+  PROCESSO_DETALHE: (processoId: string) => `/processos/${processoId}`,
+  PROCESSO_VALIDACAO: (processoId: string) => `/processos/${processoId}/validacao`,
+  PROCESSO_HISTORICO: (processoId: string) => `/processos/${processoId}/historico`,
+  PERFIL: '/perfil',
+  NOTIFICACOES: '/notificacoes',
+  ADMINISTRACAO_UTILIZADORES: '/administracao/utilizadores',
+  ADMINISTRACAO_PAINEL: '/administracao/painel',
+  ADMINISTRACAO_LISTA_VALORES: '/administracao/lista-valores',
+  ADMINISTRACAO_ENTIDADES: '/administracao/entidades',
+  ADMINISTRACAO_NOTIFICACOES: '/administracao/notificacoes',
+  ADMINISTRACAO_WORKFLOWS: '/administracao/workflows',
+  ADMINISTRACAO_PLANTAS: '/administracao/plantas',
+  ADMINISTRACAO_CONFIGURACAO: '/administracao/configuracao-procedimentos',
+  ADMINISTRACAO_ALTERACAO_OWNER: '/administracao/alteracao-owner',
+} as const;

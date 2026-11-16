@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="2026-11-12-15-tipo-instrumento-entidade-instrutora-obrigatoria" author="david.raposo">
+        <comment>
+            A entidade instrutora só se pede nos Programas; esta coluna diz se, pedida, é obrigatória. EF v1.5, Recolha
+            de informação geral dos Programas (legenda «X = obrigatório»): obrigatória no PNPOT, PROT, PEOT e PIMOT, sem
+            «X» no PS. Os restantes Programas mantêm-na obrigatória. Fora dos Programas a coluna não tem efeito.
+        </comment>
+
+        <addColumn tableName="tipo_instrumento">
+            <column name="entidade_instrutora_obrigatoria" type="BOOLEAN" defaultValueBoolean="true">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+        <sql>UPDATE tipo_instrumento SET entidade_instrutora_obrigatoria = FALSE WHERE codigo = 'PS'</sql>
+
+        <rollback>
+            <dropColumn tableName="tipo_instrumento" columnName="entidade_instrutora_obrigatoria"/>
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>

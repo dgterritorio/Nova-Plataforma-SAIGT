@@ -1,0 +1,341 @@
+<app-modal titulo="Criar nova notificação" largura="lg" [aberto]="aberto()" [fecharComFundo]="false" (fechar)="pedirFecho()">
+  @if (erroGeral(); as mensagem) {
+    <app-alerta class="alerta-modal" tipo="erro">{{ mensagem }}</app-alerta>
+  }
+  <form class="campos" [formGroup]="formulario" (ngSubmit)="criar()">
+    <fieldset class="grupo" role="radiogroup" aria-labelledby="criar-notificacao-tipo">
+      <legend class="grupo-rotulo" id="criar-notificacao-tipo">Tipo</legend>
+      <div class="cartoes">
+        @if (daEntidade()) {
+          <label class="cartao-tipo" [class.cartao-tipo-escolhido]="valores().tipo === 'PEDIDO_APOIO'">
+            <input type="radio" class="visualmente-oculto" name="tipo" formControlName="tipo" value="PEDIDO_APOIO" data-campo="tipo-pedido-apoio" />
+            <svg class="cartao-icone" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.33" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <circle cx="8" cy="8" r="6" />
+              <path d="M6.1 6a2 2 0 013.8.7c0 1.3-2 2-2 2M8 11.3h0" />
+            </svg>
+            <span class="cartao-texto">
+              <span class="cartao-titulo">Pedido de apoio</span>
+              <span class="cartao-subtitulo">Resolvido quando o Master responde. Pode ser reaberto.</span>
+            </span>
+          </label>
+          @if (!processoFixo()) {
+            <label class="cartao-tipo" [class.cartao-tipo-escolhido]="valores().tipo === 'REGULARIZACAO_PROCEDIMENTO'">
+              <input
+                type="radio"
+                class="visualmente-oculto"
+                name="tipo" formControlName="tipo"
+                value="REGULARIZACAO_PROCEDIMENTO"
+                data-campo="tipo-regularizacao"
+              />
+              <svg class="cartao-icone cartao-icone-violeta" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.33" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M9.3 1.3H4a1.3 1.3 0 00-1.3 1.4v10.6A1.3 1.3 0 004 14.7h8a1.3 1.3 0 001.3-1.4V5.3zM9.3 1.3v4h4M6 10l1.3 1.3L10 8.7" />
+              </svg>
+              <span class="cartao-texto">
+                <span class="cartao-titulo">Regularização de procedimento</span>
+                <span class="cartao-subtitulo">Procedimento publicado diretamente no DR, sem passar pela SAIGT.</span>
+              </span>
+            </label>
+          }
+        } @else {
+          <label class="cartao-tipo" [class.cartao-tipo-escolhido]="valores().tipo === 'ESTATICA'">
+            <input type="radio" class="visualmente-oculto" name="tipo" formControlName="tipo" value="ESTATICA" data-campo="tipo-estatica" />
+            <svg class="cartao-icone" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.33" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M2.7 6.7v2.6h2l4 2.7V4l-4 2.7h-2zM11.3 6a2.7 2.7 0 010 4" />
+            </svg>
+            <span class="cartao-texto">
+              <span class="cartao-titulo">Estática (geral)</span>
+              <span class="cartao-subtitulo">Persiste até o Master a remover</span>
+            </span>
+          </label>
+          <label class="cartao-tipo" [class.cartao-tipo-escolhido]="valores().tipo === 'RESPOSTA_OBRIGATORIA'">
+            <input
+              type="radio"
+              class="visualmente-oculto"
+              name="tipo" formControlName="tipo"
+              value="RESPOSTA_OBRIGATORIA"
+              data-campo="tipo-resposta"
+            />
+            <svg class="cartao-icone cartao-icone-violeta" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.33" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M14 10a1.3 1.3 0 01-1.3 1.3H4.7L2 14V3.3A1.3 1.3 0 013.3 2h9.4A1.3 1.3 0 0114 3.3z" />
+            </svg>
+            <span class="cartao-texto">
+              <span class="cartao-titulo">Resposta obrigatória (processo)</span>
+              <span class="cartao-subtitulo">Visível até o destinatário responder</span>
+            </span>
+          </label>
+        }
+      </div>
+    </fieldset>
+
+    @if (daEntidade()) {
+      @if (pedidoApoio()) {
+        @if (processoFixo()) {
+          <app-campo-texto data-campo="processo-fixo" rotulo="Processo" [compacto]="true" [formControl]="rotuloProcessoFixo" />
+        } @else {
+          <div class="processo">
+            <app-campo-texto
+              data-campo="pesquisa-processo"
+              rotulo="Pesquisar processo"
+              placeholder="Designação do instrumento"
+              [compacto]="true"
+              [formControl]="pesquisaProcesso"
+            />
+            <app-seletor
+              data-campo="processo"
+              rotulo="Processo (opcional)"
+              placeholder="Pesquise e escolha o processo…"
+              [compacto]="true"
+              [opcoes]="opcoesProcesso()"
+              formControlName="processoId"
+            />
+          </div>
+        }
+      }
+      <div class="lado-a-lado">
+        <app-campo-texto
+          data-campo="id-igt-snit"
+          rotulo="ID IGT SNIT (opcional)"
+          [compacto]="true"
+          [maxlength]="maxIdIgt"
+          [erro]="erros().idIgtSnit"
+          formControlName="idIgtSnit"
+        />
+        <app-campo-texto
+          data-campo="descricao-igt"
+          [rotulo]="regularizacao() ? 'Descrição IGT' : 'Descrição IGT (opcional)'"
+          [obrigatorio]="regularizacao()"
+          [compacto]="true"
+          [maxlength]="maxDescricaoIgt"
+          [erro]="erros().descricaoIgt"
+          formControlName="descricaoIgt"
+        />
+      </div>
+    } @else if (estatica()) {
+      <fieldset class="grupo" role="radiogroup" aria-labelledby="criar-notificacao-destinatarios">
+        <legend class="grupo-rotulo" id="criar-notificacao-destinatarios">Destinatários</legend>
+        <div class="segmentos">
+          <label class="segmento" [class.segmento-escolhido]="valores().modo === 'TODOS'">
+            <input type="radio" class="visualmente-oculto" name="modo" formControlName="modo" value="TODOS" data-campo="modo-todos" />Todos
+          </label>
+          <label class="segmento" [class.segmento-escolhido]="valores().modo === 'ENTIDADES'">
+            <input type="radio" class="visualmente-oculto" name="modo" formControlName="modo" value="ENTIDADES" data-campo="modo-entidades" />1+ Entidades
+          </label>
+          <label class="segmento" [class.segmento-escolhido]="valores().modo === 'UTILIZADORES'">
+            <input type="radio" class="visualmente-oculto" name="modo" formControlName="modo" value="UTILIZADORES" data-campo="modo-utilizadores" />1+ Utilizadores
+          </label>
+        </div>
+      </fieldset>
+
+      @if (valores().modo === 'ENTIDADES') {
+        <div class="adicionar">
+          <app-seletor
+            data-campo="entidade-a-adicionar"
+            rotulo="Entidade"
+            [obrigatorio]="true"
+            [compacto]="true"
+            [opcoes]="opcoesEntidadeAAdicionar()"
+            [erro]="erroDestinatarios()"
+            formControlName="entidadeAAdicionar"
+          />
+          <button
+            type="button"
+            app-botao
+            variante="contorno"
+            tamanho="pequeno"
+            class="botao-adicionar"
+            data-acao="adicionar-entidade"
+            [desativado]="!valores().entidadeAAdicionar"
+            (click)="adicionarEntidade()"
+          >
+            Adicionar
+          </button>
+        </div>
+        @if (entidadesEscolhidas().length > 0) {
+          <ul class="escolhidos" aria-label="Entidades escolhidas">
+            @for (entidade of entidadesEscolhidas(); track entidade.id) {
+              <li class="escolhido">
+                {{ entidade.nome }}
+                <button type="button" class="escolhido-remover" [attr.aria-label]="'Remover ' + entidade.nome" (click)="removerEntidade(entidade.id)">
+                  <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true">
+                    <path d="M3 3l6 6M9 3l-6 6" />
+                  </svg>
+                </button>
+              </li>
+            }
+          </ul>
+        }
+      }
+
+      @if (valores().modo === 'UTILIZADORES') {
+        <div class="adicionar">
+          <app-seletor
+            data-campo="utilizador-a-adicionar"
+            rotulo="Utilizador"
+            [obrigatorio]="true"
+            [compacto]="true"
+            [opcoes]="opcoesUtilizadorAAdicionar()"
+            [erro]="erroDestinatarios()"
+            formControlName="utilizadorAAdicionar"
+          />
+          <button
+            type="button"
+            app-botao
+            variante="contorno"
+            tamanho="pequeno"
+            class="botao-adicionar"
+            data-acao="adicionar-utilizador"
+            [desativado]="!valores().utilizadorAAdicionar"
+            (click)="adicionarUtilizador()"
+          >
+            Adicionar
+          </button>
+        </div>
+        @if (utilizadoresEscolhidos().length > 0) {
+          <ul class="escolhidos" aria-label="Utilizadores escolhidos">
+            @for (utilizador of utilizadoresEscolhidos(); track utilizador.id) {
+              <li class="escolhido">
+                {{ utilizador.nome }}
+                <button type="button" class="escolhido-remover" [attr.aria-label]="'Remover ' + utilizador.nome" (click)="removerUtilizador(utilizador.id)">
+                  <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true">
+                    <path d="M3 3l6 6M9 3l-6 6" />
+                  </svg>
+                </button>
+              </li>
+            }
+          </ul>
+        }
+      }
+    } @else {
+      <fieldset class="grupo" role="radiogroup" aria-labelledby="criar-notificacao-destinatario">
+        <legend class="grupo-rotulo" id="criar-notificacao-destinatario">Destinatário</legend>
+        <div class="segmentos segmentos-dois">
+          <label class="segmento" [class.segmento-escolhido]="valores().tipoDestinatario === 'ENTIDADE'">
+            <input type="radio" class="visualmente-oculto" name="tipoDestinatario" formControlName="tipoDestinatario" value="ENTIDADE" data-campo="destinatario-entidade" />Entidade
+          </label>
+          <label class="segmento" [class.segmento-escolhido]="valores().tipoDestinatario === 'UTILIZADOR'">
+            <input type="radio" class="visualmente-oculto" name="tipoDestinatario" formControlName="tipoDestinatario" value="UTILIZADOR" data-campo="destinatario-utilizador" />Utilizador
+          </label>
+        </div>
+      </fieldset>
+      @if (valores().tipoDestinatario === 'ENTIDADE') {
+        <app-seletor
+          data-campo="destinatario-unico-entidade"
+          rotulo="Entidade"
+          [obrigatorio]="true"
+          [compacto]="true"
+          [opcoes]="opcoesEntidade()"
+          [erro]="erroDestinatarioUnico()"
+          formControlName="destinatarioEntidade"
+        />
+      } @else {
+        <app-seletor
+          data-campo="destinatario-unico-utilizador"
+          rotulo="Utilizador"
+          [obrigatorio]="true"
+          [compacto]="true"
+          [opcoes]="opcoesUtilizador()"
+          [erro]="erroDestinatarioUnico()"
+          formControlName="destinatarioUtilizador"
+        />
+      }
+      <div class="processo">
+        <app-campo-texto
+          data-campo="pesquisa-processo"
+          rotulo="Pesquisar processo"
+          placeholder="Designação do instrumento"
+          [compacto]="true"
+          [formControl]="pesquisaProcesso"
+        />
+        <app-seletor
+          data-campo="processo"
+          rotulo="Processo (opcional)"
+          placeholder="Pesquise e escolha o processo…"
+          [compacto]="true"
+          [opcoes]="opcoesProcesso()"
+          formControlName="processoId"
+        />
+      </div>
+      <div class="lado-a-lado">
+        <app-campo-texto
+          data-campo="id-igt-snit"
+          rotulo="ID IGT SNIT (opcional)"
+          [compacto]="true"
+          [maxlength]="maxIdIgt"
+          [erro]="erros().idIgtSnit"
+          formControlName="idIgtSnit"
+        />
+        <app-campo-texto
+          data-campo="descricao-igt"
+          rotulo="Descrição IGT (opcional)"
+          [compacto]="true"
+          [maxlength]="maxDescricaoIgt"
+          [erro]="erros().descricaoIgt"
+          formControlName="descricaoIgt"
+        />
+      </div>
+    }
+
+    <app-campo-texto
+      data-campo="titulo"
+      rotulo="Título"
+      placeholder="Título da notificação"
+      [obrigatorio]="true"
+      [compacto]="true"
+      [maxlength]="maxTitulo"
+      [ajuda]="contadorTitulo()"
+      [erro]="erros().titulo"
+      formControlName="titulo"
+    />
+    <app-campo-texto
+      data-campo="texto"
+      rotulo="Mensagem"
+      placeholder="Texto da mensagem…"
+      [obrigatorio]="true"
+      [compacto]="true"
+      [multilinha]="true"
+      [maxlength]="maxTexto"
+      [ajuda]="ajudaTexto()"
+      [erro]="erros().texto"
+      formControlName="texto"
+    />
+    @if (!daEntidade()) {
+      <app-campo-texto
+        data-campo="prazo"
+        tipo="date"
+        [rotulo]="estatica() ? 'Prazo (opcional)' : 'Data limite de resposta (opcional)'"
+        [ajuda]="estatica() ? 'Se vazio, a notificação persiste até ser removida pelo Master.' : null"
+        [compacto]="true"
+        [ajudaAoLado]="estatica()"
+        [erro]="erros().prazo"
+        formControlName="prazo"
+      />
+    }
+    @if (!pedidoApoio()) {
+      <app-anexos-notificacao data-campo="documentos" [desativado]="!anexosPermitidos()" [ajuda]="ajudaAnexos()" />
+    }
+  </form>
+  <div rodape class="acoes">
+    @if (aConfirmarDescarte()) {
+      <p class="confirmar-descarte" role="alert">Tem dados preenchidos. Quer descartá-los?</p>
+      <button #continuar type="button" app-botao variante="secundario" tamanho="pequeno" data-acao="continuar" (click)="continuarAEditar()">
+        Continuar a editar
+      </button>
+      <button type="button" app-botao tamanho="pequeno" data-acao="descartar" (click)="descartar()">Descartar</button>
+    } @else {
+      <button type="button" app-botao variante="secundario" tamanho="pequeno" data-acao="cancelar" [desativado]="aGravar()" (click)="pedirFecho()">
+        Cancelar
+      </button>
+      <button
+        type="button"
+        app-botao
+        tamanho="pequeno"
+        data-acao="criar"
+        [desativado]="!podeCriar() && !aGravar()"
+        [aCarregar]="aGravar()"
+        (click)="criar()"
+      >
+        Criar notificação
+      </button>
+    }
+  </div>
+</app-modal>

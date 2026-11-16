@@ -1,0 +1,28 @@
+<fieldset class="destino" [attr.aria-describedby]="descritoPor()" [attr.aria-busy]="aGravar ? 'true' : null">
+  <legend class="rotulo">Destino do processo</legend>
+  @if (editavel) {
+    <div class="opcoes">
+      @for (opcao of opcoes; track opcao) {
+        <label class="opcao" [class.opcao-escolhida]="escolhido() === opcao">
+          <input
+            type="radio"
+            [name]="id"
+            [value]="opcao"
+            [checked]="escolhido() === opcao"
+            (change)="escolher(opcao)"
+          />
+          <span>{{ rotulos[opcao] }}</span>
+        </label>
+      }
+    </div>
+    <p class="ajuda" [id]="idAjuda">{{ ajuda }}</p>
+  } @else {
+    <p class="valor">{{ rotulos[valor] }}</p>
+    @if (comFicheiros) {
+      <p class="ajuda" [id]="idAjuda">{{ ajudaComFicheiros }}</p>
+    }
+  }
+  @if (erro) {
+    <p class="erro" [id]="idErro" role="alert">{{ erro }}</p>
+  }
+</fieldset>

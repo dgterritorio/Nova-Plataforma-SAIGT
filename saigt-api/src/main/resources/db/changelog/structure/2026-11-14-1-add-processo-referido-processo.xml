@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="2026-11-14-1-add-processo-referido-processo" author="arnaldo.costa">
+        <comment>
+            O ato publicado (Decisão de início ou Discussão pública) que um ato pontual de «Outros atos e anexos» visa
+            (DB-PROC-014, BL-PROC-037, FR-135): processo.processo_referido_id, nula nas linhas existentes e fora dos
+            Procedimentos ato_pontual. A regra «só em Procedimento ato_pontual» depende de outra tabela e fica no
+            serviço. Sem ON DELETE: os processos não se apagam.
+        </comment>
+
+        <addColumn tableName="processo">
+            <column name="processo_referido_id" type="UUID"/>
+        </addColumn>
+
+        <addForeignKeyConstraint constraintName="fk_processo_processo_referido"
+                                 baseTableName="processo" baseColumnNames="processo_referido_id"
+                                 referencedTableName="processo" referencedColumnNames="id"/>
+
+        <createIndex tableName="processo" indexName="idx_processo_processo_referido">
+            <column name="processo_referido_id"/>
+        </createIndex>
+
+        <rollback>
+            <dropIndex tableName="processo" indexName="idx_processo_processo_referido"/>
+            <dropForeignKeyConstraint baseTableName="processo" constraintName="fk_processo_processo_referido"/>
+            <dropColumn tableName="processo" columnName="processo_referido_id"/>
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>

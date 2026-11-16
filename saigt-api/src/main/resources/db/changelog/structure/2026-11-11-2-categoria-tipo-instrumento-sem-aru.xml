@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="2026-11-11-2-categoria-tipo-instrumento-sem-aru" author="pedro.paixao">
+        <preConditions onFail="HALT" onFailMessage="Há tipos de Instrumento com categoria ARU: o LLD só admite PLANO, PROGRAMA e SRUP (OI-060).">
+            <sqlCheck expectedResult="0">SELECT count(*) FROM tipo_instrumento WHERE categoria = 'ARU'</sqlCheck>
+        </preConditions>
+
+        <comment>
+            A ARU está fora do âmbito contratado: a categoria do tipo de Instrumento passa a admitir só PLANO,
+            PROGRAMA e SRUP (DB-PROC-001). Pára se já existir um tipo ARU, para não o deixar fora do CHECK.
+        </comment>
+
+        <sql>ALTER TABLE tipo_instrumento DROP CONSTRAINT ck_tipo_instrumento_categoria</sql>
+        <sql>ALTER TABLE tipo_instrumento ADD CONSTRAINT ck_tipo_instrumento_categoria
+            CHECK (categoria IN ('PLANO', 'PROGRAMA', 'SRUP'))</sql>
+
+        <rollback>
+            <sql>ALTER TABLE tipo_instrumento DROP CONSTRAINT ck_tipo_instrumento_categoria</sql>
+            <sql>ALTER TABLE tipo_instrumento ADD CONSTRAINT ck_tipo_instrumento_categoria
+                CHECK (categoria IN ('PLANO', 'PROGRAMA', 'SRUP', 'ARU'))</sql>
+        </rollback>
+    </changeSet>
+</databaseChangeLog>

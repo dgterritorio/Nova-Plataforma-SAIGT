@@ -1,0 +1,145 @@
+:host {
+  display: block;
+  overflow: hidden;
+  background: var(--cor-superficie);
+  border: var(--borda-largura) solid var(--cor-borda);
+  border-radius: var(--raio-lg);
+}
+
+.tabela-deslizar {
+  overflow-x: auto;
+}
+
+.tabela-tabela {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+}
+
+th {
+  height: 41px;
+  padding: 0 var(--espaco-4);
+  background: var(--cor-superficie-alt);
+  border-bottom: var(--borda-largura) solid var(--cor-borda-suave);
+  font-size: var(--texto-sm);
+  font-weight: var(--peso-semi);
+  line-height: var(--texto-sm-linha);
+  color: var(--cor-texto-secundario);
+  text-align: left;
+  white-space: nowrap;
+}
+
+td {
+  height: 56px;
+  padding: var(--espaco-2) var(--espaco-4);
+  border-bottom: var(--borda-largura) solid var(--cor-superficie-alt);
+  font-size: var(--texto-sm);
+  line-height: var(--texto-sm-linha);
+  color: var(--cor-texto-celula);
+  vertical-align: middle;
+  overflow-wrap: anywhere;
+}
+
+th:first-child,
+td:first-child {
+  padding-left: var(--espaco-5);
+}
+
+tbody tr:last-child td {
+  border-bottom: 0;
+}
+
+.alinhar-direita {
+  text-align: right;
+}
+
+.alinhar-centro {
+  text-align: center;
+}
+
+/*
+ * Compacta: a tabela dos painéis, dentro de um cartão (sem moldura própria).
+ * O cabeçalho do Figma (#99a1af sobre #f9fafb) fica a 2,5:1; usa-se o cinza acessível mais próximo.
+ */
+:host(.tabela-compacta) {
+  border: 0;
+  border-radius: 0;
+}
+
+:host(.tabela-compacta) th {
+  height: 37px;
+  background: var(--cor-superficie-tabela);
+  border-bottom-color: var(--cor-borda-elevado);
+  font-size: var(--texto-xs);
+  line-height: var(--texto-xs-linha);
+  color: var(--cor-texto-nav);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+:host(.tabela-compacta) td {
+  height: 61px;
+  border-bottom-color: var(--cor-superficie-tabela);
+  color: var(--cor-texto-cartao);
+}
+
+/* Relatório (UI-058): a compacta com o cabeçalho do Figma, que aqui passa o contraste (#62748e sobre #fbfcfd). */
+:host(.tabela-relatorio) th {
+  background: var(--cor-cabecalho-tabela-relatorio);
+  border-bottom-color: var(--cor-borda-suave);
+  font-size: var(--texto-sm);
+  line-height: var(--texto-sm-linha);
+  letter-spacing: 0.6px;
+  color: var(--cor-rotulo-indicador);
+}
+
+:host(.tabela-relatorio) td {
+  height: 49px;
+  border-bottom-color: var(--cor-borda-suave);
+  color: var(--cor-texto-rotulo);
+}
+
+:host(.tabela-compacta) th:first-child,
+:host(.tabela-compacta) td:first-child {
+  padding-left: var(--espaco-4);
+}
+
+.tabela-linha-destacada {
+  background: var(--cor-aviso-fundo);
+}
+
+.tabela-linha-clicavel {
+  cursor: pointer;
+}
+
+.tabela-linha-clicavel:hover {
+  background: var(--cor-superficie-alt);
+}
+
+.tabela-linha-clicavel:focus-visible {
+  outline: var(--anel-foco);
+  outline-offset: calc(var(--anel-foco-afastamento) * -1);
+}
+
+.tabela-vazio {
+  height: 96px;
+  text-align: center;
+  color: var(--cor-texto-secundario);
+}
+
+.tabela-barra {
+  display: block;
+  height: 12px;
+  width: 70%;
+  border-radius: var(--raio-sm);
+  background: var(--cor-borda-suave);
+}
+
+.tabela-legenda {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}

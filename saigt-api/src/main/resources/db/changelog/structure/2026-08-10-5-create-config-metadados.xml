@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="2026-08-10-5-create-config-metadados" author="david.raposo">
+        <comment>
+            Grupo 3 — configuração de metadados, editável pela DGT via backoffice: formulario_schema,
+            documento_config, permissao_acao, entidade_contacto. Ver §5, §8.2, §14.
+            `entidade_contacto` é o contacto institucional da entidade, curado pela DGT.
+        </comment>
+
+        <createTable tableName="formulario_schema">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="instrumento_procedimento_config_id" type="BIGINT">
+                <constraints nullable="false" foreignKeyName="fk_formulario_schema_procedimento_config" references="instrumento_procedimento_config(id)"/>
+            </column>
+            <column name="versao" type="INTEGER" defaultValueNumeric="1">
+                <constraints nullable="false"/>
+            </column>
+            <column name="schema" type="JSONB">
+                <constraints nullable="false"/>
+            </column>
+            <column name="ativo" type="BOOLEAN" defaultValueBoolean="true">
+                <constraints nullable="false"/>
+            </column>
+            <column name="criado_por" type="VARCHAR(200)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="criado_em" type="TIMESTAMP WITH TIME ZONE" defaultValueComputed="CURRENT_TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <addUniqueConstraint tableName="formulario_schema" columnNames="instrumento_procedimento_config_id, versao"
+                             constraintName="uq_formulario_schema_versao"/>
+
+        <createTable tableName="documento_config">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="instrumento_procedimento_config_id" type="BIGINT">
+                <constraints nullable="false" foreignKeyName="fk_documento_config_procedimento_config" references="instrumento_procedimento_config(id)"/>
+            </column>
+            <column name="nome" type="VARCHAR(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="categoria" type="VARCHAR(20)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="descricao" type="VARCHAR(300)"/>
+            <column name="extensoes_aceites" type="JSONB">
+                <constraints nullable="false"/>
+            </column>
+            <column name="ordem" type="INTEGER">
+                <constraints nullable="false"/>
+            </column>
+            <column name="obrigatorio" type="BOOLEAN" defaultValueBoolean="true">
+                <constraints nullable="false"/>
+            </column>
+            <column name="ativo" type="BOOLEAN" defaultValueBoolean="true">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <createTable tableName="permissao_acao">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="ator" type="VARCHAR(30)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="instrumento_procedimento_config_id" type="BIGINT">
+                <constraints nullable="false" foreignKeyName="fk_permissao_acao_procedimento_config" references="instrumento_procedimento_config(id)"/>
+            </column>
+            <column name="ativo" type="BOOLEAN" defaultValueBoolean="true">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <addUniqueConstraint tableName="permissao_acao" columnNames="instrumento_procedimento_config_id, ator"
+                             constraintName="uq_permissao_acao"/>
+        <sql>ALTER TABLE permissao_acao ADD CONSTRAINT ck_permissao_acao_ator
+            CHECK (ator IN ('ENTIDADE', 'PCM', 'DGT'))</sql>
+
+        <createTable tableName="entidade_contacto">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="entidade_id" type="BIGINT">
+                <constraints nullable="false" foreignKeyName="fk_entidade_contacto_entidade"
+                             references="entidade(id)"/>
+            </column>
+            <column name="email" type="VARCHAR(200)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="descricao" type="VARCHAR(200)"/>
+            <column name="telefone" type="VARCHAR(20)"/>
+            <column name="principal" type="BOOLEAN" defaultValueBoolean="false">
+                <constraints nullable="false"/>
+            </column>
+            <column name="ativo" type="BOOLEAN" defaultValueBoolean="true">
+                <constraints nullable="false"/>
+            </column>
+            <column name="criado_em" type="TIMESTAMP WITH TIME ZONE" defaultValueComputed="CURRENT_TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+            <column name="criado_por" type="UUID">
+                <constraints nullable="false" foreignKeyName="fk_entidade_contacto_utilizador"
+                             references="utilizador(id)"/>
+            </column>
+        </createTable>
+        <addUniqueConstraint tableName="entidade_contacto" columnNames="entidade_id, email"
+                             constraintName="uq_entidade_contacto"/>
+        <sql>CREATE INDEX idx_entidade_contacto ON entidade_contacto (entidade_id) WHERE ativo</sql>
+
+        <rollback>
+            <sql>DROP INDEX IF EXISTS idx_entidade_contacto</sql>
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>

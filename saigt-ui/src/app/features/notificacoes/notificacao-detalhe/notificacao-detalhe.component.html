@@ -1,0 +1,253 @@
+<section class="detalhe" aria-live="polite" aria-labelledby="detalhe-notificacao-titulo" [attr.aria-busy]="aCarregar()">
+  <p class="visualmente-oculto" role="status" aria-live="polite">{{ anuncio() }}</p>
+  @if (notificacao(); as n) {
+    <header class="cabecalho">
+      <app-icone-notificacao [simbolo]="tipo()!.icone" [tom]="tipo()!.tom" [grande]="true" />
+      <div class="cabecalho-texto">
+        <div class="selos">
+          <app-selo forma="pill" class="selo-tipo" [tom]="tipo()!.tom">
+            <app-icone-notificacao icone [simbolo]="tipo()!.icone" [mosaico]="false" />{{ tipo()!.rotulo }}
+          </app-selo>
+          @if (estado(); as selo) {
+            <app-selo forma="pill" [tom]="selo.tom">{{ selo.rotulo }}</app-selo>
+          }
+        </div>
+        <h2 #tituloDetalhe id="detalhe-notificacao-titulo" tabindex="-1">{{ n.titulo }}</h2>
+      </div>
+      <button type="button" class="fechar" aria-label="Fechar detalhe" (click)="fechar.emit()">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.33" stroke-linecap="round" aria-hidden="true">
+          <path d="M12 4L4 12M4 4l8 8" />
+        </svg>
+      </button>
+    </header>
+
+    <div class="corpo">
+      <dl class="campos">
+        <div class="campo">
+          <dt>Remetente</dt>
+          <dd class="destaque">{{ remetente(n.criadoPorNome) }}</dd>
+        </div>
+        <div class="campo">
+          <dt>Destinatários</dt>
+          <dd>{{ destinatarios() }}</dd>
+        </div>
+        <div class="campo">
+          <dt>Data de envio</dt>
+          <dd><time [attr.datetime]="n.criadoEm">{{ formatarDataHora(n.criadoEm) }}</time></dd>
+        </div>
+        @if (n.prazo) {
+          <div class="campo">
+            <dt>Prazo</dt>
+            <dd class="destaque prazo"><time [attr.datetime]="n.prazo">{{ formatarDia(n.prazo) }}</time></dd>
+          </div>
+        }
+        @if (n.idIgtSnit) {
+          <div class="campo">
+            <dt>ID IGT SNIT</dt>
+            <dd>{{ n.idIgtSnit }}</dd>
+          </div>
+        }
+        @if (n.descricaoIgt) {
+          <div class="campo campo-largo">
+            <dt>Descrição IGT</dt>
+            <dd>{{ n.descricaoIgt }}</dd>
+          </div>
+        }
+        @if (n.processoId) {
+          <div class="campo">
+            <dt>Processo</dt>
+            <dd><a class="ligacao" [routerLink]="rotaProcesso(n.processoId)">{{ n.numeroProcesso ?? 'Abrir processo' }}</a></dd>
+          </div>
+        }
+      </dl>
+
+      <p class="texto">{{ n.texto }}</p>
+
+      @if (n.documentos.length > 0 || (podeAnexar() && !podeResponder())) {
+        <section class="bloco" [attr.aria-busy]="aAnexar()">
+          <h3 class="seccao">Documentos anexos</h3>
+          @if (erroDescarga(); as mensagemErro) {
+            <app-alerta class="documentos-alerta" tipo="erro">{{ mensagemErro }}</app-alerta>
+          }
+          @if (n.documentos.length > 0) {
+            <ul class="documentos">
+              @for (documento of n.documentos; track documento.id) {
+                <li class="documento">
+                  <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.33" stroke-linecap="round" aria-hidden="true">
+                    <path d="M13.5 7.5l-5.3 5.3a3.3 3.3 0 01-4.7-4.7l5.6-5.6a2.2 2.2 0 013.1 3.1L6.6 11.2a1.1 1.1 0 01-1.6-1.6l5-5" />
+                  </svg>
+                  <button
+                    type="button"
+                    class="documento-nome documento-descarregar"
+                    [attr.aria-label]="'Descarregar ' + documento.nomeFicheiro"
+                    [attr.aria-busy]="aDescarregar() === documento.id"
+                    (click)="descarregar(documento)"
+                  >
+                    {{ documento.nomeFicheiro }}
+                  </button>
+                  <span class="documento-tamanho">{{ tamanhoEmKb(documento.tamanhoBytes) }}</span>
+                </li>
+              }
+            </ul>
+          }
+          @if (podeAnexar() && !podeResponder()) {
+            <ng-container *ngTemplateOutlet="anexarDocumentos" />
+          }
+        </section>
+      }
+
+      @if (comConversacao()) {
+        <section class="bloco">
+          <h3 class="seccao">Histórico conversacional</h3>
+          @if (n.mensagens.length > 0) {
+            <ol class="mensagens">
+              @for (mensagem of n.mensagens; track mensagem.id) {
+                <li class="mensagem">
+                  <p class="mensagem-autor">
+                    {{ mensagem.autorNome }} · <time [attr.datetime]="mensagem.criadoEm">{{ formatarDataHora(mensagem.criadoEm) }}</time>
+                  </p>
+                  <p class="mensagem-texto">{{ mensagem.texto }}</p>
+                </li>
+              }
+            </ol>
+          } @else {
+            <p class="sem-respostas">Sem respostas ainda.</p>
+          }
+          @if (erroEnvio(); as mensagemErro) {
+            <app-alerta class="resposta-alerta" tipo="erro">{{ mensagemErro }}</app-alerta>
+          }
+          @if (podeResponder()) {
+            <form class="resposta" novalidate (submit)="enviar($event)">
+              <app-campo-texto
+                class="resposta-campo"
+                rotulo="Resposta"
+                placeholder="Escrever resposta..."
+                [obrigatorio]="true"
+                [multilinha]="true"
+                [maxlength]="maximoResposta"
+                [ajuda]="contador()"
+                [erro]="erroResposta()"
+                [formControl]="controloResposta"
+                (focusout)="marcarTocado()"
+              />
+              <div class="resposta-barra">
+                @if (podeAnexar()) {
+                  <ng-container *ngTemplateOutlet="anexarDocumentos" />
+                }
+                <button
+                  app-botao
+                  type="submit"
+                  tamanho="pequeno"
+                  class="resposta-enviar"
+                  [desativado]="!respostaValida()"
+                  [aCarregar]="aEnviar()"
+                >
+                  <svg icone viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M7.27 10.84a.25.25 0 00.47-.01l3.25-9.5a.25.25 0 00-.32-.32l-9.5 3.25a.25.25 0 00-.01.47l3.97 1.59a1 1 0 01.55.55l1.59 3.97zM10.93 1.07L5.46 6.54" />
+                  </svg>
+                  Enviar resposta
+                </button>
+              </div>
+            </form>
+          }
+        </section>
+      }
+    </div>
+
+    @if (erroReabrir(); as mensagemErro) {
+      <app-alerta class="reabrir-alerta" tipo="erro">{{ mensagemErro }}</app-alerta>
+    }
+    @if (temOperacoes() || parametrosAlterarOwner() || erroOperacao() || podeReabrir()) {
+      <div class="rodape">
+        @if (erroOperacao(); as mensagemErro) {
+          <app-alerta class="operacao-alerta" tipo="erro">{{ mensagemErro }}</app-alerta>
+        }
+        @if (temOperacoes()) {
+          <div class="operacoes" role="group" aria-label="Ações da notificação">
+            @if (podeLer()) {
+              <button app-botao type="button" variante="secundario" tamanho="pequeno" class="operacao operacao-ler" [aCarregar]="aOperar() === 'LER'" (click)="marcarComoLida()">
+                <svg icone viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.33" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M13.3 4.7L6.4 11.3 2.7 7.7" />
+                </svg>
+                Marcar como lida
+              </button>
+            }
+            @if (podeResolver()) {
+              <button app-botao type="button" tamanho="pequeno" class="operacao operacao-resolver" [desativado]="aOperar() !== null" (click)="pedirConfirmacao('RESOLVER')">
+                <svg icone viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.33" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <circle cx="8" cy="8" r="6" />
+                  <path d="M5.5 8l1.7 1.7 3.3-3.4" />
+                </svg>
+                Marcar como resolvida
+              </button>
+            }
+            @if (podeRemover()) {
+              <button app-botao type="button" variante="contorno" tamanho="pequeno" class="operacao operacao-eliminar" [desativado]="aOperar() !== null" (click)="pedirConfirmacao('REMOVER')">
+                <svg icone viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.33" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M2.7 4h10.6M6.7 7.3v4M9.3 7.3v4M3.3 4l.7 8.7a1.3 1.3 0 001.3 1.3h5.4a1.3 1.3 0 001.3-1.3l.7-8.7M6 4V2.7a.7.7 0 01.7-.7h2.6a.7.7 0 01.7.7V4" />
+                </svg>
+                Eliminar
+              </button>
+            }
+          </div>
+        }
+        @if (podeReabrir()) {
+          <button app-botao type="button" tamanho="pequeno" class="reabrir" [aCarregar]="aReabrir()" (click)="reabrir()">
+            Reabrir pedido
+          </button>
+        }
+        @if (parametrosAlterarOwner(); as parametros) {
+          <a app-botao tamanho="pequeno" class="alterar-owner" [routerLink]="rotaAlteracaoOwner" [queryParams]="parametros">
+            Alterar owner do processo
+          </a>
+        }
+      </div>
+    }
+  } @else if (erro(); as mensagem) {
+    <div class="estado">
+      <app-alerta tipo="erro">{{ mensagem }}</app-alerta>
+      <button type="button" class="fechar fechar-texto" (click)="fechar.emit()">Fechar detalhe</button>
+    </div>
+  } @else if (aCarregar()) {
+    <p class="estado">A carregar a notificação…</p>
+  }
+</section>
+
+<ng-template #anexarDocumentos>
+  <div class="anexar">
+    <input
+      #seletorAnexos
+      type="file"
+      multiple
+      class="visualmente-oculto"
+      tabindex="-1"
+      aria-hidden="true"
+      [accept]="aceitesAnexo"
+      (change)="anexar($event)"
+    />
+    <button app-botao type="button" variante="secundario" tamanho="pequeno" class="anexar-botao" [aCarregar]="aAnexar()" (click)="escolherAnexos()">
+      <svg icone viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.33" stroke-linecap="round" aria-hidden="true">
+        <path d="M13.5 7.5l-5.3 5.3a3.3 3.3 0 01-4.7-4.7l5.6-5.6a2.2 2.2 0 013.1 3.1L6.6 11.2a1.1 1.1 0 01-1.6-1.6l5-5" />
+      </svg>
+      Anexar
+    </button>
+    @if (errosAnexo().length > 0) {
+      <ul class="anexar-erros" role="alert">
+        @for (erro of errosAnexo(); track $index) {
+          <li>{{ erro }}</li>
+        }
+      </ul>
+    }
+  </div>
+</ng-template>
+
+<app-confirmacao-modal
+  [aberto]="confirmacao() !== null"
+  [titulo]="tituloConfirmacao()"
+  [mensagem]="mensagemConfirmacao()"
+  [rotuloSim]="rotuloSimConfirmacao()"
+  rotuloNao="Cancelar"
+  [aProcessar]="aOperar() !== null"
+  (sim)="confirmar()"
+  (nao)="cancelarConfirmacao()"
+/>

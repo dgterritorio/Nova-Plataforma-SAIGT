@@ -1,0 +1,52 @@
+<div class="tabela-deslizar">
+  <table class="tabela-tabela" [style.min-width]="larguraMinima()" [attr.aria-busy]="aCarregar() || null">
+    @if (legenda()) {
+      <caption class="tabela-legenda">{{ legenda() }}</caption>
+    }
+    <thead>
+      <tr>
+        @for (coluna of colunas(); track coluna.chave) {
+          <th scope="col" [style.width]="coluna.largura" [class]="'alinhar-' + (coluna.alinhamento ?? 'esquerda')">
+            {{ coluna.titulo }}
+          </th>
+        }
+      </tr>
+    </thead>
+    <tbody>
+      @if (aCarregar()) {
+        @for (n of linhasEsqueleto; track n) {
+          <tr class="tabela-esqueleto" aria-hidden="true">
+            @for (coluna of colunas(); track coluna.chave) {
+              <td><span class="tabela-barra"></span></td>
+            }
+          </tr>
+        }
+      } @else {
+        @for (linha of linhas(); track $index) {
+          <tr
+            [class.tabela-linha-destacada]="linhaDestacada()(linha)"
+            [class.tabela-linha-clicavel]="clicavel()"
+            [attr.tabindex]="clicavel() ? 0 : null"
+            (click)="clicar(linha)"
+            (keydown.enter)="clicar(linha)"
+          >
+            @for (coluna of colunas(); track coluna.chave) {
+              <td [class]="'alinhar-' + (coluna.alinhamento ?? 'esquerda') + ' coluna-' + coluna.chave">
+                @if (templates().get(coluna.chave); as template) {
+                  <ng-container *ngTemplateOutlet="template; context: { $implicit: linha }" />
+                } @else {
+                  {{ valor(linha, coluna.chave) }}
+                }
+              </td>
+            }
+          </tr>
+        } @empty {
+          <tr>
+            <td class="tabela-vazio" [attr.colspan]="colunas().length">{{ mensagemVazia() }}</td>
+          </tr>
+        }
+      }
+    </tbody>
+  </table>
+</div>
+<ng-content select="[rodape]" />

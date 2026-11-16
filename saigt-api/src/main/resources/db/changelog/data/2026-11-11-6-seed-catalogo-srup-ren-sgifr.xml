@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="2026-11-11-6-seed-catalogo-srup-ren-sgifr" author="david.raposo">
+        <comment>
+            Tipos de Instrumento da REN e do SGIFR (PRA, PSA), categoria SRUP, e as suas Dinâmicas (OI-064: REN com 3,
+            SGIFR com 2). Sem ids explícitos, para não colidir com os seeds de outros tipos: as FK resolvem-se pelo código.
+            As configurações ficam inativas até haver Procedimentos e permissões, para que estes tipos não apareçam no
+            assistente nem no motor de regras antes de serem operáveis. A REN leva o IDTYPE 37 do SNIT (OI-499) e a
+            série própria do n.º de depósito, que os changesets anteriores só aplicariam a uma linha já existente.
+        </comment>
+
+        <insert tableName="tipo_dinamica">
+            <column name="codigo" value="DELIMITACAO"/>
+            <column name="nome" value="Delimitação"/>
+            <column name="ativo" valueBoolean="true"/>
+        </insert>
+        <insert tableName="tipo_dinamica">
+            <column name="codigo" value="CORRECAO_MATERIAL_RETIFICACAO"/>
+            <column name="nome" value="Correção Material ou Retificação"/>
+            <column name="ativo" valueBoolean="true"/>
+        </insert>
+
+        <insert tableName="tipo_instrumento">
+            <column name="codigo" value="REN"/>
+            <column name="nome" value="Reserva Ecológica Nacional"/>
+            <column name="categoria" value="SRUP"/>
+            <column name="snit_codigo" value="37"/>
+            <column name="serie_numero_deposito" value="REN"/>
+            <column name="ativo" valueBoolean="true"/>
+        </insert>
+        <insert tableName="tipo_instrumento">
+            <column name="codigo" value="PRA"/>
+            <column name="nome" value="Programa Regional de Ação"/>
+            <column name="categoria" value="SRUP"/>
+            <column name="ativo" valueBoolean="true"/>
+        </insert>
+        <insert tableName="tipo_instrumento">
+            <column name="codigo" value="PSA"/>
+            <column name="nome" value="Programa Sub-Regional de Ação"/>
+            <column name="categoria" value="SRUP"/>
+            <column name="ativo" valueBoolean="true"/>
+        </insert>
+
+        <sql>INSERT INTO instrumento_dinamica_config (tipo_instrumento_id, tipo_dinamica_id, ativo)
+            SELECT ti.id, td.id, false
+            FROM (VALUES ('REN', 'DELIMITACAO'), ('REN', 'ALTERACAO'), ('REN', 'CORRECAO_MATERIAL_RETIFICACAO'),
+                         ('PRA', 'DELIMITACAO'), ('PRA', 'ALTERACAO'),
+                         ('PSA', 'DELIMITACAO'), ('PSA', 'ALTERACAO'))
+                 AS v (tipo_instrumento, tipo_dinamica)
+            JOIN tipo_instrumento ti ON ti.codigo = v.tipo_instrumento
+            JOIN tipo_dinamica td ON td.codigo = v.tipo_dinamica</sql>
+
+        <rollback>
+            <sql>DELETE FROM instrumento_dinamica_config
+                WHERE tipo_instrumento_id IN (SELECT id FROM tipo_instrumento WHERE codigo IN ('REN', 'PRA', 'PSA'))</sql>
+            <sql>DELETE FROM tipo_instrumento WHERE codigo IN ('REN', 'PRA', 'PSA')</sql>
+            <sql>DELETE FROM tipo_dinamica WHERE codigo IN ('DELIMITACAO', 'CORRECAO_MATERIAL_RETIFICACAO')</sql>
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>

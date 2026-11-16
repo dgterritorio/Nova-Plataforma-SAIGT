@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="2026-11-10-7-estado-validacao-substituido" author="joao.pereira">
+        <comment>
+            Estado SUBSTITUIDO do documento (DB-DOC-002): ficheiro recusado que foi substituído na correção.
+            O rollback falha se houver linhas SUBSTITUIDO, o que é o esperado.
+        </comment>
+
+        <sql>ALTER TABLE processo_documento DROP CONSTRAINT ck_processo_documento_estado_validacao</sql>
+        <sql>ALTER TABLE processo_documento ADD CONSTRAINT ck_processo_documento_estado_validacao
+            CHECK (estado_validacao IN ('POR_VALIDAR', 'VALIDADO', 'REJEITADO', 'SUBSTITUIDO'))</sql>
+
+        <rollback>
+            <sql>ALTER TABLE processo_documento DROP CONSTRAINT ck_processo_documento_estado_validacao</sql>
+            <sql>ALTER TABLE processo_documento ADD CONSTRAINT ck_processo_documento_estado_validacao
+                CHECK (estado_validacao IN ('POR_VALIDAR', 'VALIDADO', 'REJEITADO'))</sql>
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>

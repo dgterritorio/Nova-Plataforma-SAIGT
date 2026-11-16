@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="2026-11-14-5-add-processo-resumo-validacao" author="arnaldo.costa">
+        <comment>
+            Campos opcionais do Resumo Validados, gravados pelo validar (DB-PROC-014, API-PROC-012, FR-164; EF v1.5
+            l.419-424): INCM e DGT em texto livre, Reg. Uso do Solo (Sim/Não) e Alteração PEOT, item da lista
+            ALTERACAO_PEOT. O tipo do item valida-se no serviço. O rollback retira a FK, o índice e as quatro colunas.
+        </comment>
+
+        <addColumn tableName="processo">
+            <column name="notas_incm" type="TEXT"/>
+            <column name="notas_dgt" type="TEXT"/>
+            <column name="reg_uso_solo" type="BOOLEAN"/>
+            <column name="alteracao_peot_id" type="BIGINT"/>
+        </addColumn>
+        <addForeignKeyConstraint baseTableName="processo" baseColumnNames="alteracao_peot_id"
+                                 constraintName="fk_processo_alteracao_peot"
+                                 referencedTableName="lista_valores" referencedColumnNames="id"/>
+        <createIndex tableName="processo" indexName="idx_processo_alteracao_peot">
+            <column name="alteracao_peot_id"/>
+        </createIndex>
+
+        <rollback>
+            <dropIndex tableName="processo" indexName="idx_processo_alteracao_peot"/>
+            <dropForeignKeyConstraint baseTableName="processo" constraintName="fk_processo_alteracao_peot"/>
+            <dropColumn tableName="processo" columnName="alteracao_peot_id"/>
+            <dropColumn tableName="processo" columnName="reg_uso_solo"/>
+            <dropColumn tableName="processo" columnName="notas_dgt"/>
+            <dropColumn tableName="processo" columnName="notas_incm"/>
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>

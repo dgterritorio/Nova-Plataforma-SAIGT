@@ -1,0 +1,5 @@
+.painel {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaco-4);
+}

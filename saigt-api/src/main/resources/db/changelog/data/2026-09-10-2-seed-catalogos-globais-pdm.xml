@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="2026-09-10-2-seed-catalogos-globais-pdm" author="nuno.miguel.silva">
+        <comment>
+            Issue #123 — Grupo 1: catálogos globais do PDM (39 linhas). Fonte:
+            pdm-mapeamento-configuracao.md §13.1-13.3. Configuração real de
+            produção (não fixture de dev/test) — sem `context`. Ids explícitos
+            porque §13.4-13.7 referenciam estas linhas por número; setval no
+            fim de cada tabela para não colidir com a sequência do Postgres.
+        </comment>
+
+        <loadData tableName="tipo_instrumento" file="db/data/2026-09-10-2-tipo_instrumento.csv"
+                  relativeToChangelogFile="false" separator=";" quotchar="&quot;" encoding="UTF-8">
+            <column name="id" type="NUMERIC"/>
+            <column name="codigo" type="STRING"/>
+            <column name="nome" type="STRING"/>
+            <column name="categoria" type="STRING"/>
+            <column name="ativo" type="BOOLEAN"/>
+        </loadData>
+        <sql dbms="postgresql">SELECT setval(pg_get_serial_sequence('tipo_instrumento', 'id'), (SELECT MAX(id) FROM tipo_instrumento))</sql>
+
+        <loadData tableName="tipo_dinamica" file="db/data/2026-09-10-2-tipo_dinamica.csv"
+                  relativeToChangelogFile="false" separator=";" quotchar="&quot;" encoding="UTF-8">
+            <column name="id" type="NUMERIC"/>
+            <column name="codigo" type="STRING"/>
+            <column name="nome" type="STRING"/>
+            <column name="ativo" type="BOOLEAN"/>
+        </loadData>
+        <sql dbms="postgresql">SELECT setval(pg_get_serial_sequence('tipo_dinamica', 'id'), (SELECT MAX(id) FROM tipo_dinamica))</sql>
+
+        <loadData tableName="tipo_procedimento" file="db/data/2026-09-10-2-tipo_procedimento.csv"
+                  relativeToChangelogFile="false" separator=";" quotchar="&quot;" encoding="UTF-8">
+            <column name="id" type="NUMERIC"/>
+            <column name="codigo" type="STRING"/>
+            <column name="nome" type="STRING"/>
+            <column name="ativo" type="BOOLEAN"/>
+        </loadData>
+        <sql dbms="postgresql">SELECT setval(pg_get_serial_sequence('tipo_procedimento', 'id'), (SELECT MAX(id) FROM tipo_procedimento))</sql>
+
+        <rollback>
+            <delete tableName="tipo_procedimento">
+                <where>id BETWEEN 1 AND 27</where>
+            </delete>
+            <delete tableName="tipo_dinamica">
+                <where>id BETWEEN 1 AND 13</where>
+            </delete>
+            <delete tableName="tipo_instrumento">
+                <where>id = 1</where>
+            </delete>
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>

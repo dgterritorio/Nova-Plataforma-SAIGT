@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="2026-11-11-4-create-sgifr-rede-defesa" author="david.raposo">
+        <comment>
+            Catálogo das redes de defesa do SGIFR (DB-PROC-016, FR-113) e redes escolhidas em cada processo
+            (DB-PROC-017, FR-093). As redes que valem para cada programa leem-se de aplica_pra, aplica_psa e
+            publicavel, nunca de uma lista de códigos no código. O rollback apaga as duas tabelas.
+        </comment>
+
+        <createTable tableName="sgifr_rede_defesa">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" primaryKeyName="pk_sgifr_rede_defesa" nullable="false"/>
+            </column>
+            <column name="codigo" type="VARCHAR(10)">
+                <constraints nullable="false" unique="true" uniqueConstraintName="uq_sgifr_rede_defesa_codigo"/>
+            </column>
+            <column name="nome" type="VARCHAR(200)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="aplica_pra" type="BOOLEAN">
+                <constraints nullable="false"/>
+            </column>
+            <column name="aplica_psa" type="BOOLEAN">
+                <constraints nullable="false"/>
+            </column>
+            <column name="publicavel" type="BOOLEAN">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <createTable tableName="processo_rede_defesa">
+            <column name="processo_id" type="UUID">
+                <constraints nullable="false" foreignKeyName="fk_processo_rede_defesa_processo"
+                             references="processo(id)"/>
+            </column>
+            <column name="rede_defesa_id" type="BIGINT">
+                <constraints nullable="false" foreignKeyName="fk_processo_rede_defesa_rede"
+                             references="sgifr_rede_defesa(id)"/>
+            </column>
+        </createTable>
+        <addPrimaryKey tableName="processo_rede_defesa" columnNames="processo_id, rede_defesa_id"
+                       constraintName="pk_processo_rede_defesa"/>
+        <createIndex tableName="processo_rede_defesa" indexName="idx_processo_rede_defesa_rede">
+            <column name="rede_defesa_id"/>
+        </createIndex>
+
+        <rollback>
+            <dropTable tableName="processo_rede_defesa"/>
+            <dropTable tableName="sgifr_rede_defesa"/>
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>

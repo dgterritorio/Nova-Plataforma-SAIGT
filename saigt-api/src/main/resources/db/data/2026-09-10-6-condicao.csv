@@ -1,0 +1,12 @@
+id;regra_id;avaliador;parametros;grupo;ativo
+401;301;"OCORRENCIA_NAO_EXISTE";"{""tipo_ocorrencia"":""DINAMICA"",""codigo"":""ELABORACAO""}";1;true
+402;302;"INSTRUMENTO_EM_VIGOR";"{}";1;true
+403;302;"OCORRENCIA_NAO_EXISTE";"{""tipo_ocorrencia"":""DINAMICA"",""codigo"":""REVISAO"",""estado"":""EM_CURSO""}";1;true
+404;303;"INSTRUMENTO_EM_VIGOR";"{}";1;true
+405;304;"INSTRUMENTO_EM_VIGOR";"{}";1;true
+406;305;"INSTRUMENTO_EM_VIGOR";"{}";1;true
+407;306;"INSTRUMENTO_EM_VIGOR";"{}";1;true
+408;307;"INSTRUMENTO_EM_VIGOR";"{}";1;true
+409;308;"INSTRUMENTO_EM_VIGOR";"{}";1;true
+410;309;"INSTRUMENTO_EM_VIGOR";"{}";1;true
+411;309;"OCORRENCIA_NAO_EXISTE";"{""tipo_ocorrencia"":""DINAMICA"",""codigo"":""REVOGACAO""}";1;true

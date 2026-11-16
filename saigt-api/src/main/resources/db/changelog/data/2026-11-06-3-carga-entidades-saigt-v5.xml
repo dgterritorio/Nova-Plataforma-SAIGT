@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <!-- Sem `context`: a carga é igual em todos os ambientes (BL-IAM-028), não é dado de desenvolvimento. -->
+    <changeSet id="2026-11-06-3-carga-entidades-saigt-v5" author="david.raposo">
+        <comment>
+            Carga das 366 entidades SAIGT do extrato da DGT v5 (a 5126, repetição da 5128, fica de fora).
+            O CSV vai para uma tabela de passagem para que as linhas criadas pelo login (sem `codigo`) recebam o
+            código da entidade com o mesmo NIPC antes do upsert por `codigo`, mantendo o `id` e as referências.
+            O upsert só toca nas colunas do CSV: o responsável, o `ativo` e o `atualizado_em` ficam como estavam.
+            O NIPC que serve mais de um código (600025861: 3001 e 3007) não identifica a linha e fica sem código.
+            Todas as colunas são STRING: sem tipo, o loadData lê `0412` como número.
+        </comment>
+
+        <createTable tableName="entidade_carga">
+            <column name="codigo" type="VARCHAR(20)">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="descricao_incm" type="VARCHAR(200)"/>
+            <column name="descricao_saigt" type="VARCHAR(200)"/>
+            <column name="tipo_entidade" type="VARCHAR(20)"/>
+            <column name="nipc" type="VARCHAR(20)"/>
+            <column name="dico" type="VARCHAR(4)"/>
+        </createTable>
+
+        <loadData tableName="entidade_carga" file="db/data/entidades-saigt-v5.csv"
+                  relativeToChangelogFile="false" separator=";" quotchar="&quot;" encoding="UTF-8">
+            <column name="codigo" type="STRING"/>
+            <column name="descricao_incm" type="STRING"/>
+            <column name="descricao_saigt" type="STRING"/>
+            <column name="tipo_entidade" type="STRING"/>
+            <column name="nipc" type="STRING"/>
+            <column name="dico" type="STRING"/>
+        </loadData>
+
+        <sql>
+            UPDATE entidade e SET codigo = c.codigo
+            FROM entidade_carga c
+            WHERE e.codigo IS NULL
+              AND e.nipc = c.nipc
+              AND NOT EXISTS (SELECT 1 FROM entidade_carga o WHERE o.nipc = c.nipc AND o.codigo &lt;&gt; c.codigo)
+              AND NOT EXISTS (SELECT 1 FROM entidade j WHERE j.codigo = c.codigo)
+        </sql>
+
+        <!-- Upsert por `codigo`. Em SQL e não em loadUpdateData porque este grava o `dico` vazio como '' e o CHECK recusa. -->
+        <sql>
+            INSERT INTO entidade (codigo, descricao_incm, descricao_saigt, tipo_entidade, nipc, dico)
+            SELECT codigo, descricao_incm, descricao_saigt, tipo_entidade, nipc, NULLIF(dico, '')
+            FROM entidade_carga
+            ON CONFLICT (codigo) DO UPDATE SET
+                descricao_incm = EXCLUDED.descricao_incm,
+                descricao_saigt = EXCLUDED.descricao_saigt,
+                tipo_entidade = EXCLUDED.tipo_entidade,
+                nipc = EXCLUDED.nipc,
+                dico = EXCLUDED.dico
+        </sql>
+
+        <dropTable tableName="entidade_carga"/>
+
+        <rollback>
+            <comment>
+                Apaga as entidades da carga que nada referencia. As que já eram referidas (por exemplo a Sintra do
+                login) ficam, com os valores da carga: não há o que repor.
+            </comment>
+            <createTable tableName="entidade_carga">
+                <column name="codigo" type="VARCHAR(20)">
+                    <constraints primaryKey="true" nullable="false"/>
+                </column>
+                <column name="descricao_incm" type="VARCHAR(200)"/>
+                <column name="descricao_saigt" type="VARCHAR(200)"/>
+                <column name="tipo_entidade" type="VARCHAR(20)"/>
+                <column name="nipc" type="VARCHAR(20)"/>
+                <column name="dico" type="VARCHAR(4)"/>
+            </createTable>
+            <loadData tableName="entidade_carga" file="db/data/entidades-saigt-v5.csv"
+                      relativeToChangelogFile="false" separator=";" quotchar="&quot;" encoding="UTF-8">
+                <column name="codigo" type="STRING"/>
+                <column name="descricao_incm" type="STRING"/>
+                <column name="descricao_saigt" type="STRING"/>
+                <column name="tipo_entidade" type="STRING"/>
+                <column name="nipc" type="STRING"/>
+                <column name="dico" type="STRING"/>
+            </loadData>
+            <sql>
+                DELETE FROM entidade e USING entidade_carga c
+                WHERE e.codigo = c.codigo
+                  AND NOT EXISTS (SELECT 1 FROM auditoria a WHERE a.entidade_id = e.id)
+                  AND NOT EXISTS (SELECT 1 FROM utilizador_entidade u WHERE u.entidade_id = e.id)
+                  AND NOT EXISTS (SELECT 1 FROM entidade_contacto t WHERE t.entidade_id = e.id)
+                  AND NOT EXISTS (SELECT 1 FROM instrumento i WHERE i.entidade_id = e.id)
+            </sql>
+            <dropTable tableName="entidade_carga"/>
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>

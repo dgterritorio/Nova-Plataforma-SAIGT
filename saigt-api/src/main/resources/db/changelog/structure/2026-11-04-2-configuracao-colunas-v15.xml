@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="2026-11-04-2-configuracao-colunas-v15" author="david.raposo">
+        <comment>
+            Colunas da v15 do LLD: `associacao_instrumentos` (DB-PROC-004) e `tamanho_maximo_processo`, `repetivel` e
+            `ato_pontual` (DB-PROC-005). O limite das linhas existentes é o baseline legado de 5 GB por procedimento
+            (TR-019 `pending`, OI-182 aberto). Nenhuma linha passa a repetível nem a ato pontual: isso vem dos seeds.
+        </comment>
+
+        <addColumn tableName="instrumento_dinamica_config">
+            <column name="associacao_instrumentos" type="VARCHAR(12)" defaultValue="UM">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+        <sql>ALTER TABLE instrumento_dinamica_config ADD CONSTRAINT ck_instrumento_dinamica_config_associacao
+            CHECK (associacao_instrumentos IN ('UM', 'UM_OU_MAIS', 'OPCIONAL'))</sql>
+
+        <addColumn tableName="instrumento_procedimento_config">
+            <column name="tamanho_maximo_processo" type="BIGINT"/>
+            <column name="repetivel" type="BOOLEAN" defaultValueBoolean="false">
+                <constraints nullable="false"/>
+            </column>
+            <column name="ato_pontual" type="BOOLEAN" defaultValueBoolean="false">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+        <sql>ALTER TABLE instrumento_procedimento_config ADD CONSTRAINT ck_instrumento_procedimento_config_tamanho
+            CHECK (tamanho_maximo_processo IS NULL OR tamanho_maximo_processo > 0)</sql>
+        <sql>UPDATE instrumento_procedimento_config SET tamanho_maximo_processo = 5368709120</sql>
+
+        <rollback>
+            <sql>ALTER TABLE instrumento_procedimento_config DROP CONSTRAINT ck_instrumento_procedimento_config_tamanho</sql>
+            <dropColumn tableName="instrumento_procedimento_config" columnName="ato_pontual"/>
+            <dropColumn tableName="instrumento_procedimento_config" columnName="repetivel"/>
+            <dropColumn tableName="instrumento_procedimento_config" columnName="tamanho_maximo_processo"/>
+            <sql>ALTER TABLE instrumento_dinamica_config DROP CONSTRAINT ck_instrumento_dinamica_config_associacao</sql>
+            <dropColumn tableName="instrumento_dinamica_config" columnName="associacao_instrumentos"/>
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>

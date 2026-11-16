@@ -1,0 +1,160 @@
+.modal-fundo {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--espaco-4);
+  background: var(--cor-sobreposicao);
+}
+
+.modal-caixa {
+  display: flex;
+  flex-direction: column;
+  max-width: 100%;
+  max-height: 90vh;
+  overflow: hidden;
+  background: var(--cor-superficie);
+  border-radius: var(--raio-xl);
+  box-shadow: var(--sombra-modal);
+}
+
+.modal-caixa:focus-visible {
+  outline: var(--anel-foco);
+  outline-offset: var(--anel-foco-afastamento);
+}
+
+.modal-sm {
+  width: var(--largura-modal-sm);
+}
+
+.modal-md {
+  width: var(--largura-modal-md);
+}
+
+.modal-lg {
+  width: var(--largura-modal-lg);
+}
+
+.modal-xl {
+  width: var(--largura-modal-xl);
+}
+
+.modal-cabecalho {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--espaco-3);
+  padding: var(--espaco-4) var(--espaco-6);
+  border-bottom: var(--borda-largura) solid var(--cor-borda);
+}
+
+.modal-titulo {
+  margin: 0;
+  font-size: var(--texto-md);
+  font-weight: var(--peso-semi);
+  line-height: var(--texto-md-linha);
+  color: var(--cor-texto);
+}
+
+.modal-fechar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  border: 0;
+  border-radius: var(--raio-md);
+  background: none;
+  color: var(--cor-texto-secundario);
+  cursor: pointer;
+}
+
+.modal-fechar svg {
+  width: 18px;
+  height: 18px;
+}
+
+.modal-fechar:hover {
+  background: var(--cor-superficie-alt);
+}
+
+.modal-corpo {
+  flex: 1;
+  overflow-y: auto;
+  padding: var(--espaco-4) var(--espaco-6);
+}
+
+/* Por dentro: a caixa tem overflow: hidden e cortaria o anel desenhado por fora. */
+.modal-corpo:focus-visible {
+  outline: var(--anel-foco);
+  outline-offset: calc(var(--anel-foco-afastamento) * -1);
+}
+
+.modal-rodape {
+  display: flex;
+  flex-shrink: 0;
+  justify-content: flex-end;
+  gap: var(--espaco-2);
+  padding: var(--espaco-3) var(--espaco-6);
+  border-top: var(--borda-largura) solid var(--cor-borda);
+}
+
+.modal-rodape:empty {
+  display: none;
+}
+
+/* Confirmação (UI-050): sem divisores, tudo dentro de um padding de 24px. */
+.modal-confirmacao {
+  padding: var(--espaco-6);
+  border: var(--borda-largura) solid var(--cor-borda-controlo);
+}
+
+.modal-cabecalho-confirmacao {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--espaco-3);
+}
+
+.modal-medalhao {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: var(--raio-pill);
+  background: var(--cor-icone-info-fundo);
+  color: var(--cor-primaria);
+}
+
+.modal-medalhao svg,
+:host ::ng-deep .modal-medalhao [icone] {
+  width: 20px;
+  height: 20px;
+}
+
+.modal-subtitulo {
+  margin: var(--espaco-0-5) 0 0;
+  font-size: var(--texto-sm);
+  line-height: var(--texto-sm-linha);
+  color: var(--cor-texto-secundario);
+}
+
+.modal-cabecalho .modal-subtitulo {
+  font-size: var(--texto-xs);
+  color: var(--cor-texto-nav);
+}
+
+.modal-confirmacao .modal-corpo {
+  padding: var(--espaco-5) 0 0;
+}
+
+.modal-confirmacao .modal-rodape {
+  gap: var(--espaco-3);
+  padding: var(--espaco-6) 0 0;
+  border-top: 0;
+}

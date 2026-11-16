@@ -1,0 +1,23 @@
+tipo;codigo;descricao;ordem;ativo
+"FREGUESIA";"111102";"Algueirão-Mem Martins";1;true
+"FREGUESIA";"111129";"Almargem do Bispo";2;true
+"FREGUESIA";"111130";"Belas";3;true
+"FREGUESIA";"111115";"Casal de Cambra";4;true
+"FREGUESIA";"111105";"Colares";5;true
+"FREGUESIA";"111131";"Montelavar";6;true
+"FREGUESIA";"111132";"Pêro Pinheiro";7;true
+"FREGUESIA";"111133";"Queluz";8;true
+"FREGUESIA";"111108";"Rio de Mouro";9;true
+"FREGUESIA";"111134";"São João das Lampas";10;true
+"FREGUESIA";"111135";"Terrugem";11;true
+"FREGUESIA";"111122";"União das freguesias de Agualva e Mira-Sintra";12;true
+"FREGUESIA";"111125";"União das freguesias de Massamá e Monte Abraão";13;true
+"FREGUESIA";"111128";"União das freguesias de Sintra (Santa Maria e São Miguel, São Martinho e São Pedro de Penaferrim)";14;true
+"FREGUESIA";"111124";"União das freguesias do Cacém e São Marcos";15;true
+"MOTIVO_ALTERACAO_LEI";"LEI_31_2014";"Lei n.º 31/2014 (Lei de Bases Gerais da Política Pública de Solos, de Ordenamento do Território e de Urbanismo)";1;true
+"MOTIVO_ALTERACAO_LEI";"DL_80_2015";"Decreto-Lei n.º 80/2015 (RJIGT)";2;true
+"MOTIVO_ALTERACAO_LEI";"DL_10_2024";"Decreto-Lei n.º 10/2024";3;true
+"MOTIVO_ALTERACAO_PROGRAMA";"PNPOT";"Programa Nacional da Política de Ordenamento do Território";1;true
+"MOTIVO_ALTERACAO_PROGRAMA";"PROT_AML";"Plano Regional de Ordenamento do Território da Área Metropolitana de Lisboa";2;true
+"MOTIVO_ALTERACAO_PROGRAMA";"POC_ACE";"Programa da Orla Costeira Alcobaça–Cabo Espichel";3;true
+"MOTIVO_ALTERACAO_PLANO";"PDIM";"Plano Diretor Intermunicipal";1;true

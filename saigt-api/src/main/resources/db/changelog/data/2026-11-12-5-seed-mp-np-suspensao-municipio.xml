@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <!--
+        Medidas Preventivas, Normas Provisórias e Suspensão por iniciativa do município nos planos municipais (PDM, PP,
+        PU) e intermunicipais (PDIM, PUIM, PPIM): EF v1.5 §3.1.1, FR-043 e FR-161. Configuração inicial, editável em
+        backoffice. Sem ids explícitos: tudo se resolve pelos códigos e cada INSERT salta as linhas que já existam (por
+        exemplo criadas em backoffice), para servir qualquer ambiente. A Prorrogação (ordem 2) não é obrigatória: o
+        Procedimento final, que termina a Dinâmica quando publicado, é a Publicação.
+    -->
+
+    <changeSet id="2026-11-12-5-seed-mp-np-suspensao-municipio-dinamicas" author="david.raposo">
+        <comment>As três Dinâmicas nos planos intermunicipais; PDM, PP e PU já as têm.</comment>
+        <sql>INSERT INTO instrumento_dinamica_config (tipo_instrumento_id, tipo_dinamica_id, ativo, associacao_instrumentos)
+            SELECT ti.id, td.id, true, 'UM'
+            FROM tipo_instrumento ti
+            CROSS JOIN tipo_dinamica td
+            WHERE ti.codigo IN ('PDIM', 'PUIM', 'PPIM')
+              AND td.codigo IN ('MEDIDAS_PREVENTIVAS', 'NORMAS_PROVISORIAS', 'SUSPENSAO')
+              AND NOT EXISTS (SELECT 1 FROM instrumento_dinamica_config idc
+                              WHERE idc.tipo_instrumento_id = ti.id AND idc.tipo_dinamica_id = td.id)
+            ORDER BY ti.id, td.id</sql>
+
+        <rollback>
+            <sql>DELETE FROM instrumento_dinamica_config
+                WHERE tipo_instrumento_id IN (SELECT id FROM tipo_instrumento WHERE codigo IN ('PDIM', 'PUIM', 'PPIM'))
+                  AND tipo_dinamica_id IN (SELECT id FROM tipo_dinamica
+                                           WHERE codigo IN ('MEDIDAS_PREVENTIVAS', 'NORMAS_PROVISORIAS', 'SUSPENSAO'))</sql>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="2026-11-12-5-seed-mp-np-suspensao-municipio-procedimentos" author="david.raposo">
+        <comment>
+            Publicação (ordem 1, obrigatória) e Prorrogação (ordem 2), não repetíveis (OI-406), na 2.ª série parte H
+            (nos planos, só a Constituição da Comissão Consultiva é da parte C) e com o limite de 5 GB por omissão.
+        </comment>
+        <sql>INSERT INTO instrumento_procedimento_config (instrumento_dinamica_config_id, tipo_procedimento_id, ordem,
+                obrigatorio, serie_dr, ativo, tamanho_maximo_processo, repetivel, ato_pontual)
+            SELECT idc.id, tp.id, v.ordem, v.ordem = 1, 'SEGUNDA_H', true, 5368709120, false, false
+            FROM (VALUES ('MEDIDAS_PREVENTIVAS', 1, 'PUBLICACAO_MP'), ('MEDIDAS_PREVENTIVAS', 2, 'PRORROGACAO_MP'),
+                         ('NORMAS_PROVISORIAS', 1, 'PUBLICACAO_NP'), ('NORMAS_PROVISORIAS', 2, 'PRORROGACAO_NP'),
+                         ('SUSPENSAO', 1, 'PUBLICACAO_SUSPENSAO'), ('SUSPENSAO', 2, 'PRORROGACAO_SUSPENSAO'))
+                 AS v (tipo_dinamica, ordem, tipo_procedimento)
+            JOIN tipo_dinamica td ON td.codigo = v.tipo_dinamica
+            JOIN instrumento_dinamica_config idc ON idc.tipo_dinamica_id = td.id
+            JOIN tipo_instrumento ti ON ti.id = idc.tipo_instrumento_id
+                AND ti.codigo IN ('PDM', 'PP', 'PU', 'PDIM', 'PUIM', 'PPIM')
+            JOIN tipo_procedimento tp ON tp.codigo = v.tipo_procedimento
+            WHERE NOT EXISTS (SELECT 1 FROM instrumento_procedimento_config ipc
+                              WHERE ipc.instrumento_dinamica_config_id = idc.id AND ipc.tipo_procedimento_id = tp.id)
+            ORDER BY idc.id, v.ordem</sql>
+
+        <rollback>
+            <sql>DELETE FROM instrumento_procedimento_config
+                WHERE tipo_procedimento_id IN (SELECT id FROM tipo_procedimento WHERE codigo IN ('PUBLICACAO_MP',
+                    'PRORROGACAO_MP', 'PUBLICACAO_NP', 'PRORROGACAO_NP', 'PUBLICACAO_SUSPENSAO', 'PRORROGACAO_SUSPENSAO'))
+                  AND instrumento_dinamica_config_id IN (SELECT idc.id FROM instrumento_dinamica_config idc
+                    JOIN tipo_instrumento ti ON ti.id = idc.tipo_instrumento_id
+                    JOIN tipo_dinamica td ON td.id = idc.tipo_dinamica_id
+                    WHERE ti.codigo IN ('PDM', 'PP', 'PU', 'PDIM', 'PUIM', 'PPIM')
+                      AND td.codigo IN ('MEDIDAS_PREVENTIVAS', 'NORMAS_PROVISORIAS', 'SUSPENSAO'))</sql>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="2026-11-12-5-seed-mp-np-suspensao-municipio-permissoes" author="david.raposo">
+        <comment>Câmara e DGT em cada Procedimento (FR-160; matriz configurável em permissao_acao, TR-236, OI-271).</comment>
+        <sql>INSERT INTO permissao_acao (tipo_entidade, instrumento_procedimento_config_id, ativo)
+            SELECT v.tipo_entidade, ipc.id, true
+            FROM instrumento_procedimento_config ipc
+            JOIN instrumento_dinamica_config idc ON idc.id = ipc.instrumento_dinamica_config_id
+            JOIN tipo_instrumento ti ON ti.id = idc.tipo_instrumento_id
+            JOIN tipo_dinamica td ON td.id = idc.tipo_dinamica_id
+            JOIN tipo_procedimento tp ON tp.id = ipc.tipo_procedimento_id
+            CROSS JOIN (VALUES (1, 'CM'), (2, 'DGT')) AS v (ordem, tipo_entidade)
+            WHERE ti.codigo IN ('PDM', 'PP', 'PU', 'PDIM', 'PUIM', 'PPIM')
+              AND td.codigo IN ('MEDIDAS_PREVENTIVAS', 'NORMAS_PROVISORIAS', 'SUSPENSAO')
+              AND tp.codigo IN ('PUBLICACAO_MP', 'PRORROGACAO_MP', 'PUBLICACAO_NP', 'PRORROGACAO_NP',
+                                'PUBLICACAO_SUSPENSAO', 'PRORROGACAO_SUSPENSAO')
+              AND NOT EXISTS (SELECT 1 FROM permissao_acao pa
+                              WHERE pa.instrumento_procedimento_config_id = ipc.id AND pa.tipo_entidade = v.tipo_entidade)
+            ORDER BY ipc.id, v.ordem</sql>
+
+        <rollback>
+            <sql>DELETE FROM permissao_acao
+                WHERE instrumento_procedimento_config_id IN (SELECT ipc.id FROM instrumento_procedimento_config ipc
+                    JOIN instrumento_dinamica_config idc ON idc.id = ipc.instrumento_dinamica_config_id
+                    JOIN tipo_instrumento ti ON ti.id = idc.tipo_instrumento_id
+                    JOIN tipo_dinamica td ON td.id = idc.tipo_dinamica_id
+                    JOIN tipo_procedimento tp ON tp.id = ipc.tipo_procedimento_id
+                    WHERE ti.codigo IN ('PDM', 'PP', 'PU', 'PDIM', 'PUIM', 'PPIM')
+                      AND td.codigo IN ('MEDIDAS_PREVENTIVAS', 'NORMAS_PROVISORIAS', 'SUSPENSAO')
+                      AND tp.codigo IN ('PUBLICACAO_MP', 'PRORROGACAO_MP', 'PUBLICACAO_NP', 'PRORROGACAO_NP',
+                                        'PUBLICACAO_SUSPENSAO', 'PRORROGACAO_SUSPENSAO'))
+                  AND tipo_entidade IN ('CM', 'DGT')</sql>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="2026-11-12-5-seed-mp-np-suspensao-municipio-regras" author="david.raposo">
+        <comment>
+            Uma regra de elegibilidade por configuração, ao nível da Dinâmica; uma configuração que já tenha regra (do
+            backoffice) fica como está. Sem regra de unicidade: as três podem correr em paralelo (EF v1.5).
+        </comment>
+        <sql>INSERT INTO regra (instrumento_dinamica_config_id, operador, substitui_sequenciamento, descricao, ativo)
+            SELECT idc.id, 'AND', false, v.descricao, true
+            FROM (VALUES ('MEDIDAS_PREVENTIVAS', 'Requer plano em vigor'),
+                         ('NORMAS_PROVISORIAS', 'Requer plano em vigor'),
+                         ('SUSPENSAO', 'Requer plano em vigor e Medidas Preventivas publicadas no mesmo plano'))
+                 AS v (tipo_dinamica, descricao)
+            JOIN tipo_dinamica td ON td.codigo = v.tipo_dinamica
+            JOIN instrumento_dinamica_config idc ON idc.tipo_dinamica_id = td.id
+            JOIN tipo_instrumento ti ON ti.id = idc.tipo_instrumento_id
+                AND ti.codigo IN ('PDM', 'PP', 'PU', 'PDIM', 'PUIM', 'PPIM')
+            WHERE NOT EXISTS (SELECT 1 FROM regra r WHERE r.instrumento_dinamica_config_id = idc.id)
+            ORDER BY idc.id</sql>
+
+        <rollback>
+            <sql>DELETE FROM regra
+                WHERE instrumento_dinamica_config_id IN (SELECT idc.id FROM instrumento_dinamica_config idc
+                    JOIN tipo_instrumento ti ON ti.id = idc.tipo_instrumento_id
+                    JOIN tipo_dinamica td ON td.id = idc.tipo_dinamica_id
+                    WHERE ti.codigo IN ('PDM', 'PP', 'PU', 'PDIM', 'PUIM', 'PPIM')
+                      AND td.codigo IN ('MEDIDAS_PREVENTIVAS', 'NORMAS_PROVISORIAS', 'SUSPENSAO'))</sql>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="2026-11-12-5-seed-mp-np-suspensao-municipio-condicoes" author="david.raposo">
+        <comment>
+            Um processo PUBLICACAO_MP em PUBLICADO no mesmo plano desbloqueia a Suspensão, incluindo o registo externo,
+            que nasce PUBLICADO (TR-152).
+        </comment>
+        <sql>INSERT INTO condicao (regra_id, avaliador, parametros, grupo, ativo)
+            SELECT r.id, v.avaliador, CAST(v.parametros AS jsonb), 1, true
+            FROM (VALUES ('MEDIDAS_PREVENTIVAS', 'Requer plano em vigor', 1, 'INSTRUMENTO_EM_VIGOR', '{}'),
+                         ('NORMAS_PROVISORIAS', 'Requer plano em vigor', 1, 'INSTRUMENTO_EM_VIGOR', '{}'),
+                         ('SUSPENSAO', 'Requer plano em vigor e Medidas Preventivas publicadas no mesmo plano', 1,
+                          'INSTRUMENTO_EM_VIGOR', '{}'),
+                         ('SUSPENSAO', 'Requer plano em vigor e Medidas Preventivas publicadas no mesmo plano', 2,
+                          'OCORRENCIA_EM_ESTADO',
+                          '{"tipo_ocorrencia": "PROCESSO", "codigo": "PUBLICACAO_MP", "estado": "PUBLICADO"}'))
+                 AS v (tipo_dinamica, descricao, ordem, avaliador, parametros)
+            JOIN tipo_dinamica td ON td.codigo = v.tipo_dinamica
+            JOIN instrumento_dinamica_config idc ON idc.tipo_dinamica_id = td.id
+            JOIN tipo_instrumento ti ON ti.id = idc.tipo_instrumento_id
+                AND ti.codigo IN ('PDM', 'PP', 'PU', 'PDIM', 'PUIM', 'PPIM')
+            JOIN regra r ON r.instrumento_dinamica_config_id = idc.id AND r.descricao = v.descricao
+            WHERE NOT EXISTS (SELECT 1 FROM condicao c WHERE c.regra_id = r.id AND c.avaliador = v.avaliador
+                              AND c.parametros = CAST(v.parametros AS jsonb))
+            ORDER BY r.id, v.ordem</sql>
+
+        <rollback>
+            <sql>DELETE FROM condicao WHERE regra_id IN (SELECT r.id FROM regra r
+                JOIN instrumento_dinamica_config idc ON idc.id = r.instrumento_dinamica_config_id
+                JOIN tipo_instrumento ti ON ti.id = idc.tipo_instrumento_id
+                JOIN tipo_dinamica td ON td.id = idc.tipo_dinamica_id
+                WHERE ti.codigo IN ('PDM', 'PP', 'PU', 'PDIM', 'PUIM', 'PPIM')
+                  AND td.codigo IN ('MEDIDAS_PREVENTIVAS', 'NORMAS_PROVISORIAS', 'SUSPENSAO'))</sql>
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>

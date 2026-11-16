@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="2026-11-09-1-create-planta" author="margarida.marques">
+        <comment>
+            Plantas SAIGT/SNIT: uma linha por peça gráfica (ZIP ou TIFF) de um processo, criada quando o ficheiro
+            entra no processo. O nome no regulamento, a folha, o link da imagem e o em vigor são preenchidos depois.
+            nome_tiff e nome_zip têm o tamanho de processo_documento.nome_ficheiro, de onde vêm.
+            A FK para processo_documento não apaga em cascata: a aplicação apaga a planta antes do documento.
+        </comment>
+
+        <createTable tableName="planta">
+            <column name="id" type="UUID">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="processo_id" type="UUID">
+                <constraints nullable="false" foreignKeyName="fk_planta_processo" references="processo(id)"/>
+            </column>
+            <column name="processo_documento_id" type="UUID">
+                <constraints nullable="false" foreignKeyName="fk_planta_processo_documento"
+                             references="processo_documento(id)"
+                             unique="true" uniqueConstraintName="uq_planta_processo_documento"/>
+            </column>
+            <column name="nome_regulamento" type="VARCHAR(500)"/>
+            <column name="numero_folha" type="VARCHAR(20)"/>
+            <column name="nome_tiff" type="VARCHAR(300)"/>
+            <column name="nome_zip" type="VARCHAR(300)"/>
+            <column name="link_jpeg" type="TEXT"/>
+            <column name="em_vigor" type="BOOLEAN" defaultValueBoolean="false">
+                <constraints nullable="false"/>
+            </column>
+            <column name="criado_em" type="TIMESTAMP WITH TIME ZONE">
+                <constraints nullable="false"/>
+            </column>
+            <column name="atualizado_em" type="TIMESTAMP WITH TIME ZONE">
+                <constraints nullable="false"/>
+            </column>
+            <column name="atualizado_por" type="UUID">
+                <constraints foreignKeyName="fk_planta_atualizado_por" references="utilizador(id)"/>
+            </column>
+        </createTable>
+
+        <createIndex tableName="planta" indexName="idx_planta_processo_id">
+            <column name="processo_id"/>
+        </createIndex>
+        <createIndex tableName="planta" indexName="idx_planta_em_vigor">
+            <column name="em_vigor"/>
+        </createIndex>
+
+        <rollback>
+            <dropTable tableName="planta"/>
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>

@@ -1,0 +1,71 @@
+.passos {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.passo {
+  display: flex;
+  align-items: center;
+  gap: var(--espaco-1-5);
+  padding: var(--espaco-1) var(--espaco-3);
+  border-radius: var(--raio-pill);
+  background: var(--cor-superficie);
+  color: var(--cor-texto-passo);
+}
+
+.passo-atual {
+  background: var(--cor-primaria);
+  color: var(--cor-primaria-contraste);
+}
+
+.passo-concluido {
+  background: var(--cor-sucesso-fundo);
+  color: var(--cor-sucesso);
+}
+
+.passo-numero {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
+  font-size: var(--texto-xs);
+  font-weight: var(--peso-negrito);
+  line-height: var(--texto-xs-linha);
+}
+
+.passo-numero svg {
+  width: 12px;
+  height: 12px;
+}
+
+.passo-etiqueta {
+  font-size: var(--texto-sm);
+  font-weight: var(--peso-medio);
+  line-height: var(--texto-sm-linha);
+  white-space: nowrap;
+}
+
+.conector {
+  width: 24px;
+  height: 1px;
+  margin: 0 var(--espaco-1);
+  background: var(--cor-borda-controlo);
+}
+
+.conector-concluido {
+  background: var(--cor-conector-concluido);
+}
+
+.visualmente-oculto {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="2026-10-30-2-add-entidade-emitente-contacto-publicacao-processo" author="david.raposo">
+        <comment>
+            Processo: «Identificação da entidade emitente» e «Contato para publicação» do formulário
+            inicial. Texto livre; a entidade emitente só é obrigatória em `submeter`, nos Planos e
+            Programas, e o contacto nunca.
+        </comment>
+
+        <addColumn tableName="processo">
+            <column name="entidade_emitente" type="VARCHAR(500)"/>
+            <column name="contacto_publicacao" type="VARCHAR(500)"/>
+        </addColumn>
+
+        <rollback>
+            <dropColumn tableName="processo" columnName="contacto_publicacao"/>
+            <dropColumn tableName="processo" columnName="entidade_emitente"/>
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>

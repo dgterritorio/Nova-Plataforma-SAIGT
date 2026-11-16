@@ -1,0 +1,828 @@
+instrumento;dinamica;procedimento;codigo;acao;ordem;obrigatorio;ordem_anterior;obrigatorio_anterior;nome;descricao;separador;tipo_elemento;elemento_informacao_base
+PU;ELABORACAO;DECISAO_INICIO;TEXTO_ATO_PUB;INSERIR;1;true;;;Texto do ato a publicar no Diário da República;;Texto do Ato;PECA_ESCRITA;TEXTO_ATO
+PU;ELABORACAO;DECISAO_INICIO;TEXTO_ATO_DEP;INSERIR;2;true;;;Texto do ato a publicar no Diário da República;;Texto do Ato;PECA_ESCRITA;TEXTO_ATO
+PU;ELABORACAO;DECISAO_INICIO;DELIBERACAO_PUB;INSERIR;3;true;;;Deliberação do início de elaboração de plano territorial (CM/CIM);;Deliberação;PECA_ESCRITA;DELIBERACAO
+PU;ELABORACAO;DECISAO_INICIO;DELIBERACAO_DEP;INSERIR;4;true;;;Deliberação do início de elaboração de plano territorial (CM/CIM);;Deliberação;PECA_ESCRITA;DELIBERACAO
+PU;ELABORACAO;DECISAO_INICIO;PLANTA_AREA_INTERVENCAO_PUB;INSERIR;5;false;;;Planta com a área de intervenção;;Planta com Área de Intervenção;PECA_GRAFICA;
+PU;ELABORACAO;DECISAO_INICIO;PLANTA_AREA_INTERVENCAO_DEP;INSERIR;6;false;;;Planta com a área de intervenção;;Planta com Área de Intervenção;PECA_GRAFICA;
+PU;ELABORACAO;ABERTURA_DISCUSSAO_PUBLICA;TEXTO_ATO_PUB;INSERIR;1;true;;;Texto do ato a publicar no Diário da República;;Texto do Ato;PECA_ESCRITA;TEXTO_ATO
+PU;ELABORACAO;ABERTURA_DISCUSSAO_PUBLICA;TEXTO_ATO_DEP;INSERIR;2;true;;;Texto do ato a publicar no Diário da República;;Texto do Ato;PECA_ESCRITA;TEXTO_ATO
+PU;ELABORACAO;ABERTURA_DISCUSSAO_PUBLICA;DELIBERACAO_PUB;INSERIR;3;true;;;Deliberação;;Deliberação;PECA_ESCRITA;DELIBERACAO
+PU;ELABORACAO;ABERTURA_DISCUSSAO_PUBLICA;DELIBERACAO_DEP;INSERIR;4;true;;;Deliberação;;Deliberação;PECA_ESCRITA;DELIBERACAO
+PU;ELABORACAO;ELABORACAO;TEXTO_ATO_PUB;INSERIR;1;true;;;Texto do ato a publicar no Diário da República;;Texto do Ato;PECA_ESCRITA;TEXTO_ATO
+PU;ELABORACAO;ELABORACAO;TEXTO_ATO_DEP;INSERIR;2;true;;;Texto do ato a publicar no Diário da República;;Texto do Ato;PECA_ESCRITA;TEXTO_ATO
+PU;ELABORACAO;ELABORACAO;DELIBERACAO_PUB;INSERIR;3;true;;;Deliberação da Assembleia Municipal/Intermunicipal (AM/AMi) que aprova o plano;;Deliberação;PECA_ESCRITA;DELIBERACAO
+PU;ELABORACAO;ELABORACAO;DELIBERACAO_DEP;INSERIR;4;true;;;Deliberação da Assembleia Municipal/Intermunicipal (AM/AMi) que aprova o plano;;Deliberação;PECA_ESCRITA;DELIBERACAO
+PU;ELABORACAO;ELABORACAO;REGULAMENTO_PUB;INSERIR;5;true;;;Regulamento;;Regulamento;PECA_ESCRITA;
+PU;ELABORACAO;ELABORACAO;REGULAMENTO_DEP;INSERIR;6;true;;;Regulamento;;Regulamento;PECA_ESCRITA;
+PU;ELABORACAO;ELABORACAO;PLANTA_ZONAMENTO_PUB;INSERIR;7;true;;;Planta de Zonamento;;Planta de Zonamento;PECA_GRAFICA;
+PU;ELABORACAO;ELABORACAO;PLANTA_ZONAMENTO_DEP;INSERIR;8;true;;;Planta de Zonamento;;Planta de Zonamento;PECA_GRAFICA;
+PU;ELABORACAO;ELABORACAO;PLANTA_CONDICIONANTES_PUB;INSERIR;9;true;;;Planta de Condicionantes;;Planta de Condicionantes;PECA_GRAFICA;
+PU;ELABORACAO;ELABORACAO;PLANTA_CONDICIONANTES_DEP;INSERIR;10;true;;;Planta de Condicionantes;;Planta de Condicionantes;PECA_GRAFICA;
+PU;ELABORACAO;ELABORACAO;OUTRAS_PLANTAS_PUB;INSERIR;11;true;;;Outras plantas;;Outras Plantas;PECA_GRAFICA;
+PU;ELABORACAO;ELABORACAO;OUTRAS_PLANTAS_DEP;INSERIR;12;true;;;Outras plantas;;Outras Plantas;PECA_GRAFICA;
+PU;ELABORACAO;ELABORACAO;CARTOGRAMA_PUB;INSERIR;13;true;;;Cartograma;;Cartograma;PECA_GRAFICA;
+PU;ELABORACAO;ELABORACAO;CARTOGRAMA_DEP;INSERIR;14;true;;;Cartograma;;Cartograma;PECA_GRAFICA;
+PU;ELABORACAO;ELABORACAO;ESTUDOS_CARACTERIZACAO_DEP;INSERIR;15;true;;;Estudos de caracterização do território;Estudos de caraterização económica, social, biofísica e da estrutura fundiária do território municipal;Estudos de Caracterização;PECA_ESCRITA;
+PU;ELABORACAO;ELABORACAO;RELATORIO_PLANO_DEP;INSERIR;16;true;;;Relatório com os objetivos estratégicos do plano e a respetiva fundamentação;Relatório, que explicita os objectivos estratégicos do plano e a respectiva fundamentação técnica, suportada na avaliação das condições económicas, sociais, culturais e ambientais para a sua execução;Relatório do Plano;PECA_ESCRITA;
+PU;ELABORACAO;ELABORACAO;RELATORIO_AMBIENTAL_DEP;INSERIR;17;true;;;Relatório ambiental;Relatório ambiental, no qual se identificam, descrevem e avaliam os eventuais efeitos significativos no ambiente resultantes da aplicação do plano e as suas alternativas razoáveis que tenham em conta os objectivos e o âmbito de aplicação territorial respectivos;Relatório Ambiental;PECA_ESCRITA;
+PU;ELABORACAO;ELABORACAO;PROGRAMA_EXECUCAO_DEP;INSERIR;18;true;;;Programa de execução;Programa de execução contendo disposições indicativas sobre as intervenções municipais previstas, bem como sobre os meios de financiamento das mesmas;Programa de Execução;PECA_ESCRITA;
+PU;ELABORACAO;ELABORACAO;PLANTA_ENQUADRAMENTO_DEP;INSERIR;19;true;;;Planta de enquadramento regional;Planta de enquadramento regional elaborada a escala inferior à do plano director municipal, com indicação dos municípios limítrofes, centros urbanos mais importantes, principais vias de comunicação e outras infra-estruturas relevantes e grandes equipamentos que sirvam o município, bem como a…;Planta de Enquadramento;PECA_GRAFICA;
+PU;ELABORACAO;ELABORACAO;PLANTA_SITUACAO_EXISTENTE_DEP;INSERIR;20;true;;;Planta da situação existente à data da elaboração do plano;Planta da situação existente com a ocupação do território municipal à data da elaboração do plano;Planta da Situação Existente;PECA_GRAFICA;
+PU;ELABORACAO;ELABORACAO;COMPROMISSOS_URBANISTICOS_DEP;INSERIR;21;true;;;Relatório e/ou planta das licenças ou autorizações de operações urbanísticas;Relatório e ou planta com a indicação das licenças ou autorizações de operações urbanísticas emitidas, bem como das informações prévias favoráveis em vigor, substituível por declaração de câmara municipal comprovativa da inexistência dos referidos compromissos urbanísticos na área do plano;Compromissos Urbanísticos;PECA_ESCRITA;
+PU;ELABORACAO;ELABORACAO;PLANTAS_INFRAESTRUTURAS_DEP;INSERIR;22;true;;;Plantas do traçado das infraestruturas existentes e previstas;Plantas de identificação do traçado de infra-estruturas viárias, de abastecimento de água, de saneamento, de energia eléctrica, de recolha de resíduos e demais infra-estruturas relevantes, existentes e previstas, na área do plano;Plantas de Infraestruturas;PECA_GRAFICA;
+PU;ELABORACAO;ELABORACAO;ESTRUTURA_ECOLOGICA_AGLOMERADOS_DEP;INSERIR;23;true;;;Carta da estrutura ecológica do(s) aglomerado(s);;Estrutura Ecológica dos Aglomerados;PECA_GRAFICA;
+PU;ELABORACAO;ELABORACAO;MAPA_RUIDO_DEP;INSERIR;24;true;;;Relatório de recolha de dados acústicos ou mapa de ruído;;Mapa de Ruído;PECA_GRAFICA;
+PU;ELABORACAO;ELABORACAO;RELATORIO_PONDERACAO_DEP;INSERIR;25;true;;;Relatório de ponderação dos resultados da discussão pública;;Relatório de Ponderação;PECA_ESCRITA;
+PU;ELABORACAO;ELABORACAO;PARECERES_ATA_DEP;INSERIR;26;true;;;Pareceres emitidos / Ata da conferência de serviços;;Pareceres;PECA_ESCRITA;
+PU;ELABORACAO;ELABORACAO;DELIBERACAO_CM_DEP;INSERIR;27;true;;;Deliberação da Câmara Municipal (CM) / CIM que determina a elaboração/revisão do Plano;;Deliberação da CM;PECA_ESCRITA;
+PU;REVISAO;DECISAO_INICIO;TEXTO_ATO_PUB;INSERIR;1;true;;;Texto do ato a publicar no Diário da República;;Texto do Ato;PECA_ESCRITA;TEXTO_ATO
+PU;REVISAO;DECISAO_INICIO;TEXTO_ATO_DEP;INSERIR;2;true;;;Texto do ato a publicar no Diário da República;;Texto do Ato;PECA_ESCRITA;TEXTO_ATO
+PU;REVISAO;DECISAO_INICIO;DELIBERACAO_PUB;INSERIR;3;true;;;Deliberação do início de revisão de plano territorial (CM/CIM);;Deliberação;PECA_ESCRITA;DELIBERACAO
+PU;REVISAO;DECISAO_INICIO;DELIBERACAO_DEP;INSERIR;4;true;;;Deliberação do início de revisão de plano territorial (CM/CIM);;Deliberação;PECA_ESCRITA;DELIBERACAO
+PU;REVISAO;DECISAO_INICIO;PLANTA_AREA_INTERVENCAO_PUB;INSERIR;5;false;;;Planta com a área de intervenção;;Planta com Área de Intervenção;PECA_GRAFICA;
+PU;REVISAO;DECISAO_INICIO;PLANTA_AREA_INTERVENCAO_DEP;INSERIR;6;false;;;Planta com a área de intervenção;;Planta com Área de Intervenção;PECA_GRAFICA;
+PU;REVISAO;ABERTURA_DISCUSSAO_PUBLICA;TEXTO_ATO_PUB;INSERIR;1;true;;;Texto do ato a publicar no Diário da República;;Texto do Ato;PECA_ESCRITA;TEXTO_ATO
+PU;REVISAO;ABERTURA_DISCUSSAO_PUBLICA;TEXTO_ATO_DEP;INSERIR;2;true;;;Texto do ato a publicar no Diário da República;;Texto do Ato;PECA_ESCRITA;TEXTO_ATO
+PU;REVISAO;ABERTURA_DISCUSSAO_PUBLICA;DELIBERACAO_PUB;INSERIR;3;true;;;Deliberação;;Deliberação;PECA_ESCRITA;DELIBERACAO
+PU;REVISAO;ABERTURA_DISCUSSAO_PUBLICA;DELIBERACAO_DEP;INSERIR;4;true;;;Deliberação;;Deliberação;PECA_ESCRITA;DELIBERACAO
+PU;REVISAO;REVISAO;TEXTO_ATO_PUB;INSERIR;1;true;;;Texto do ato a publicar no Diário da República;;Texto do Ato;PECA_ESCRITA;TEXTO_ATO
+PU;REVISAO;REVISAO;TEXTO_ATO_DEP;INSERIR;2;true;;;Texto do ato a publicar no Diário da República;;Texto do Ato;PECA_ESCRITA;TEXTO_ATO
+PU;REVISAO;REVISAO;DELIBERACAO_PUB;INSERIR;3;true;;;Deliberação da Assembleia Municipal/Intermunicipal (AM/AMi) que aprova o plano;;Deliberação;PECA_ESCRITA;DELIBERACAO
+PU;REVISAO;REVISAO;DELIBERACAO_DEP;INSERIR;4;true;;;Deliberação da Assembleia Municipal/Intermunicipal (AM/AMi) que aprova o plano;;Deliberação;PECA_ESCRITA;DELIBERACAO
+PU;REVISAO;REVISAO;REGULAMENTO_PUB;INSERIR;5;true;;;Regulamento;;Regulamento;PECA_ESCRITA;
+PU;REVISAO;REVISAO;REGULAMENTO_DEP;INSERIR;6;true;;;Regulamento;;Regulamento;PECA_ESCRITA;
+PU;REVISAO;REVISAO;PLANTA_ZONAMENTO_PUB;INSERIR;7;true;;;Planta de Zonamento;;Planta de Zonamento;PECA_GRAFICA;
+PU;REVISAO;REVISAO;PLANTA_ZONAMENTO_DEP;INSERIR;8;true;;;Planta de Zonamento;;Planta de Zonamento;PECA_GRAFICA;
+PU;REVISAO;REVISAO;PLANTA_CONDICIONANTES_PUB;INSERIR;9;true;;;Planta de Condicionantes;;Planta de Condicionantes;PECA_GRAFICA;
+PU;REVISAO;REVISAO;PLANTA_CONDICIONANTES_DEP;INSERIR;10;true;;;Planta de Condicionantes;;Planta de Condicionantes;PECA_GRAFICA;
+PU;REVISAO;REVISAO;OUTRAS_PLANTAS_PUB;INSERIR;11;true;;;Outras plantas;;Outras Plantas;PECA_GRAFICA;
+PU;REVISAO;REVISAO;OUTRAS_PLANTAS_DEP;INSERIR;12;true;;;Outras plantas;;Outras Plantas;PECA_GRAFICA;
+PU;REVISAO;REVISAO;CARTOGRAMA_PUB;INSERIR;13;true;;;Cartograma;;Cartograma;PECA_GRAFICA;
+PU;REVISAO;REVISAO;CARTOGRAMA_DEP;INSERIR;14;true;;;Cartograma;;Cartograma;PECA_GRAFICA;
+PU;REVISAO;REVISAO;ESTUDOS_CARACTERIZACAO_DEP;INSERIR;15;true;;;Estudos de caracterização do território;Estudos de caraterização económica, social, biofísica e da estrutura fundiária do território municipal;Estudos de Caracterização;PECA_ESCRITA;
+PU;REVISAO;REVISAO;RELATORIO_PLANO_DEP;INSERIR;16;true;;;Relatório com os objetivos estratégicos do plano e a respetiva fundamentação;Relatório, que explicita os objectivos estratégicos do plano e a respectiva fundamentação técnica, suportada na avaliação das condições económicas, sociais, culturais e ambientais para a sua execução;Relatório do Plano;PECA_ESCRITA;
+PU;REVISAO;REVISAO;RELATORIO_AMBIENTAL_DEP;INSERIR;17;true;;;Relatório ambiental;Relatório ambiental, no qual se identificam, descrevem e avaliam os eventuais efeitos significativos no ambiente resultantes da aplicação do plano e as suas alternativas razoáveis que tenham em conta os objectivos e o âmbito de aplicação territorial respectivos;Relatório Ambiental;PECA_ESCRITA;
+PU;REVISAO;REVISAO;PROGRAMA_EXECUCAO_DEP;INSERIR;18;true;;;Programa de execução;Programa de execução contendo disposições indicativas sobre as intervenções municipais previstas, bem como sobre os meios de financiamento das mesmas;Programa de Execução;PECA_ESCRITA;
+PU;REVISAO;REVISAO;PLANTA_ENQUADRAMENTO_DEP;INSERIR;19;true;;;Planta de enquadramento regional;Planta de enquadramento regional elaborada a escala inferior à do plano director municipal, com indicação dos municípios limítrofes, centros urbanos mais importantes, principais vias de comunicação e outras infra-estruturas relevantes e grandes equipamentos que sirvam o município, bem como a…;Planta de Enquadramento;PECA_GRAFICA;
+PU;REVISAO;REVISAO;PLANTA_SITUACAO_EXISTENTE_DEP;INSERIR;20;true;;;Planta da situação existente à data da elaboração do plano;Planta da situação existente com a ocupação do território municipal à data da elaboração do plano;Planta da Situação Existente;PECA_GRAFICA;
+PU;REVISAO;REVISAO;COMPROMISSOS_URBANISTICOS_DEP;INSERIR;21;true;;;Relatório e/ou planta das licenças ou autorizações de operações urbanísticas;Relatório e ou planta com a indicação das licenças ou autorizações de operações urbanísticas emitidas, bem como das informações prévias favoráveis em vigor, substituível por declaração de câmara municipal comprovativa da inexistência dos referidos compromissos urbanísticos na área do plano;Compromissos Urbanísticos;PECA_ESCRITA;
+PU;REVISAO;REVISAO;PLANTAS_INFRAESTRUTURAS_DEP;INSERIR;22;true;;;Plantas do traçado das infraestruturas existentes e previstas;Plantas de identificação do traçado de infra-estruturas viárias, de abastecimento de água, de saneamento, de energia eléctrica, de recolha de resíduos e demais infra-estruturas relevantes, existentes e previstas, na área do plano;Plantas de Infraestruturas;PECA_GRAFICA;
+PU;REVISAO;REVISAO;ESTRUTURA_ECOLOGICA_AGLOMERADOS_DEP;INSERIR;23;true;;;Carta da estrutura ecológica do(s) aglomerado(s);;Estrutura Ecológica dos Aglomerados;PECA_GRAFICA;
+PU;REVISAO;REVISAO;MAPA_RUIDO_DEP;INSERIR;24;true;;;Relatório de recolha de dados acústicos ou mapa de ruído;;Mapa de Ruído;PECA_GRAFICA;
+PU;REVISAO;REVISAO;RELATORIO_PONDERACAO_DEP;INSERIR;25;true;;;Relatório de ponderação dos resultados da discussão pública;;Relatório de Ponderação;PECA_ESCRITA;
+PU;REVISAO;REVISAO;PARECERES_ATA_DEP;INSERIR;26;true;;;Pareceres emitidos / Ata da conferência de serviços;;Pareceres;PECA_ESCRITA;
+PU;REVISAO;REVISAO;DELIBERACAO_CM_DEP;INSERIR;27;true;;;Deliberação da Câmara Municipal (CM) / CIM que determina a elaboração/revisão do Plano;;Deliberação da CM;PECA_ESCRITA;
+PU;ALTERACAO;DECISAO_INICIO;TEXTO_ATO_PUB;ATUALIZAR;1;true;3;true;;;;;
+PU;ALTERACAO;DECISAO_INICIO;TEXTO_ATO_DEP;ATUALIZAR;2;true;4;false;;;;;
+PU;ALTERACAO;DECISAO_INICIO;DELIBERACAO_PUB;ATUALIZAR;3;true;1;true;;;;;
+PU;ALTERACAO;DECISAO_INICIO;DELIBERACAO_DEP;ATUALIZAR;4;true;2;false;;;;;
+PU;ALTERACAO;DECISAO_INICIO;PLANTA_LOCALIZACAO_PUB;ATUALIZAR;5;false;5;true;;;;;
+PU;ALTERACAO;DECISAO_INICIO;PLANTA_LOCALIZACAO_DEP;ATUALIZAR;6;false;6;false;;;;;
+PU;ALTERACAO;ABERTURA_DISCUSSAO_PUBLICA;TEXTO_ATO_PUB;INSERIR;1;true;;;Texto do ato a publicar no Diário da República;;Texto do Ato;PECA_ESCRITA;TEXTO_ATO
+PU;ALTERACAO;ABERTURA_DISCUSSAO_PUBLICA;TEXTO_ATO_DEP;INSERIR;2;true;;;Texto do ato a publicar no Diário da República;;Texto do Ato;PECA_ESCRITA;TEXTO_ATO
+PU;ALTERACAO;ABERTURA_DISCUSSAO_PUBLICA;DELIBERACAO_PUB;INSERIR;3;true;;;Deliberação;;Deliberação;PECA_ESCRITA;DELIBERACAO
+PU;ALTERACAO;ABERTURA_DISCUSSAO_PUBLICA;DELIBERACAO_DEP;INSERIR;4;true;;;Deliberação;;Deliberação;PECA_ESCRITA;DELIBERACAO
+PU;ALTERACAO;ALTERACAO;TEXTO_ATO_PUB;INSERIR;1;true;;;Texto do ato a publicar no Diário da República;;Texto do Ato;PECA_ESCRITA;TEXTO_ATO
+PU;ALTERACAO;ALTERACAO;TEXTO_ATO_DEP;INSERIR;2;true;;;Texto do ato a publicar no Diário da República;;Texto do Ato;PECA_ESCRITA;TEXTO_ATO
+PU;ALTERACAO;ALTERACAO;DELIBERACAO_PUB;INSERIR;3;true;;;Deliberação da Assembleia Municipal/Intermunicipal (AM/AMi) que aprova a alteração do plano;;Deliberação;PECA_ESCRITA;DELIBERACAO
+PU;ALTERACAO;ALTERACAO;DELIBERACAO_DEP;INSERIR;4;true;;;Deliberação da Assembleia Municipal/Intermunicipal (AM/AMi) que aprova a alteração do plano;;Deliberação;PECA_ESCRITA;DELIBERACAO
+PU;ALTERACAO;ALTERACAO;ALTERACOES_REGULAMENTO_PUB;INSERIR;5;true;;;Texto das disposições alteradas no Regulamento - quando tenha sido alterado;;Alterações ao Regulamento;PECA_ESCRITA;
+PU;ALTERACAO;ALTERACAO;ALTERACOES_REGULAMENTO_DEP;INSERIR;6;true;;;Texto das disposições alteradas no Regulamento - quando tenha sido alterado;;Alterações ao Regulamento;PECA_ESCRITA;
+PU;ALTERACAO;ALTERACAO;REGULAMENTO_INTEGRAL_PUB;INSERIR;7;true;;;Regulamento (versão alterada integral quando alterações superiores a 20%);;Regulamento Integral;PECA_ESCRITA;
+PU;ALTERACAO;ALTERACAO;REGULAMENTO_INTEGRAL_DEP;INSERIR;8;true;;;Regulamento (versão alterada integral quando alterações superiores a 20%);;Regulamento Integral;PECA_ESCRITA;
+PU;ALTERACAO;ALTERACAO;PLANTA_ZONAMENTO_PUB;INSERIR;9;true;;;Planta de Zonamento - quando tenha sido alterada;;Planta de Zonamento;PECA_GRAFICA;
+PU;ALTERACAO;ALTERACAO;PLANTA_ZONAMENTO_DEP;INSERIR;10;true;;;Planta de Zonamento - quando tenha sido alterada;;Planta de Zonamento;PECA_GRAFICA;
+PU;ALTERACAO;ALTERACAO;PLANTA_CONDICIONANTES_PUB;INSERIR;11;true;;;Planta de Condicionantes - quando tenha sido alterada;;Planta de Condicionantes;PECA_GRAFICA;
+PU;ALTERACAO;ALTERACAO;PLANTA_CONDICIONANTES_DEP;INSERIR;12;true;;;Planta de Condicionantes - quando tenha sido alterada;;Planta de Condicionantes;PECA_GRAFICA;
+PU;ALTERACAO;ALTERACAO;RELATORIO_FUNDAMENTACAO_DEP;INSERIR;13;true;;;Relatório fundamentando as alterações introduzidas;;Relatório de Fundamentação;PECA_ESCRITA;
+PU;ALTERACAO;ALTERACAO;DEMAIS_ELEMENTOS_DEP;INSERIR;14;true;;;Os demais elementos do plano afetados pela alteração;;Demais Elementos;OUTROS;
+PU;ALTERACAO;ALTERACAO;RELATORIO_AMBIENTAL_DEP;INSERIR;15;true;;;Relatório ambiental;Relatório ambiental, no qual se identificam, descrevem e avaliam os eventuais efeitos significativos no ambiente resultantes da aplicação do plano e as suas alternativas razoáveis que tenham em conta os objectivos e o âmbito de aplicação territorial respectivos;Relatório Ambiental;PECA_ESCRITA;
+PU;ALTERACAO;ALTERACAO;RELATORIO_PONDERACAO_DEP;INSERIR;16;true;;;Relatório de ponderação dos resultados da discussão pública;;Relatório de Ponderação;PECA_ESCRITA;
+PU;ALTERACAO;ALTERACAO;DELIBERACAO_CM_DEP;INSERIR;17;true;;;Deliberação da Câmara Municipal (CM) que determina a alteração do plano;;Deliberação da CM;PECA_ESCRITA;
+PU;ALTERACAO;ALTERACAO;PARECERES_ATA_DEP;INSERIR;18;true;;;Pareceres emitidos / Ata da conferência de serviços;;Pareceres;PECA_ESCRITA;
+PU;ALTERACAO_ADAPTACAO;ALTERACAO_ADAPTACAO;TEXTO_ATO_PUB;INSERIR;1;true;;;Declaração da entidade responsável pela elaboração do plano;Texto do ato a publicar - Declaração da entidade responsável pela elaboração do plano;Texto do Ato;PECA_ESCRITA;
+PU;ALTERACAO_ADAPTACAO;ALTERACAO_ADAPTACAO;TEXTO_ATO_DEP;INSERIR;2;true;;;Declaração da entidade responsável pela elaboração do plano;Texto do ato a publicar - Declaração da entidade responsável pela elaboração do plano;Texto do Ato;PECA_ESCRITA;
+PU;ALTERACAO_ADAPTACAO;ALTERACAO_ADAPTACAO;ALTERACOES_REGULAMENTO_PUB;INSERIR;3;true;;;Texto das disposições alteradas no Regulamento - quando tenha sido alterado;;Alterações ao Regulamento;PECA_ESCRITA;
+PU;ALTERACAO_ADAPTACAO;ALTERACAO_ADAPTACAO;ALTERACOES_REGULAMENTO_DEP;INSERIR;4;true;;;Texto das disposições alteradas no Regulamento - quando tenha sido alterado;;Alterações ao Regulamento;PECA_ESCRITA;
+PU;ALTERACAO_ADAPTACAO;ALTERACAO_ADAPTACAO;REGULAMENTO_INTEGRAL_PUB;INSERIR;5;false;;;Regulamento (versão alterada integral);;Regulamento Integral;PECA_ESCRITA;
+PU;ALTERACAO_ADAPTACAO;ALTERACAO_ADAPTACAO;REGULAMENTO_INTEGRAL_DEP;INSERIR;6;false;;;Regulamento (versão alterada integral);;Regulamento Integral;PECA_ESCRITA;
+PU;ALTERACAO_ADAPTACAO;ALTERACAO_ADAPTACAO;PLANTA_ZONAMENTO_PUB;INSERIR;7;true;;;Planta de Zonamento - quando tenha sido alterada;;Planta de Zonamento;PECA_GRAFICA;
+PU;ALTERACAO_ADAPTACAO;ALTERACAO_ADAPTACAO;PLANTA_ZONAMENTO_DEP;INSERIR;8;true;;;Planta de Zonamento - quando tenha sido alterada;;Planta de Zonamento;PECA_GRAFICA;
+PU;ALTERACAO_ADAPTACAO;ALTERACAO_ADAPTACAO;PLANTA_CONDICIONANTES_PUB;INSERIR;9;true;;;Planta de Condicionantes - quando tenha sido alterada;;Planta de Condicionantes;PECA_GRAFICA;
+PU;ALTERACAO_ADAPTACAO;ALTERACAO_ADAPTACAO;PLANTA_CONDICIONANTES_DEP;INSERIR;10;true;;;Planta de Condicionantes - quando tenha sido alterada;;Planta de Condicionantes;PECA_GRAFICA;
+PU;ALTERACAO_ADAPTACAO;ALTERACAO_ADAPTACAO;RELATORIO_FUNDAMENTACAO_DEP;INSERIR;11;true;;;Relatório fundamentando as adaptações introduzidas;;Relatório de Fundamentação;PECA_ESCRITA;
+PU;ALTERACAO_ADAPTACAO;ALTERACAO_ADAPTACAO;DEMAIS_ELEMENTOS_DEP;INSERIR;12;true;;;Os demais elementos do plano afetados pela adaptação (vide ficha modelo n.º 2);;Demais Elementos;OUTROS;
+PU;ALTERACAO_ADAPTACAO;ALTERACAO_ADAPTACAO;DELIBERACAO_AM_DEP;INSERIR;13;true;;;Deliberação da Assembleia Municipal/Intermunicipal (AM/AMi) que aprova a adaptação do plano;;Deliberação da AM;PECA_ESCRITA;
+PU;ALTERACAO_ADAPTACAO;ALTERACAO_ADAPTACAO;DELIBERACAO_CM_DEP;INSERIR;14;true;;;Deliberação da Câmara Municipal (CM) que determina a adaptação do plano;;Deliberação da CM;PECA_ESCRITA;
+PU;ALTERACAO_SIMPLIFICADA_ART123;DECISAO_INICIO;TEXTO_ATO_PUB;INSERIR;1;true;;;Texto do ato a publicar no Diário da República;;Texto do Ato;PECA_ESCRITA;
+PU;ALTERACAO_SIMPLIFICADA_ART123;DECISAO_INICIO;TEXTO_ATO_DEP;INSERIR;2;true;;;Texto do ato a publicar no Diário da República;;Texto do Ato;PECA_ESCRITA;
+PU;ALTERACAO_SIMPLIFICADA_ART123;DECISAO_INICIO;DELIBERACAO_PUB;INSERIR;3;true;;;Deliberação do início de alteração simplificada e participação pública (CM/CIM);;Deliberação;PECA_ESCRITA;
+PU;ALTERACAO_SIMPLIFICADA_ART123;DECISAO_INICIO;DELIBERACAO_DEP;INSERIR;4;true;;;Deliberação do início de alteração simplificada e participação pública (CM/CIM);;Deliberação;PECA_ESCRITA;
+PU;ALTERACAO_SIMPLIFICADA_ART123;ALTERACAO_SIMPLIFICADA;TEXTO_ATO_PUB;INSERIR;1;true;;;Texto do ato a publicar no Diário da República;;Texto do Ato;PECA_ESCRITA;
+PU;ALTERACAO_SIMPLIFICADA_ART123;ALTERACAO_SIMPLIFICADA;TEXTO_ATO_DEP;INSERIR;2;true;;;Texto do ato a publicar no Diário da República;;Texto do Ato;PECA_ESCRITA;
+PU;ALTERACAO_SIMPLIFICADA_ART123;ALTERACAO_SIMPLIFICADA;DELIBERACAO_PUB;INSERIR;3;true;;;Deliberação de aprovação do procedimento de plano territorial;;Deliberação;PECA_ESCRITA;
+PU;ALTERACAO_SIMPLIFICADA_ART123;ALTERACAO_SIMPLIFICADA;DELIBERACAO_DEP;INSERIR;4;true;;;Deliberação de aprovação do procedimento de plano territorial;;Deliberação;PECA_ESCRITA;
+PU;ALTERACAO_SIMPLIFICADA_ART123;ALTERACAO_SIMPLIFICADA;ALTERACOES_REGULAMENTO_PUB;INSERIR;5;true;;;Texto das disposições alteradas no Regulamento - quando tenha sido alterado;;Alterações ao Regulamento;PECA_ESCRITA;
+PU;ALTERACAO_SIMPLIFICADA_ART123;ALTERACAO_SIMPLIFICADA;ALTERACOES_REGULAMENTO_DEP;INSERIR;6;true;;;Texto das disposições alteradas no Regulamento - quando tenha sido alterado;;Alterações ao Regulamento;PECA_ESCRITA;
+PU;ALTERACAO_SIMPLIFICADA_ART123;ALTERACAO_SIMPLIFICADA;REGULAMENTO_INTEGRAL_PUB;INSERIR;7;false;;;Regulamento (versão alterada integral);;Regulamento Integral;PECA_ESCRITA;
+PU;ALTERACAO_SIMPLIFICADA_ART123;ALTERACAO_SIMPLIFICADA;REGULAMENTO_INTEGRAL_DEP;INSERIR;8;false;;;Regulamento (versão alterada integral);;Regulamento Integral;PECA_ESCRITA;
+PU;ALTERACAO_SIMPLIFICADA_ART123;ALTERACAO_SIMPLIFICADA;PLANTA_ZONAMENTO_PUB;INSERIR;9;true;;;Planta de Zonamento - quando tenha sido alterada;;Planta de Zonamento;PECA_GRAFICA;
+PU;ALTERACAO_SIMPLIFICADA_ART123;ALTERACAO_SIMPLIFICADA;PLANTA_ZONAMENTO_DEP;INSERIR;10;true;;;Planta de Zonamento - quando tenha sido alterada;;Planta de Zonamento;PECA_GRAFICA;
+PU;ALTERACAO_SIMPLIFICADA_ART123;ALTERACAO_SIMPLIFICADA;PLANTA_CONDICIONANTES_PUB;INSERIR;11;true;;;Planta de Condicionantes - quando tenha sido alterada;;Planta de Condicionantes;PECA_GRAFICA;
+PU;ALTERACAO_SIMPLIFICADA_ART123;ALTERACAO_SIMPLIFICADA;PLANTA_CONDICIONANTES_DEP;INSERIR;12;true;;;Planta de Condicionantes - quando tenha sido alterada;;Planta de Condicionantes;PECA_GRAFICA;
+PU;ALTERACAO_SIMPLIFICADA_ART123;ALTERACAO_SIMPLIFICADA;RELATORIO_FUNDAMENTACAO_DEP;INSERIR;13;true;;;Relatório fundamentando as alterações introduzidas;;Relatório de Fundamentação;PECA_ESCRITA;
+PU;ALTERACAO_SIMPLIFICADA_ART123;ALTERACAO_SIMPLIFICADA;DEMAIS_ELEMENTOS_DEP;INSERIR;14;true;;;Os demais elementos do plano afetados pela alteração;;Demais Elementos;OUTROS;
+PU;ALTERACAO_SIMPLIFICADA_ART123;ALTERACAO_SIMPLIFICADA;RELATORIO_PONDERACAO_DEP;INSERIR;15;true;;;Relatório de ponderação dos resultados da discussão pública;;Relatório de Ponderação;PECA_ESCRITA;
+PU;ALTERACAO_SIMPLIFICADA_ART123;ALTERACAO_SIMPLIFICADA;DELIBERACAO_CM_DEP;INSERIR;16;true;;;Deliberação da Câmara Municipal (CM) que determina a alteração do plano;;Deliberação da CM;PECA_ESCRITA;
+PU;ALTERACAO_SIMPLIFICADA_ART123;ALTERACAO_SIMPLIFICADA;PARECER_CCDR_DEP;INSERIR;17;true;;;Parecer da CCDR;;Parecer da CCDR;PECA_ESCRITA;
+PU;ALTERACAO_SIMPLIFICADA_DL10_2024;ABERTURA_DISCUSSAO_PUBLICA_DL10;TEXTO_ATO_PUB;INSERIR;1;true;;;Texto do ato a publicar no Diário da República;;Texto do Ato;PECA_ESCRITA;
+PU;ALTERACAO_SIMPLIFICADA_DL10_2024;ABERTURA_DISCUSSAO_PUBLICA_DL10;TEXTO_ATO_DEP;INSERIR;2;true;;;Texto do ato a publicar no Diário da República;;Texto do Ato;PECA_ESCRITA;
+PU;ALTERACAO_SIMPLIFICADA_DL10_2024;ABERTURA_DISCUSSAO_PUBLICA_DL10;DELIBERACAO_PUB;INSERIR;3;true;;;Deliberação do início de alteração simplificada e participação pública (CM/CIM);;Deliberação;PECA_ESCRITA;
+PU;ALTERACAO_SIMPLIFICADA_DL10_2024;ABERTURA_DISCUSSAO_PUBLICA_DL10;DELIBERACAO_DEP;INSERIR;4;true;;;Deliberação do início de alteração simplificada e participação pública (CM/CIM);;Deliberação;PECA_ESCRITA;
+PU;ALTERACAO_SIMPLIFICADA_DL10_2024;ALTERACAO_SIMPLIFICADA_DL10;TEXTO_ATO_PUB;INSERIR;1;true;;;Texto do ato a publicar no Diário da República;;Texto do Ato;PECA_ESCRITA;
+PU;ALTERACAO_SIMPLIFICADA_DL10_2024;ALTERACAO_SIMPLIFICADA_DL10;TEXTO_ATO_DEP;INSERIR;2;true;;;Texto do ato a publicar no Diário da República;;Texto do Ato;PECA_ESCRITA;
+PU;ALTERACAO_SIMPLIFICADA_DL10_2024;ALTERACAO_SIMPLIFICADA_DL10;DELIBERACAO_PUB;INSERIR;3;true;;;Deliberação de aprovação do procedimento de plano territorial;;Deliberação;PECA_ESCRITA;
+PU;ALTERACAO_SIMPLIFICADA_DL10_2024;ALTERACAO_SIMPLIFICADA_DL10;DELIBERACAO_DEP;INSERIR;4;true;;;Deliberação de aprovação do procedimento de plano territorial;;Deliberação;PECA_ESCRITA;
+PU;ALTERACAO_SIMPLIFICADA_DL10_2024;ALTERACAO_SIMPLIFICADA_DL10;ALTERACOES_REGULAMENTO_PUB;INSERIR;5;true;;;Texto das disposições alteradas no Regulamento - quando tenha sido alterado;;Alterações ao Regulamento;PECA_ESCRITA;
+PU;ALTERACAO_SIMPLIFICADA_DL10_2024;ALTERACAO_SIMPLIFICADA_DL10;ALTERACOES_REGULAMENTO_DEP;INSERIR;6;true;;;Texto das disposições alteradas no Regulamento - quando tenha sido alterado;;Alterações ao Regulamento;PECA_ESCRITA;
+PU;ALTERACAO_SIMPLIFICADA_DL10_2024;ALTERACAO_SIMPLIFICADA_DL10;REGULAMENTO_INTEGRAL_PUB;INSERIR;7;false;;;Regulamento (versão alterada integral);;Regulamento Integral;PECA_ESCRITA;
+PU;ALTERACAO_SIMPLIFICADA_DL10_2024;ALTERACAO_SIMPLIFICADA_DL10;REGULAMENTO_INTEGRAL_DEP;INSERIR;8;false;;;Regulamento (versão alterada integral);;Regulamento Integral;PECA_ESCRITA;
+PU;ALTERACAO_SIMPLIFICADA_DL10_2024;ALTERACAO_SIMPLIFICADA_DL10;PLANTA_ZONAMENTO_PUB;INSERIR;9;true;;;Planta de Zonamento - quando tenha sido alterada;;Planta de Zonamento;PECA_GRAFICA;
+PU;ALTERACAO_SIMPLIFICADA_DL10_2024;ALTERACAO_SIMPLIFICADA_DL10;PLANTA_ZONAMENTO_DEP;INSERIR;10;true;;;Planta de Zonamento - quando tenha sido alterada;;Planta de Zonamento;PECA_GRAFICA;
+PU;ALTERACAO_SIMPLIFICADA_DL10_2024;ALTERACAO_SIMPLIFICADA_DL10;PLANTA_CONDICIONANTES_PUB;INSERIR;11;true;;;Planta de Condicionantes - quando tenha sido alterada;;Planta de Condicionantes;PECA_GRAFICA;
+PU;ALTERACAO_SIMPLIFICADA_DL10_2024;ALTERACAO_SIMPLIFICADA_DL10;PLANTA_CONDICIONANTES_DEP;INSERIR;12;true;;;Planta de Condicionantes - quando tenha sido alterada;;Planta de Condicionantes;PECA_GRAFICA;
+PU;ALTERACAO_SIMPLIFICADA_DL10_2024;ALTERACAO_SIMPLIFICADA_DL10;RELATORIO_FUNDAMENTACAO_DEP;INSERIR;13;true;;;Relatório fundamentando as alterações introduzidas;;Relatório de Fundamentação;PECA_ESCRITA;
+PU;ALTERACAO_SIMPLIFICADA_DL10_2024;ALTERACAO_SIMPLIFICADA_DL10;DEMAIS_ELEMENTOS_DEP;INSERIR;14;true;;;Os demais elementos do plano afetados pela alteração;;Demais Elementos;OUTROS;
+PU;ALTERACAO_SIMPLIFICADA_DL10_2024;ALTERACAO_SIMPLIFICADA_DL10;RELATORIO_PONDERACAO_DEP;INSERIR;15;true;;;Relatório de ponderação dos resultados da discussão pública;;Relatório de Ponderação;PECA_ESCRITA;
+PU;ALTERACAO_SIMPLIFICADA_DL10_2024;ALTERACAO_SIMPLIFICADA_DL10;DELIBERACAO_CM_DEP;INSERIR;16;true;;;Deliberação da Câmara Municipal (CM) que determina a alteração do plano;;Deliberação da CM;PECA_ESCRITA;
+PU;ALTERACAO_SIMPLIFICADA_DL10_2024;ALTERACAO_SIMPLIFICADA_DL10;PARECER_CCDR_DEP;INSERIR;17;true;;;Parecer da CCDR;;Parecer da CCDR;PECA_ESCRITA;
+PU;CORRECAO_MATERIAL;CORRECAO_MATERIAL;TEXTO_ATO_PUB;INSERIR;1;true;;;Declaração da entidade responsável pela elaboração do plano;Texto do ato a publicar - Declaração da entidade responsável pela elaboração do plano;Texto do Ato;PECA_ESCRITA;
+PU;CORRECAO_MATERIAL;CORRECAO_MATERIAL;TEXTO_ATO_DEP;INSERIR;2;true;;;Declaração da entidade responsável pela elaboração do plano;Texto do ato a publicar - Declaração da entidade responsável pela elaboração do plano;Texto do Ato;PECA_ESCRITA;
+PU;CORRECAO_MATERIAL;CORRECAO_MATERIAL;ALTERACOES_REGULAMENTO_PUB;INSERIR;3;true;;;Texto das disposições corrigidas no Regulamento - quando tenha sido corrigido;;Alterações ao Regulamento;PECA_ESCRITA;
+PU;CORRECAO_MATERIAL;CORRECAO_MATERIAL;ALTERACOES_REGULAMENTO_DEP;INSERIR;4;true;;;Texto das disposições corrigidas no Regulamento - quando tenha sido corrigido;;Alterações ao Regulamento;PECA_ESCRITA;
+PU;CORRECAO_MATERIAL;CORRECAO_MATERIAL;REGULAMENTO_INTEGRAL_PUB;INSERIR;5;false;;;Regulamento (versão alterada integral) - quando necessário;;Regulamento Integral;PECA_ESCRITA;
+PU;CORRECAO_MATERIAL;CORRECAO_MATERIAL;REGULAMENTO_INTEGRAL_DEP;INSERIR;6;false;;;Regulamento (versão alterada integral) - quando necessário;;Regulamento Integral;PECA_ESCRITA;
+PU;CORRECAO_MATERIAL;CORRECAO_MATERIAL;PLANTA_ZONAMENTO_PUB;INSERIR;7;true;;;Planta de Zonamento - quando tenha sido corrigida;;Planta de Zonamento;PECA_GRAFICA;
+PU;CORRECAO_MATERIAL;CORRECAO_MATERIAL;PLANTA_ZONAMENTO_DEP;INSERIR;8;true;;;Planta de Zonamento - quando tenha sido corrigida;;Planta de Zonamento;PECA_GRAFICA;
+PU;CORRECAO_MATERIAL;CORRECAO_MATERIAL;PLANTA_CONDICIONANTES_PUB;INSERIR;9;true;;;Planta de Condicionantes - quando tenha sido corrigida;;Planta de Condicionantes;PECA_GRAFICA;
+PU;CORRECAO_MATERIAL;CORRECAO_MATERIAL;PLANTA_CONDICIONANTES_DEP;INSERIR;10;true;;;Planta de Condicionantes - quando tenha sido corrigida;;Planta de Condicionantes;PECA_GRAFICA;
+PU;CORRECAO_MATERIAL;CORRECAO_MATERIAL;RELATORIO_FUNDAMENTACAO_DEP;INSERIR;11;true;;;Relatório fundamentando as correções materiais/retificações introduzidas;;Relatório de Fundamentação;PECA_ESCRITA;
+PU;CORRECAO_MATERIAL;CORRECAO_MATERIAL;DEMAIS_ELEMENTOS_DEP;INSERIR;12;true;;;Os demais elementos do plano afetados pela correção material/retificação;;Demais Elementos;OUTROS;
+PU;CORRECAO_MATERIAL;CORRECAO_MATERIAL;DECLARACAO_CM_DEP;INSERIR;13;true;;;Declaração da Câmara Municipal (CM) de correção material/retificação do plano;;Declaração da CM;PECA_ESCRITA;
+PU;REVOGACAO;REVOGACAO;TEXTO_ATO_PUB;INSERIR;1;true;;;Texto do ato a publicar no Diário da República;;Texto do Ato;PECA_ESCRITA;
+PU;REVOGACAO;REVOGACAO;TEXTO_ATO_DEP;INSERIR;2;true;;;Texto do ato a publicar no Diário da República;;Texto do Ato;PECA_ESCRITA;
+PU;REVOGACAO;REVOGACAO;DELIBERACAO_PUB;INSERIR;3;true;;;Deliberação de aprovação da revogação de plano territorial;;Deliberação;PECA_ESCRITA;
+PU;REVOGACAO;REVOGACAO;DELIBERACAO_DEP;INSERIR;4;true;;;Deliberação de aprovação da revogação de plano territorial;;Deliberação;PECA_ESCRITA;
+PP;ELABORACAO;DECISAO_INICIO;TEXTO_ATO_PUB;INSERIR;1;true;;;Texto do ato a publicar no Diário da República;;Texto do Ato;PECA_ESCRITA;TEXTO_ATO
+PP;ELABORACAO;DECISAO_INICIO;TEXTO_ATO_DEP;INSERIR;2;true;;;Texto do ato a publicar no Diário da República;;Texto do Ato;PECA_ESCRITA;TEXTO_ATO
+PP;ELABORACAO;DECISAO_INICIO;DELIBERACAO_PUB;INSERIR;3;true;;;Deliberação do início de elaboração de plano territorial (CM/CIM);;Deliberação;PECA_ESCRITA;DELIBERACAO
+PP;ELABORACAO;DECISAO_INICIO;DELIBERACAO_DEP;INSERIR;4;true;;;Deliberação do início de elaboração de plano territorial (CM/CIM);;Deliberação;PECA_ESCRITA;DELIBERACAO
+PP;ELABORACAO;DECISAO_INICIO;PLANTA_AREA_INTERVENCAO_PUB;INSERIR;5;false;;;Planta com a área de intervenção;;Planta com Área de Intervenção;PECA_GRAFICA;
+PP;ELABORACAO;DECISAO_INICIO;PLANTA_AREA_INTERVENCAO_DEP;INSERIR;6;false;;;Planta com a área de intervenção;;Planta com Área de Intervenção;PECA_GRAFICA;
+PP;ELABORACAO;ABERTURA_DISCUSSAO_PUBLICA;TEXTO_ATO_PUB;INSERIR;1;true;;;Texto do ato a publicar no Diário da República;;Texto do Ato;PECA_ESCRITA;TEXTO_ATO
+PP;ELABORACAO;ABERTURA_DISCUSSAO_PUBLICA;TEXTO_ATO_DEP;INSERIR;2;true;;;Texto do ato a publicar no Diário da República;;Texto do Ato;PECA_ESCRITA;TEXTO_ATO
+PP;ELABORACAO;ABERTURA_DISCUSSAO_PUBLICA;DELIBERACAO_PUB;INSERIR;3;true;;;Deliberação;;Deliberação;PECA_ESCRITA;DELIBERACAO
+PP;ELABORACAO;ABERTURA_DISCUSSAO_PUBLICA;DELIBERACAO_DEP;INSERIR;4;true;;;Deliberação;;Deliberação;PECA_ESCRITA;DELIBERACAO
+PP;ELABORACAO;ELABORACAO;TEXTO_ATO_PUB;INSERIR;1;true;;;Texto do ato a publicar no Diário da República;;Texto do Ato;PECA_ESCRITA;TEXTO_ATO
+PP;ELABORACAO;ELABORACAO;TEXTO_ATO_DEP;INSERIR;2;true;;;Texto do ato a publicar no Diário da República;;Texto do Ato;PECA_ESCRITA;TEXTO_ATO
+PP;ELABORACAO;ELABORACAO;DELIBERACAO_PUB;INSERIR;3;true;;;Deliberação da Assembleia Municipal/Intermunicipal (AM/AMi) que aprova o plano;;Deliberação;PECA_ESCRITA;DELIBERACAO
+PP;ELABORACAO;ELABORACAO;DELIBERACAO_DEP;INSERIR;4;true;;;Deliberação da Assembleia Municipal/Intermunicipal (AM/AMi) que aprova o plano;;Deliberação;PECA_ESCRITA;DELIBERACAO
+PP;ELABORACAO;ELABORACAO;REGULAMENTO_PUB;INSERIR;5;true;;;Regulamento;;Regulamento;PECA_ESCRITA;
+PP;ELABORACAO;ELABORACAO;REGULAMENTO_DEP;INSERIR;6;true;;;Regulamento;;Regulamento;PECA_ESCRITA;
+PP;ELABORACAO;ELABORACAO;PLANTA_IMPLANTACAO_PUB;INSERIR;7;true;;;Planta de Implantação;;Planta de Implantação;PECA_GRAFICA;
+PP;ELABORACAO;ELABORACAO;PLANTA_IMPLANTACAO_DEP;INSERIR;8;true;;;Planta de Implantação;;Planta de Implantação;PECA_GRAFICA;
+PP;ELABORACAO;ELABORACAO;PLANTA_CONDICIONANTES_PUB;INSERIR;9;true;;;Planta de Condicionantes;;Planta de Condicionantes;PECA_GRAFICA;
+PP;ELABORACAO;ELABORACAO;PLANTA_CONDICIONANTES_DEP;INSERIR;10;true;;;Planta de Condicionantes;;Planta de Condicionantes;PECA_GRAFICA;
+PP;ELABORACAO;ELABORACAO;PLANTA_TRANSFORMACAO_FUNDIARIA_PUB;INSERIR;11;true;;;Planta da transformação fundiária prevista;;Planta da Transformação Fundiária;PECA_GRAFICA;
+PP;ELABORACAO;ELABORACAO;PLANTA_TRANSFORMACAO_FUNDIARIA_DEP;INSERIR;12;true;;;Planta da transformação fundiária prevista;;Planta da Transformação Fundiária;PECA_GRAFICA;
+PP;ELABORACAO;ELABORACAO;OUTRAS_PLANTAS_PUB;INSERIR;13;true;;;Outras plantas;;Outras Plantas;PECA_GRAFICA;
+PP;ELABORACAO;ELABORACAO;OUTRAS_PLANTAS_DEP;INSERIR;14;true;;;Outras plantas;;Outras Plantas;PECA_GRAFICA;
+PP;ELABORACAO;ELABORACAO;CARTOGRAMA_PUB;INSERIR;15;true;;;Cartograma;;Cartograma;PECA_GRAFICA;
+PP;ELABORACAO;ELABORACAO;CARTOGRAMA_DEP;INSERIR;16;true;;;Cartograma;;Cartograma;PECA_GRAFICA;
+PP;ELABORACAO;ELABORACAO;ESTUDOS_CARACTERIZACAO_DEP;INSERIR;17;true;;;Estudos de caracterização do território;Estudos de caraterização económica, social, biofísica e da estrutura fundiária do território municipal;Estudos de Caracterização;PECA_ESCRITA;
+PP;ELABORACAO;ELABORACAO;RELATORIO_PLANO_DEP;INSERIR;18;true;;;Relatório com os objetivos estratégicos do plano e a respetiva fundamentação;Relatório, que explicita os objectivos estratégicos do plano e a respectiva fundamentação técnica, suportada na avaliação das condições económicas, sociais, culturais e ambientais para a sua execução;Relatório do Plano;PECA_ESCRITA;
+PP;ELABORACAO;ELABORACAO;RELATORIO_AMBIENTAL_DEP;INSERIR;19;true;;;Relatório ambiental;Relatório ambiental, no qual se identificam, descrevem e avaliam os eventuais efeitos significativos no ambiente resultantes da aplicação do plano e as suas alternativas razoáveis que tenham em conta os objectivos e o âmbito de aplicação territorial respectivos;Relatório Ambiental;PECA_ESCRITA;
+PP;ELABORACAO;ELABORACAO;PROGRAMA_EXECUCAO_DEP;INSERIR;20;true;;;Programa de execução;Programa de execução contendo disposições indicativas sobre as intervenções municipais previstas, bem como sobre os meios de financiamento das mesmas;Programa de Execução;PECA_ESCRITA;
+PP;ELABORACAO;ELABORACAO;PLANTA_ENQUADRAMENTO_DEP;INSERIR;21;true;;;Planta de enquadramento regional;Planta de enquadramento regional elaborada a escala inferior à do plano director municipal, com indicação dos municípios limítrofes, centros urbanos mais importantes, principais vias de comunicação e outras infra-estruturas relevantes e grandes equipamentos que sirvam o município, bem como a…;Planta de Enquadramento;PECA_GRAFICA;
+PP;ELABORACAO;ELABORACAO;PLANTA_SITUACAO_EXISTENTE_DEP;INSERIR;22;true;;;Planta da situação existente à data da elaboração do plano;Planta da situação existente com a ocupação do território municipal à data da elaboração do plano;Planta da Situação Existente;PECA_GRAFICA;
+PP;ELABORACAO;ELABORACAO;COMPROMISSOS_URBANISTICOS_DEP;INSERIR;23;true;;;Relatório e/ou planta das licenças ou autorizações de operações urbanísticas;Relatório e ou planta com a indicação das licenças ou autorizações de operações urbanísticas emitidas, bem como das informações prévias favoráveis em vigor, substituível por declaração de câmara municipal comprovativa da inexistência dos referidos compromissos urbanísticos na área do plano;Compromissos Urbanísticos;PECA_ESCRITA;
+PP;ELABORACAO;ELABORACAO;PLANTAS_INFRAESTRUTURAS_DEP;INSERIR;24;true;;;Plantas do traçado das infraestruturas existentes e previstas;Plantas de identificação do traçado de infra-estruturas viárias, de abastecimento de água, de saneamento, de energia eléctrica, de recolha de resíduos e demais infra-estruturas relevantes, existentes e previstas, na área do plano;Plantas de Infraestruturas;PECA_GRAFICA;
+PP;ELABORACAO;ELABORACAO;ESTRUTURA_ECOLOGICA_AGLOMERADOS_DEP;INSERIR;25;true;;;Carta da estrutura ecológica do(s) aglomerado(s);;Estrutura Ecológica dos Aglomerados;PECA_GRAFICA;
+PP;ELABORACAO;ELABORACAO;MAPA_RUIDO_DEP;INSERIR;26;true;;;Relatório de recolha de dados acústicos ou mapa de ruído;;Mapa de Ruído;PECA_GRAFICA;
+PP;ELABORACAO;ELABORACAO;RELATORIO_PONDERACAO_DEP;INSERIR;27;true;;;Relatório de ponderação dos resultados da discussão pública;;Relatório de Ponderação;PECA_ESCRITA;
+PP;ELABORACAO;ELABORACAO;PARECERES_ATA_DEP;INSERIR;28;true;;;Pareceres emitidos / Ata da conferência de serviços;;Pareceres;PECA_ESCRITA;
+PP;ELABORACAO;ELABORACAO;DELIBERACAO_CM_DEP;INSERIR;29;true;;;Deliberação da Câmara Municipal (CM) / CIM que determina a elaboração/revisão do Plano;;Deliberação da CM;PECA_ESCRITA;
+PP;REVISAO;DECISAO_INICIO;TEXTO_ATO_PUB;INSERIR;1;true;;;Texto do ato a publicar no Diário da República;;Texto do Ato;PECA_ESCRITA;TEXTO_ATO
+PP;REVISAO;DECISAO_INICIO;TEXTO_ATO_DEP;INSERIR;2;true;;;Texto do ato a publicar no Diário da República;;Texto do Ato;PECA_ESCRITA;TEXTO_ATO
+PP;REVISAO;DECISAO_INICIO;DELIBERACAO_PUB;INSERIR;3;true;;;Deliberação do início de revisão de plano territorial (CM/CIM);;Deliberação;PECA_ESCRITA;DELIBERACAO
+PP;REVISAO;DECISAO_INICIO;DELIBERACAO_DEP;INSERIR;4;true;;;Deliberação do início de revisão de plano territorial (CM/CIM);;Deliberação;PECA_ESCRITA;DELIBERACAO
+PP;REVISAO;DECISAO_INICIO;PLANTA_AREA_INTERVENCAO_PUB;INSERIR;5;false;;;Planta com a área de intervenção;;Planta com Área de Intervenção;PECA_GRAFICA;
+PP;REVISAO;DECISAO_INICIO;PLANTA_AREA_INTERVENCAO_DEP;INSERIR;6;false;;;Planta com a área de intervenção;;Planta com Área de Intervenção;PECA_GRAFICA;
+PP;REVISAO;ABERTURA_DISCUSSAO_PUBLICA;TEXTO_ATO_PUB;INSERIR;1;true;;;Texto do ato a publicar no Diário da República;;Texto do Ato;PECA_ESCRITA;TEXTO_ATO
+PP;REVISAO;ABERTURA_DISCUSSAO_PUBLICA;TEXTO_ATO_DEP;INSERIR;2;true;;;Texto do ato a publicar no Diário da República;;Texto do Ato;PECA_ESCRITA;TEXTO_ATO
+PP;REVISAO;ABERTURA_DISCUSSAO_PUBLICA;DELIBERACAO_PUB;INSERIR;3;true;;;Deliberação;;Deliberação;PECA_ESCRITA;DELIBERACAO
+PP;REVISAO;ABERTURA_DISCUSSAO_PUBLICA;DELIBERACAO_DEP;INSERIR;4;true;;;Deliberação;;Deliberação;PECA_ESCRITA;DELIBERACAO
+PP;REVISAO;REVISAO;TEXTO_ATO_PUB;INSERIR;1;true;;;Texto do ato a publicar no Diário da República;;Texto do Ato;PECA_ESCRITA;TEXTO_ATO
+PP;REVISAO;REVISAO;TEXTO_ATO_DEP;INSERIR;2;true;;;Texto do ato a publicar no Diário da República;;Texto do Ato;PECA_ESCRITA;TEXTO_ATO
+PP;REVISAO;REVISAO;DELIBERACAO_PUB;INSERIR;3;true;;;Deliberação da Assembleia Municipal/Intermunicipal (AM/AMi) que aprova o plano;;Deliberação;PECA_ESCRITA;DELIBERACAO
+PP;REVISAO;REVISAO;DELIBERACAO_DEP;INSERIR;4;true;;;Deliberação da Assembleia Municipal/Intermunicipal (AM/AMi) que aprova o plano;;Deliberação;PECA_ESCRITA;DELIBERACAO
+PP;REVISAO;REVISAO;REGULAMENTO_PUB;INSERIR;5;true;;;Regulamento;;Regulamento;PECA_ESCRITA;
+PP;REVISAO;REVISAO;REGULAMENTO_DEP;INSERIR;6;true;;;Regulamento;;Regulamento;PECA_ESCRITA;
+PP;REVISAO;REVISAO;PLANTA_IMPLANTACAO_PUB;INSERIR;7;true;;;Planta de Implantação;;Planta de Implantação;PECA_GRAFICA;
+PP;REVISAO;REVISAO;PLANTA_IMPLANTACAO_DEP;INSERIR;8;true;;;Planta de Implantação;;Planta de Implantação;PECA_GRAFICA;
+PP;REVISAO;REVISAO;PLANTA_CONDICIONANTES_PUB;INSERIR;9;true;;;Planta de Condicionantes;;Planta de Condicionantes;PECA_GRAFICA;
+PP;REVISAO;REVISAO;PLANTA_CONDICIONANTES_DEP;INSERIR;10;true;;;Planta de Condicionantes;;Planta de Condicionantes;PECA_GRAFICA;
+PP;REVISAO;REVISAO;PLANTA_TRANSFORMACAO_FUNDIARIA_PUB;INSERIR;11;true;;;Planta da transformação fundiária prevista;;Planta da Transformação Fundiária;PECA_GRAFICA;
+PP;REVISAO;REVISAO;PLANTA_TRANSFORMACAO_FUNDIARIA_DEP;INSERIR;12;true;;;Planta da transformação fundiária prevista;;Planta da Transformação Fundiária;PECA_GRAFICA;
+PP;REVISAO;REVISAO;OUTRAS_PLANTAS_PUB;INSERIR;13;true;;;Outras plantas;;Outras Plantas;PECA_GRAFICA;
+PP;REVISAO;REVISAO;OUTRAS_PLANTAS_DEP;INSERIR;14;true;;;Outras plantas;;Outras Plantas;PECA_GRAFICA;
+PP;REVISAO;REVISAO;CARTOGRAMA_PUB;INSERIR;15;true;;;Cartograma;;Cartograma;PECA_GRAFICA;
+PP;REVISAO;REVISAO;CARTOGRAMA_DEP;INSERIR;16;true;;;Cartograma;;Cartograma;PECA_GRAFICA;
+PP;REVISAO;REVISAO;ESTUDOS_CARACTERIZACAO_DEP;INSERIR;17;true;;;Estudos de caracterização do território;Estudos de caraterização económica, social, biofísica e da estrutura fundiária do território municipal;Estudos de Caracterização;PECA_ESCRITA;
+PP;REVISAO;REVISAO;RELATORIO_PLANO_DEP;INSERIR;18;true;;;Relatório com os objetivos estratégicos do plano e a respetiva fundamentação;Relatório, que explicita os objectivos estratégicos do plano e a respectiva fundamentação técnica, suportada na avaliação das condições económicas, sociais, culturais e ambientais para a sua execução;Relatório do Plano;PECA_ESCRITA;
+PP;REVISAO;REVISAO;RELATORIO_AMBIENTAL_DEP;INSERIR;19;true;;;Relatório ambiental;Relatório ambiental, no qual se identificam, descrevem e avaliam os eventuais efeitos significativos no ambiente resultantes da aplicação do plano e as suas alternativas razoáveis que tenham em conta os objectivos e o âmbito de aplicação territorial respectivos;Relatório Ambiental;PECA_ESCRITA;
+PP;REVISAO;REVISAO;PROGRAMA_EXECUCAO_DEP;INSERIR;20;true;;;Programa de execução;Programa de execução contendo disposições indicativas sobre as intervenções municipais previstas, bem como sobre os meios de financiamento das mesmas;Programa de Execução;PECA_ESCRITA;
+PP;REVISAO;REVISAO;PLANTA_ENQUADRAMENTO_DEP;INSERIR;21;true;;;Planta de enquadramento regional;Planta de enquadramento regional elaborada a escala inferior à do plano director municipal, com indicação dos municípios limítrofes, centros urbanos mais importantes, principais vias de comunicação e outras infra-estruturas relevantes e grandes equipamentos que sirvam o município, bem como a…;Planta de Enquadramento;PECA_GRAFICA;
+PP;REVISAO;REVISAO;PLANTA_SITUACAO_EXISTENTE_DEP;INSERIR;22;true;;;Planta da situação existente à data da elaboração do plano;Planta da situação existente com a ocupação do território municipal à data da elaboração do plano;Planta da Situação Existente;PECA_GRAFICA;
+PP;REVISAO;REVISAO;COMPROMISSOS_URBANISTICOS_DEP;INSERIR;23;true;;;Relatório e/ou planta das licenças ou autorizações de operações urbanísticas;Relatório e ou planta com a indicação das licenças ou autorizações de operações urbanísticas emitidas, bem como das informações prévias favoráveis em vigor, substituível por declaração de câmara municipal comprovativa da inexistência dos referidos compromissos urbanísticos na área do plano;Compromissos Urbanísticos;PECA_ESCRITA;
+PP;REVISAO;REVISAO;PLANTAS_INFRAESTRUTURAS_DEP;INSERIR;24;true;;;Plantas do traçado das infraestruturas existentes e previstas;Plantas de identificação do traçado de infra-estruturas viárias, de abastecimento de água, de saneamento, de energia eléctrica, de recolha de resíduos e demais infra-estruturas relevantes, existentes e previstas, na área do plano;Plantas de Infraestruturas;PECA_GRAFICA;
+PP;REVISAO;REVISAO;ESTRUTURA_ECOLOGICA_AGLOMERADOS_DEP;INSERIR;25;true;;;Carta da estrutura ecológica do(s) aglomerado(s);;Estrutura Ecológica dos Aglomerados;PECA_GRAFICA;
+PP;REVISAO;REVISAO;MAPA_RUIDO_DEP;INSERIR;26;true;;;Relatório de recolha de dados acústicos ou mapa de ruído;;Mapa de Ruído;PECA_GRAFICA;
+PP;REVISAO;REVISAO;RELATORIO_PONDERACAO_DEP;INSERIR;27;true;;;Relatório de ponderação dos resultados da discussão pública;;Relatório de Ponderação;PECA_ESCRITA;
+PP;REVISAO;REVISAO;PARECERES_ATA_DEP;INSERIR;28;true;;;Pareceres emitidos / Ata da conferência de serviços;;Pareceres;PECA_ESCRITA;
+PP;REVISAO;REVISAO;DELIBERACAO_CM_DEP;INSERIR;29;true;;;Deliberação da Câmara Municipal (CM) / CIM que determina a elaboração/revisão do Plano;;Deliberação da CM;PECA_ESCRITA;
+PP;ALTERACAO;DECISAO_INICIO;TEXTO_ATO_PUB;ATUALIZAR;1;true;3;true;;;;;
+PP;ALTERACAO;DECISAO_INICIO;TEXTO_ATO_DEP;ATUALIZAR;2;true;4;false;;;;;
+PP;ALTERACAO;DECISAO_INICIO;DELIBERACAO_PUB;ATUALIZAR;3;true;1;true;;;;;
+PP;ALTERACAO;DECISAO_INICIO;DELIBERACAO_DEP;ATUALIZAR;4;true;2;false;;;;;
+PP;ALTERACAO;DECISAO_INICIO;PLANTA_LOCALIZACAO_PUB;ATUALIZAR;5;false;5;true;;;;;
+PP;ALTERACAO;DECISAO_INICIO;PLANTA_LOCALIZACAO_DEP;ATUALIZAR;6;false;6;false;;;;;
+PP;ALTERACAO;ABERTURA_DISCUSSAO_PUBLICA;TEXTO_ATO_PUB;INSERIR;1;true;;;Texto do ato a publicar no Diário da República;;Texto do Ato;PECA_ESCRITA;TEXTO_ATO
+PP;ALTERACAO;ABERTURA_DISCUSSAO_PUBLICA;TEXTO_ATO_DEP;INSERIR;2;true;;;Texto do ato a publicar no Diário da República;;Texto do Ato;PECA_ESCRITA;TEXTO_ATO
+PP;ALTERACAO;ABERTURA_DISCUSSAO_PUBLICA;DELIBERACAO_PUB;INSERIR;3;true;;;Deliberação;;Deliberação;PECA_ESCRITA;DELIBERACAO
+PP;ALTERACAO;ABERTURA_DISCUSSAO_PUBLICA;DELIBERACAO_DEP;INSERIR;4;true;;;Deliberação;;Deliberação;PECA_ESCRITA;DELIBERACAO
+PP;ALTERACAO;ALTERACAO;TEXTO_ATO_PUB;INSERIR;1;true;;;Texto do ato a publicar no Diário da República;;Texto do Ato;PECA_ESCRITA;TEXTO_ATO
+PP;ALTERACAO;ALTERACAO;TEXTO_ATO_DEP;INSERIR;2;true;;;Texto do ato a publicar no Diário da República;;Texto do Ato;PECA_ESCRITA;TEXTO_ATO
+PP;ALTERACAO;ALTERACAO;DELIBERACAO_PUB;INSERIR;3;true;;;Deliberação da Assembleia Municipal/Intermunicipal (AM/AMi) que aprova a alteração do plano;;Deliberação;PECA_ESCRITA;DELIBERACAO
+PP;ALTERACAO;ALTERACAO;DELIBERACAO_DEP;INSERIR;4;true;;;Deliberação da Assembleia Municipal/Intermunicipal (AM/AMi) que aprova a alteração do plano;;Deliberação;PECA_ESCRITA;DELIBERACAO
+PP;ALTERACAO;ALTERACAO;ALTERACOES_REGULAMENTO_PUB;INSERIR;5;true;;;Texto das disposições alteradas no Regulamento - quando tenha sido alterado;;Alterações ao Regulamento;PECA_ESCRITA;
+PP;ALTERACAO;ALTERACAO;ALTERACOES_REGULAMENTO_DEP;INSERIR;6;true;;;Texto das disposições alteradas no Regulamento - quando tenha sido alterado;;Alterações ao Regulamento;PECA_ESCRITA;
+PP;ALTERACAO;ALTERACAO;REGULAMENTO_INTEGRAL_PUB;INSERIR;7;true;;;Regulamento (versão alterada integral quando alterações superiores a 20%);;Regulamento Integral;PECA_ESCRITA;
+PP;ALTERACAO;ALTERACAO;REGULAMENTO_INTEGRAL_DEP;INSERIR;8;true;;;Regulamento (versão alterada integral quando alterações superiores a 20%);;Regulamento Integral;PECA_ESCRITA;
+PP;ALTERACAO;ALTERACAO;PLANTA_IMPLANTACAO_PUB;INSERIR;9;true;;;Planta de Implantação - quando tenha sido alterada;;Planta de Implantação;PECA_GRAFICA;
+PP;ALTERACAO;ALTERACAO;PLANTA_IMPLANTACAO_DEP;INSERIR;10;true;;;Planta de Implantação - quando tenha sido alterada;;Planta de Implantação;PECA_GRAFICA;
+PP;ALTERACAO;ALTERACAO;PLANTA_CONDICIONANTES_PUB;INSERIR;11;true;;;Planta de Condicionantes - quando tenha sido alterada;;Planta de Condicionantes;PECA_GRAFICA;
+PP;ALTERACAO;ALTERACAO;PLANTA_CONDICIONANTES_DEP;INSERIR;12;true;;;Planta de Condicionantes - quando tenha sido alterada;;Planta de Condicionantes;PECA_GRAFICA;
+PP;ALTERACAO;ALTERACAO;RELATORIO_FUNDAMENTACAO_DEP;INSERIR;13;true;;;Relatório fundamentando as alterações introduzidas;;Relatório de Fundamentação;PECA_ESCRITA;
+PP;ALTERACAO;ALTERACAO;DEMAIS_ELEMENTOS_DEP;INSERIR;14;true;;;Os demais elementos do plano afetados pela alteração;;Demais Elementos;OUTROS;
+PP;ALTERACAO;ALTERACAO;RELATORIO_AMBIENTAL_DEP;INSERIR;15;true;;;Relatório ambiental;Relatório ambiental, no qual se identificam, descrevem e avaliam os eventuais efeitos significativos no ambiente resultantes da aplicação do plano e as suas alternativas razoáveis que tenham em conta os objectivos e o âmbito de aplicação territorial respectivos;Relatório Ambiental;PECA_ESCRITA;
+PP;ALTERACAO;ALTERACAO;RELATORIO_PONDERACAO_DEP;INSERIR;16;true;;;Relatório de ponderação dos resultados da discussão pública;;Relatório de Ponderação;PECA_ESCRITA;
+PP;ALTERACAO;ALTERACAO;DELIBERACAO_CM_DEP;INSERIR;17;true;;;Deliberação da Câmara Municipal (CM) que determina a alteração do plano;;Deliberação da CM;PECA_ESCRITA;
+PP;ALTERACAO;ALTERACAO;PARECERES_ATA_DEP;INSERIR;18;true;;;Pareceres emitidos / Ata da conferência de serviços;;Pareceres;PECA_ESCRITA;
+PP;ALTERACAO_ADAPTACAO;ALTERACAO_ADAPTACAO;TEXTO_ATO_PUB;INSERIR;1;true;;;Declaração da entidade responsável pela elaboração do plano;Texto do ato a publicar - Declaração da entidade responsável pela elaboração do plano;Texto do Ato;PECA_ESCRITA;
+PP;ALTERACAO_ADAPTACAO;ALTERACAO_ADAPTACAO;TEXTO_ATO_DEP;INSERIR;2;true;;;Declaração da entidade responsável pela elaboração do plano;Texto do ato a publicar - Declaração da entidade responsável pela elaboração do plano;Texto do Ato;PECA_ESCRITA;
+PP;ALTERACAO_ADAPTACAO;ALTERACAO_ADAPTACAO;ALTERACOES_REGULAMENTO_PUB;INSERIR;3;true;;;Texto das disposições alteradas no Regulamento - quando tenha sido alterado;;Alterações ao Regulamento;PECA_ESCRITA;
+PP;ALTERACAO_ADAPTACAO;ALTERACAO_ADAPTACAO;ALTERACOES_REGULAMENTO_DEP;INSERIR;4;true;;;Texto das disposições alteradas no Regulamento - quando tenha sido alterado;;Alterações ao Regulamento;PECA_ESCRITA;
+PP;ALTERACAO_ADAPTACAO;ALTERACAO_ADAPTACAO;REGULAMENTO_INTEGRAL_PUB;INSERIR;5;false;;;Regulamento (versão alterada integral);;Regulamento Integral;PECA_ESCRITA;
+PP;ALTERACAO_ADAPTACAO;ALTERACAO_ADAPTACAO;REGULAMENTO_INTEGRAL_DEP;INSERIR;6;false;;;Regulamento (versão alterada integral);;Regulamento Integral;PECA_ESCRITA;
+PP;ALTERACAO_ADAPTACAO;ALTERACAO_ADAPTACAO;PLANTA_IMPLANTACAO_PUB;INSERIR;7;true;;;Planta de Implantação - quando tenha sido alterada;;Planta de Implantação;PECA_GRAFICA;
+PP;ALTERACAO_ADAPTACAO;ALTERACAO_ADAPTACAO;PLANTA_IMPLANTACAO_DEP;INSERIR;8;true;;;Planta de Implantação - quando tenha sido alterada;;Planta de Implantação;PECA_GRAFICA;
+PP;ALTERACAO_ADAPTACAO;ALTERACAO_ADAPTACAO;PLANTA_CONDICIONANTES_PUB;INSERIR;9;true;;;Planta de Condicionantes - quando tenha sido alterada;;Planta de Condicionantes;PECA_GRAFICA;
+PP;ALTERACAO_ADAPTACAO;ALTERACAO_ADAPTACAO;PLANTA_CONDICIONANTES_DEP;INSERIR;10;true;;;Planta de Condicionantes - quando tenha sido alterada;;Planta de Condicionantes;PECA_GRAFICA;
+PP;ALTERACAO_ADAPTACAO;ALTERACAO_ADAPTACAO;RELATORIO_FUNDAMENTACAO_DEP;INSERIR;11;true;;;Relatório fundamentando as adaptações introduzidas;;Relatório de Fundamentação;PECA_ESCRITA;
+PP;ALTERACAO_ADAPTACAO;ALTERACAO_ADAPTACAO;DEMAIS_ELEMENTOS_DEP;INSERIR;12;true;;;Os demais elementos do plano afetados pela adaptação (vide ficha modelo n.º 2);;Demais Elementos;OUTROS;
+PP;ALTERACAO_ADAPTACAO;ALTERACAO_ADAPTACAO;DELIBERACAO_AM_DEP;INSERIR;13;true;;;Deliberação da Assembleia Municipal/Intermunicipal (AM/AMi) que aprova a adaptação do plano;;Deliberação da AM;PECA_ESCRITA;
+PP;ALTERACAO_ADAPTACAO;ALTERACAO_ADAPTACAO;DELIBERACAO_CM_DEP;INSERIR;14;true;;;Deliberação da Câmara Municipal (CM) que determina a adaptação do plano;;Deliberação da CM;PECA_ESCRITA;
+PP;ALTERACAO_SIMPLIFICADA_ART123;DECISAO_INICIO;TEXTO_ATO_PUB;INSERIR;1;true;;;Texto do ato a publicar no Diário da República;;Texto do Ato;PECA_ESCRITA;
+PP;ALTERACAO_SIMPLIFICADA_ART123;DECISAO_INICIO;TEXTO_ATO_DEP;INSERIR;2;true;;;Texto do ato a publicar no Diário da República;;Texto do Ato;PECA_ESCRITA;
+PP;ALTERACAO_SIMPLIFICADA_ART123;DECISAO_INICIO;DELIBERACAO_PUB;INSERIR;3;true;;;Deliberação do início de alteração simplificada e participação pública (CM/CIM);;Deliberação;PECA_ESCRITA;
+PP;ALTERACAO_SIMPLIFICADA_ART123;DECISAO_INICIO;DELIBERACAO_DEP;INSERIR;4;true;;;Deliberação do início de alteração simplificada e participação pública (CM/CIM);;Deliberação;PECA_ESCRITA;
+PP;ALTERACAO_SIMPLIFICADA_ART123;ALTERACAO_SIMPLIFICADA;TEXTO_ATO_PUB;INSERIR;1;true;;;Texto do ato a publicar no Diário da República;;Texto do Ato;PECA_ESCRITA;
+PP;ALTERACAO_SIMPLIFICADA_ART123;ALTERACAO_SIMPLIFICADA;TEXTO_ATO_DEP;INSERIR;2;true;;;Texto do ato a publicar no Diário da República;;Texto do Ato;PECA_ESCRITA;
+PP;ALTERACAO_SIMPLIFICADA_ART123;ALTERACAO_SIMPLIFICADA;DELIBERACAO_PUB;INSERIR;3;true;;;Deliberação de aprovação do procedimento de plano territorial;;Deliberação;PECA_ESCRITA;
+PP;ALTERACAO_SIMPLIFICADA_ART123;ALTERACAO_SIMPLIFICADA;DELIBERACAO_DEP;INSERIR;4;true;;;Deliberação de aprovação do procedimento de plano territorial;;Deliberação;PECA_ESCRITA;
+PP;ALTERACAO_SIMPLIFICADA_ART123;ALTERACAO_SIMPLIFICADA;ALTERACOES_REGULAMENTO_PUB;INSERIR;5;true;;;Texto das disposições alteradas no Regulamento - quando tenha sido alterado;;Alterações ao Regulamento;PECA_ESCRITA;
+PP;ALTERACAO_SIMPLIFICADA_ART123;ALTERACAO_SIMPLIFICADA;ALTERACOES_REGULAMENTO_DEP;INSERIR;6;true;;;Texto das disposições alteradas no Regulamento - quando tenha sido alterado;;Alterações ao Regulamento;PECA_ESCRITA;
+PP;ALTERACAO_SIMPLIFICADA_ART123;ALTERACAO_SIMPLIFICADA;REGULAMENTO_INTEGRAL_PUB;INSERIR;7;false;;;Regulamento (versão alterada integral);;Regulamento Integral;PECA_ESCRITA;
+PP;ALTERACAO_SIMPLIFICADA_ART123;ALTERACAO_SIMPLIFICADA;REGULAMENTO_INTEGRAL_DEP;INSERIR;8;false;;;Regulamento (versão alterada integral);;Regulamento Integral;PECA_ESCRITA;
+PP;ALTERACAO_SIMPLIFICADA_ART123;ALTERACAO_SIMPLIFICADA;PLANTA_IMPLANTACAO_PUB;INSERIR;9;true;;;Planta de Implantação - quando tenha sido alterada;;Planta de Implantação;PECA_GRAFICA;
+PP;ALTERACAO_SIMPLIFICADA_ART123;ALTERACAO_SIMPLIFICADA;PLANTA_IMPLANTACAO_DEP;INSERIR;10;true;;;Planta de Implantação - quando tenha sido alterada;;Planta de Implantação;PECA_GRAFICA;
+PP;ALTERACAO_SIMPLIFICADA_ART123;ALTERACAO_SIMPLIFICADA;PLANTA_CONDICIONANTES_PUB;INSERIR;11;true;;;Planta de Condicionantes - quando tenha sido alterada;;Planta de Condicionantes;PECA_GRAFICA;
+PP;ALTERACAO_SIMPLIFICADA_ART123;ALTERACAO_SIMPLIFICADA;PLANTA_CONDICIONANTES_DEP;INSERIR;12;true;;;Planta de Condicionantes - quando tenha sido alterada;;Planta de Condicionantes;PECA_GRAFICA;
+PP;ALTERACAO_SIMPLIFICADA_ART123;ALTERACAO_SIMPLIFICADA;RELATORIO_FUNDAMENTACAO_DEP;INSERIR;13;true;;;Relatório fundamentando as alterações introduzidas;;Relatório de Fundamentação;PECA_ESCRITA;
+PP;ALTERACAO_SIMPLIFICADA_ART123;ALTERACAO_SIMPLIFICADA;DEMAIS_ELEMENTOS_DEP;INSERIR;14;true;;;Os demais elementos do plano afetados pela alteração;;Demais Elementos;OUTROS;
+PP;ALTERACAO_SIMPLIFICADA_ART123;ALTERACAO_SIMPLIFICADA;RELATORIO_PONDERACAO_DEP;INSERIR;15;true;;;Relatório de ponderação dos resultados da discussão pública;;Relatório de Ponderação;PECA_ESCRITA;
+PP;ALTERACAO_SIMPLIFICADA_ART123;ALTERACAO_SIMPLIFICADA;DELIBERACAO_CM_DEP;INSERIR;16;true;;;Deliberação da Câmara Municipal (CM) que determina a alteração do plano;;Deliberação da CM;PECA_ESCRITA;
+PP;ALTERACAO_SIMPLIFICADA_ART123;ALTERACAO_SIMPLIFICADA;PARECER_CCDR_DEP;INSERIR;17;true;;;Parecer da CCDR;;Parecer da CCDR;PECA_ESCRITA;
+PP;ALTERACAO_SIMPLIFICADA_DL10_2024;ABERTURA_DISCUSSAO_PUBLICA_DL10;TEXTO_ATO_PUB;INSERIR;1;true;;;Texto do ato a publicar no Diário da República;;Texto do Ato;PECA_ESCRITA;
+PP;ALTERACAO_SIMPLIFICADA_DL10_2024;ABERTURA_DISCUSSAO_PUBLICA_DL10;TEXTO_ATO_DEP;INSERIR;2;true;;;Texto do ato a publicar no Diário da República;;Texto do Ato;PECA_ESCRITA;
+PP;ALTERACAO_SIMPLIFICADA_DL10_2024;ABERTURA_DISCUSSAO_PUBLICA_DL10;DELIBERACAO_PUB;INSERIR;3;true;;;Deliberação do início de alteração simplificada e participação pública (CM/CIM);;Deliberação;PECA_ESCRITA;
+PP;ALTERACAO_SIMPLIFICADA_DL10_2024;ABERTURA_DISCUSSAO_PUBLICA_DL10;DELIBERACAO_DEP;INSERIR;4;true;;;Deliberação do início de alteração simplificada e participação pública (CM/CIM);;Deliberação;PECA_ESCRITA;
+PP;ALTERACAO_SIMPLIFICADA_DL10_2024;ALTERACAO_SIMPLIFICADA_DL10;TEXTO_ATO_PUB;INSERIR;1;true;;;Texto do ato a publicar no Diário da República;;Texto do Ato;PECA_ESCRITA;
+PP;ALTERACAO_SIMPLIFICADA_DL10_2024;ALTERACAO_SIMPLIFICADA_DL10;TEXTO_ATO_DEP;INSERIR;2;true;;;Texto do ato a publicar no Diário da República;;Texto do Ato;PECA_ESCRITA;
+PP;ALTERACAO_SIMPLIFICADA_DL10_2024;ALTERACAO_SIMPLIFICADA_DL10;DELIBERACAO_PUB;INSERIR;3;true;;;Deliberação de aprovação do procedimento de plano territorial;;Deliberação;PECA_ESCRITA;
+PP;ALTERACAO_SIMPLIFICADA_DL10_2024;ALTERACAO_SIMPLIFICADA_DL10;DELIBERACAO_DEP;INSERIR;4;true;;;Deliberação de aprovação do procedimento de plano territorial;;Deliberação;PECA_ESCRITA;
+PP;ALTERACAO_SIMPLIFICADA_DL10_2024;ALTERACAO_SIMPLIFICADA_DL10;ALTERACOES_REGULAMENTO_PUB;INSERIR;5;true;;;Texto das disposições alteradas no Regulamento - quando tenha sido alterado;;Alterações ao Regulamento;PECA_ESCRITA;
+PP;ALTERACAO_SIMPLIFICADA_DL10_2024;ALTERACAO_SIMPLIFICADA_DL10;ALTERACOES_REGULAMENTO_DEP;INSERIR;6;true;;;Texto das disposições alteradas no Regulamento - quando tenha sido alterado;;Alterações ao Regulamento;PECA_ESCRITA;
+PP;ALTERACAO_SIMPLIFICADA_DL10_2024;ALTERACAO_SIMPLIFICADA_DL10;REGULAMENTO_INTEGRAL_PUB;INSERIR;7;false;;;Regulamento (versão alterada integral);;Regulamento Integral;PECA_ESCRITA;
+PP;ALTERACAO_SIMPLIFICADA_DL10_2024;ALTERACAO_SIMPLIFICADA_DL10;REGULAMENTO_INTEGRAL_DEP;INSERIR;8;false;;;Regulamento (versão alterada integral);;Regulamento Integral;PECA_ESCRITA;
+PP;ALTERACAO_SIMPLIFICADA_DL10_2024;ALTERACAO_SIMPLIFICADA_DL10;PLANTA_IMPLANTACAO_PUB;INSERIR;9;true;;;Planta de Implantação - quando tenha sido alterada;;Planta de Implantação;PECA_GRAFICA;
+PP;ALTERACAO_SIMPLIFICADA_DL10_2024;ALTERACAO_SIMPLIFICADA_DL10;PLANTA_IMPLANTACAO_DEP;INSERIR;10;true;;;Planta de Implantação - quando tenha sido alterada;;Planta de Implantação;PECA_GRAFICA;
+PP;ALTERACAO_SIMPLIFICADA_DL10_2024;ALTERACAO_SIMPLIFICADA_DL10;PLANTA_CONDICIONANTES_PUB;INSERIR;11;true;;;Planta de Condicionantes - quando tenha sido alterada;;Planta de Condicionantes;PECA_GRAFICA;
+PP;ALTERACAO_SIMPLIFICADA_DL10_2024;ALTERACAO_SIMPLIFICADA_DL10;PLANTA_CONDICIONANTES_DEP;INSERIR;12;true;;;Planta de Condicionantes - quando tenha sido alterada;;Planta de Condicionantes;PECA_GRAFICA;
+PP;ALTERACAO_SIMPLIFICADA_DL10_2024;ALTERACAO_SIMPLIFICADA_DL10;RELATORIO_FUNDAMENTACAO_DEP;INSERIR;13;true;;;Relatório fundamentando as alterações introduzidas;;Relatório de Fundamentação;PECA_ESCRITA;
+PP;ALTERACAO_SIMPLIFICADA_DL10_2024;ALTERACAO_SIMPLIFICADA_DL10;DEMAIS_ELEMENTOS_DEP;INSERIR;14;true;;;Os demais elementos do plano afetados pela alteração;;Demais Elementos;OUTROS;
+PP;ALTERACAO_SIMPLIFICADA_DL10_2024;ALTERACAO_SIMPLIFICADA_DL10;RELATORIO_PONDERACAO_DEP;INSERIR;15;true;;;Relatório de ponderação dos resultados da discussão pública;;Relatório de Ponderação;PECA_ESCRITA;
+PP;ALTERACAO_SIMPLIFICADA_DL10_2024;ALTERACAO_SIMPLIFICADA_DL10;DELIBERACAO_CM_DEP;INSERIR;16;true;;;Deliberação da Câmara Municipal (CM) que determina a alteração do plano;;Deliberação da CM;PECA_ESCRITA;
+PP;ALTERACAO_SIMPLIFICADA_DL10_2024;ALTERACAO_SIMPLIFICADA_DL10;PARECER_CCDR_DEP;INSERIR;17;true;;;Parecer da CCDR;;Parecer da CCDR;PECA_ESCRITA;
+PP;CORRECAO_MATERIAL;CORRECAO_MATERIAL;TEXTO_ATO_PUB;INSERIR;1;true;;;Declaração da entidade responsável pela elaboração do plano;Texto do ato a publicar - Declaração da entidade responsável pela elaboração do plano;Texto do Ato;PECA_ESCRITA;
+PP;CORRECAO_MATERIAL;CORRECAO_MATERIAL;TEXTO_ATO_DEP;INSERIR;2;true;;;Declaração da entidade responsável pela elaboração do plano;Texto do ato a publicar - Declaração da entidade responsável pela elaboração do plano;Texto do Ato;PECA_ESCRITA;
+PP;CORRECAO_MATERIAL;CORRECAO_MATERIAL;ALTERACOES_REGULAMENTO_PUB;INSERIR;3;true;;;Texto das disposições corrigidas no Regulamento - quando tenha sido corrigido;;Alterações ao Regulamento;PECA_ESCRITA;
+PP;CORRECAO_MATERIAL;CORRECAO_MATERIAL;ALTERACOES_REGULAMENTO_DEP;INSERIR;4;true;;;Texto das disposições corrigidas no Regulamento - quando tenha sido corrigido;;Alterações ao Regulamento;PECA_ESCRITA;
+PP;CORRECAO_MATERIAL;CORRECAO_MATERIAL;REGULAMENTO_INTEGRAL_PUB;INSERIR;5;false;;;Regulamento (versão alterada integral) - quando necessário;;Regulamento Integral;PECA_ESCRITA;
+PP;CORRECAO_MATERIAL;CORRECAO_MATERIAL;REGULAMENTO_INTEGRAL_DEP;INSERIR;6;false;;;Regulamento (versão alterada integral) - quando necessário;;Regulamento Integral;PECA_ESCRITA;
+PP;CORRECAO_MATERIAL;CORRECAO_MATERIAL;PLANTA_IMPLANTACAO_PUB;INSERIR;7;true;;;Planta de Implantação - quando tenha sido corrigida;;Planta de Implantação;PECA_GRAFICA;
+PP;CORRECAO_MATERIAL;CORRECAO_MATERIAL;PLANTA_IMPLANTACAO_DEP;INSERIR;8;true;;;Planta de Implantação - quando tenha sido corrigida;;Planta de Implantação;PECA_GRAFICA;
+PP;CORRECAO_MATERIAL;CORRECAO_MATERIAL;PLANTA_CONDICIONANTES_PUB;INSERIR;9;true;;;Planta de Condicionantes - quando tenha sido corrigida;;Planta de Condicionantes;PECA_GRAFICA;
+PP;CORRECAO_MATERIAL;CORRECAO_MATERIAL;PLANTA_CONDICIONANTES_DEP;INSERIR;10;true;;;Planta de Condicionantes - quando tenha sido corrigida;;Planta de Condicionantes;PECA_GRAFICA;
+PP;CORRECAO_MATERIAL;CORRECAO_MATERIAL;RELATORIO_FUNDAMENTACAO_DEP;INSERIR;11;true;;;Relatório fundamentando as correções materiais/retificações introduzidas;;Relatório de Fundamentação;PECA_ESCRITA;
+PP;CORRECAO_MATERIAL;CORRECAO_MATERIAL;DEMAIS_ELEMENTOS_DEP;INSERIR;12;true;;;Os demais elementos do plano afetados pela correção material/retificação;;Demais Elementos;OUTROS;
+PP;CORRECAO_MATERIAL;CORRECAO_MATERIAL;DECLARACAO_CM_DEP;INSERIR;13;true;;;Declaração da Câmara Municipal (CM) de correção material/retificação do plano;;Declaração da CM;PECA_ESCRITA;
+PP;REVOGACAO;REVOGACAO;TEXTO_ATO_PUB;INSERIR;1;true;;;Texto do ato a publicar no Diário da República;;Texto do Ato;PECA_ESCRITA;
+PP;REVOGACAO;REVOGACAO;TEXTO_ATO_DEP;INSERIR;2;true;;;Texto do ato a publicar no Diário da República;;Texto do Ato;PECA_ESCRITA;
+PP;REVOGACAO;REVOGACAO;DELIBERACAO_PUB;INSERIR;3;true;;;Deliberação de aprovação da revogação de plano territorial;;Deliberação;PECA_ESCRITA;
+PP;REVOGACAO;REVOGACAO;DELIBERACAO_DEP;INSERIR;4;true;;;Deliberação de aprovação da revogação de plano territorial;;Deliberação;PECA_ESCRITA;
+PDIM;ELABORACAO;DECISAO_INICIO;TEXTO_ATO_PUB;INSERIR;1;true;;;Texto do ato a publicar no Diário da República;;Texto do Ato;PECA_ESCRITA;TEXTO_ATO
+PDIM;ELABORACAO;DECISAO_INICIO;TEXTO_ATO_DEP;INSERIR;2;true;;;Texto do ato a publicar no Diário da República;;Texto do Ato;PECA_ESCRITA;TEXTO_ATO
+PDIM;ELABORACAO;DECISAO_INICIO;DELIBERACAO_PUB;INSERIR;3;true;;;Deliberação do início de elaboração de plano territorial (CM/CIM);;Deliberação;PECA_ESCRITA;DELIBERACAO
+PDIM;ELABORACAO;DECISAO_INICIO;DELIBERACAO_DEP;INSERIR;4;true;;;Deliberação do início de elaboração de plano territorial (CM/CIM);;Deliberação;PECA_ESCRITA;DELIBERACAO
+PDIM;ELABORACAO;CONSTITUICAO_CC;TEXTO_ATO_PUB;INSERIR;1;true;;;Texto do Aviso de constituição da CC;;Texto do Ato;PECA_ESCRITA;
+PDIM;ELABORACAO;CONSTITUICAO_CC;TEXTO_ATO_DEP;INSERIR;2;true;;;Texto do Aviso de constituição da CC;;Texto do Ato;PECA_ESCRITA;
+PDIM;ELABORACAO;CONSTITUICAO_CC;DESPACHO_CCDR_PUB;INSERIR;3;true;;;Despacho do Presidente da CCDR para constituição da CC;;Despacho da CCDR;PECA_ESCRITA;
+PDIM;ELABORACAO;CONSTITUICAO_CC;DESPACHO_CCDR_DEP;INSERIR;4;true;;;Despacho do Presidente da CCDR para constituição da CC;;Despacho da CCDR;PECA_ESCRITA;
+PDIM;ELABORACAO;ABERTURA_DISCUSSAO_PUBLICA;TEXTO_ATO_PUB;INSERIR;1;true;;;Texto do ato a publicar no Diário da República;;Texto do Ato;PECA_ESCRITA;TEXTO_ATO
+PDIM;ELABORACAO;ABERTURA_DISCUSSAO_PUBLICA;TEXTO_ATO_DEP;INSERIR;2;true;;;Texto do ato a publicar no Diário da República;;Texto do Ato;PECA_ESCRITA;TEXTO_ATO
+PDIM;ELABORACAO;ABERTURA_DISCUSSAO_PUBLICA;DELIBERACAO_PUB;INSERIR;3;true;;;Deliberação;;Deliberação;PECA_ESCRITA;DELIBERACAO
+PDIM;ELABORACAO;ABERTURA_DISCUSSAO_PUBLICA;DELIBERACAO_DEP;INSERIR;4;true;;;Deliberação;;Deliberação;PECA_ESCRITA;DELIBERACAO
+PDIM;ELABORACAO;ELABORACAO;TEXTO_ATO_PUB;INSERIR;1;true;;;Texto do ato a publicar no Diário da República;;Texto do Ato;PECA_ESCRITA;TEXTO_ATO
+PDIM;ELABORACAO;ELABORACAO;TEXTO_ATO_DEP;INSERIR;2;true;;;Texto do ato a publicar no Diário da República;;Texto do Ato;PECA_ESCRITA;TEXTO_ATO
+PDIM;ELABORACAO;ELABORACAO;DELIBERACAO_PUB;INSERIR;3;true;;;Deliberação da Assembleia Municipal/Intermunicipal (AM/AMi) que aprova o plano;;Deliberação;PECA_ESCRITA;DELIBERACAO
+PDIM;ELABORACAO;ELABORACAO;DELIBERACAO_DEP;INSERIR;4;true;;;Deliberação da Assembleia Municipal/Intermunicipal (AM/AMi) que aprova o plano;;Deliberação;PECA_ESCRITA;DELIBERACAO
+PDIM;ELABORACAO;ELABORACAO;REGULAMENTO_PUB;INSERIR;5;true;;;Regulamento;;Regulamento;PECA_ESCRITA;
+PDIM;ELABORACAO;ELABORACAO;REGULAMENTO_DEP;INSERIR;6;true;;;Regulamento;;Regulamento;PECA_ESCRITA;
+PDIM;ELABORACAO;ELABORACAO;PLANTA_ORDENAMENTO_PUB;INSERIR;7;true;;;Planta de Ordenamento;;Planta de Ordenamento;PECA_GRAFICA;
+PDIM;ELABORACAO;ELABORACAO;PLANTA_ORDENAMENTO_DEP;INSERIR;8;true;;;Planta de Ordenamento;;Planta de Ordenamento;PECA_GRAFICA;
+PDIM;ELABORACAO;ELABORACAO;PLANTA_CONDICIONANTES_PUB;INSERIR;9;true;;;Planta de Condicionantes;;Planta de Condicionantes;PECA_GRAFICA;
+PDIM;ELABORACAO;ELABORACAO;PLANTA_CONDICIONANTES_DEP;INSERIR;10;true;;;Planta de Condicionantes;;Planta de Condicionantes;PECA_GRAFICA;
+PDIM;ELABORACAO;ELABORACAO;OUTRAS_PLANTAS_PUB;INSERIR;11;true;;;Outras plantas;;Outras Plantas;PECA_GRAFICA;
+PDIM;ELABORACAO;ELABORACAO;OUTRAS_PLANTAS_DEP;INSERIR;12;true;;;Outras plantas;;Outras Plantas;PECA_GRAFICA;
+PDIM;ELABORACAO;ELABORACAO;CARTOGRAMA_PUB;INSERIR;13;true;;;Cartograma;;Cartograma;PECA_GRAFICA;
+PDIM;ELABORACAO;ELABORACAO;CARTOGRAMA_DEP;INSERIR;14;true;;;Cartograma;;Cartograma;PECA_GRAFICA;
+PDIM;ELABORACAO;ELABORACAO;ESTUDOS_CARACTERIZACAO_DEP;INSERIR;15;true;;;Estudos de caracterização do território;Estudos de caraterização económica, social, biofísica e da estrutura fundiária do território municipal;Estudos de Caracterização;PECA_ESCRITA;
+PDIM;ELABORACAO;ELABORACAO;RELATORIO_PLANO_DEP;INSERIR;16;true;;;Relatório com os objetivos estratégicos do plano e a respetiva fundamentação;Relatório, que explicita os objectivos estratégicos do plano e a respectiva fundamentação técnica, suportada na avaliação das condições económicas, sociais, culturais e ambientais para a sua execução;Relatório do Plano;PECA_ESCRITA;
+PDIM;ELABORACAO;ELABORACAO;RELATORIO_AMBIENTAL_DEP;INSERIR;17;true;;;Relatório ambiental;Relatório ambiental, no qual se identificam, descrevem e avaliam os eventuais efeitos significativos no ambiente resultantes da aplicação do plano e as suas alternativas razoáveis que tenham em conta os objectivos e o âmbito de aplicação territorial respectivos;Relatório Ambiental;PECA_ESCRITA;
+PDIM;ELABORACAO;ELABORACAO;PROGRAMA_EXECUCAO_DEP;INSERIR;18;true;;;Programa de execução;Programa de execução contendo disposições indicativas sobre as intervenções municipais previstas, bem como sobre os meios de financiamento das mesmas;Programa de Execução;PECA_ESCRITA;
+PDIM;ELABORACAO;ELABORACAO;PLANTA_ENQUADRAMENTO_DEP;INSERIR;19;true;;;Planta de enquadramento regional;Planta de enquadramento regional elaborada a escala inferior à do plano director municipal, com indicação dos municípios limítrofes, centros urbanos mais importantes, principais vias de comunicação e outras infra-estruturas relevantes e grandes equipamentos que sirvam o município, bem como a…;Planta de Enquadramento;PECA_GRAFICA;
+PDIM;ELABORACAO;ELABORACAO;PLANTA_SITUACAO_EXISTENTE_DEP;INSERIR;20;true;;;Planta da situação existente à data da elaboração do plano;Planta da situação existente com a ocupação do território municipal à data da elaboração do plano;Planta da Situação Existente;PECA_GRAFICA;
+PDIM;ELABORACAO;ELABORACAO;COMPROMISSOS_URBANISTICOS_DEP;INSERIR;21;true;;;Relatório e/ou planta das licenças ou autorizações de operações urbanísticas;Relatório e ou planta com a indicação das licenças ou autorizações de operações urbanísticas emitidas, bem como das informações prévias favoráveis em vigor, substituível por declaração de câmara municipal comprovativa da inexistência dos referidos compromissos urbanísticos na área do plano;Compromissos Urbanísticos;PECA_ESCRITA;
+PDIM;ELABORACAO;ELABORACAO;ESTRUTURA_ECOLOGICA_DEP;INSERIR;22;true;;;Carta da estrutura ecológica municipal ou do(s) aglomerado(s);;Estrutura Ecológica;PECA_GRAFICA;
+PDIM;ELABORACAO;ELABORACAO;CARTA_EDUCATIVA_DEP;INSERIR;23;true;;;Carta educativa;;Carta Educativa;PECA_ESCRITA;
+PDIM;ELABORACAO;ELABORACAO;MAPA_RUIDO_DEP;INSERIR;24;true;;;Relatório de recolha de dados acústicos ou mapa de ruído;;Mapa de Ruído;PECA_GRAFICA;
+PDIM;ELABORACAO;ELABORACAO;RELATORIO_PONDERACAO_DEP;INSERIR;25;true;;;Relatório de ponderação dos resultados da discussão pública;;Relatório de Ponderação;PECA_ESCRITA;
+PDIM;ELABORACAO;ELABORACAO;PARECERES_ATA_DEP;INSERIR;26;true;;;Pareceres emitidos / Ata da conferência de serviços;;Pareceres;PECA_ESCRITA;
+PDIM;ELABORACAO;ELABORACAO;DELIBERACAO_CM_DEP;INSERIR;27;true;;;Deliberação da Câmara Municipal (CM) / CIM que determina a elaboração/revisão do Plano;;Deliberação da CM;PECA_ESCRITA;
+PDIM;ELABORACAO;ELABORACAO;PARECER_CA_DEP;INSERIR;28;true;;;Parecer da Comissão de Acompanhamento e os outros pareceres emitidos;;Parecer da Comissão de Acompanhamento;PECA_ESCRITA;
+PDIM;ELABORACAO;ELABORACAO;PARECER_CCDR_DEP;INSERIR;29;true;;;Parecer da CCDR;;Parecer da CCDR;PECA_ESCRITA;
+PDIM;REVISAO;DECISAO_INICIO;TEXTO_ATO_PUB;INSERIR;1;true;;;Texto do ato a publicar no Diário da República;;Texto do Ato;PECA_ESCRITA;TEXTO_ATO
+PDIM;REVISAO;DECISAO_INICIO;TEXTO_ATO_DEP;INSERIR;2;true;;;Texto do ato a publicar no Diário da República;;Texto do Ato;PECA_ESCRITA;TEXTO_ATO
+PDIM;REVISAO;DECISAO_INICIO;DELIBERACAO_PUB;INSERIR;3;true;;;Deliberação do início de revisão de plano territorial (CM/CIM);;Deliberação;PECA_ESCRITA;DELIBERACAO
+PDIM;REVISAO;DECISAO_INICIO;DELIBERACAO_DEP;INSERIR;4;true;;;Deliberação do início de revisão de plano territorial (CM/CIM);;Deliberação;PECA_ESCRITA;DELIBERACAO
+PDIM;REVISAO;CONSTITUICAO_CC;TEXTO_ATO_PUB;INSERIR;1;true;;;Texto do Aviso de constituição da CC;;Texto do Ato;PECA_ESCRITA;
+PDIM;REVISAO;CONSTITUICAO_CC;TEXTO_ATO_DEP;INSERIR;2;true;;;Texto do Aviso de constituição da CC;;Texto do Ato;PECA_ESCRITA;
+PDIM;REVISAO;CONSTITUICAO_CC;DESPACHO_CCDR_PUB;INSERIR;3;true;;;Despacho do Presidente da CCDR para constituição da CC;;Despacho da CCDR;PECA_ESCRITA;
+PDIM;REVISAO;CONSTITUICAO_CC;DESPACHO_CCDR_DEP;INSERIR;4;true;;;Despacho do Presidente da CCDR para constituição da CC;;Despacho da CCDR;PECA_ESCRITA;
+PDIM;REVISAO;ABERTURA_DISCUSSAO_PUBLICA;TEXTO_ATO_PUB;INSERIR;1;true;;;Texto do ato a publicar no Diário da República;;Texto do Ato;PECA_ESCRITA;TEXTO_ATO
+PDIM;REVISAO;ABERTURA_DISCUSSAO_PUBLICA;TEXTO_ATO_DEP;INSERIR;2;true;;;Texto do ato a publicar no Diário da República;;Texto do Ato;PECA_ESCRITA;TEXTO_ATO
+PDIM;REVISAO;ABERTURA_DISCUSSAO_PUBLICA;DELIBERACAO_PUB;INSERIR;3;true;;;Deliberação;;Deliberação;PECA_ESCRITA;DELIBERACAO
+PDIM;REVISAO;ABERTURA_DISCUSSAO_PUBLICA;DELIBERACAO_DEP;INSERIR;4;true;;;Deliberação;;Deliberação;PECA_ESCRITA;DELIBERACAO
+PDIM;REVISAO;REVISAO;TEXTO_ATO_PUB;INSERIR;1;true;;;Texto do ato a publicar no Diário da República;;Texto do Ato;PECA_ESCRITA;TEXTO_ATO
+PDIM;REVISAO;REVISAO;TEXTO_ATO_DEP;INSERIR;2;true;;;Texto do ato a publicar no Diário da República;;Texto do Ato;PECA_ESCRITA;TEXTO_ATO
+PDIM;REVISAO;REVISAO;DELIBERACAO_PUB;INSERIR;3;true;;;Deliberação da Assembleia Municipal/Intermunicipal (AM/AMi) que aprova o plano;;Deliberação;PECA_ESCRITA;DELIBERACAO
+PDIM;REVISAO;REVISAO;DELIBERACAO_DEP;INSERIR;4;true;;;Deliberação da Assembleia Municipal/Intermunicipal (AM/AMi) que aprova o plano;;Deliberação;PECA_ESCRITA;DELIBERACAO
+PDIM;REVISAO;REVISAO;REGULAMENTO_PUB;INSERIR;5;true;;;Regulamento;;Regulamento;PECA_ESCRITA;
+PDIM;REVISAO;REVISAO;REGULAMENTO_DEP;INSERIR;6;true;;;Regulamento;;Regulamento;PECA_ESCRITA;
+PDIM;REVISAO;REVISAO;PLANTA_ORDENAMENTO_PUB;INSERIR;7;true;;;Planta de Ordenamento;;Planta de Ordenamento;PECA_GRAFICA;
+PDIM;REVISAO;REVISAO;PLANTA_ORDENAMENTO_DEP;INSERIR;8;true;;;Planta de Ordenamento;;Planta de Ordenamento;PECA_GRAFICA;
+PDIM;REVISAO;REVISAO;PLANTA_CONDICIONANTES_PUB;INSERIR;9;true;;;Planta de Condicionantes;;Planta de Condicionantes;PECA_GRAFICA;
+PDIM;REVISAO;REVISAO;PLANTA_CONDICIONANTES_DEP;INSERIR;10;true;;;Planta de Condicionantes;;Planta de Condicionantes;PECA_GRAFICA;
+PDIM;REVISAO;REVISAO;OUTRAS_PLANTAS_PUB;INSERIR;11;true;;;Outras plantas;;Outras Plantas;PECA_GRAFICA;
+PDIM;REVISAO;REVISAO;OUTRAS_PLANTAS_DEP;INSERIR;12;true;;;Outras plantas;;Outras Plantas;PECA_GRAFICA;
+PDIM;REVISAO;REVISAO;CARTOGRAMA_PUB;INSERIR;13;true;;;Cartograma;;Cartograma;PECA_GRAFICA;
+PDIM;REVISAO;REVISAO;CARTOGRAMA_DEP;INSERIR;14;true;;;Cartograma;;Cartograma;PECA_GRAFICA;
+PDIM;REVISAO;REVISAO;ESTUDOS_CARACTERIZACAO_DEP;INSERIR;15;true;;;Estudos de caracterização do território;Estudos de caraterização económica, social, biofísica e da estrutura fundiária do território municipal;Estudos de Caracterização;PECA_ESCRITA;
+PDIM;REVISAO;REVISAO;RELATORIO_PLANO_DEP;INSERIR;16;true;;;Relatório com os objetivos estratégicos do plano e a respetiva fundamentação;Relatório, que explicita os objectivos estratégicos do plano e a respectiva fundamentação técnica, suportada na avaliação das condições económicas, sociais, culturais e ambientais para a sua execução;Relatório do Plano;PECA_ESCRITA;
+PDIM;REVISAO;REVISAO;RELATORIO_AMBIENTAL_DEP;INSERIR;17;true;;;Relatório ambiental;Relatório ambiental, no qual se identificam, descrevem e avaliam os eventuais efeitos significativos no ambiente resultantes da aplicação do plano e as suas alternativas razoáveis que tenham em conta os objectivos e o âmbito de aplicação territorial respectivos;Relatório Ambiental;PECA_ESCRITA;
+PDIM;REVISAO;REVISAO;PROGRAMA_EXECUCAO_DEP;INSERIR;18;true;;;Programa de execução;Programa de execução contendo disposições indicativas sobre as intervenções municipais previstas, bem como sobre os meios de financiamento das mesmas;Programa de Execução;PECA_ESCRITA;
+PDIM;REVISAO;REVISAO;PLANTA_ENQUADRAMENTO_DEP;INSERIR;19;true;;;Planta de enquadramento regional;Planta de enquadramento regional elaborada a escala inferior à do plano director municipal, com indicação dos municípios limítrofes, centros urbanos mais importantes, principais vias de comunicação e outras infra-estruturas relevantes e grandes equipamentos que sirvam o município, bem como a…;Planta de Enquadramento;PECA_GRAFICA;
+PDIM;REVISAO;REVISAO;PLANTA_SITUACAO_EXISTENTE_DEP;INSERIR;20;true;;;Planta da situação existente à data da elaboração do plano;Planta da situação existente com a ocupação do território municipal à data da elaboração do plano;Planta da Situação Existente;PECA_GRAFICA;
+PDIM;REVISAO;REVISAO;COMPROMISSOS_URBANISTICOS_DEP;INSERIR;21;true;;;Relatório e/ou planta das licenças ou autorizações de operações urbanísticas;Relatório e ou planta com a indicação das licenças ou autorizações de operações urbanísticas emitidas, bem como das informações prévias favoráveis em vigor, substituível por declaração de câmara municipal comprovativa da inexistência dos referidos compromissos urbanísticos na área do plano;Compromissos Urbanísticos;PECA_ESCRITA;
+PDIM;REVISAO;REVISAO;ESTRUTURA_ECOLOGICA_DEP;INSERIR;22;true;;;Carta da estrutura ecológica municipal ou do(s) aglomerado(s);;Estrutura Ecológica;PECA_GRAFICA;
+PDIM;REVISAO;REVISAO;CARTA_EDUCATIVA_DEP;INSERIR;23;true;;;Carta educativa;;Carta Educativa;PECA_ESCRITA;
+PDIM;REVISAO;REVISAO;MAPA_RUIDO_DEP;INSERIR;24;true;;;Relatório de recolha de dados acústicos ou mapa de ruído;;Mapa de Ruído;PECA_GRAFICA;
+PDIM;REVISAO;REVISAO;RELATORIO_PONDERACAO_DEP;INSERIR;25;true;;;Relatório de ponderação dos resultados da discussão pública;;Relatório de Ponderação;PECA_ESCRITA;
+PDIM;REVISAO;REVISAO;PARECERES_ATA_DEP;INSERIR;26;true;;;Pareceres emitidos / Ata da conferência de serviços;;Pareceres;PECA_ESCRITA;
+PDIM;REVISAO;REVISAO;DELIBERACAO_CM_DEP;INSERIR;27;true;;;Deliberação da Câmara Municipal (CM) / CIM que determina a elaboração/revisão do Plano;;Deliberação da CM;PECA_ESCRITA;
+PDIM;REVISAO;REVISAO;PARECER_CA_DEP;INSERIR;28;true;;;Parecer da Comissão de Acompanhamento e os outros pareceres emitidos;;Parecer da Comissão de Acompanhamento;PECA_ESCRITA;
+PDIM;REVISAO;REVISAO;PARECER_CCDR_DEP;INSERIR;29;true;;;Parecer da CCDR;;Parecer da CCDR;PECA_ESCRITA;
+PDIM;ALTERACAO;DECISAO_INICIO;TEXTO_ATO_PUB;INSERIR;1;true;;;Texto do ato a publicar no Diário da República;;Texto do Ato;PECA_ESCRITA;TEXTO_ATO
+PDIM;ALTERACAO;DECISAO_INICIO;TEXTO_ATO_DEP;INSERIR;2;true;;;Texto do ato a publicar no Diário da República;;Texto do Ato;PECA_ESCRITA;TEXTO_ATO
+PDIM;ALTERACAO;DECISAO_INICIO;DELIBERACAO_PUB;INSERIR;3;true;;;Deliberação do início de alteração de plano territorial (CM/CIM);;Deliberação;PECA_ESCRITA;DELIBERACAO
+PDIM;ALTERACAO;DECISAO_INICIO;DELIBERACAO_DEP;INSERIR;4;true;;;Deliberação do início de alteração de plano territorial (CM/CIM);;Deliberação;PECA_ESCRITA;DELIBERACAO
+PDIM;ALTERACAO;ABERTURA_DISCUSSAO_PUBLICA;TEXTO_ATO_PUB;INSERIR;1;true;;;Texto do ato a publicar no Diário da República;;Texto do Ato;PECA_ESCRITA;TEXTO_ATO
+PDIM;ALTERACAO;ABERTURA_DISCUSSAO_PUBLICA;TEXTO_ATO_DEP;INSERIR;2;true;;;Texto do ato a publicar no Diário da República;;Texto do Ato;PECA_ESCRITA;TEXTO_ATO
+PDIM;ALTERACAO;ABERTURA_DISCUSSAO_PUBLICA;DELIBERACAO_PUB;INSERIR;3;true;;;Deliberação;;Deliberação;PECA_ESCRITA;DELIBERACAO
+PDIM;ALTERACAO;ABERTURA_DISCUSSAO_PUBLICA;DELIBERACAO_DEP;INSERIR;4;true;;;Deliberação;;Deliberação;PECA_ESCRITA;DELIBERACAO
+PDIM;ALTERACAO;ALTERACAO;TEXTO_ATO_PUB;INSERIR;1;true;;;Texto do ato a publicar no Diário da República;;Texto do Ato;PECA_ESCRITA;TEXTO_ATO
+PDIM;ALTERACAO;ALTERACAO;TEXTO_ATO_DEP;INSERIR;2;true;;;Texto do ato a publicar no Diário da República;;Texto do Ato;PECA_ESCRITA;TEXTO_ATO
+PDIM;ALTERACAO;ALTERACAO;DELIBERACAO_PUB;INSERIR;3;true;;;Deliberação da Assembleia Municipal/Intermunicipal (AM/AMi) que aprova a alteração do plano;;Deliberação;PECA_ESCRITA;DELIBERACAO
+PDIM;ALTERACAO;ALTERACAO;DELIBERACAO_DEP;INSERIR;4;true;;;Deliberação da Assembleia Municipal/Intermunicipal (AM/AMi) que aprova a alteração do plano;;Deliberação;PECA_ESCRITA;DELIBERACAO
+PDIM;ALTERACAO;ALTERACAO;ALTERACOES_REGULAMENTO_PUB;INSERIR;5;true;;;Texto das disposições alteradas no Regulamento - quando tenha sido alterado;;Alterações ao Regulamento;PECA_ESCRITA;
+PDIM;ALTERACAO;ALTERACAO;ALTERACOES_REGULAMENTO_DEP;INSERIR;6;true;;;Texto das disposições alteradas no Regulamento - quando tenha sido alterado;;Alterações ao Regulamento;PECA_ESCRITA;
+PDIM;ALTERACAO;ALTERACAO;REGULAMENTO_INTEGRAL_PUB;INSERIR;7;true;;;Regulamento (versão alterada integral quando alterações superiores a 20%);;Regulamento Integral;PECA_ESCRITA;
+PDIM;ALTERACAO;ALTERACAO;REGULAMENTO_INTEGRAL_DEP;INSERIR;8;true;;;Regulamento (versão alterada integral quando alterações superiores a 20%);;Regulamento Integral;PECA_ESCRITA;
+PDIM;ALTERACAO;ALTERACAO;PLANTA_ORDENAMENTO_PUB;INSERIR;9;true;;;Planta de Ordenamento - quando tenha sido alterada;;Planta de Ordenamento;PECA_GRAFICA;
+PDIM;ALTERACAO;ALTERACAO;PLANTA_ORDENAMENTO_DEP;INSERIR;10;true;;;Planta de Ordenamento - quando tenha sido alterada;;Planta de Ordenamento;PECA_GRAFICA;
+PDIM;ALTERACAO;ALTERACAO;PLANTA_CONDICIONANTES_PUB;INSERIR;11;true;;;Planta de Condicionantes - quando tenha sido alterada;;Planta de Condicionantes;PECA_GRAFICA;
+PDIM;ALTERACAO;ALTERACAO;PLANTA_CONDICIONANTES_DEP;INSERIR;12;true;;;Planta de Condicionantes - quando tenha sido alterada;;Planta de Condicionantes;PECA_GRAFICA;
+PDIM;ALTERACAO;ALTERACAO;RELATORIO_FUNDAMENTACAO_DEP;INSERIR;13;true;;;Relatório fundamentando as alterações introduzidas;;Relatório de Fundamentação;PECA_ESCRITA;
+PDIM;ALTERACAO;ALTERACAO;DEMAIS_ELEMENTOS_DEP;INSERIR;14;true;;;Os demais elementos do plano afetados pela alteração;;Demais Elementos;OUTROS;
+PDIM;ALTERACAO;ALTERACAO;RELATORIO_AMBIENTAL_DEP;INSERIR;15;true;;;Relatório ambiental;Relatório ambiental, no qual se identificam, descrevem e avaliam os eventuais efeitos significativos no ambiente resultantes da aplicação do plano e as suas alternativas razoáveis que tenham em conta os objectivos e o âmbito de aplicação territorial respectivos;Relatório Ambiental;PECA_ESCRITA;
+PDIM;ALTERACAO;ALTERACAO;RELATORIO_PONDERACAO_DEP;INSERIR;16;true;;;Relatório de ponderação dos resultados da discussão pública;;Relatório de Ponderação;PECA_ESCRITA;
+PDIM;ALTERACAO;ALTERACAO;DELIBERACAO_CM_DEP;INSERIR;17;true;;;Deliberação da Câmara Municipal (CM) que determina a alteração do plano;;Deliberação da CM;PECA_ESCRITA;
+PDIM;ALTERACAO;ALTERACAO;PARECER_CCDR_DEP;INSERIR;18;true;;;Parecer da CCDR;;Parecer da CCDR;PECA_ESCRITA;
+PDIM;ALTERACAO;ALTERACAO;PARECERES_ATA_DEP;INSERIR;19;true;;;Pareceres emitidos / Ata da conferência de serviços;;Pareceres;PECA_ESCRITA;
+PDIM;ALTERACAO_ADAPTACAO;ALTERACAO_ADAPTACAO;TEXTO_ATO_PUB;INSERIR;1;true;;;Declaração da entidade responsável pela elaboração do plano;Texto do ato a publicar - Declaração da entidade responsável pela elaboração do plano;Texto do Ato;PECA_ESCRITA;
+PDIM;ALTERACAO_ADAPTACAO;ALTERACAO_ADAPTACAO;TEXTO_ATO_DEP;INSERIR;2;true;;;Declaração da entidade responsável pela elaboração do plano;Texto do ato a publicar - Declaração da entidade responsável pela elaboração do plano;Texto do Ato;PECA_ESCRITA;
+PDIM;ALTERACAO_ADAPTACAO;ALTERACAO_ADAPTACAO;ALTERACOES_REGULAMENTO_PUB;INSERIR;3;true;;;Texto das disposições alteradas no Regulamento - quando tenha sido alterado;;Alterações ao Regulamento;PECA_ESCRITA;
+PDIM;ALTERACAO_ADAPTACAO;ALTERACAO_ADAPTACAO;ALTERACOES_REGULAMENTO_DEP;INSERIR;4;true;;;Texto das disposições alteradas no Regulamento - quando tenha sido alterado;;Alterações ao Regulamento;PECA_ESCRITA;
+PDIM;ALTERACAO_ADAPTACAO;ALTERACAO_ADAPTACAO;REGULAMENTO_INTEGRAL_PUB;INSERIR;5;false;;;Regulamento (versão alterada integral);;Regulamento Integral;PECA_ESCRITA;
+PDIM;ALTERACAO_ADAPTACAO;ALTERACAO_ADAPTACAO;REGULAMENTO_INTEGRAL_DEP;INSERIR;6;false;;;Regulamento (versão alterada integral);;Regulamento Integral;PECA_ESCRITA;
+PDIM;ALTERACAO_ADAPTACAO;ALTERACAO_ADAPTACAO;PLANTA_ORDENAMENTO_PUB;INSERIR;7;true;;;Planta de Ordenamento - quando tenha sido alterada;;Planta de Ordenamento;PECA_GRAFICA;
+PDIM;ALTERACAO_ADAPTACAO;ALTERACAO_ADAPTACAO;PLANTA_ORDENAMENTO_DEP;INSERIR;8;true;;;Planta de Ordenamento - quando tenha sido alterada;;Planta de Ordenamento;PECA_GRAFICA;
+PDIM;ALTERACAO_ADAPTACAO;ALTERACAO_ADAPTACAO;PLANTA_CONDICIONANTES_PUB;INSERIR;9;true;;;Planta de Condicionantes - quando tenha sido alterada;;Planta de Condicionantes;PECA_GRAFICA;
+PDIM;ALTERACAO_ADAPTACAO;ALTERACAO_ADAPTACAO;PLANTA_CONDICIONANTES_DEP;INSERIR;10;true;;;Planta de Condicionantes - quando tenha sido alterada;;Planta de Condicionantes;PECA_GRAFICA;
+PDIM;ALTERACAO_ADAPTACAO;ALTERACAO_ADAPTACAO;RELATORIO_FUNDAMENTACAO_DEP;INSERIR;11;true;;;Relatório fundamentando as adaptações introduzidas;;Relatório de Fundamentação;PECA_ESCRITA;
+PDIM;ALTERACAO_ADAPTACAO;ALTERACAO_ADAPTACAO;DEMAIS_ELEMENTOS_DEP;INSERIR;12;true;;;Os demais elementos do plano afetados pela adaptação (vide ficha modelo n.º 2);;Demais Elementos;OUTROS;
+PDIM;ALTERACAO_ADAPTACAO;ALTERACAO_ADAPTACAO;DELIBERACAO_AM_DEP;INSERIR;13;true;;;Deliberação da Assembleia Municipal/Intermunicipal (AM/AMi) que aprova a adaptação do plano;;Deliberação da AM;PECA_ESCRITA;
+PDIM;ALTERACAO_ADAPTACAO;ALTERACAO_ADAPTACAO;DELIBERACAO_CM_DEP;INSERIR;14;true;;;Deliberação da Câmara Municipal (CM) que determina a adaptação do plano;;Deliberação da CM;PECA_ESCRITA;
+PDIM;ALTERACAO_SIMPLIFICADA_ART123;DECISAO_INICIO;TEXTO_ATO_PUB;INSERIR;1;true;;;Texto do ato a publicar no Diário da República;;Texto do Ato;PECA_ESCRITA;
+PDIM;ALTERACAO_SIMPLIFICADA_ART123;DECISAO_INICIO;TEXTO_ATO_DEP;INSERIR;2;true;;;Texto do ato a publicar no Diário da República;;Texto do Ato;PECA_ESCRITA;
+PDIM;ALTERACAO_SIMPLIFICADA_ART123;DECISAO_INICIO;DELIBERACAO_PUB;INSERIR;3;true;;;Deliberação do início de alteração simplificada e participação pública (CM/CIM);;Deliberação;PECA_ESCRITA;
+PDIM;ALTERACAO_SIMPLIFICADA_ART123;DECISAO_INICIO;DELIBERACAO_DEP;INSERIR;4;true;;;Deliberação do início de alteração simplificada e participação pública (CM/CIM);;Deliberação;PECA_ESCRITA;
+PDIM;ALTERACAO_SIMPLIFICADA_ART123;ALTERACAO_SIMPLIFICADA;TEXTO_ATO_PUB;INSERIR;1;true;;;Texto do ato a publicar no Diário da República;;Texto do Ato;PECA_ESCRITA;
+PDIM;ALTERACAO_SIMPLIFICADA_ART123;ALTERACAO_SIMPLIFICADA;TEXTO_ATO_DEP;INSERIR;2;true;;;Texto do ato a publicar no Diário da República;;Texto do Ato;PECA_ESCRITA;
+PDIM;ALTERACAO_SIMPLIFICADA_ART123;ALTERACAO_SIMPLIFICADA;DELIBERACAO_PUB;INSERIR;3;true;;;Deliberação de aprovação do procedimento de plano territorial;;Deliberação;PECA_ESCRITA;
+PDIM;ALTERACAO_SIMPLIFICADA_ART123;ALTERACAO_SIMPLIFICADA;DELIBERACAO_DEP;INSERIR;4;true;;;Deliberação de aprovação do procedimento de plano territorial;;Deliberação;PECA_ESCRITA;
+PDIM;ALTERACAO_SIMPLIFICADA_ART123;ALTERACAO_SIMPLIFICADA;ALTERACOES_REGULAMENTO_PUB;INSERIR;5;true;;;Texto das disposições alteradas no Regulamento - quando tenha sido alterado;;Alterações ao Regulamento;PECA_ESCRITA;
+PDIM;ALTERACAO_SIMPLIFICADA_ART123;ALTERACAO_SIMPLIFICADA;ALTERACOES_REGULAMENTO_DEP;INSERIR;6;true;;;Texto das disposições alteradas no Regulamento - quando tenha sido alterado;;Alterações ao Regulamento;PECA_ESCRITA;
+PDIM;ALTERACAO_SIMPLIFICADA_ART123;ALTERACAO_SIMPLIFICADA;REGULAMENTO_INTEGRAL_PUB;INSERIR;7;false;;;Regulamento (versão alterada integral);;Regulamento Integral;PECA_ESCRITA;
+PDIM;ALTERACAO_SIMPLIFICADA_ART123;ALTERACAO_SIMPLIFICADA;REGULAMENTO_INTEGRAL_DEP;INSERIR;8;false;;;Regulamento (versão alterada integral);;Regulamento Integral;PECA_ESCRITA;
+PDIM;ALTERACAO_SIMPLIFICADA_ART123;ALTERACAO_SIMPLIFICADA;PLANTA_ORDENAMENTO_PUB;INSERIR;9;true;;;Planta de Ordenamento - quando tenha sido alterada;;Planta de Ordenamento;PECA_GRAFICA;
+PDIM;ALTERACAO_SIMPLIFICADA_ART123;ALTERACAO_SIMPLIFICADA;PLANTA_ORDENAMENTO_DEP;INSERIR;10;true;;;Planta de Ordenamento - quando tenha sido alterada;;Planta de Ordenamento;PECA_GRAFICA;
+PDIM;ALTERACAO_SIMPLIFICADA_ART123;ALTERACAO_SIMPLIFICADA;PLANTA_CONDICIONANTES_PUB;INSERIR;11;true;;;Planta de Condicionantes - quando tenha sido alterada;;Planta de Condicionantes;PECA_GRAFICA;
+PDIM;ALTERACAO_SIMPLIFICADA_ART123;ALTERACAO_SIMPLIFICADA;PLANTA_CONDICIONANTES_DEP;INSERIR;12;true;;;Planta de Condicionantes - quando tenha sido alterada;;Planta de Condicionantes;PECA_GRAFICA;
+PDIM;ALTERACAO_SIMPLIFICADA_ART123;ALTERACAO_SIMPLIFICADA;RELATORIO_FUNDAMENTACAO_DEP;INSERIR;13;true;;;Relatório fundamentando as alterações introduzidas;;Relatório de Fundamentação;PECA_ESCRITA;
+PDIM;ALTERACAO_SIMPLIFICADA_ART123;ALTERACAO_SIMPLIFICADA;DEMAIS_ELEMENTOS_DEP;INSERIR;14;true;;;Os demais elementos do plano afetados pela alteração;;Demais Elementos;OUTROS;
+PDIM;ALTERACAO_SIMPLIFICADA_ART123;ALTERACAO_SIMPLIFICADA;RELATORIO_PONDERACAO_DEP;INSERIR;15;true;;;Relatório de ponderação dos resultados da discussão pública;;Relatório de Ponderação;PECA_ESCRITA;
+PDIM;ALTERACAO_SIMPLIFICADA_ART123;ALTERACAO_SIMPLIFICADA;DELIBERACAO_CM_DEP;INSERIR;16;true;;;Deliberação da Câmara Municipal (CM) que determina a alteração do plano;;Deliberação da CM;PECA_ESCRITA;
+PDIM;ALTERACAO_SIMPLIFICADA_ART123;ALTERACAO_SIMPLIFICADA;PARECER_CCDR_DEP;INSERIR;17;true;;;Parecer da CCDR;;Parecer da CCDR;PECA_ESCRITA;
+PDIM;CORRECAO_MATERIAL;CORRECAO_MATERIAL;TEXTO_ATO_PUB;INSERIR;1;true;;;Declaração da entidade responsável pela elaboração do plano;Texto do ato a publicar - Declaração da entidade responsável pela elaboração do plano;Texto do Ato;PECA_ESCRITA;
+PDIM;CORRECAO_MATERIAL;CORRECAO_MATERIAL;TEXTO_ATO_DEP;INSERIR;2;true;;;Declaração da entidade responsável pela elaboração do plano;Texto do ato a publicar - Declaração da entidade responsável pela elaboração do plano;Texto do Ato;PECA_ESCRITA;
+PDIM;CORRECAO_MATERIAL;CORRECAO_MATERIAL;ALTERACOES_REGULAMENTO_PUB;INSERIR;3;true;;;Texto das disposições corrigidas no Regulamento - quando tenha sido corrigido;;Alterações ao Regulamento;PECA_ESCRITA;
+PDIM;CORRECAO_MATERIAL;CORRECAO_MATERIAL;ALTERACOES_REGULAMENTO_DEP;INSERIR;4;true;;;Texto das disposições corrigidas no Regulamento - quando tenha sido corrigido;;Alterações ao Regulamento;PECA_ESCRITA;
+PDIM;CORRECAO_MATERIAL;CORRECAO_MATERIAL;REGULAMENTO_INTEGRAL_PUB;INSERIR;5;false;;;Regulamento (versão alterada integral) - quando necessário;;Regulamento Integral;PECA_ESCRITA;
+PDIM;CORRECAO_MATERIAL;CORRECAO_MATERIAL;REGULAMENTO_INTEGRAL_DEP;INSERIR;6;false;;;Regulamento (versão alterada integral) - quando necessário;;Regulamento Integral;PECA_ESCRITA;
+PDIM;CORRECAO_MATERIAL;CORRECAO_MATERIAL;PLANTA_ORDENAMENTO_PUB;INSERIR;7;true;;;Planta de Ordenamento - quando tenha sido corrigida;;Planta de Ordenamento;PECA_GRAFICA;
+PDIM;CORRECAO_MATERIAL;CORRECAO_MATERIAL;PLANTA_ORDENAMENTO_DEP;INSERIR;8;true;;;Planta de Ordenamento - quando tenha sido corrigida;;Planta de Ordenamento;PECA_GRAFICA;
+PDIM;CORRECAO_MATERIAL;CORRECAO_MATERIAL;PLANTA_CONDICIONANTES_PUB;INSERIR;9;true;;;Planta de Condicionantes - quando tenha sido corrigida;;Planta de Condicionantes;PECA_GRAFICA;
+PDIM;CORRECAO_MATERIAL;CORRECAO_MATERIAL;PLANTA_CONDICIONANTES_DEP;INSERIR;10;true;;;Planta de Condicionantes - quando tenha sido corrigida;;Planta de Condicionantes;PECA_GRAFICA;
+PDIM;CORRECAO_MATERIAL;CORRECAO_MATERIAL;RELATORIO_FUNDAMENTACAO_DEP;INSERIR;11;true;;;Relatório fundamentando as correções materiais/retificações introduzidas;;Relatório de Fundamentação;PECA_ESCRITA;
+PDIM;CORRECAO_MATERIAL;CORRECAO_MATERIAL;DEMAIS_ELEMENTOS_DEP;INSERIR;12;true;;;Os demais elementos do plano afetados pela correção material/retificação;;Demais Elementos;OUTROS;
+PDIM;CORRECAO_MATERIAL;CORRECAO_MATERIAL;DECLARACAO_CM_DEP;INSERIR;13;true;;;Declaração da Câmara Municipal (CM) de correção material/retificação do plano;;Declaração da CM;PECA_ESCRITA;
+PDIM;REVOGACAO;REVOGACAO;TEXTO_ATO_PUB;INSERIR;1;true;;;Texto do ato a publicar no Diário da República;;Texto do Ato;PECA_ESCRITA;
+PDIM;REVOGACAO;REVOGACAO;TEXTO_ATO_DEP;INSERIR;2;true;;;Texto do ato a publicar no Diário da República;;Texto do Ato;PECA_ESCRITA;
+PDIM;REVOGACAO;REVOGACAO;DELIBERACAO_PUB;INSERIR;3;true;;;Deliberação de aprovação da revogação de plano territorial;;Deliberação;PECA_ESCRITA;
+PDIM;REVOGACAO;REVOGACAO;DELIBERACAO_DEP;INSERIR;4;true;;;Deliberação de aprovação da revogação de plano territorial;;Deliberação;PECA_ESCRITA;
+PUIM;ELABORACAO;DECISAO_INICIO;TEXTO_ATO_PUB;INSERIR;1;true;;;Texto do ato a publicar no Diário da República;;Texto do Ato;PECA_ESCRITA;TEXTO_ATO
+PUIM;ELABORACAO;DECISAO_INICIO;TEXTO_ATO_DEP;INSERIR;2;true;;;Texto do ato a publicar no Diário da República;;Texto do Ato;PECA_ESCRITA;TEXTO_ATO
+PUIM;ELABORACAO;DECISAO_INICIO;DELIBERACAO_PUB;INSERIR;3;true;;;Deliberação do início de elaboração de plano territorial (CM/CIM);;Deliberação;PECA_ESCRITA;DELIBERACAO
+PUIM;ELABORACAO;DECISAO_INICIO;DELIBERACAO_DEP;INSERIR;4;true;;;Deliberação do início de elaboração de plano territorial (CM/CIM);;Deliberação;PECA_ESCRITA;DELIBERACAO
+PUIM;ELABORACAO;DECISAO_INICIO;PLANTA_AREA_INTERVENCAO_PUB;INSERIR;5;false;;;Planta com a área de intervenção;;Planta com Área de Intervenção;PECA_GRAFICA;
+PUIM;ELABORACAO;DECISAO_INICIO;PLANTA_AREA_INTERVENCAO_DEP;INSERIR;6;false;;;Planta com a área de intervenção;;Planta com Área de Intervenção;PECA_GRAFICA;
+PUIM;ELABORACAO;ABERTURA_DISCUSSAO_PUBLICA;TEXTO_ATO_PUB;INSERIR;1;true;;;Texto do ato a publicar no Diário da República;;Texto do Ato;PECA_ESCRITA;TEXTO_ATO
+PUIM;ELABORACAO;ABERTURA_DISCUSSAO_PUBLICA;TEXTO_ATO_DEP;INSERIR;2;true;;;Texto do ato a publicar no Diário da República;;Texto do Ato;PECA_ESCRITA;TEXTO_ATO
+PUIM;ELABORACAO;ABERTURA_DISCUSSAO_PUBLICA;DELIBERACAO_PUB;INSERIR;3;true;;;Deliberação;;Deliberação;PECA_ESCRITA;DELIBERACAO
+PUIM;ELABORACAO;ABERTURA_DISCUSSAO_PUBLICA;DELIBERACAO_DEP;INSERIR;4;true;;;Deliberação;;Deliberação;PECA_ESCRITA;DELIBERACAO
+PUIM;ELABORACAO;ELABORACAO;TEXTO_ATO_PUB;INSERIR;1;true;;;Texto do ato a publicar no Diário da República;;Texto do Ato;PECA_ESCRITA;TEXTO_ATO
+PUIM;ELABORACAO;ELABORACAO;TEXTO_ATO_DEP;INSERIR;2;true;;;Texto do ato a publicar no Diário da República;;Texto do Ato;PECA_ESCRITA;TEXTO_ATO
+PUIM;ELABORACAO;ELABORACAO;DELIBERACAO_PUB;INSERIR;3;true;;;Deliberação da Assembleia Municipal/Intermunicipal (AM/AMi) que aprova o plano;;Deliberação;PECA_ESCRITA;DELIBERACAO
+PUIM;ELABORACAO;ELABORACAO;DELIBERACAO_DEP;INSERIR;4;true;;;Deliberação da Assembleia Municipal/Intermunicipal (AM/AMi) que aprova o plano;;Deliberação;PECA_ESCRITA;DELIBERACAO
+PUIM;ELABORACAO;ELABORACAO;REGULAMENTO_PUB;INSERIR;5;true;;;Regulamento;;Regulamento;PECA_ESCRITA;
+PUIM;ELABORACAO;ELABORACAO;REGULAMENTO_DEP;INSERIR;6;true;;;Regulamento;;Regulamento;PECA_ESCRITA;
+PUIM;ELABORACAO;ELABORACAO;PLANTA_ZONAMENTO_PUB;INSERIR;7;true;;;Planta de Zonamento;;Planta de Zonamento;PECA_GRAFICA;
+PUIM;ELABORACAO;ELABORACAO;PLANTA_ZONAMENTO_DEP;INSERIR;8;true;;;Planta de Zonamento;;Planta de Zonamento;PECA_GRAFICA;
+PUIM;ELABORACAO;ELABORACAO;PLANTA_CONDICIONANTES_PUB;INSERIR;9;true;;;Planta de Condicionantes;;Planta de Condicionantes;PECA_GRAFICA;
+PUIM;ELABORACAO;ELABORACAO;PLANTA_CONDICIONANTES_DEP;INSERIR;10;true;;;Planta de Condicionantes;;Planta de Condicionantes;PECA_GRAFICA;
+PUIM;ELABORACAO;ELABORACAO;OUTRAS_PLANTAS_PUB;INSERIR;11;true;;;Outras plantas;;Outras Plantas;PECA_GRAFICA;
+PUIM;ELABORACAO;ELABORACAO;OUTRAS_PLANTAS_DEP;INSERIR;12;true;;;Outras plantas;;Outras Plantas;PECA_GRAFICA;
+PUIM;ELABORACAO;ELABORACAO;CARTOGRAMA_PUB;INSERIR;13;true;;;Cartograma;;Cartograma;PECA_GRAFICA;
+PUIM;ELABORACAO;ELABORACAO;CARTOGRAMA_DEP;INSERIR;14;true;;;Cartograma;;Cartograma;PECA_GRAFICA;
+PUIM;ELABORACAO;ELABORACAO;ESTUDOS_CARACTERIZACAO_DEP;INSERIR;15;true;;;Estudos de caracterização do território;Estudos de caraterização económica, social, biofísica e da estrutura fundiária do território municipal;Estudos de Caracterização;PECA_ESCRITA;
+PUIM;ELABORACAO;ELABORACAO;RELATORIO_PLANO_DEP;INSERIR;16;true;;;Relatório com os objetivos estratégicos do plano e a respetiva fundamentação;Relatório, que explicita os objectivos estratégicos do plano e a respectiva fundamentação técnica, suportada na avaliação das condições económicas, sociais, culturais e ambientais para a sua execução;Relatório do Plano;PECA_ESCRITA;
+PUIM;ELABORACAO;ELABORACAO;RELATORIO_AMBIENTAL_DEP;INSERIR;17;true;;;Relatório ambiental;Relatório ambiental, no qual se identificam, descrevem e avaliam os eventuais efeitos significativos no ambiente resultantes da aplicação do plano e as suas alternativas razoáveis que tenham em conta os objectivos e o âmbito de aplicação territorial respectivos;Relatório Ambiental;PECA_ESCRITA;
+PUIM;ELABORACAO;ELABORACAO;PROGRAMA_EXECUCAO_DEP;INSERIR;18;true;;;Programa de execução;Programa de execução contendo disposições indicativas sobre as intervenções municipais previstas, bem como sobre os meios de financiamento das mesmas;Programa de Execução;PECA_ESCRITA;
+PUIM;ELABORACAO;ELABORACAO;PLANTA_ENQUADRAMENTO_DEP;INSERIR;19;true;;;Planta de enquadramento regional;Planta de enquadramento regional elaborada a escala inferior à do plano director municipal, com indicação dos municípios limítrofes, centros urbanos mais importantes, principais vias de comunicação e outras infra-estruturas relevantes e grandes equipamentos que sirvam o município, bem como a…;Planta de Enquadramento;PECA_GRAFICA;
+PUIM;ELABORACAO;ELABORACAO;PLANTA_SITUACAO_EXISTENTE_DEP;INSERIR;20;true;;;Planta da situação existente à data da elaboração do plano;Planta da situação existente com a ocupação do território municipal à data da elaboração do plano;Planta da Situação Existente;PECA_GRAFICA;
+PUIM;ELABORACAO;ELABORACAO;COMPROMISSOS_URBANISTICOS_DEP;INSERIR;21;true;;;Relatório e/ou planta das licenças ou autorizações de operações urbanísticas;Relatório e ou planta com a indicação das licenças ou autorizações de operações urbanísticas emitidas, bem como das informações prévias favoráveis em vigor, substituível por declaração de câmara municipal comprovativa da inexistência dos referidos compromissos urbanísticos na área do plano;Compromissos Urbanísticos;PECA_ESCRITA;
+PUIM;ELABORACAO;ELABORACAO;PLANTAS_INFRAESTRUTURAS_DEP;INSERIR;22;true;;;Plantas do traçado das infraestruturas existentes e previstas;Plantas de identificação do traçado de infra-estruturas viárias, de abastecimento de água, de saneamento, de energia eléctrica, de recolha de resíduos e demais infra-estruturas relevantes, existentes e previstas, na área do plano;Plantas de Infraestruturas;PECA_GRAFICA;
+PUIM;ELABORACAO;ELABORACAO;ESTRUTURA_ECOLOGICA_AGLOMERADOS_DEP;INSERIR;23;true;;;Carta da estrutura ecológica do(s) aglomerado(s);;Estrutura Ecológica dos Aglomerados;PECA_GRAFICA;
+PUIM;ELABORACAO;ELABORACAO;MAPA_RUIDO_DEP;INSERIR;24;true;;;Relatório de recolha de dados acústicos ou mapa de ruído;;Mapa de Ruído;PECA_GRAFICA;
+PUIM;ELABORACAO;ELABORACAO;RELATORIO_PONDERACAO_DEP;INSERIR;25;true;;;Relatório de ponderação dos resultados da discussão pública;;Relatório de Ponderação;PECA_ESCRITA;
+PUIM;ELABORACAO;ELABORACAO;PARECERES_ATA_DEP;INSERIR;26;true;;;Pareceres emitidos / Ata da conferência de serviços;;Pareceres;PECA_ESCRITA;
+PUIM;ELABORACAO;ELABORACAO;DELIBERACAO_CM_DEP;INSERIR;27;true;;;Deliberação da Câmara Municipal (CM) / CIM que determina a elaboração/revisão do Plano;;Deliberação da CM;PECA_ESCRITA;
+PUIM;REVISAO;DECISAO_INICIO;TEXTO_ATO_PUB;INSERIR;1;true;;;Texto do ato a publicar no Diário da República;;Texto do Ato;PECA_ESCRITA;TEXTO_ATO
+PUIM;REVISAO;DECISAO_INICIO;TEXTO_ATO_DEP;INSERIR;2;true;;;Texto do ato a publicar no Diário da República;;Texto do Ato;PECA_ESCRITA;TEXTO_ATO
+PUIM;REVISAO;DECISAO_INICIO;DELIBERACAO_PUB;INSERIR;3;true;;;Deliberação do início de revisão de plano territorial (CM/CIM);;Deliberação;PECA_ESCRITA;DELIBERACAO
+PUIM;REVISAO;DECISAO_INICIO;DELIBERACAO_DEP;INSERIR;4;true;;;Deliberação do início de revisão de plano territorial (CM/CIM);;Deliberação;PECA_ESCRITA;DELIBERACAO
+PUIM;REVISAO;DECISAO_INICIO;PLANTA_AREA_INTERVENCAO_PUB;INSERIR;5;false;;;Planta com a área de intervenção;;Planta com Área de Intervenção;PECA_GRAFICA;
+PUIM;REVISAO;DECISAO_INICIO;PLANTA_AREA_INTERVENCAO_DEP;INSERIR;6;false;;;Planta com a área de intervenção;;Planta com Área de Intervenção;PECA_GRAFICA;
+PUIM;REVISAO;ABERTURA_DISCUSSAO_PUBLICA;TEXTO_ATO_PUB;INSERIR;1;true;;;Texto do ato a publicar no Diário da República;;Texto do Ato;PECA_ESCRITA;TEXTO_ATO
+PUIM;REVISAO;ABERTURA_DISCUSSAO_PUBLICA;TEXTO_ATO_DEP;INSERIR;2;true;;;Texto do ato a publicar no Diário da República;;Texto do Ato;PECA_ESCRITA;TEXTO_ATO
+PUIM;REVISAO;ABERTURA_DISCUSSAO_PUBLICA;DELIBERACAO_PUB;INSERIR;3;true;;;Deliberação;;Deliberação;PECA_ESCRITA;DELIBERACAO
+PUIM;REVISAO;ABERTURA_DISCUSSAO_PUBLICA;DELIBERACAO_DEP;INSERIR;4;true;;;Deliberação;;Deliberação;PECA_ESCRITA;DELIBERACAO
+PUIM;REVISAO;REVISAO;TEXTO_ATO_PUB;INSERIR;1;true;;;Texto do ato a publicar no Diário da República;;Texto do Ato;PECA_ESCRITA;TEXTO_ATO
+PUIM;REVISAO;REVISAO;TEXTO_ATO_DEP;INSERIR;2;true;;;Texto do ato a publicar no Diário da República;;Texto do Ato;PECA_ESCRITA;TEXTO_ATO
+PUIM;REVISAO;REVISAO;DELIBERACAO_PUB;INSERIR;3;true;;;Deliberação da Assembleia Municipal/Intermunicipal (AM/AMi) que aprova o plano;;Deliberação;PECA_ESCRITA;DELIBERACAO
+PUIM;REVISAO;REVISAO;DELIBERACAO_DEP;INSERIR;4;true;;;Deliberação da Assembleia Municipal/Intermunicipal (AM/AMi) que aprova o plano;;Deliberação;PECA_ESCRITA;DELIBERACAO
+PUIM;REVISAO;REVISAO;REGULAMENTO_PUB;INSERIR;5;true;;;Regulamento;;Regulamento;PECA_ESCRITA;
+PUIM;REVISAO;REVISAO;REGULAMENTO_DEP;INSERIR;6;true;;;Regulamento;;Regulamento;PECA_ESCRITA;
+PUIM;REVISAO;REVISAO;PLANTA_ZONAMENTO_PUB;INSERIR;7;true;;;Planta de Zonamento;;Planta de Zonamento;PECA_GRAFICA;
+PUIM;REVISAO;REVISAO;PLANTA_ZONAMENTO_DEP;INSERIR;8;true;;;Planta de Zonamento;;Planta de Zonamento;PECA_GRAFICA;
+PUIM;REVISAO;REVISAO;PLANTA_CONDICIONANTES_PUB;INSERIR;9;true;;;Planta de Condicionantes;;Planta de Condicionantes;PECA_GRAFICA;
+PUIM;REVISAO;REVISAO;PLANTA_CONDICIONANTES_DEP;INSERIR;10;true;;;Planta de Condicionantes;;Planta de Condicionantes;PECA_GRAFICA;
+PUIM;REVISAO;REVISAO;OUTRAS_PLANTAS_PUB;INSERIR;11;true;;;Outras plantas;;Outras Plantas;PECA_GRAFICA;
+PUIM;REVISAO;REVISAO;OUTRAS_PLANTAS_DEP;INSERIR;12;true;;;Outras plantas;;Outras Plantas;PECA_GRAFICA;
+PUIM;REVISAO;REVISAO;CARTOGRAMA_PUB;INSERIR;13;true;;;Cartograma;;Cartograma;PECA_GRAFICA;
+PUIM;REVISAO;REVISAO;CARTOGRAMA_DEP;INSERIR;14;true;;;Cartograma;;Cartograma;PECA_GRAFICA;
+PUIM;REVISAO;REVISAO;ESTUDOS_CARACTERIZACAO_DEP;INSERIR;15;true;;;Estudos de caracterização do território;Estudos de caraterização económica, social, biofísica e da estrutura fundiária do território municipal;Estudos de Caracterização;PECA_ESCRITA;
+PUIM;REVISAO;REVISAO;RELATORIO_PLANO_DEP;INSERIR;16;true;;;Relatório com os objetivos estratégicos do plano e a respetiva fundamentação;Relatório, que explicita os objectivos estratégicos do plano e a respectiva fundamentação técnica, suportada na avaliação das condições económicas, sociais, culturais e ambientais para a sua execução;Relatório do Plano;PECA_ESCRITA;
+PUIM;REVISAO;REVISAO;RELATORIO_AMBIENTAL_DEP;INSERIR;17;true;;;Relatório ambiental;Relatório ambiental, no qual se identificam, descrevem e avaliam os eventuais efeitos significativos no ambiente resultantes da aplicação do plano e as suas alternativas razoáveis que tenham em conta os objectivos e o âmbito de aplicação territorial respectivos;Relatório Ambiental;PECA_ESCRITA;
+PUIM;REVISAO;REVISAO;PROGRAMA_EXECUCAO_DEP;INSERIR;18;true;;;Programa de execução;Programa de execução contendo disposições indicativas sobre as intervenções municipais previstas, bem como sobre os meios de financiamento das mesmas;Programa de Execução;PECA_ESCRITA;
+PUIM;REVISAO;REVISAO;PLANTA_ENQUADRAMENTO_DEP;INSERIR;19;true;;;Planta de enquadramento regional;Planta de enquadramento regional elaborada a escala inferior à do plano director municipal, com indicação dos municípios limítrofes, centros urbanos mais importantes, principais vias de comunicação e outras infra-estruturas relevantes e grandes equipamentos que sirvam o município, bem como a…;Planta de Enquadramento;PECA_GRAFICA;
+PUIM;REVISAO;REVISAO;PLANTA_SITUACAO_EXISTENTE_DEP;INSERIR;20;true;;;Planta da situação existente à data da elaboração do plano;Planta da situação existente com a ocupação do território municipal à data da elaboração do plano;Planta da Situação Existente;PECA_GRAFICA;
+PUIM;REVISAO;REVISAO;COMPROMISSOS_URBANISTICOS_DEP;INSERIR;21;true;;;Relatório e/ou planta das licenças ou autorizações de operações urbanísticas;Relatório e ou planta com a indicação das licenças ou autorizações de operações urbanísticas emitidas, bem como das informações prévias favoráveis em vigor, substituível por declaração de câmara municipal comprovativa da inexistência dos referidos compromissos urbanísticos na área do plano;Compromissos Urbanísticos;PECA_ESCRITA;
+PUIM;REVISAO;REVISAO;PLANTAS_INFRAESTRUTURAS_DEP;INSERIR;22;true;;;Plantas do traçado das infraestruturas existentes e previstas;Plantas de identificação do traçado de infra-estruturas viárias, de abastecimento de água, de saneamento, de energia eléctrica, de recolha de resíduos e demais infra-estruturas relevantes, existentes e previstas, na área do plano;Plantas de Infraestruturas;PECA_GRAFICA;
+PUIM;REVISAO;REVISAO;ESTRUTURA_ECOLOGICA_AGLOMERADOS_DEP;INSERIR;23;true;;;Carta da estrutura ecológica do(s) aglomerado(s);;Estrutura Ecológica dos Aglomerados;PECA_GRAFICA;
+PUIM;REVISAO;REVISAO;MAPA_RUIDO_DEP;INSERIR;24;true;;;Relatório de recolha de dados acústicos ou mapa de ruído;;Mapa de Ruído;PECA_GRAFICA;
+PUIM;REVISAO;REVISAO;RELATORIO_PONDERACAO_DEP;INSERIR;25;true;;;Relatório de ponderação dos resultados da discussão pública;;Relatório de Ponderação;PECA_ESCRITA;
+PUIM;REVISAO;REVISAO;PARECERES_ATA_DEP;INSERIR;26;true;;;Pareceres emitidos / Ata da conferência de serviços;;Pareceres;PECA_ESCRITA;
+PUIM;REVISAO;REVISAO;DELIBERACAO_CM_DEP;INSERIR;27;true;;;Deliberação da Câmara Municipal (CM) / CIM que determina a elaboração/revisão do Plano;;Deliberação da CM;PECA_ESCRITA;
+PUIM;ALTERACAO;DECISAO_INICIO;TEXTO_ATO_PUB;INSERIR;1;true;;;Texto do ato a publicar no Diário da República;;Texto do Ato;PECA_ESCRITA;TEXTO_ATO
+PUIM;ALTERACAO;DECISAO_INICIO;TEXTO_ATO_DEP;INSERIR;2;true;;;Texto do ato a publicar no Diário da República;;Texto do Ato;PECA_ESCRITA;TEXTO_ATO
+PUIM;ALTERACAO;DECISAO_INICIO;DELIBERACAO_PUB;INSERIR;3;true;;;Deliberação do início de alteração de plano territorial (CM/CIM);;Deliberação;PECA_ESCRITA;DELIBERACAO
+PUIM;ALTERACAO;DECISAO_INICIO;DELIBERACAO_DEP;INSERIR;4;true;;;Deliberação do início de alteração de plano territorial (CM/CIM);;Deliberação;PECA_ESCRITA;DELIBERACAO
+PUIM;ALTERACAO;DECISAO_INICIO;PLANTA_LOCALIZACAO_PUB;INSERIR;5;false;;;Planta com a área de intervenção;;Planta com Área de Intervenção;PECA_GRAFICA;
+PUIM;ALTERACAO;DECISAO_INICIO;PLANTA_LOCALIZACAO_DEP;INSERIR;6;false;;;Planta com a área de intervenção;;Planta com Área de Intervenção;PECA_GRAFICA;
+PUIM;ALTERACAO;ABERTURA_DISCUSSAO_PUBLICA;TEXTO_ATO_PUB;INSERIR;1;true;;;Texto do ato a publicar no Diário da República;;Texto do Ato;PECA_ESCRITA;TEXTO_ATO
+PUIM;ALTERACAO;ABERTURA_DISCUSSAO_PUBLICA;TEXTO_ATO_DEP;INSERIR;2;true;;;Texto do ato a publicar no Diário da República;;Texto do Ato;PECA_ESCRITA;TEXTO_ATO
+PUIM;ALTERACAO;ABERTURA_DISCUSSAO_PUBLICA;DELIBERACAO_PUB;INSERIR;3;true;;;Deliberação;;Deliberação;PECA_ESCRITA;DELIBERACAO
+PUIM;ALTERACAO;ABERTURA_DISCUSSAO_PUBLICA;DELIBERACAO_DEP;INSERIR;4;true;;;Deliberação;;Deliberação;PECA_ESCRITA;DELIBERACAO
+PUIM;ALTERACAO;ALTERACAO;TEXTO_ATO_PUB;INSERIR;1;true;;;Texto do ato a publicar no Diário da República;;Texto do Ato;PECA_ESCRITA;TEXTO_ATO
+PUIM;ALTERACAO;ALTERACAO;TEXTO_ATO_DEP;INSERIR;2;true;;;Texto do ato a publicar no Diário da República;;Texto do Ato;PECA_ESCRITA;TEXTO_ATO
+PUIM;ALTERACAO;ALTERACAO;DELIBERACAO_PUB;INSERIR;3;true;;;Deliberação da Assembleia Municipal/Intermunicipal (AM/AMi) que aprova a alteração do plano;;Deliberação;PECA_ESCRITA;DELIBERACAO
+PUIM;ALTERACAO;ALTERACAO;DELIBERACAO_DEP;INSERIR;4;true;;;Deliberação da Assembleia Municipal/Intermunicipal (AM/AMi) que aprova a alteração do plano;;Deliberação;PECA_ESCRITA;DELIBERACAO
+PUIM;ALTERACAO;ALTERACAO;ALTERACOES_REGULAMENTO_PUB;INSERIR;5;true;;;Texto das disposições alteradas no Regulamento - quando tenha sido alterado;;Alterações ao Regulamento;PECA_ESCRITA;
+PUIM;ALTERACAO;ALTERACAO;ALTERACOES_REGULAMENTO_DEP;INSERIR;6;true;;;Texto das disposições alteradas no Regulamento - quando tenha sido alterado;;Alterações ao Regulamento;PECA_ESCRITA;
+PUIM;ALTERACAO;ALTERACAO;REGULAMENTO_INTEGRAL_PUB;INSERIR;7;true;;;Regulamento (versão alterada integral quando alterações superiores a 20%);;Regulamento Integral;PECA_ESCRITA;
+PUIM;ALTERACAO;ALTERACAO;REGULAMENTO_INTEGRAL_DEP;INSERIR;8;true;;;Regulamento (versão alterada integral quando alterações superiores a 20%);;Regulamento Integral;PECA_ESCRITA;
+PUIM;ALTERACAO;ALTERACAO;PLANTA_ZONAMENTO_PUB;INSERIR;9;true;;;Planta de Zonamento - quando tenha sido alterada;;Planta de Zonamento;PECA_GRAFICA;
+PUIM;ALTERACAO;ALTERACAO;PLANTA_ZONAMENTO_DEP;INSERIR;10;true;;;Planta de Zonamento - quando tenha sido alterada;;Planta de Zonamento;PECA_GRAFICA;
+PUIM;ALTERACAO;ALTERACAO;PLANTA_CONDICIONANTES_PUB;INSERIR;11;true;;;Planta de Condicionantes - quando tenha sido alterada;;Planta de Condicionantes;PECA_GRAFICA;
+PUIM;ALTERACAO;ALTERACAO;PLANTA_CONDICIONANTES_DEP;INSERIR;12;true;;;Planta de Condicionantes - quando tenha sido alterada;;Planta de Condicionantes;PECA_GRAFICA;
+PUIM;ALTERACAO;ALTERACAO;RELATORIO_FUNDAMENTACAO_DEP;INSERIR;13;true;;;Relatório fundamentando as alterações introduzidas;;Relatório de Fundamentação;PECA_ESCRITA;
+PUIM;ALTERACAO;ALTERACAO;DEMAIS_ELEMENTOS_DEP;INSERIR;14;true;;;Os demais elementos do plano afetados pela alteração;;Demais Elementos;OUTROS;
+PUIM;ALTERACAO;ALTERACAO;RELATORIO_AMBIENTAL_DEP;INSERIR;15;true;;;Relatório ambiental;Relatório ambiental, no qual se identificam, descrevem e avaliam os eventuais efeitos significativos no ambiente resultantes da aplicação do plano e as suas alternativas razoáveis que tenham em conta os objectivos e o âmbito de aplicação territorial respectivos;Relatório Ambiental;PECA_ESCRITA;
+PUIM;ALTERACAO;ALTERACAO;RELATORIO_PONDERACAO_DEP;INSERIR;16;true;;;Relatório de ponderação dos resultados da discussão pública;;Relatório de Ponderação;PECA_ESCRITA;
+PUIM;ALTERACAO;ALTERACAO;DELIBERACAO_CM_DEP;INSERIR;17;true;;;Deliberação da Câmara Municipal (CM) que determina a alteração do plano;;Deliberação da CM;PECA_ESCRITA;
+PUIM;ALTERACAO;ALTERACAO;PARECERES_ATA_DEP;INSERIR;18;true;;;Pareceres emitidos / Ata da conferência de serviços;;Pareceres;PECA_ESCRITA;
+PUIM;ALTERACAO_ADAPTACAO;ALTERACAO_ADAPTACAO;TEXTO_ATO_PUB;INSERIR;1;true;;;Declaração da entidade responsável pela elaboração do plano;Texto do ato a publicar - Declaração da entidade responsável pela elaboração do plano;Texto do Ato;PECA_ESCRITA;
+PUIM;ALTERACAO_ADAPTACAO;ALTERACAO_ADAPTACAO;TEXTO_ATO_DEP;INSERIR;2;true;;;Declaração da entidade responsável pela elaboração do plano;Texto do ato a publicar - Declaração da entidade responsável pela elaboração do plano;Texto do Ato;PECA_ESCRITA;
+PUIM;ALTERACAO_ADAPTACAO;ALTERACAO_ADAPTACAO;ALTERACOES_REGULAMENTO_PUB;INSERIR;3;true;;;Texto das disposições alteradas no Regulamento - quando tenha sido alterado;;Alterações ao Regulamento;PECA_ESCRITA;
+PUIM;ALTERACAO_ADAPTACAO;ALTERACAO_ADAPTACAO;ALTERACOES_REGULAMENTO_DEP;INSERIR;4;true;;;Texto das disposições alteradas no Regulamento - quando tenha sido alterado;;Alterações ao Regulamento;PECA_ESCRITA;
+PUIM;ALTERACAO_ADAPTACAO;ALTERACAO_ADAPTACAO;REGULAMENTO_INTEGRAL_PUB;INSERIR;5;false;;;Regulamento (versão alterada integral);;Regulamento Integral;PECA_ESCRITA;
+PUIM;ALTERACAO_ADAPTACAO;ALTERACAO_ADAPTACAO;REGULAMENTO_INTEGRAL_DEP;INSERIR;6;false;;;Regulamento (versão alterada integral);;Regulamento Integral;PECA_ESCRITA;
+PUIM;ALTERACAO_ADAPTACAO;ALTERACAO_ADAPTACAO;PLANTA_ZONAMENTO_PUB;INSERIR;7;true;;;Planta de Zonamento - quando tenha sido alterada;;Planta de Zonamento;PECA_GRAFICA;
+PUIM;ALTERACAO_ADAPTACAO;ALTERACAO_ADAPTACAO;PLANTA_ZONAMENTO_DEP;INSERIR;8;true;;;Planta de Zonamento - quando tenha sido alterada;;Planta de Zonamento;PECA_GRAFICA;
+PUIM;ALTERACAO_ADAPTACAO;ALTERACAO_ADAPTACAO;PLANTA_CONDICIONANTES_PUB;INSERIR;9;true;;;Planta de Condicionantes - quando tenha sido alterada;;Planta de Condicionantes;PECA_GRAFICA;
+PUIM;ALTERACAO_ADAPTACAO;ALTERACAO_ADAPTACAO;PLANTA_CONDICIONANTES_DEP;INSERIR;10;true;;;Planta de Condicionantes - quando tenha sido alterada;;Planta de Condicionantes;PECA_GRAFICA;
+PUIM;ALTERACAO_ADAPTACAO;ALTERACAO_ADAPTACAO;RELATORIO_FUNDAMENTACAO_DEP;INSERIR;11;true;;;Relatório fundamentando as adaptações introduzidas;;Relatório de Fundamentação;PECA_ESCRITA;
+PUIM;ALTERACAO_ADAPTACAO;ALTERACAO_ADAPTACAO;DEMAIS_ELEMENTOS_DEP;INSERIR;12;true;;;Os demais elementos do plano afetados pela adaptação (vide ficha modelo n.º 2);;Demais Elementos;OUTROS;
+PUIM;ALTERACAO_ADAPTACAO;ALTERACAO_ADAPTACAO;DELIBERACAO_AM_DEP;INSERIR;13;true;;;Deliberação da Assembleia Municipal/Intermunicipal (AM/AMi) que aprova a adaptação do plano;;Deliberação da AM;PECA_ESCRITA;
+PUIM;ALTERACAO_ADAPTACAO;ALTERACAO_ADAPTACAO;DELIBERACAO_CM_DEP;INSERIR;14;true;;;Deliberação da Câmara Municipal (CM) que determina a adaptação do plano;;Deliberação da CM;PECA_ESCRITA;
+PUIM;ALTERACAO_SIMPLIFICADA_ART123;DECISAO_INICIO;TEXTO_ATO_PUB;INSERIR;1;true;;;Texto do ato a publicar no Diário da República;;Texto do Ato;PECA_ESCRITA;
+PUIM;ALTERACAO_SIMPLIFICADA_ART123;DECISAO_INICIO;TEXTO_ATO_DEP;INSERIR;2;true;;;Texto do ato a publicar no Diário da República;;Texto do Ato;PECA_ESCRITA;
+PUIM;ALTERACAO_SIMPLIFICADA_ART123;DECISAO_INICIO;DELIBERACAO_PUB;INSERIR;3;true;;;Deliberação do início de alteração simplificada e participação pública (CM/CIM);;Deliberação;PECA_ESCRITA;
+PUIM;ALTERACAO_SIMPLIFICADA_ART123;DECISAO_INICIO;DELIBERACAO_DEP;INSERIR;4;true;;;Deliberação do início de alteração simplificada e participação pública (CM/CIM);;Deliberação;PECA_ESCRITA;
+PUIM;ALTERACAO_SIMPLIFICADA_ART123;ALTERACAO_SIMPLIFICADA;TEXTO_ATO_PUB;INSERIR;1;true;;;Texto do ato a publicar no Diário da República;;Texto do Ato;PECA_ESCRITA;
+PUIM;ALTERACAO_SIMPLIFICADA_ART123;ALTERACAO_SIMPLIFICADA;TEXTO_ATO_DEP;INSERIR;2;true;;;Texto do ato a publicar no Diário da República;;Texto do Ato;PECA_ESCRITA;
+PUIM;ALTERACAO_SIMPLIFICADA_ART123;ALTERACAO_SIMPLIFICADA;DELIBERACAO_PUB;INSERIR;3;true;;;Deliberação de aprovação do procedimento de plano territorial;;Deliberação;PECA_ESCRITA;
+PUIM;ALTERACAO_SIMPLIFICADA_ART123;ALTERACAO_SIMPLIFICADA;DELIBERACAO_DEP;INSERIR;4;true;;;Deliberação de aprovação do procedimento de plano territorial;;Deliberação;PECA_ESCRITA;
+PUIM;ALTERACAO_SIMPLIFICADA_ART123;ALTERACAO_SIMPLIFICADA;ALTERACOES_REGULAMENTO_PUB;INSERIR;5;true;;;Texto das disposições alteradas no Regulamento - quando tenha sido alterado;;Alterações ao Regulamento;PECA_ESCRITA;
+PUIM;ALTERACAO_SIMPLIFICADA_ART123;ALTERACAO_SIMPLIFICADA;ALTERACOES_REGULAMENTO_DEP;INSERIR;6;true;;;Texto das disposições alteradas no Regulamento - quando tenha sido alterado;;Alterações ao Regulamento;PECA_ESCRITA;
+PUIM;ALTERACAO_SIMPLIFICADA_ART123;ALTERACAO_SIMPLIFICADA;REGULAMENTO_INTEGRAL_PUB;INSERIR;7;false;;;Regulamento (versão alterada integral);;Regulamento Integral;PECA_ESCRITA;
+PUIM;ALTERACAO_SIMPLIFICADA_ART123;ALTERACAO_SIMPLIFICADA;REGULAMENTO_INTEGRAL_DEP;INSERIR;8;false;;;Regulamento (versão alterada integral);;Regulamento Integral;PECA_ESCRITA;
+PUIM;ALTERACAO_SIMPLIFICADA_ART123;ALTERACAO_SIMPLIFICADA;PLANTA_ZONAMENTO_PUB;INSERIR;9;true;;;Planta de Zonamento - quando tenha sido alterada;;Planta de Zonamento;PECA_GRAFICA;
+PUIM;ALTERACAO_SIMPLIFICADA_ART123;ALTERACAO_SIMPLIFICADA;PLANTA_ZONAMENTO_DEP;INSERIR;10;true;;;Planta de Zonamento - quando tenha sido alterada;;Planta de Zonamento;PECA_GRAFICA;
+PUIM;ALTERACAO_SIMPLIFICADA_ART123;ALTERACAO_SIMPLIFICADA;PLANTA_CONDICIONANTES_PUB;INSERIR;11;true;;;Planta de Condicionantes - quando tenha sido alterada;;Planta de Condicionantes;PECA_GRAFICA;
+PUIM;ALTERACAO_SIMPLIFICADA_ART123;ALTERACAO_SIMPLIFICADA;PLANTA_CONDICIONANTES_DEP;INSERIR;12;true;;;Planta de Condicionantes - quando tenha sido alterada;;Planta de Condicionantes;PECA_GRAFICA;
+PUIM;ALTERACAO_SIMPLIFICADA_ART123;ALTERACAO_SIMPLIFICADA;RELATORIO_FUNDAMENTACAO_DEP;INSERIR;13;true;;;Relatório fundamentando as alterações introduzidas;;Relatório de Fundamentação;PECA_ESCRITA;
+PUIM;ALTERACAO_SIMPLIFICADA_ART123;ALTERACAO_SIMPLIFICADA;DEMAIS_ELEMENTOS_DEP;INSERIR;14;true;;;Os demais elementos do plano afetados pela alteração;;Demais Elementos;OUTROS;
+PUIM;ALTERACAO_SIMPLIFICADA_ART123;ALTERACAO_SIMPLIFICADA;RELATORIO_PONDERACAO_DEP;INSERIR;15;true;;;Relatório de ponderação dos resultados da discussão pública;;Relatório de Ponderação;PECA_ESCRITA;
+PUIM;ALTERACAO_SIMPLIFICADA_ART123;ALTERACAO_SIMPLIFICADA;DELIBERACAO_CM_DEP;INSERIR;16;true;;;Deliberação da Câmara Municipal (CM) que determina a alteração do plano;;Deliberação da CM;PECA_ESCRITA;
+PUIM;ALTERACAO_SIMPLIFICADA_ART123;ALTERACAO_SIMPLIFICADA;PARECER_CCDR_DEP;INSERIR;17;true;;;Parecer da CCDR;;Parecer da CCDR;PECA_ESCRITA;
+PUIM;CORRECAO_MATERIAL;CORRECAO_MATERIAL;TEXTO_ATO_PUB;INSERIR;1;true;;;Declaração da entidade responsável pela elaboração do plano;Texto do ato a publicar - Declaração da entidade responsável pela elaboração do plano;Texto do Ato;PECA_ESCRITA;
+PUIM;CORRECAO_MATERIAL;CORRECAO_MATERIAL;TEXTO_ATO_DEP;INSERIR;2;true;;;Declaração da entidade responsável pela elaboração do plano;Texto do ato a publicar - Declaração da entidade responsável pela elaboração do plano;Texto do Ato;PECA_ESCRITA;
+PUIM;CORRECAO_MATERIAL;CORRECAO_MATERIAL;ALTERACOES_REGULAMENTO_PUB;INSERIR;3;true;;;Texto das disposições corrigidas no Regulamento - quando tenha sido corrigido;;Alterações ao Regulamento;PECA_ESCRITA;
+PUIM;CORRECAO_MATERIAL;CORRECAO_MATERIAL;ALTERACOES_REGULAMENTO_DEP;INSERIR;4;true;;;Texto das disposições corrigidas no Regulamento - quando tenha sido corrigido;;Alterações ao Regulamento;PECA_ESCRITA;
+PUIM;CORRECAO_MATERIAL;CORRECAO_MATERIAL;REGULAMENTO_INTEGRAL_PUB;INSERIR;5;false;;;Regulamento (versão alterada integral) - quando necessário;;Regulamento Integral;PECA_ESCRITA;
+PUIM;CORRECAO_MATERIAL;CORRECAO_MATERIAL;REGULAMENTO_INTEGRAL_DEP;INSERIR;6;false;;;Regulamento (versão alterada integral) - quando necessário;;Regulamento Integral;PECA_ESCRITA;
+PUIM;CORRECAO_MATERIAL;CORRECAO_MATERIAL;PLANTA_ZONAMENTO_PUB;INSERIR;7;true;;;Planta de Zonamento - quando tenha sido corrigida;;Planta de Zonamento;PECA_GRAFICA;
+PUIM;CORRECAO_MATERIAL;CORRECAO_MATERIAL;PLANTA_ZONAMENTO_DEP;INSERIR;8;true;;;Planta de Zonamento - quando tenha sido corrigida;;Planta de Zonamento;PECA_GRAFICA;
+PUIM;CORRECAO_MATERIAL;CORRECAO_MATERIAL;PLANTA_CONDICIONANTES_PUB;INSERIR;9;true;;;Planta de Condicionantes - quando tenha sido corrigida;;Planta de Condicionantes;PECA_GRAFICA;
+PUIM;CORRECAO_MATERIAL;CORRECAO_MATERIAL;PLANTA_CONDICIONANTES_DEP;INSERIR;10;true;;;Planta de Condicionantes - quando tenha sido corrigida;;Planta de Condicionantes;PECA_GRAFICA;
+PUIM;CORRECAO_MATERIAL;CORRECAO_MATERIAL;RELATORIO_FUNDAMENTACAO_DEP;INSERIR;11;true;;;Relatório fundamentando as correções materiais/retificações introduzidas;;Relatório de Fundamentação;PECA_ESCRITA;
+PUIM;CORRECAO_MATERIAL;CORRECAO_MATERIAL;DEMAIS_ELEMENTOS_DEP;INSERIR;12;true;;;Os demais elementos do plano afetados pela correção material/retificação;;Demais Elementos;OUTROS;
+PUIM;CORRECAO_MATERIAL;CORRECAO_MATERIAL;DECLARACAO_CM_DEP;INSERIR;13;true;;;Declaração da Câmara Municipal (CM) de correção material/retificação do plano;;Declaração da CM;PECA_ESCRITA;
+PUIM;REVOGACAO;REVOGACAO;TEXTO_ATO_PUB;INSERIR;1;true;;;Texto do ato a publicar no Diário da República;;Texto do Ato;PECA_ESCRITA;
+PUIM;REVOGACAO;REVOGACAO;TEXTO_ATO_DEP;INSERIR;2;true;;;Texto do ato a publicar no Diário da República;;Texto do Ato;PECA_ESCRITA;
+PUIM;REVOGACAO;REVOGACAO;DELIBERACAO_PUB;INSERIR;3;true;;;Deliberação de aprovação da revogação de plano territorial;;Deliberação;PECA_ESCRITA;
+PUIM;REVOGACAO;REVOGACAO;DELIBERACAO_DEP;INSERIR;4;true;;;Deliberação de aprovação da revogação de plano territorial;;Deliberação;PECA_ESCRITA;
+PPIM;ELABORACAO;DECISAO_INICIO;TEXTO_ATO_PUB;INSERIR;1;true;;;Texto do ato a publicar no Diário da República;;Texto do Ato;PECA_ESCRITA;TEXTO_ATO
+PPIM;ELABORACAO;DECISAO_INICIO;TEXTO_ATO_DEP;INSERIR;2;true;;;Texto do ato a publicar no Diário da República;;Texto do Ato;PECA_ESCRITA;TEXTO_ATO
+PPIM;ELABORACAO;DECISAO_INICIO;DELIBERACAO_PUB;INSERIR;3;true;;;Deliberação do início de elaboração de plano territorial (CM/CIM);;Deliberação;PECA_ESCRITA;DELIBERACAO
+PPIM;ELABORACAO;DECISAO_INICIO;DELIBERACAO_DEP;INSERIR;4;true;;;Deliberação do início de elaboração de plano territorial (CM/CIM);;Deliberação;PECA_ESCRITA;DELIBERACAO
+PPIM;ELABORACAO;DECISAO_INICIO;PLANTA_AREA_INTERVENCAO_PUB;INSERIR;5;false;;;Planta com a área de intervenção;;Planta com Área de Intervenção;PECA_GRAFICA;
+PPIM;ELABORACAO;DECISAO_INICIO;PLANTA_AREA_INTERVENCAO_DEP;INSERIR;6;false;;;Planta com a área de intervenção;;Planta com Área de Intervenção;PECA_GRAFICA;
+PPIM;ELABORACAO;ABERTURA_DISCUSSAO_PUBLICA;TEXTO_ATO_PUB;INSERIR;1;true;;;Texto do ato a publicar no Diário da República;;Texto do Ato;PECA_ESCRITA;TEXTO_ATO
+PPIM;ELABORACAO;ABERTURA_DISCUSSAO_PUBLICA;TEXTO_ATO_DEP;INSERIR;2;true;;;Texto do ato a publicar no Diário da República;;Texto do Ato;PECA_ESCRITA;TEXTO_ATO
+PPIM;ELABORACAO;ABERTURA_DISCUSSAO_PUBLICA;DELIBERACAO_PUB;INSERIR;3;true;;;Deliberação;;Deliberação;PECA_ESCRITA;DELIBERACAO
+PPIM;ELABORACAO;ABERTURA_DISCUSSAO_PUBLICA;DELIBERACAO_DEP;INSERIR;4;true;;;Deliberação;;Deliberação;PECA_ESCRITA;DELIBERACAO
+PPIM;ELABORACAO;ELABORACAO;TEXTO_ATO_PUB;INSERIR;1;true;;;Texto do ato a publicar no Diário da República;;Texto do Ato;PECA_ESCRITA;TEXTO_ATO
+PPIM;ELABORACAO;ELABORACAO;TEXTO_ATO_DEP;INSERIR;2;true;;;Texto do ato a publicar no Diário da República;;Texto do Ato;PECA_ESCRITA;TEXTO_ATO
+PPIM;ELABORACAO;ELABORACAO;DELIBERACAO_PUB;INSERIR;3;true;;;Deliberação da Assembleia Municipal/Intermunicipal (AM/AMi) que aprova o plano;;Deliberação;PECA_ESCRITA;DELIBERACAO
+PPIM;ELABORACAO;ELABORACAO;DELIBERACAO_DEP;INSERIR;4;true;;;Deliberação da Assembleia Municipal/Intermunicipal (AM/AMi) que aprova o plano;;Deliberação;PECA_ESCRITA;DELIBERACAO
+PPIM;ELABORACAO;ELABORACAO;REGULAMENTO_PUB;INSERIR;5;true;;;Regulamento;;Regulamento;PECA_ESCRITA;
+PPIM;ELABORACAO;ELABORACAO;REGULAMENTO_DEP;INSERIR;6;true;;;Regulamento;;Regulamento;PECA_ESCRITA;
+PPIM;ELABORACAO;ELABORACAO;PLANTA_IMPLANTACAO_PUB;INSERIR;7;true;;;Planta de Implantação;;Planta de Implantação;PECA_GRAFICA;
+PPIM;ELABORACAO;ELABORACAO;PLANTA_IMPLANTACAO_DEP;INSERIR;8;true;;;Planta de Implantação;;Planta de Implantação;PECA_GRAFICA;
+PPIM;ELABORACAO;ELABORACAO;PLANTA_CONDICIONANTES_PUB;INSERIR;9;true;;;Planta de Condicionantes;;Planta de Condicionantes;PECA_GRAFICA;
+PPIM;ELABORACAO;ELABORACAO;PLANTA_CONDICIONANTES_DEP;INSERIR;10;true;;;Planta de Condicionantes;;Planta de Condicionantes;PECA_GRAFICA;
+PPIM;ELABORACAO;ELABORACAO;PLANTA_TRANSFORMACAO_FUNDIARIA_PUB;INSERIR;11;true;;;Planta da transformação fundiária prevista;;Planta da Transformação Fundiária;PECA_GRAFICA;
+PPIM;ELABORACAO;ELABORACAO;PLANTA_TRANSFORMACAO_FUNDIARIA_DEP;INSERIR;12;true;;;Planta da transformação fundiária prevista;;Planta da Transformação Fundiária;PECA_GRAFICA;
+PPIM;ELABORACAO;ELABORACAO;OUTRAS_PLANTAS_PUB;INSERIR;13;true;;;Outras plantas;;Outras Plantas;PECA_GRAFICA;
+PPIM;ELABORACAO;ELABORACAO;OUTRAS_PLANTAS_DEP;INSERIR;14;true;;;Outras plantas;;Outras Plantas;PECA_GRAFICA;
+PPIM;ELABORACAO;ELABORACAO;CARTOGRAMA_PUB;INSERIR;15;true;;;Cartograma;;Cartograma;PECA_GRAFICA;
+PPIM;ELABORACAO;ELABORACAO;CARTOGRAMA_DEP;INSERIR;16;true;;;Cartograma;;Cartograma;PECA_GRAFICA;
+PPIM;ELABORACAO;ELABORACAO;ESTUDOS_CARACTERIZACAO_DEP;INSERIR;17;true;;;Estudos de caracterização do território;Estudos de caraterização económica, social, biofísica e da estrutura fundiária do território municipal;Estudos de Caracterização;PECA_ESCRITA;
+PPIM;ELABORACAO;ELABORACAO;RELATORIO_PLANO_DEP;INSERIR;18;true;;;Relatório com os objetivos estratégicos do plano e a respetiva fundamentação;Relatório, que explicita os objectivos estratégicos do plano e a respectiva fundamentação técnica, suportada na avaliação das condições económicas, sociais, culturais e ambientais para a sua execução;Relatório do Plano;PECA_ESCRITA;
+PPIM;ELABORACAO;ELABORACAO;RELATORIO_AMBIENTAL_DEP;INSERIR;19;true;;;Relatório ambiental;Relatório ambiental, no qual se identificam, descrevem e avaliam os eventuais efeitos significativos no ambiente resultantes da aplicação do plano e as suas alternativas razoáveis que tenham em conta os objectivos e o âmbito de aplicação territorial respectivos;Relatório Ambiental;PECA_ESCRITA;
+PPIM;ELABORACAO;ELABORACAO;PROGRAMA_EXECUCAO_DEP;INSERIR;20;true;;;Programa de execução;Programa de execução contendo disposições indicativas sobre as intervenções municipais previstas, bem como sobre os meios de financiamento das mesmas;Programa de Execução;PECA_ESCRITA;
+PPIM;ELABORACAO;ELABORACAO;PLANTA_ENQUADRAMENTO_DEP;INSERIR;21;true;;;Planta de enquadramento regional;Planta de enquadramento regional elaborada a escala inferior à do plano director municipal, com indicação dos municípios limítrofes, centros urbanos mais importantes, principais vias de comunicação e outras infra-estruturas relevantes e grandes equipamentos que sirvam o município, bem como a…;Planta de Enquadramento;PECA_GRAFICA;
+PPIM;ELABORACAO;ELABORACAO;PLANTA_SITUACAO_EXISTENTE_DEP;INSERIR;22;true;;;Planta da situação existente à data da elaboração do plano;Planta da situação existente com a ocupação do território municipal à data da elaboração do plano;Planta da Situação Existente;PECA_GRAFICA;
+PPIM;ELABORACAO;ELABORACAO;COMPROMISSOS_URBANISTICOS_DEP;INSERIR;23;true;;;Relatório e/ou planta das licenças ou autorizações de operações urbanísticas;Relatório e ou planta com a indicação das licenças ou autorizações de operações urbanísticas emitidas, bem como das informações prévias favoráveis em vigor, substituível por declaração de câmara municipal comprovativa da inexistência dos referidos compromissos urbanísticos na área do plano;Compromissos Urbanísticos;PECA_ESCRITA;
+PPIM;ELABORACAO;ELABORACAO;PLANTAS_INFRAESTRUTURAS_DEP;INSERIR;24;true;;;Plantas do traçado das infraestruturas existentes e previstas;Plantas de identificação do traçado de infra-estruturas viárias, de abastecimento de água, de saneamento, de energia eléctrica, de recolha de resíduos e demais infra-estruturas relevantes, existentes e previstas, na área do plano;Plantas de Infraestruturas;PECA_GRAFICA;
+PPIM;ELABORACAO;ELABORACAO;ESTRUTURA_ECOLOGICA_AGLOMERADOS_DEP;INSERIR;25;true;;;Carta da estrutura ecológica do(s) aglomerado(s);;Estrutura Ecológica dos Aglomerados;PECA_GRAFICA;
+PPIM;ELABORACAO;ELABORACAO;MAPA_RUIDO_DEP;INSERIR;26;true;;;Relatório de recolha de dados acústicos ou mapa de ruído;;Mapa de Ruído;PECA_GRAFICA;
+PPIM;ELABORACAO;ELABORACAO;RELATORIO_PONDERACAO_DEP;INSERIR;27;true;;;Relatório de ponderação dos resultados da discussão pública;;Relatório de Ponderação;PECA_ESCRITA;
+PPIM;ELABORACAO;ELABORACAO;PARECERES_ATA_DEP;INSERIR;28;true;;;Pareceres emitidos / Ata da conferência de serviços;;Pareceres;PECA_ESCRITA;
+PPIM;ELABORACAO;ELABORACAO;DELIBERACAO_CM_DEP;INSERIR;29;true;;;Deliberação da Câmara Municipal (CM) / CIM que determina a elaboração/revisão do Plano;;Deliberação da CM;PECA_ESCRITA;
+PPIM;REVISAO;DECISAO_INICIO;TEXTO_ATO_PUB;INSERIR;1;true;;;Texto do ato a publicar no Diário da República;;Texto do Ato;PECA_ESCRITA;TEXTO_ATO
+PPIM;REVISAO;DECISAO_INICIO;TEXTO_ATO_DEP;INSERIR;2;true;;;Texto do ato a publicar no Diário da República;;Texto do Ato;PECA_ESCRITA;TEXTO_ATO
+PPIM;REVISAO;DECISAO_INICIO;DELIBERACAO_PUB;INSERIR;3;true;;;Deliberação do início de revisão de plano territorial (CM/CIM);;Deliberação;PECA_ESCRITA;DELIBERACAO
+PPIM;REVISAO;DECISAO_INICIO;DELIBERACAO_DEP;INSERIR;4;true;;;Deliberação do início de revisão de plano territorial (CM/CIM);;Deliberação;PECA_ESCRITA;DELIBERACAO
+PPIM;REVISAO;DECISAO_INICIO;PLANTA_AREA_INTERVENCAO_PUB;INSERIR;5;false;;;Planta com a área de intervenção;;Planta com Área de Intervenção;PECA_GRAFICA;
+PPIM;REVISAO;DECISAO_INICIO;PLANTA_AREA_INTERVENCAO_DEP;INSERIR;6;false;;;Planta com a área de intervenção;;Planta com Área de Intervenção;PECA_GRAFICA;
+PPIM;REVISAO;ABERTURA_DISCUSSAO_PUBLICA;TEXTO_ATO_PUB;INSERIR;1;true;;;Texto do ato a publicar no Diário da República;;Texto do Ato;PECA_ESCRITA;TEXTO_ATO
+PPIM;REVISAO;ABERTURA_DISCUSSAO_PUBLICA;TEXTO_ATO_DEP;INSERIR;2;true;;;Texto do ato a publicar no Diário da República;;Texto do Ato;PECA_ESCRITA;TEXTO_ATO
+PPIM;REVISAO;ABERTURA_DISCUSSAO_PUBLICA;DELIBERACAO_PUB;INSERIR;3;true;;;Deliberação;;Deliberação;PECA_ESCRITA;DELIBERACAO
+PPIM;REVISAO;ABERTURA_DISCUSSAO_PUBLICA;DELIBERACAO_DEP;INSERIR;4;true;;;Deliberação;;Deliberação;PECA_ESCRITA;DELIBERACAO
+PPIM;REVISAO;REVISAO;TEXTO_ATO_PUB;INSERIR;1;true;;;Texto do ato a publicar no Diário da República;;Texto do Ato;PECA_ESCRITA;TEXTO_ATO
+PPIM;REVISAO;REVISAO;TEXTO_ATO_DEP;INSERIR;2;true;;;Texto do ato a publicar no Diário da República;;Texto do Ato;PECA_ESCRITA;TEXTO_ATO
+PPIM;REVISAO;REVISAO;DELIBERACAO_PUB;INSERIR;3;true;;;Deliberação da Assembleia Municipal/Intermunicipal (AM/AMi) que aprova o plano;;Deliberação;PECA_ESCRITA;DELIBERACAO
+PPIM;REVISAO;REVISAO;DELIBERACAO_DEP;INSERIR;4;true;;;Deliberação da Assembleia Municipal/Intermunicipal (AM/AMi) que aprova o plano;;Deliberação;PECA_ESCRITA;DELIBERACAO
+PPIM;REVISAO;REVISAO;REGULAMENTO_PUB;INSERIR;5;true;;;Regulamento;;Regulamento;PECA_ESCRITA;
+PPIM;REVISAO;REVISAO;REGULAMENTO_DEP;INSERIR;6;true;;;Regulamento;;Regulamento;PECA_ESCRITA;
+PPIM;REVISAO;REVISAO;PLANTA_IMPLANTACAO_PUB;INSERIR;7;true;;;Planta de Implantação;;Planta de Implantação;PECA_GRAFICA;
+PPIM;REVISAO;REVISAO;PLANTA_IMPLANTACAO_DEP;INSERIR;8;true;;;Planta de Implantação;;Planta de Implantação;PECA_GRAFICA;
+PPIM;REVISAO;REVISAO;PLANTA_CONDICIONANTES_PUB;INSERIR;9;true;;;Planta de Condicionantes;;Planta de Condicionantes;PECA_GRAFICA;
+PPIM;REVISAO;REVISAO;PLANTA_CONDICIONANTES_DEP;INSERIR;10;true;;;Planta de Condicionantes;;Planta de Condicionantes;PECA_GRAFICA;
+PPIM;REVISAO;REVISAO;PLANTA_TRANSFORMACAO_FUNDIARIA_PUB;INSERIR;11;true;;;Planta da transformação fundiária prevista;;Planta da Transformação Fundiária;PECA_GRAFICA;
+PPIM;REVISAO;REVISAO;PLANTA_TRANSFORMACAO_FUNDIARIA_DEP;INSERIR;12;true;;;Planta da transformação fundiária prevista;;Planta da Transformação Fundiária;PECA_GRAFICA;
+PPIM;REVISAO;REVISAO;OUTRAS_PLANTAS_PUB;INSERIR;13;true;;;Outras plantas;;Outras Plantas;PECA_GRAFICA;
+PPIM;REVISAO;REVISAO;OUTRAS_PLANTAS_DEP;INSERIR;14;true;;;Outras plantas;;Outras Plantas;PECA_GRAFICA;
+PPIM;REVISAO;REVISAO;CARTOGRAMA_PUB;INSERIR;15;true;;;Cartograma;;Cartograma;PECA_GRAFICA;
+PPIM;REVISAO;REVISAO;CARTOGRAMA_DEP;INSERIR;16;true;;;Cartograma;;Cartograma;PECA_GRAFICA;
+PPIM;REVISAO;REVISAO;ESTUDOS_CARACTERIZACAO_DEP;INSERIR;17;true;;;Estudos de caracterização do território;Estudos de caraterização económica, social, biofísica e da estrutura fundiária do território municipal;Estudos de Caracterização;PECA_ESCRITA;
+PPIM;REVISAO;REVISAO;RELATORIO_PLANO_DEP;INSERIR;18;true;;;Relatório com os objetivos estratégicos do plano e a respetiva fundamentação;Relatório, que explicita os objectivos estratégicos do plano e a respectiva fundamentação técnica, suportada na avaliação das condições económicas, sociais, culturais e ambientais para a sua execução;Relatório do Plano;PECA_ESCRITA;
+PPIM;REVISAO;REVISAO;RELATORIO_AMBIENTAL_DEP;INSERIR;19;true;;;Relatório ambiental;Relatório ambiental, no qual se identificam, descrevem e avaliam os eventuais efeitos significativos no ambiente resultantes da aplicação do plano e as suas alternativas razoáveis que tenham em conta os objectivos e o âmbito de aplicação territorial respectivos;Relatório Ambiental;PECA_ESCRITA;
+PPIM;REVISAO;REVISAO;PROGRAMA_EXECUCAO_DEP;INSERIR;20;true;;;Programa de execução;Programa de execução contendo disposições indicativas sobre as intervenções municipais previstas, bem como sobre os meios de financiamento das mesmas;Programa de Execução;PECA_ESCRITA;
+PPIM;REVISAO;REVISAO;PLANTA_ENQUADRAMENTO_DEP;INSERIR;21;true;;;Planta de enquadramento regional;Planta de enquadramento regional elaborada a escala inferior à do plano director municipal, com indicação dos municípios limítrofes, centros urbanos mais importantes, principais vias de comunicação e outras infra-estruturas relevantes e grandes equipamentos que sirvam o município, bem como a…;Planta de Enquadramento;PECA_GRAFICA;
+PPIM;REVISAO;REVISAO;PLANTA_SITUACAO_EXISTENTE_DEP;INSERIR;22;true;;;Planta da situação existente à data da elaboração do plano;Planta da situação existente com a ocupação do território municipal à data da elaboração do plano;Planta da Situação Existente;PECA_GRAFICA;
+PPIM;REVISAO;REVISAO;COMPROMISSOS_URBANISTICOS_DEP;INSERIR;23;true;;;Relatório e/ou planta das licenças ou autorizações de operações urbanísticas;Relatório e ou planta com a indicação das licenças ou autorizações de operações urbanísticas emitidas, bem como das informações prévias favoráveis em vigor, substituível por declaração de câmara municipal comprovativa da inexistência dos referidos compromissos urbanísticos na área do plano;Compromissos Urbanísticos;PECA_ESCRITA;
+PPIM;REVISAO;REVISAO;PLANTAS_INFRAESTRUTURAS_DEP;INSERIR;24;true;;;Plantas do traçado das infraestruturas existentes e previstas;Plantas de identificação do traçado de infra-estruturas viárias, de abastecimento de água, de saneamento, de energia eléctrica, de recolha de resíduos e demais infra-estruturas relevantes, existentes e previstas, na área do plano;Plantas de Infraestruturas;PECA_GRAFICA;
+PPIM;REVISAO;REVISAO;ESTRUTURA_ECOLOGICA_AGLOMERADOS_DEP;INSERIR;25;true;;;Carta da estrutura ecológica do(s) aglomerado(s);;Estrutura Ecológica dos Aglomerados;PECA_GRAFICA;
+PPIM;REVISAO;REVISAO;MAPA_RUIDO_DEP;INSERIR;26;true;;;Relatório de recolha de dados acústicos ou mapa de ruído;;Mapa de Ruído;PECA_GRAFICA;
+PPIM;REVISAO;REVISAO;RELATORIO_PONDERACAO_DEP;INSERIR;27;true;;;Relatório de ponderação dos resultados da discussão pública;;Relatório de Ponderação;PECA_ESCRITA;
+PPIM;REVISAO;REVISAO;PARECERES_ATA_DEP;INSERIR;28;true;;;Pareceres emitidos / Ata da conferência de serviços;;Pareceres;PECA_ESCRITA;
+PPIM;REVISAO;REVISAO;DELIBERACAO_CM_DEP;INSERIR;29;true;;;Deliberação da Câmara Municipal (CM) / CIM que determina a elaboração/revisão do Plano;;Deliberação da CM;PECA_ESCRITA;
+PPIM;ALTERACAO;DECISAO_INICIO;TEXTO_ATO_PUB;INSERIR;1;true;;;Texto do ato a publicar no Diário da República;;Texto do Ato;PECA_ESCRITA;TEXTO_ATO
+PPIM;ALTERACAO;DECISAO_INICIO;TEXTO_ATO_DEP;INSERIR;2;true;;;Texto do ato a publicar no Diário da República;;Texto do Ato;PECA_ESCRITA;TEXTO_ATO
+PPIM;ALTERACAO;DECISAO_INICIO;DELIBERACAO_PUB;INSERIR;3;true;;;Deliberação do início de alteração de plano territorial (CM/CIM);;Deliberação;PECA_ESCRITA;DELIBERACAO
+PPIM;ALTERACAO;DECISAO_INICIO;DELIBERACAO_DEP;INSERIR;4;true;;;Deliberação do início de alteração de plano territorial (CM/CIM);;Deliberação;PECA_ESCRITA;DELIBERACAO
+PPIM;ALTERACAO;DECISAO_INICIO;PLANTA_LOCALIZACAO_PUB;INSERIR;5;false;;;Planta com a área de intervenção;;Planta com Área de Intervenção;PECA_GRAFICA;
+PPIM;ALTERACAO;DECISAO_INICIO;PLANTA_LOCALIZACAO_DEP;INSERIR;6;false;;;Planta com a área de intervenção;;Planta com Área de Intervenção;PECA_GRAFICA;
+PPIM;ALTERACAO;ABERTURA_DISCUSSAO_PUBLICA;TEXTO_ATO_PUB;INSERIR;1;true;;;Texto do ato a publicar no Diário da República;;Texto do Ato;PECA_ESCRITA;TEXTO_ATO
+PPIM;ALTERACAO;ABERTURA_DISCUSSAO_PUBLICA;TEXTO_ATO_DEP;INSERIR;2;true;;;Texto do ato a publicar no Diário da República;;Texto do Ato;PECA_ESCRITA;TEXTO_ATO
+PPIM;ALTERACAO;ABERTURA_DISCUSSAO_PUBLICA;DELIBERACAO_PUB;INSERIR;3;true;;;Deliberação;;Deliberação;PECA_ESCRITA;DELIBERACAO
+PPIM;ALTERACAO;ABERTURA_DISCUSSAO_PUBLICA;DELIBERACAO_DEP;INSERIR;4;true;;;Deliberação;;Deliberação;PECA_ESCRITA;DELIBERACAO
+PPIM;ALTERACAO;ALTERACAO;TEXTO_ATO_PUB;INSERIR;1;true;;;Texto do ato a publicar no Diário da República;;Texto do Ato;PECA_ESCRITA;TEXTO_ATO
+PPIM;ALTERACAO;ALTERACAO;TEXTO_ATO_DEP;INSERIR;2;true;;;Texto do ato a publicar no Diário da República;;Texto do Ato;PECA_ESCRITA;TEXTO_ATO
+PPIM;ALTERACAO;ALTERACAO;DELIBERACAO_PUB;INSERIR;3;true;;;Deliberação da Assembleia Municipal/Intermunicipal (AM/AMi) que aprova a alteração do plano;;Deliberação;PECA_ESCRITA;DELIBERACAO
+PPIM;ALTERACAO;ALTERACAO;DELIBERACAO_DEP;INSERIR;4;true;;;Deliberação da Assembleia Municipal/Intermunicipal (AM/AMi) que aprova a alteração do plano;;Deliberação;PECA_ESCRITA;DELIBERACAO
+PPIM;ALTERACAO;ALTERACAO;ALTERACOES_REGULAMENTO_PUB;INSERIR;5;true;;;Texto das disposições alteradas no Regulamento - quando tenha sido alterado;;Alterações ao Regulamento;PECA_ESCRITA;
+PPIM;ALTERACAO;ALTERACAO;ALTERACOES_REGULAMENTO_DEP;INSERIR;6;true;;;Texto das disposições alteradas no Regulamento - quando tenha sido alterado;;Alterações ao Regulamento;PECA_ESCRITA;
+PPIM;ALTERACAO;ALTERACAO;REGULAMENTO_INTEGRAL_PUB;INSERIR;7;true;;;Regulamento (versão alterada integral quando alterações superiores a 20%);;Regulamento Integral;PECA_ESCRITA;
+PPIM;ALTERACAO;ALTERACAO;REGULAMENTO_INTEGRAL_DEP;INSERIR;8;true;;;Regulamento (versão alterada integral quando alterações superiores a 20%);;Regulamento Integral;PECA_ESCRITA;
+PPIM;ALTERACAO;ALTERACAO;PLANTA_IMPLANTACAO_PUB;INSERIR;9;true;;;Planta de Implantação - quando tenha sido alterada;;Planta de Implantação;PECA_GRAFICA;
+PPIM;ALTERACAO;ALTERACAO;PLANTA_IMPLANTACAO_DEP;INSERIR;10;true;;;Planta de Implantação - quando tenha sido alterada;;Planta de Implantação;PECA_GRAFICA;
+PPIM;ALTERACAO;ALTERACAO;PLANTA_CONDICIONANTES_PUB;INSERIR;11;true;;;Planta de Condicionantes - quando tenha sido alterada;;Planta de Condicionantes;PECA_GRAFICA;
+PPIM;ALTERACAO;ALTERACAO;PLANTA_CONDICIONANTES_DEP;INSERIR;12;true;;;Planta de Condicionantes - quando tenha sido alterada;;Planta de Condicionantes;PECA_GRAFICA;
+PPIM;ALTERACAO;ALTERACAO;RELATORIO_FUNDAMENTACAO_DEP;INSERIR;13;true;;;Relatório fundamentando as alterações introduzidas;;Relatório de Fundamentação;PECA_ESCRITA;
+PPIM;ALTERACAO;ALTERACAO;DEMAIS_ELEMENTOS_DEP;INSERIR;14;true;;;Os demais elementos do plano afetados pela alteração;;Demais Elementos;OUTROS;
+PPIM;ALTERACAO;ALTERACAO;RELATORIO_AMBIENTAL_DEP;INSERIR;15;true;;;Relatório ambiental;Relatório ambiental, no qual se identificam, descrevem e avaliam os eventuais efeitos significativos no ambiente resultantes da aplicação do plano e as suas alternativas razoáveis que tenham em conta os objectivos e o âmbito de aplicação territorial respectivos;Relatório Ambiental;PECA_ESCRITA;
+PPIM;ALTERACAO;ALTERACAO;RELATORIO_PONDERACAO_DEP;INSERIR;16;true;;;Relatório de ponderação dos resultados da discussão pública;;Relatório de Ponderação;PECA_ESCRITA;
+PPIM;ALTERACAO;ALTERACAO;DELIBERACAO_CM_DEP;INSERIR;17;true;;;Deliberação da Câmara Municipal (CM) que determina a alteração do plano;;Deliberação da CM;PECA_ESCRITA;
+PPIM;ALTERACAO;ALTERACAO;PARECERES_ATA_DEP;INSERIR;18;true;;;Pareceres emitidos / Ata da conferência de serviços;;Pareceres;PECA_ESCRITA;
+PPIM;ALTERACAO_ADAPTACAO;ALTERACAO_ADAPTACAO;TEXTO_ATO_PUB;INSERIR;1;true;;;Declaração da entidade responsável pela elaboração do plano;Texto do ato a publicar - Declaração da entidade responsável pela elaboração do plano;Texto do Ato;PECA_ESCRITA;
+PPIM;ALTERACAO_ADAPTACAO;ALTERACAO_ADAPTACAO;TEXTO_ATO_DEP;INSERIR;2;true;;;Declaração da entidade responsável pela elaboração do plano;Texto do ato a publicar - Declaração da entidade responsável pela elaboração do plano;Texto do Ato;PECA_ESCRITA;
+PPIM;ALTERACAO_ADAPTACAO;ALTERACAO_ADAPTACAO;ALTERACOES_REGULAMENTO_PUB;INSERIR;3;true;;;Texto das disposições alteradas no Regulamento - quando tenha sido alterado;;Alterações ao Regulamento;PECA_ESCRITA;
+PPIM;ALTERACAO_ADAPTACAO;ALTERACAO_ADAPTACAO;ALTERACOES_REGULAMENTO_DEP;INSERIR;4;true;;;Texto das disposições alteradas no Regulamento - quando tenha sido alterado;;Alterações ao Regulamento;PECA_ESCRITA;
+PPIM;ALTERACAO_ADAPTACAO;ALTERACAO_ADAPTACAO;REGULAMENTO_INTEGRAL_PUB;INSERIR;5;false;;;Regulamento (versão alterada integral);;Regulamento Integral;PECA_ESCRITA;
+PPIM;ALTERACAO_ADAPTACAO;ALTERACAO_ADAPTACAO;REGULAMENTO_INTEGRAL_DEP;INSERIR;6;false;;;Regulamento (versão alterada integral);;Regulamento Integral;PECA_ESCRITA;
+PPIM;ALTERACAO_ADAPTACAO;ALTERACAO_ADAPTACAO;PLANTA_IMPLANTACAO_PUB;INSERIR;7;true;;;Planta de Implantação - quando tenha sido alterada;;Planta de Implantação;PECA_GRAFICA;
+PPIM;ALTERACAO_ADAPTACAO;ALTERACAO_ADAPTACAO;PLANTA_IMPLANTACAO_DEP;INSERIR;8;true;;;Planta de Implantação - quando tenha sido alterada;;Planta de Implantação;PECA_GRAFICA;
+PPIM;ALTERACAO_ADAPTACAO;ALTERACAO_ADAPTACAO;PLANTA_CONDICIONANTES_PUB;INSERIR;9;true;;;Planta de Condicionantes - quando tenha sido alterada;;Planta de Condicionantes;PECA_GRAFICA;
+PPIM;ALTERACAO_ADAPTACAO;ALTERACAO_ADAPTACAO;PLANTA_CONDICIONANTES_DEP;INSERIR;10;true;;;Planta de Condicionantes - quando tenha sido alterada;;Planta de Condicionantes;PECA_GRAFICA;
+PPIM;ALTERACAO_ADAPTACAO;ALTERACAO_ADAPTACAO;RELATORIO_FUNDAMENTACAO_DEP;INSERIR;11;true;;;Relatório fundamentando as adaptações introduzidas;;Relatório de Fundamentação;PECA_ESCRITA;
+PPIM;ALTERACAO_ADAPTACAO;ALTERACAO_ADAPTACAO;DEMAIS_ELEMENTOS_DEP;INSERIR;12;true;;;Os demais elementos do plano afetados pela adaptação (vide ficha modelo n.º 2);;Demais Elementos;OUTROS;
+PPIM;ALTERACAO_ADAPTACAO;ALTERACAO_ADAPTACAO;DELIBERACAO_AM_DEP;INSERIR;13;true;;;Deliberação da Assembleia Municipal/Intermunicipal (AM/AMi) que aprova a adaptação do plano;;Deliberação da AM;PECA_ESCRITA;
+PPIM;ALTERACAO_ADAPTACAO;ALTERACAO_ADAPTACAO;DELIBERACAO_CM_DEP;INSERIR;14;true;;;Deliberação da Câmara Municipal (CM) que determina a adaptação do plano;;Deliberação da CM;PECA_ESCRITA;
+PPIM;ALTERACAO_SIMPLIFICADA_ART123;DECISAO_INICIO;TEXTO_ATO_PUB;INSERIR;1;true;;;Texto do ato a publicar no Diário da República;;Texto do Ato;PECA_ESCRITA;
+PPIM;ALTERACAO_SIMPLIFICADA_ART123;DECISAO_INICIO;TEXTO_ATO_DEP;INSERIR;2;true;;;Texto do ato a publicar no Diário da República;;Texto do Ato;PECA_ESCRITA;
+PPIM;ALTERACAO_SIMPLIFICADA_ART123;DECISAO_INICIO;DELIBERACAO_PUB;INSERIR;3;true;;;Deliberação do início de alteração simplificada e participação pública (CM/CIM);;Deliberação;PECA_ESCRITA;
+PPIM;ALTERACAO_SIMPLIFICADA_ART123;DECISAO_INICIO;DELIBERACAO_DEP;INSERIR;4;true;;;Deliberação do início de alteração simplificada e participação pública (CM/CIM);;Deliberação;PECA_ESCRITA;
+PPIM;ALTERACAO_SIMPLIFICADA_ART123;ALTERACAO_SIMPLIFICADA;TEXTO_ATO_PUB;INSERIR;1;true;;;Texto do ato a publicar no Diário da República;;Texto do Ato;PECA_ESCRITA;
+PPIM;ALTERACAO_SIMPLIFICADA_ART123;ALTERACAO_SIMPLIFICADA;TEXTO_ATO_DEP;INSERIR;2;true;;;Texto do ato a publicar no Diário da República;;Texto do Ato;PECA_ESCRITA;
+PPIM;ALTERACAO_SIMPLIFICADA_ART123;ALTERACAO_SIMPLIFICADA;DELIBERACAO_PUB;INSERIR;3;true;;;Deliberação de aprovação do procedimento de plano territorial;;Deliberação;PECA_ESCRITA;
+PPIM;ALTERACAO_SIMPLIFICADA_ART123;ALTERACAO_SIMPLIFICADA;DELIBERACAO_DEP;INSERIR;4;true;;;Deliberação de aprovação do procedimento de plano territorial;;Deliberação;PECA_ESCRITA;
+PPIM;ALTERACAO_SIMPLIFICADA_ART123;ALTERACAO_SIMPLIFICADA;ALTERACOES_REGULAMENTO_PUB;INSERIR;5;true;;;Texto das disposições alteradas no Regulamento - quando tenha sido alterado;;Alterações ao Regulamento;PECA_ESCRITA;
+PPIM;ALTERACAO_SIMPLIFICADA_ART123;ALTERACAO_SIMPLIFICADA;ALTERACOES_REGULAMENTO_DEP;INSERIR;6;true;;;Texto das disposições alteradas no Regulamento - quando tenha sido alterado;;Alterações ao Regulamento;PECA_ESCRITA;
+PPIM;ALTERACAO_SIMPLIFICADA_ART123;ALTERACAO_SIMPLIFICADA;REGULAMENTO_INTEGRAL_PUB;INSERIR;7;false;;;Regulamento (versão alterada integral);;Regulamento Integral;PECA_ESCRITA;
+PPIM;ALTERACAO_SIMPLIFICADA_ART123;ALTERACAO_SIMPLIFICADA;REGULAMENTO_INTEGRAL_DEP;INSERIR;8;false;;;Regulamento (versão alterada integral);;Regulamento Integral;PECA_ESCRITA;
+PPIM;ALTERACAO_SIMPLIFICADA_ART123;ALTERACAO_SIMPLIFICADA;PLANTA_IMPLANTACAO_PUB;INSERIR;9;true;;;Planta de Implantação - quando tenha sido alterada;;Planta de Implantação;PECA_GRAFICA;
+PPIM;ALTERACAO_SIMPLIFICADA_ART123;ALTERACAO_SIMPLIFICADA;PLANTA_IMPLANTACAO_DEP;INSERIR;10;true;;;Planta de Implantação - quando tenha sido alterada;;Planta de Implantação;PECA_GRAFICA;
+PPIM;ALTERACAO_SIMPLIFICADA_ART123;ALTERACAO_SIMPLIFICADA;PLANTA_CONDICIONANTES_PUB;INSERIR;11;true;;;Planta de Condicionantes - quando tenha sido alterada;;Planta de Condicionantes;PECA_GRAFICA;
+PPIM;ALTERACAO_SIMPLIFICADA_ART123;ALTERACAO_SIMPLIFICADA;PLANTA_CONDICIONANTES_DEP;INSERIR;12;true;;;Planta de Condicionantes - quando tenha sido alterada;;Planta de Condicionantes;PECA_GRAFICA;
+PPIM;ALTERACAO_SIMPLIFICADA_ART123;ALTERACAO_SIMPLIFICADA;RELATORIO_FUNDAMENTACAO_DEP;INSERIR;13;true;;;Relatório fundamentando as alterações introduzidas;;Relatório de Fundamentação;PECA_ESCRITA;
+PPIM;ALTERACAO_SIMPLIFICADA_ART123;ALTERACAO_SIMPLIFICADA;DEMAIS_ELEMENTOS_DEP;INSERIR;14;true;;;Os demais elementos do plano afetados pela alteração;;Demais Elementos;OUTROS;
+PPIM;ALTERACAO_SIMPLIFICADA_ART123;ALTERACAO_SIMPLIFICADA;RELATORIO_PONDERACAO_DEP;INSERIR;15;true;;;Relatório de ponderação dos resultados da discussão pública;;Relatório de Ponderação;PECA_ESCRITA;
+PPIM;ALTERACAO_SIMPLIFICADA_ART123;ALTERACAO_SIMPLIFICADA;DELIBERACAO_CM_DEP;INSERIR;16;true;;;Deliberação da Câmara Municipal (CM) que determina a alteração do plano;;Deliberação da CM;PECA_ESCRITA;
+PPIM;ALTERACAO_SIMPLIFICADA_ART123;ALTERACAO_SIMPLIFICADA;PARECER_CCDR_DEP;INSERIR;17;true;;;Parecer da CCDR;;Parecer da CCDR;PECA_ESCRITA;
+PPIM;CORRECAO_MATERIAL;CORRECAO_MATERIAL;TEXTO_ATO_PUB;INSERIR;1;true;;;Declaração da entidade responsável pela elaboração do plano;Texto do ato a publicar - Declaração da entidade responsável pela elaboração do plano;Texto do Ato;PECA_ESCRITA;
+PPIM;CORRECAO_MATERIAL;CORRECAO_MATERIAL;TEXTO_ATO_DEP;INSERIR;2;true;;;Declaração da entidade responsável pela elaboração do plano;Texto do ato a publicar - Declaração da entidade responsável pela elaboração do plano;Texto do Ato;PECA_ESCRITA;
+PPIM;CORRECAO_MATERIAL;CORRECAO_MATERIAL;ALTERACOES_REGULAMENTO_PUB;INSERIR;3;true;;;Texto das disposições corrigidas no Regulamento - quando tenha sido corrigido;;Alterações ao Regulamento;PECA_ESCRITA;
+PPIM;CORRECAO_MATERIAL;CORRECAO_MATERIAL;ALTERACOES_REGULAMENTO_DEP;INSERIR;4;true;;;Texto das disposições corrigidas no Regulamento - quando tenha sido corrigido;;Alterações ao Regulamento;PECA_ESCRITA;
+PPIM;CORRECAO_MATERIAL;CORRECAO_MATERIAL;REGULAMENTO_INTEGRAL_PUB;INSERIR;5;false;;;Regulamento (versão alterada integral) - quando necessário;;Regulamento Integral;PECA_ESCRITA;
+PPIM;CORRECAO_MATERIAL;CORRECAO_MATERIAL;REGULAMENTO_INTEGRAL_DEP;INSERIR;6;false;;;Regulamento (versão alterada integral) - quando necessário;;Regulamento Integral;PECA_ESCRITA;
+PPIM;CORRECAO_MATERIAL;CORRECAO_MATERIAL;PLANTA_IMPLANTACAO_PUB;INSERIR;7;true;;;Planta de Implantação - quando tenha sido corrigida;;Planta de Implantação;PECA_GRAFICA;
+PPIM;CORRECAO_MATERIAL;CORRECAO_MATERIAL;PLANTA_IMPLANTACAO_DEP;INSERIR;8;true;;;Planta de Implantação - quando tenha sido corrigida;;Planta de Implantação;PECA_GRAFICA;
+PPIM;CORRECAO_MATERIAL;CORRECAO_MATERIAL;PLANTA_CONDICIONANTES_PUB;INSERIR;9;true;;;Planta de Condicionantes - quando tenha sido corrigida;;Planta de Condicionantes;PECA_GRAFICA;
+PPIM;CORRECAO_MATERIAL;CORRECAO_MATERIAL;PLANTA_CONDICIONANTES_DEP;INSERIR;10;true;;;Planta de Condicionantes - quando tenha sido corrigida;;Planta de Condicionantes;PECA_GRAFICA;
+PPIM;CORRECAO_MATERIAL;CORRECAO_MATERIAL;RELATORIO_FUNDAMENTACAO_DEP;INSERIR;11;true;;;Relatório fundamentando as correções materiais/retificações introduzidas;;Relatório de Fundamentação;PECA_ESCRITA;
+PPIM;CORRECAO_MATERIAL;CORRECAO_MATERIAL;DEMAIS_ELEMENTOS_DEP;INSERIR;12;true;;;Os demais elementos do plano afetados pela correção material/retificação;;Demais Elementos;OUTROS;
+PPIM;CORRECAO_MATERIAL;CORRECAO_MATERIAL;DECLARACAO_CM_DEP;INSERIR;13;true;;;Declaração da Câmara Municipal (CM) de correção material/retificação do plano;;Declaração da CM;PECA_ESCRITA;
+PPIM;REVOGACAO;REVOGACAO;TEXTO_ATO_PUB;INSERIR;1;true;;;Texto do ato a publicar no Diário da República;;Texto do Ato;PECA_ESCRITA;
+PPIM;REVOGACAO;REVOGACAO;TEXTO_ATO_DEP;INSERIR;2;true;;;Texto do ato a publicar no Diário da República;;Texto do Ato;PECA_ESCRITA;
+PPIM;REVOGACAO;REVOGACAO;DELIBERACAO_PUB;INSERIR;3;true;;;Deliberação de aprovação da revogação de plano territorial;;Deliberação;PECA_ESCRITA;
+PPIM;REVOGACAO;REVOGACAO;DELIBERACAO_DEP;INSERIR;4;true;;;Deliberação de aprovação da revogação de plano territorial;;Deliberação;PECA_ESCRITA;

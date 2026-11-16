@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <!--
+        Dinâmicas transversais, iniciadas sem escolher primeiro um IGT: Suspensão por iniciativa da CCDR, Suspensão e
+        Medidas Preventivas por iniciativa do Governo e Ratificação (EF v1.5 §3.1.1, §3.1.2 e «IGT – Séries DR»; TR-255;
+        OI-503). As Medidas Preventivas do município passam a iniciar-se também sem IGT, com associação opcional.
+        Configuração inicial, editável em backoffice. Sem ids explícitos: tudo se resolve pelos códigos e cada INSERT
+        salta as linhas que já existam (por exemplo criadas em backoffice). O snit_codigo nulo da Suspensão da CCDR e da
+        Ratificação e o codigo_idus nulo das quatro são valores que o Master preenche em backoffice quando existirem.
+    -->
+
+    <changeSet id="2026-11-12-11-seed-dinamicas-transversais-tipos-dinamica" author="david.raposo">
+        <sql>INSERT INTO tipo_dinamica (codigo, nome, inicio_sem_igt, snit_codigo, ativo)
+            SELECT v.codigo, v.nome, true, v.snit_codigo, true
+            FROM (VALUES (1, 'SUSPENSAO_CCDR', 'Suspensão (iniciativa da CCDR)', CAST(NULL AS VARCHAR(20))),
+                         (2, 'SUSPENSAO_GOVERNO', 'Suspensão (iniciativa do Governo)', '18'),
+                         (3, 'MEDIDAS_PREVENTIVAS_GOVERNO', 'Medidas Preventivas (iniciativa do Governo)', '15'),
+                         (4, 'RATIFICACAO', 'Ratificação', NULL))
+                 AS v (ordem, codigo, nome, snit_codigo)
+            WHERE NOT EXISTS (SELECT 1 FROM tipo_dinamica td WHERE td.codigo = v.codigo)
+            ORDER BY v.ordem</sql>
+        <sql>UPDATE tipo_dinamica SET inicio_sem_igt = true, nome = 'Medidas Preventivas (iniciativa do município)'
+            WHERE codigo = 'MEDIDAS_PREVENTIVAS'</sql>
+
+        <rollback>
+            <sql>UPDATE tipo_dinamica SET inicio_sem_igt = false, nome = 'Medidas Preventivas'
+                WHERE codigo = 'MEDIDAS_PREVENTIVAS'</sql>
+            <sql>DELETE FROM tipo_dinamica
+                WHERE codigo IN ('SUSPENSAO_CCDR', 'SUSPENSAO_GOVERNO', 'MEDIDAS_PREVENTIVAS_GOVERNO', 'RATIFICACAO')</sql>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="2026-11-12-11-seed-dinamicas-transversais-tipos-procedimento" author="david.raposo">
+        <comment>Códigos próprios: o formulário fixo e os itens documentais diferem dos do município (BL-PROC-019).</comment>
+        <sql>INSERT INTO tipo_procedimento (codigo, nome, ativo)
+            SELECT v.codigo, v.nome, true
+            FROM (VALUES (1, 'PUBLICACAO_SUSPENSAO_GOVERNO', 'Publicação da suspensão (Governo)'),
+                         (2, 'PRORROGACAO_SUSPENSAO_GOVERNO', 'Prorrogação da suspensão (Governo)'),
+                         (3, 'PUBLICACAO_MP_GOVERNO', 'Publicação das medidas preventivas (Governo)'),
+                         (4, 'PRORROGACAO_MP_GOVERNO', 'Prorrogação das medidas preventivas (Governo)'),
+                         (5, 'SUSPENSAO_CCDR', 'Suspensão (CCDR)'),
+                         (6, 'RATIFICACAO', 'Ratificação'))
+                 AS v (ordem, codigo, nome)
+            WHERE NOT EXISTS (SELECT 1 FROM tipo_procedimento tp WHERE tp.codigo = v.codigo)
+            ORDER BY v.ordem</sql>
+
+        <rollback>
+            <sql>DELETE FROM tipo_procedimento WHERE codigo IN ('PUBLICACAO_SUSPENSAO_GOVERNO', 'PRORROGACAO_SUSPENSAO_GOVERNO',
+                'PUBLICACAO_MP_GOVERNO', 'PRORROGACAO_MP_GOVERNO', 'SUSPENSAO_CCDR', 'RATIFICACAO')</sql>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="2026-11-12-11-seed-dinamicas-transversais-configuracoes" author="david.raposo">
+        <comment>
+            Uma linha por tipo de Instrumento que a Dinâmica pode abranger (DB-PROC-004). A Suspensão da CCDR é opcional
+            nos planos municipais e intermunicipais (FR-167, OI-504); as do Governo abrangem um ou mais planos ou
+            programas de qualquer tipo (FR-167); a Ratificação, um PDM ou PDIM.
+        </comment>
+        <sql>INSERT INTO instrumento_dinamica_config (tipo_instrumento_id, tipo_dinamica_id, ativo, associacao_instrumentos)
+            SELECT ti.id, td.id, true, v.associacao
+            FROM (VALUES ('SUSPENSAO_CCDR', 'OPCIONAL'), ('SUSPENSAO_GOVERNO', 'UM_OU_MAIS'),
+                         ('MEDIDAS_PREVENTIVAS_GOVERNO', 'UM_OU_MAIS'), ('RATIFICACAO', 'UM'))
+                 AS v (tipo_dinamica, associacao)
+            JOIN tipo_dinamica td ON td.codigo = v.tipo_dinamica
+            JOIN tipo_instrumento ti ON CASE v.tipo_dinamica
+                    WHEN 'SUSPENSAO_CCDR' THEN ti.codigo IN ('PDM', 'PU', 'PP', 'PDIM', 'PUIM', 'PPIM')
+                    WHEN 'RATIFICACAO' THEN ti.codigo IN ('PDM', 'PDIM')
+                    ELSE ti.categoria IN ('PLANO', 'PROGRAMA') END
+            WHERE NOT EXISTS (SELECT 1 FROM instrumento_dinamica_config idc
+                              WHERE idc.tipo_instrumento_id = ti.id AND idc.tipo_dinamica_id = td.id)
+            ORDER BY td.id, ti.id</sql>
+        <sql>UPDATE instrumento_dinamica_config SET associacao_instrumentos = 'OPCIONAL'
+            WHERE tipo_dinamica_id = (SELECT id FROM tipo_dinamica WHERE codigo = 'MEDIDAS_PREVENTIVAS')
+              AND tipo_instrumento_id IN (SELECT id FROM tipo_instrumento
+                                          WHERE codigo IN ('PDM', 'PU', 'PP', 'PDIM', 'PUIM', 'PPIM'))</sql>
+
+        <rollback>
+            <sql>UPDATE instrumento_dinamica_config SET associacao_instrumentos = 'UM'
+                WHERE tipo_dinamica_id = (SELECT id FROM tipo_dinamica WHERE codigo = 'MEDIDAS_PREVENTIVAS')
+                  AND tipo_instrumento_id IN (SELECT id FROM tipo_instrumento
+                                              WHERE codigo IN ('PDM', 'PU', 'PP', 'PDIM', 'PUIM', 'PPIM'))</sql>
+            <sql>DELETE FROM instrumento_dinamica_config WHERE tipo_dinamica_id IN (SELECT id FROM tipo_dinamica
+                WHERE codigo IN ('SUSPENSAO_CCDR', 'SUSPENSAO_GOVERNO', 'MEDIDAS_PREVENTIVAS_GOVERNO', 'RATIFICACAO'))</sql>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="2026-11-12-11-seed-dinamicas-transversais-procedimentos" author="david.raposo">
+        <comment>
+            A Publicação (ordem 1, obrigatória) precede a Prorrogação (ordem 2) nas Dinâmicas do Governo (BL-PROC-003);
+            a Suspensão da CCDR e a Ratificação têm um só Procedimento. Séries da EF v1.5: Governo e Ratificação na
+            1.ª série, CCDR na 2.ª série parte C. Não repetíveis, não pontuais, limite de 5 GB por omissão.
+        </comment>
+        <sql>INSERT INTO instrumento_procedimento_config (instrumento_dinamica_config_id, tipo_procedimento_id, ordem,
+                obrigatorio, serie_dr, ativo, tamanho_maximo_processo, repetivel, ato_pontual)
+            SELECT idc.id, tp.id, v.ordem, v.ordem = 1, v.serie_dr, true, 5368709120, false, false
+            FROM (VALUES ('SUSPENSAO_GOVERNO', 1, 'PUBLICACAO_SUSPENSAO_GOVERNO', 'PRIMEIRA'),
+                         ('SUSPENSAO_GOVERNO', 2, 'PRORROGACAO_SUSPENSAO_GOVERNO', 'PRIMEIRA'),
+                         ('MEDIDAS_PREVENTIVAS_GOVERNO', 1, 'PUBLICACAO_MP_GOVERNO', 'PRIMEIRA'),
+                         ('MEDIDAS_PREVENTIVAS_GOVERNO', 2, 'PRORROGACAO_MP_GOVERNO', 'PRIMEIRA'),
+                         ('SUSPENSAO_CCDR', 1, 'SUSPENSAO_CCDR', 'SEGUNDA_C'),
+                         ('RATIFICACAO', 1, 'RATIFICACAO', 'PRIMEIRA'))
+                 AS v (tipo_dinamica, ordem, tipo_procedimento, serie_dr)
+            JOIN tipo_dinamica td ON td.codigo = v.tipo_dinamica
+            JOIN instrumento_dinamica_config idc ON idc.tipo_dinamica_id = td.id
+            JOIN tipo_procedimento tp ON tp.codigo = v.tipo_procedimento
+            WHERE NOT EXISTS (SELECT 1 FROM instrumento_procedimento_config ipc
+                              WHERE ipc.instrumento_dinamica_config_id = idc.id AND ipc.tipo_procedimento_id = tp.id)
+            ORDER BY idc.id, v.ordem</sql>
+
+        <rollback>
+            <sql>DELETE FROM instrumento_procedimento_config WHERE instrumento_dinamica_config_id IN (
+                SELECT idc.id FROM instrumento_dinamica_config idc JOIN tipo_dinamica td ON td.id = idc.tipo_dinamica_id
+                WHERE td.codigo IN ('SUSPENSAO_CCDR', 'SUSPENSAO_GOVERNO', 'MEDIDAS_PREVENTIVAS_GOVERNO', 'RATIFICACAO'))</sql>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="2026-11-12-11-seed-dinamicas-transversais-permissoes" author="david.raposo">
+        <comment>
+            CCDR e DGT na Suspensão da CCDR; Secretaria de Estado e DGT nas do Governo e na Ratificação (EF v1.5 §2.2.4,
+            FR-160). A PCM não cria processos (FR-189).
+        </comment>
+        <sql>INSERT INTO permissao_acao (tipo_entidade, instrumento_procedimento_config_id, ativo)
+            SELECT v.tipo_entidade, ipc.id, true
+            FROM (VALUES ('SUSPENSAO_CCDR', 1, 'CCDR_DR'), ('SUSPENSAO_CCDR', 2, 'DGT'),
+                         ('SUSPENSAO_GOVERNO', 1, 'SEC_ESTADO'), ('SUSPENSAO_GOVERNO', 2, 'DGT'),
+                         ('MEDIDAS_PREVENTIVAS_GOVERNO', 1, 'SEC_ESTADO'), ('MEDIDAS_PREVENTIVAS_GOVERNO', 2, 'DGT'),
+                         ('RATIFICACAO', 1, 'SEC_ESTADO'), ('RATIFICACAO', 2, 'DGT'))
+                 AS v (tipo_dinamica, ordem, tipo_entidade)
+            JOIN tipo_dinamica td ON td.codigo = v.tipo_dinamica
+            JOIN instrumento_dinamica_config idc ON idc.tipo_dinamica_id = td.id
+            JOIN instrumento_procedimento_config ipc ON ipc.instrumento_dinamica_config_id = idc.id
+            WHERE NOT EXISTS (SELECT 1 FROM permissao_acao pa
+                              WHERE pa.instrumento_procedimento_config_id = ipc.id AND pa.tipo_entidade = v.tipo_entidade)
+            ORDER BY ipc.id, v.ordem</sql>
+
+        <rollback>
+            <sql>DELETE FROM permissao_acao WHERE instrumento_procedimento_config_id IN (
+                SELECT ipc.id FROM instrumento_procedimento_config ipc
+                JOIN instrumento_dinamica_config idc ON idc.id = ipc.instrumento_dinamica_config_id
+                JOIN tipo_dinamica td ON td.id = idc.tipo_dinamica_id
+                WHERE td.codigo IN ('SUSPENSAO_CCDR', 'SUSPENSAO_GOVERNO', 'MEDIDAS_PREVENTIVAS_GOVERNO', 'RATIFICACAO'))</sql>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="2026-11-12-11-seed-dinamicas-transversais-regras" author="david.raposo">
+        <comment>
+            Planos ou programas em vigor (EF v1.5, FR-167), avaliado em cada Instrumento associado. A Ratificação não tem
+            regra: o PDM a ratificar pode ainda não estar em vigor. Sem regras de unicidade: todas podem coexistir com
+            outros procedimentos. Uma configuração que já tenha regra (do backoffice) fica como está.
+        </comment>
+        <sql>INSERT INTO regra (instrumento_dinamica_config_id, operador, substitui_sequenciamento, descricao, ativo)
+            SELECT idc.id, 'AND', false, 'Requer instrumento em vigor', true
+            FROM instrumento_dinamica_config idc
+            JOIN tipo_dinamica td ON td.id = idc.tipo_dinamica_id
+            WHERE td.codigo IN ('SUSPENSAO_CCDR', 'SUSPENSAO_GOVERNO', 'MEDIDAS_PREVENTIVAS_GOVERNO')
+              AND NOT EXISTS (SELECT 1 FROM regra r WHERE r.instrumento_dinamica_config_id = idc.id)
+            ORDER BY idc.id</sql>
+
+        <rollback>
+            <sql>DELETE FROM regra WHERE instrumento_dinamica_config_id IN (
+                SELECT idc.id FROM instrumento_dinamica_config idc JOIN tipo_dinamica td ON td.id = idc.tipo_dinamica_id
+                WHERE td.codigo IN ('SUSPENSAO_CCDR', 'SUSPENSAO_GOVERNO', 'MEDIDAS_PREVENTIVAS_GOVERNO', 'RATIFICACAO'))</sql>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="2026-11-12-11-seed-dinamicas-transversais-condicoes" author="david.raposo">
+        <sql>INSERT INTO condicao (regra_id, avaliador, parametros, grupo, ativo)
+            SELECT r.id, 'INSTRUMENTO_EM_VIGOR', CAST('{}' AS jsonb), 1, true
+            FROM regra r
+            JOIN instrumento_dinamica_config idc ON idc.id = r.instrumento_dinamica_config_id
+            JOIN tipo_dinamica td ON td.id = idc.tipo_dinamica_id
+            WHERE td.codigo IN ('SUSPENSAO_CCDR', 'SUSPENSAO_GOVERNO', 'MEDIDAS_PREVENTIVAS_GOVERNO')
+              AND r.descricao = 'Requer instrumento em vigor'
+              AND NOT EXISTS (SELECT 1 FROM condicao c WHERE c.regra_id = r.id AND c.avaliador = 'INSTRUMENTO_EM_VIGOR')
+            ORDER BY r.id</sql>
+
+        <rollback>
+            <sql>DELETE FROM condicao WHERE regra_id IN (SELECT r.id FROM regra r
+                JOIN instrumento_dinamica_config idc ON idc.id = r.instrumento_dinamica_config_id
+                JOIN tipo_dinamica td ON td.id = idc.tipo_dinamica_id
+                WHERE td.codigo IN ('SUSPENSAO_CCDR', 'SUSPENSAO_GOVERNO', 'MEDIDAS_PREVENTIVAS_GOVERNO', 'RATIFICACAO'))</sql>
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>

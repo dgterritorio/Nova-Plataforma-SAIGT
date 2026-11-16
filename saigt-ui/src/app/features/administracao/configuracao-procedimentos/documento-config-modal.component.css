@@ -1,0 +1,24 @@
+.grupo {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaco-3);
+  margin: 0;
+  padding: var(--espaco-3) var(--espaco-4) var(--espaco-4);
+  border: 1px solid var(--cor-borda);
+  border-radius: var(--raio-md);
+}
+
+.grupo > legend {
+  padding: 0 var(--espaco-1);
+  font-size: var(--texto-sm);
+  font-weight: var(--peso-semi);
+  line-height: var(--texto-sm-linha);
+  color: var(--cor-texto-rotulo);
+}
+
+.erro-grupo {
+  margin: 0;
+  font-size: var(--texto-xs);
+  line-height: var(--texto-xs-linha);
+  color: var(--cor-erro);
+}

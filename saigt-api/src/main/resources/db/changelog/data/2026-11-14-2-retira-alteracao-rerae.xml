@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="2026-11-14-2-retira-alteracao-rerae" author="david.raposo">
+        <preConditions onFail="HALT"
+                       onFailMessage="Há Dinâmicas iniciadas de Alteração RERAE: o OI-545 retira esta Dinâmica. Decidir o destino delas antes de migrar (em desenvolvimento, scripts/reset-all.sh).">
+            <sqlCheck expectedResult="0">SELECT count(*) FROM dinamica d
+                JOIN instrumento_dinamica_config c ON c.id = d.instrumento_dinamica_config_id
+                JOIN tipo_dinamica t ON t.id = c.tipo_dinamica_id
+                WHERE t.codigo = 'ALTERACAO_RERAE'</sqlCheck>
+        </preConditions>
+        <comment>
+            A lista de documentos da DGT de 04/11 já não tem a Alteração no âmbito RERAE: o OI-545 retira-a da SAIGT e
+            reverte o OI-243. Saem as configurações da Dinâmica em todos os tipos de Instrumento, com os seus
+            Procedimentos, regras, condições, permissões e itens documentais, e os tipos ALTERACAO_RERAE,
+            ABERTURA_DISCUSSAO_PUBLICA_RERAE e ALTERACAO_RERAE. As operações usam os códigos e não ids, para servirem
+            qualquer ambiente. O rollback, como o de 2026-11-04-3, repõe os tipos e as configurações da Dinâmica do PDM,
+            do PP e do PU do seed 2026-09-10, e os seus Procedimentos com as permissões da Câmara e da DGT; os itens,
+            as regras e as configurações dos intermunicipais não voltam.
+        </comment>
+
+        <sql>DELETE FROM condicao WHERE regra_id IN (
+                SELECT r.id FROM regra r
+                WHERE r.instrumento_dinamica_config_id IN (
+                        SELECT c.id FROM instrumento_dinamica_config c
+                        JOIN tipo_dinamica t ON t.id = c.tipo_dinamica_id WHERE t.codigo = 'ALTERACAO_RERAE')
+                   OR r.instrumento_procedimento_config_id IN (
+                        SELECT p.id FROM instrumento_procedimento_config p
+                        JOIN instrumento_dinamica_config c ON c.id = p.instrumento_dinamica_config_id
+                        JOIN tipo_dinamica t ON t.id = c.tipo_dinamica_id WHERE t.codigo = 'ALTERACAO_RERAE'))</sql>
+        <sql>DELETE FROM regra
+            WHERE instrumento_dinamica_config_id IN (
+                    SELECT c.id FROM instrumento_dinamica_config c
+                    JOIN tipo_dinamica t ON t.id = c.tipo_dinamica_id WHERE t.codigo = 'ALTERACAO_RERAE')
+               OR instrumento_procedimento_config_id IN (
+                    SELECT p.id FROM instrumento_procedimento_config p
+                    JOIN instrumento_dinamica_config c ON c.id = p.instrumento_dinamica_config_id
+                    JOIN tipo_dinamica t ON t.id = c.tipo_dinamica_id WHERE t.codigo = 'ALTERACAO_RERAE')</sql>
+        <sql>DELETE FROM permissao_acao WHERE instrumento_procedimento_config_id IN (
+                SELECT p.id FROM instrumento_procedimento_config p
+                JOIN instrumento_dinamica_config c ON c.id = p.instrumento_dinamica_config_id
+                JOIN tipo_dinamica t ON t.id = c.tipo_dinamica_id WHERE t.codigo = 'ALTERACAO_RERAE')</sql>
+        <sql>DELETE FROM documento_config WHERE instrumento_procedimento_config_id IN (
+                SELECT p.id FROM instrumento_procedimento_config p
+                JOIN instrumento_dinamica_config c ON c.id = p.instrumento_dinamica_config_id
+                JOIN tipo_dinamica t ON t.id = c.tipo_dinamica_id WHERE t.codigo = 'ALTERACAO_RERAE')</sql>
+        <sql>DELETE FROM instrumento_procedimento_config WHERE instrumento_dinamica_config_id IN (
+                SELECT c.id FROM instrumento_dinamica_config c
+                JOIN tipo_dinamica t ON t.id = c.tipo_dinamica_id WHERE t.codigo = 'ALTERACAO_RERAE')</sql>
+        <sql>DELETE FROM instrumento_dinamica_config WHERE tipo_dinamica_id IN (
+                SELECT id FROM tipo_dinamica WHERE codigo = 'ALTERACAO_RERAE')</sql>
+        <sql>DELETE FROM tipo_procedimento WHERE codigo IN ('ABERTURA_DISCUSSAO_PUBLICA_RERAE', 'ALTERACAO_RERAE')</sql>
+        <sql>DELETE FROM tipo_dinamica WHERE codigo = 'ALTERACAO_RERAE'</sql>
+
+        <rollback>
+            <insert tableName="tipo_dinamica">
+                <column name="id" valueNumeric="4"/>
+                <column name="codigo" value="ALTERACAO_RERAE"/>
+                <column name="nome" value="Alteração no âmbito RERAE"/>
+                <column name="ativo" valueBoolean="true"/>
+            </insert>
+            <insert tableName="tipo_procedimento">
+                <column name="id" valueNumeric="9"/>
+                <column name="codigo" value="ABERTURA_DISCUSSAO_PUBLICA_RERAE"/>
+                <column name="nome" value="Abertura do período de discussão pública (RERAE)"/>
+                <column name="ativo" valueBoolean="true"/>
+            </insert>
+            <insert tableName="tipo_procedimento">
+                <column name="id" valueNumeric="10"/>
+                <column name="codigo" value="ALTERACAO_RERAE"/>
+                <column name="nome" value="Alteração RERAE"/>
+                <column name="ativo" valueBoolean="true"/>
+            </insert>
+            <insert tableName="instrumento_dinamica_config">
+                <column name="id" valueNumeric="104"/>
+                <column name="tipo_instrumento_id" valueNumeric="1"/>
+                <column name="tipo_dinamica_id" valueNumeric="4"/>
+                <column name="ativo" valueBoolean="true"/>
+            </insert>
+            <insert tableName="instrumento_dinamica_config">
+                <column name="id" valueNumeric="2104"/>
+                <column name="tipo_instrumento_id" valueNumeric="2"/>
+                <column name="tipo_dinamica_id" valueNumeric="4"/>
+                <column name="ativo" valueBoolean="true"/>
+            </insert>
+            <insert tableName="instrumento_dinamica_config">
+                <column name="id" valueNumeric="3104"/>
+                <column name="tipo_instrumento_id" valueNumeric="3"/>
+                <column name="tipo_dinamica_id" valueNumeric="4"/>
+                <column name="ativo" valueBoolean="true"/>
+            </insert>
+            <!-- Os seeds anteriores (2026-11-09-1, por exemplo) ligam itens a estes Procedimentos pelo id: sem eles,
+                 reverter até antes desses seeds e voltar a migrar falharia na FK. -->
+            <sql>INSERT INTO instrumento_procedimento_config (id, instrumento_dinamica_config_id, tipo_procedimento_id,
+                    ordem, ativo, obrigatorio, serie_dr, codigo_idus, repetivel, ato_pontual, visivel_na_dinamica,
+                    pede_localizacao, pede_motivo_alteracao, pergunta_geoconform, pede_fundamentacao_rjigt,
+                    tamanho_maximo_processo)
+                SELECT v.id, v.config, v.tipo, v.ordem, TRUE, TRUE, 'SEGUNDA_H', v.idus, FALSE, FALSE, FALSE, 'NAO', 'NAO',
+                    'NAO_APLICAVEL', FALSE, 5368709120
+                FROM (VALUES (212, 104, 9, 1, NULL), (213, 104, 10, 2, '040'), (2210, 2104, 9, 1, NULL),
+                             (2211, 2104, 10, 2, '040'), (3210, 3104, 9, 1, NULL), (3211, 3104, 10, 2, '040'))
+                    AS v(id, config, tipo, ordem, idus)</sql>
+            <sql>INSERT INTO permissao_acao (tipo_entidade, instrumento_procedimento_config_id, ativo)
+                SELECT e.tipo, p.id, TRUE FROM (VALUES ('CM'), ('DGT')) AS e(tipo)
+                CROSS JOIN (VALUES (212), (213), (2210), (2211), (3210), (3211)) AS p(id)</sql>
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>

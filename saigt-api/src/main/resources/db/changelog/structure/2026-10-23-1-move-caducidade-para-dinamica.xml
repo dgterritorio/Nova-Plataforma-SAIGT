@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="2026-10-23-1-move-caducidade-para-dinamica" author="david.raposo">
+        <comment>
+            Só as Dinâmicas caducam (DB-PROC-013). `data_caducidade` fica vazia enquanto nenhum Procedimento da
+            Dinâmica estiver publicado; `alertas_enviados` guarda os limiares já notificados (UM_MES, QUINZE_DIAS, DATA).
+            `processo.data_limite` e `processo.alertas_enviados` deixam de existir (DB-PROC-014).
+        </comment>
+
+        <addColumn tableName="dinamica">
+            <column name="data_caducidade" type="DATE"/>
+            <column name="alertas_enviados" type="JSONB"/>
+        </addColumn>
+        <sql>CREATE INDEX idx_dinamica_data_caducidade ON dinamica (data_caducidade)
+            WHERE estado = 'EM_CURSO'</sql>
+
+        <sql>DROP INDEX IF EXISTS idx_processo_data_limite</sql>
+        <dropColumn tableName="processo" columnName="data_limite"/>
+        <dropColumn tableName="processo" columnName="alertas_enviados"/>
+
+        <rollback>
+            <addColumn tableName="processo">
+                <column name="data_limite" type="DATE"/>
+                <column name="alertas_enviados" type="JSONB"/>
+            </addColumn>
+            <sql>CREATE INDEX idx_processo_data_limite ON processo (data_limite)
+                WHERE estado NOT IN ('PUBLICADO', 'ANULADO', 'ANULADO_INCM')</sql>
+            <sql>DROP INDEX IF EXISTS idx_dinamica_data_caducidade</sql>
+            <dropColumn tableName="dinamica" columnName="alertas_enviados"/>
+            <dropColumn tableName="dinamica" columnName="data_caducidade"/>
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>

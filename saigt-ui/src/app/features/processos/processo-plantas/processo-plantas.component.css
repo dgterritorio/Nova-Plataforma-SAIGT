@@ -1,0 +1,444 @@
+/* Figma 2111:3561 («5.1.Preencher Plantas»). */
+:host {
+    display: block;
+}
+
+.cartao {
+    overflow: hidden;
+    background: var(--cor-superficie);
+    border: var(--borda-largura) solid var(--cor-borda);
+    border-radius: var(--raio-xl);
+    box-shadow: var(--sombra-cartao);
+}
+
+.cabecalho {
+    margin: 0;
+    padding: var(--espaco-6) var(--espaco-6) 25px;
+    background: var(--cor-cabecalho-cartao);
+    border-bottom: var(--borda-largura) solid var(--cor-borda);
+    font-size: var(--texto-base);
+    font-weight: var(--peso-semi);
+    line-height: var(--texto-base-linha);
+    color: var(--cor-texto);
+}
+
+.corpo {
+    padding: var(--espaco-6);
+}
+
+.pendencias {
+    margin: 0 0 var(--espaco-4);
+    padding: var(--espaco-3) var(--espaco-4) var(--espaco-3) var(--espaco-8);
+    background: var(--cor-erro-fundo);
+    border: var(--borda-largura) solid var(--cor-erro-borda);
+    border-radius: var(--raio-md);
+    font-size: var(--texto-sm);
+    line-height: var(--texto-sm-linha);
+    color: var(--cor-erro);
+}
+
+.estado {
+    margin: 0;
+    font-size: var(--texto-sm);
+    line-height: var(--texto-sm-linha);
+    color: var(--cor-texto-secundario);
+}
+
+.passos {
+    margin: 0;
+    padding: var(--espaco-5) 0;
+    list-style: none;
+    background: var(--cor-superficie);
+    border: var(--borda-largura-fina) solid var(--cor-borda-elevado);
+    border-radius: var(--raio-lg);
+    box-shadow: var(--sombra-cartao);
+}
+
+.passo {
+    position: relative;
+    display: flex;
+    gap: var(--espaco-4);
+    padding: 0 var(--espaco-5);
+}
+
+.passo + .passo {
+    padding-top: var(--espaco-6);
+}
+
+/* Conector entre marcadores: verde depois de um passo concluído. */
+.passo:not(:last-child)::after {
+    position: absolute;
+    top: 32px;
+    bottom: -20px;
+    left: calc(var(--espaco-5) + 13px);
+    width: 2px;
+    border-radius: var(--raio-pill);
+    background: var(--cor-borda-elevado);
+    content: '';
+}
+
+.passo + .passo:not(:last-child)::after {
+    top: calc(var(--espaco-6) + 32px);
+}
+
+.passo-concluido:not(:last-child)::after {
+    background: var(--cor-conector-passo-concluido);
+}
+
+.marcador {
+    display: flex;
+    flex: none;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    border: var(--borda-largura-zona) solid var(--cor-primaria-hover);
+    border-radius: var(--raio-pill);
+    font-size: var(--texto-sm);
+    font-weight: var(--peso-negrito);
+    line-height: var(--texto-sm-linha);
+    color: var(--cor-primaria-hover);
+}
+
+.passo-concluido .marcador {
+    background: var(--cor-passo-concluido);
+    border-color: var(--cor-passo-concluido);
+    color: var(--cor-superficie);
+}
+
+.marcador svg,
+.icone-ok svg {
+    width: 14px;
+    height: 14px;
+    fill: none;
+    stroke: currentcolor;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+.conteudo {
+    flex: 1;
+    min-width: 0;
+    padding-bottom: var(--espaco-4);
+}
+
+.titulo-passo {
+    margin: 0;
+    font-size: var(--texto-base);
+    font-weight: var(--peso-semi);
+    line-height: var(--texto-base-linha);
+    color: var(--cor-texto-celula-forte);
+}
+
+.subtitulo {
+    margin: 0;
+    padding-top: var(--espaco-0-5);
+    font-size: var(--texto-sm);
+    line-height: var(--texto-sm-linha);
+    color: var(--cor-texto-secundario);
+}
+
+.grelha-zips {
+    display: flex;
+    gap: var(--espaco-3-5);
+    margin-top: var(--espaco-3);
+}
+
+.zip {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    gap: var(--espaco-1-5);
+    min-width: 0;
+}
+
+.rotulo-zip {
+    font-size: var(--texto-sm);
+    font-weight: var(--peso-semi);
+    line-height: var(--texto-sm-linha);
+    letter-spacing: 0.6px;
+    text-transform: uppercase;
+    color: var(--cor-texto-data);
+}
+
+.zona {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: var(--espaco-1-5);
+    min-height: 118px;
+    padding: var(--espaco-5);
+    background: var(--cor-superficie-tabela);
+    border: var(--borda-largura-zona) dashed var(--cor-borda-filtro);
+    border-radius: var(--raio-lg);
+    cursor: pointer;
+}
+
+.conteudo > .zona {
+    margin-top: var(--espaco-3);
+}
+
+.zona:focus-within {
+    outline: var(--anel-foco);
+    outline-offset: var(--anel-foco-afastamento);
+}
+
+.zona-desativada {
+    cursor: default;
+}
+
+.ficheiro-input {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    cursor: pointer;
+}
+
+.icone-carregar,
+.icone-ok {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: var(--espaco-8);
+    height: var(--espaco-8);
+    border-radius: var(--raio-pill);
+}
+
+.icone-carregar {
+    background: var(--cor-superficie);
+    border: var(--borda-largura-fina) solid var(--cor-borda-filtro);
+    filter: var(--sombra-menu);
+    color: var(--cor-icone-carregar);
+}
+
+.icone-carregar svg {
+    width: 16px;
+    height: 16px;
+    fill: none;
+    stroke: currentcolor;
+    stroke-width: 1.2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+.zona-texto,
+.nome-ficheiro {
+    font-size: var(--texto-sm);
+    font-weight: var(--peso-semi);
+    line-height: var(--texto-sm-linha);
+    color: var(--cor-texto-caixa);
+    overflow-wrap: anywhere;
+    text-align: center;
+}
+
+.zona-dica {
+    font-size: var(--texto-xs);
+    line-height: var(--texto-xs-linha);
+    color: var(--cor-texto-secundario);
+}
+
+.zona-carregada {
+    background: var(--cor-alerta-sucesso-fundo);
+    border-color: var(--cor-borda-zona-carregada);
+    cursor: default;
+}
+
+.zona-carregada .icone-ok {
+    background: var(--cor-icone-sucesso-fundo);
+    color: var(--cor-acao-sucesso);
+}
+
+.zona-carregada .nome-ficheiro {
+    color: var(--cor-acao-sucesso);
+}
+
+.remover {
+    padding: 0;
+    border: 0;
+    background: none;
+    font-size: var(--texto-xs);
+    line-height: var(--texto-xs-linha);
+    color: var(--cor-texto-secundario);
+    cursor: pointer;
+}
+
+.remover:focus-visible {
+    outline: var(--anel-foco);
+    outline-offset: var(--anel-foco-afastamento);
+}
+
+.remover:hover:not(:disabled) {
+    color: var(--cor-erro);
+    text-decoration: underline;
+}
+
+.ver-pdf {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--espaco-1-5);
+    margin-top: var(--espaco-3);
+    padding: 0;
+    border: 0;
+    background: none;
+    font-size: var(--texto-sm);
+    font-weight: var(--peso-semi);
+    line-height: var(--texto-sm-linha);
+    color: var(--cor-primaria);
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.ver-pdf:disabled {
+    color: var(--cor-texto-secundario);
+    cursor: progress;
+}
+
+.ver-pdf:focus-visible {
+    outline: var(--anel-foco);
+    outline-offset: var(--anel-foco-afastamento);
+}
+
+.ver-pdf:hover:not(:disabled) {
+    color: var(--cor-primaria-hover);
+}
+
+.visualmente-oculto {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+}
+
+.formato {
+    display: flex;
+    flex-direction: column;
+    margin-top: var(--espaco-3);
+    padding: var(--espaco-3) var(--espaco-4);
+    background: var(--cor-superficie-tabela);
+    border: var(--borda-largura-fina) solid var(--cor-borda-elevado);
+    border-radius: var(--raio-md);
+}
+
+.rotulo-formato {
+    margin-bottom: var(--espaco-1-5);
+    font-size: var(--texto-xs);
+    font-weight: var(--peso-semi);
+    line-height: var(--texto-xs-linha);
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    color: var(--cor-texto-secundario);
+}
+
+.formato code {
+    /* O Figma usa Consolas; sem token de letra para código, fica a pilha monoespaçada. */
+    font-family: Consolas, 'Courier New', monospace;
+    font-size: var(--texto-sm);
+    line-height: 19.5px;
+    white-space: pre;
+    color: var(--cor-texto-cartao);
+}
+
+.tabela {
+    width: 100%;
+    margin-top: var(--espaco-3);
+    border: var(--borda-largura-fina) solid var(--cor-borda-elevado);
+    border-radius: var(--raio-lg);
+    border-collapse: separate;
+    border-spacing: 0;
+    overflow: hidden;
+}
+
+.tabela th {
+    height: 34px;
+    padding: 0 var(--espaco-4);
+    background: var(--cor-superficie-tabela);
+    border-bottom: var(--borda-largura-fina) solid var(--cor-borda-elevado);
+    font-size: var(--texto-xs);
+    font-weight: var(--peso-semi);
+    line-height: 13.333px;
+    letter-spacing: 0.5px;
+    text-align: left;
+    text-transform: uppercase;
+    color: var(--cor-texto-secundario);
+}
+
+.tabela td {
+    height: 58px;
+    padding: 0 var(--espaco-4);
+    border-bottom: var(--borda-largura-fina) solid var(--cor-superficie-tabela);
+    font-size: var(--texto-sm);
+    font-weight: var(--peso-semi);
+    line-height: var(--texto-sm-linha);
+    color: var(--cor-texto-celula-forte);
+}
+
+.linha-associada td {
+    background: color-mix(in srgb, var(--cor-alerta-sucesso-fundo) 50%, transparent);
+}
+
+.tabela tr:last-child td {
+    border-bottom: 0;
+}
+
+.coluna-folha {
+    width: 120px;
+}
+
+.folha {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: var(--espaco-6);
+    height: var(--espaco-6);
+    border-radius: var(--raio-pill);
+    background: var(--cor-borda-elevado);
+    font-size: var(--texto-sm);
+    font-weight: var(--peso-negrito);
+    color: var(--cor-texto-caixa);
+}
+
+.seletor-tiff {
+    width: 100%;
+    max-width: 380px;
+    height: 34px;
+    padding: 0 var(--espaco-3);
+    background: var(--cor-superficie);
+    border: var(--borda-largura-fina) solid var(--cor-borda-filtro);
+    border-radius: var(--raio-md);
+    font: inherit;
+    font-size: var(--texto-sm);
+    font-weight: var(--peso-normal);
+    color: var(--cor-texto-caixa);
+}
+
+.seletor-escolhido {
+    background: var(--cor-alerta-sucesso-fundo);
+    border-color: var(--cor-borda-zona-carregada);
+    font-weight: var(--peso-medio);
+    color: var(--cor-texto-escolhido);
+}
+
+.seletor-tiff:focus-visible {
+    outline: var(--anel-foco);
+    outline-offset: var(--anel-foco-afastamento);
+}
+
+.erro {
+    margin: var(--espaco-2) 0 0;
+    font-size: var(--texto-sm);
+    line-height: var(--texto-sm-linha);
+    color: var(--cor-erro);
+}
+
+@media (width <= 720px) {
+    .grelha-zips {
+        flex-direction: column;
+    }
+}

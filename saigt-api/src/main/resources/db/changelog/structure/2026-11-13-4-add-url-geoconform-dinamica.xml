@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="2026-11-13-4-add-url-geoconform-dinamica" author="arnaldo.costa">
+        <comment>
+            URL de acesso ao processo no GeoConform (DB-PROC-013, API-EXT-INT-018, FR-172): devolvido pela criação do
+            processo no GeoConform depois de publicada a Decisão de início. Nulo até lá e nas Dinâmicas sem GeoConform.
+        </comment>
+
+        <addColumn tableName="dinamica">
+            <column name="url_geoconform" type="TEXT"/>
+        </addColumn>
+
+        <rollback>
+            <dropColumn tableName="dinamica" columnName="url_geoconform"/>
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>

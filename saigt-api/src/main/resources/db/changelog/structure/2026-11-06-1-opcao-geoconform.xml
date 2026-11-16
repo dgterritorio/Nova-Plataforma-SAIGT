@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="2026-11-06-1-opcao-geoconform" author="david.raposo">
+        <comment>
+            Opção GeoConform (FR-169, DB-PROC-013): `dinamica.com_geoconform` guarda a resposta, nula até ser dada, e
+            `instrumento_procedimento_config.pergunta_geoconform` diz se o Procedimento a pergunta. A coluna de
+            configuração ainda não existe no DB-PROC-005. Os valores vão pelos códigos, nunca pelos ids: a Decisão de
+            início de PDM pergunta sempre na Elaboração e na Revisão e só quando a Alteração incide sobre Peças
+            Gráficas. Os restantes Procedimentos ficam `NAO_APLICAVEL`.
+        </comment>
+
+        <addColumn tableName="dinamica">
+            <column name="com_geoconform" type="BOOLEAN"/>
+        </addColumn>
+
+        <addColumn tableName="instrumento_procedimento_config">
+            <column name="pergunta_geoconform" type="VARCHAR(20)" defaultValue="NAO_APLICAVEL">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+        <sql>ALTER TABLE instrumento_procedimento_config ADD CONSTRAINT ck_instrumento_procedimento_config_pergunta_geoconform
+            CHECK (pergunta_geoconform IN ('NAO_APLICAVEL', 'OBRIGATORIA', 'SE_PECAS_GRAFICAS'))</sql>
+
+        <sql>UPDATE instrumento_procedimento_config SET pergunta_geoconform = 'OBRIGATORIA'
+            WHERE tipo_procedimento_id = (SELECT id FROM tipo_procedimento WHERE codigo = 'DECISAO_INICIO')
+              AND instrumento_dinamica_config_id IN (
+                  SELECT idc.id FROM instrumento_dinamica_config idc
+                  JOIN tipo_instrumento ti ON ti.id = idc.tipo_instrumento_id
+                  JOIN tipo_dinamica td ON td.id = idc.tipo_dinamica_id
+                  WHERE ti.codigo = 'PDM' AND td.codigo IN ('ELABORACAO', 'REVISAO'))</sql>
+        <sql>UPDATE instrumento_procedimento_config SET pergunta_geoconform = 'SE_PECAS_GRAFICAS'
+            WHERE tipo_procedimento_id = (SELECT id FROM tipo_procedimento WHERE codigo = 'DECISAO_INICIO')
+              AND instrumento_dinamica_config_id IN (
+                  SELECT idc.id FROM instrumento_dinamica_config idc
+                  JOIN tipo_instrumento ti ON ti.id = idc.tipo_instrumento_id
+                  JOIN tipo_dinamica td ON td.id = idc.tipo_dinamica_id
+                  WHERE ti.codigo = 'PDM' AND td.codigo = 'ALTERACAO')</sql>
+
+        <rollback>
+            <sql>ALTER TABLE instrumento_procedimento_config DROP CONSTRAINT ck_instrumento_procedimento_config_pergunta_geoconform</sql>
+            <dropColumn tableName="instrumento_procedimento_config" columnName="pergunta_geoconform"/>
+            <dropColumn tableName="dinamica" columnName="com_geoconform"/>
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>

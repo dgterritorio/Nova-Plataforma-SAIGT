@@ -1,0 +1,14 @@
+id;codigo;nome;ativo
+1;"ELABORACAO";"Elaboração";true
+2;"REVISAO";"Revisão";true
+3;"ALTERACAO";"Alteração";true
+4;"ALTERACAO_RERAE";"Alteração no âmbito RERAE";true
+5;"ALTERACAO_SIMPLIFICADA_ART123";"Alteração Simplificada (Art. 123.º RJIGT)";true
+6;"ALTERACAO_SIMPLIFICADA_DL10_2024";"Alteração Simplificada (DL 10/2024)";true
+7;"ALTERACAO_ADAPTACAO";"Alteração por Adaptação";true
+8;"CORRECAO_MATERIAL";"Correção Material";true
+9;"REVOGACAO";"Revogação";true
+10;"MEDIDAS_PREVENTIVAS";"Medidas Preventivas";true
+11;"NORMAS_PROVISORIAS";"Normas Provisórias";true
+12;"SUSPENSAO";"Suspensão (iniciativa do município)";true
+13;"OUTROS_ATOS_ANEXOS";"Outros atos e anexos";true

@@ -1,0 +1,220 @@
+<app-modal [titulo]="titulo()" [subtitulo]="procedimento()" largura="lg" [aberto]="aberto()" (fechar)="fechar.emit()">
+  <form class="formulario" [id]="idFormulario" [formGroup]="formulario" (ngSubmit)="submeter()" novalidate>
+    @if (erroGeral(); as erro) {
+      <app-alerta tipo="erro" titulo="Não foi possível gravar o item documental.">{{ erro.mensagem }}</app-alerta>
+    }
+    @if (!item()) {
+      <app-campo-texto
+        formControlName="codigo"
+        rotulo="Código"
+        ajuda="Ex.: TEXTO_ATO_PUB"
+        [obrigatorio]="true"
+        [compacto]="true"
+        [maxlength]="50"
+        [erro]="erroDoCampo('codigo')"
+      />
+    }
+    <div class="linha-campos">
+      <app-campo-texto formControlName="nome" rotulo="Nome" [obrigatorio]="true" [compacto]="true" [maxlength]="100" [erro]="erroDoCampo('nome')" />
+      <app-campo-texto
+        formControlName="separador"
+        rotulo="Separador"
+        [ajuda]="ajudaSeparador"
+        [obrigatorio]="true"
+        [compacto]="true"
+        [maxlength]="100"
+        [erro]="erroDoCampo('separador')"
+      />
+    </div>
+    <app-campo-texto
+      formControlName="descricao"
+      rotulo="Descrição"
+      [multilinha]="true"
+      [compacto]="true"
+      [maxlength]="300"
+      [erro]="erroDoCampo('descricao')"
+    />
+    <div class="linha-campos">
+      <app-seletor
+        formControlName="categoria"
+        rotulo="Caixa"
+        [obrigatorio]="true"
+        [compacto]="true"
+        [opcoes]="opcoesCaixa"
+        [erro]="erroDoCampo('categoria')"
+      />
+      <app-seletor
+        formControlName="tipoElemento"
+        rotulo="Tipo de elemento"
+        [obrigatorio]="true"
+        [compacto]="true"
+        [opcoes]="opcoesTipo"
+        [erro]="erroDoCampo('tipoElemento')"
+      />
+      <app-seletor
+        formControlName="formato"
+        rotulo="Formato"
+        [obrigatorio]="true"
+        [compacto]="true"
+        [opcoes]="opcoesFormato"
+        [erro]="erroDoCampo('formato')"
+      />
+    </div>
+    <app-campo-texto
+      formControlName="extensoesAceites"
+      rotulo="Extensões aceites"
+      placeholder="pdf, docx"
+      [ajuda]="extensoesEf()"
+      [obrigatorio]="true"
+      [compacto]="true"
+      [erro]="erroDoCampo('extensoesAceites')"
+    />
+    <p class="so-leitor" aria-live="polite" [id]="idAjudaExtensoes">{{ extensoesEf() }}</p>
+    <div class="linha-campos">
+      <app-campo-texto
+        formControlName="ordem"
+        rotulo="Ordem"
+        tipo="number"
+        [obrigatorio]="true"
+        [compacto]="true"
+        [erro]="erroDoCampo('ordem')"
+      />
+      <app-seletor
+        formControlName="elementoInformacaoBase"
+        rotulo="Informação Base"
+        placeholder="Nenhuma"
+        [compacto]="true"
+        [opcoes]="opcoesInformacaoBase"
+        [erro]="erroDoCampo('elementoInformacaoBase')"
+      />
+      <app-seletor
+        formControlName="regraNomenclatura"
+        rotulo="Regra de nome"
+        [obrigatorio]="true"
+        [compacto]="true"
+        [opcoes]="opcoesRegraNome"
+        [erro]="erroDoCampo('regraNomenclatura')"
+      />
+    </div>
+    <div class="caixas">
+      <label class="caixa-verificacao">
+        <input type="checkbox" formControlName="obrigatorio" />
+        Obrigatório
+      </label>
+    </div>
+
+    <fieldset class="grupo">
+      <legend>Limites</legend>
+      <div class="linha-campos">
+        <app-campo-texto
+          formControlName="tamanhoMaximoFicheiro"
+          rotulo="Tamanho máximo por ficheiro (MB)"
+          tipo="number"
+          ajuda="Vazio = sem limite."
+          [compacto]="true"
+          [erro]="erroDoCampo('tamanhoMaximoFicheiro')"
+        />
+        <app-campo-texto
+          formControlName="tamanhoMaximoTotal"
+          rotulo="Tamanho máximo do item (MB)"
+          tipo="number"
+          ajuda="Vazio = sem limite."
+          [compacto]="true"
+          [erro]="erroDoCampo('tamanhoMaximoTotal')"
+        />
+        <app-campo-texto
+          formControlName="numeroMaximoFicheiros"
+          rotulo="N.º máximo de ficheiros"
+          tipo="number"
+          ajuda="Vazio = sem limite."
+          [compacto]="true"
+          [erro]="erroDoCampo('numeroMaximoFicheiros')"
+        />
+      </div>
+    </fieldset>
+
+    @if (pecaGrafica()) {
+      <fieldset class="grupo grupo-tiff">
+        <legend>Regras do GeoTIFF</legend>
+        @if (erroTiff(); as erro) {
+          <app-alerta tipo="erro">{{ erro }}</app-alerta>
+        }
+        <app-campo-texto
+          formControlName="sistemasReferencia"
+          rotulo="Sistemas de referência"
+          placeholder="EPSG:3763, EPSG:5014"
+          ajuda="Separados por vírgulas, no formato EPSG:<código>. Vazio = não verificar."
+          [compacto]="true"
+          [erro]="erroDoCampo('sistemasReferencia')"
+        />
+        <fieldset class="caixas" [attr.aria-describedby]="erroDoCampo('compressoesAceites') ? idFormulario + '-erro-compressoes' : null">
+          <legend>Compressões aceites</legend>
+          <label class="caixa-verificacao">
+            <input type="checkbox" formControlName="compressaoNone" />
+            Sem compressão
+          </label>
+          <label class="caixa-verificacao">
+            <input type="checkbox" formControlName="compressaoLzw" />
+            LZW
+          </label>
+          @if (erroDoCampo('compressoesAceites'); as erro) {
+            <p class="erro-grupo" role="alert" [id]="idFormulario + '-erro-compressoes'">{{ erro }}</p>
+          }
+        </fieldset>
+        <div class="caixas">
+          <label class="caixa-verificacao">
+            <input type="checkbox" formControlName="bandaAlfaTolerada" />
+            Banda alfa tolerada
+          </label>
+        </div>
+        <div class="linha-campos">
+          <app-seletor
+            formControlName="modeloCor"
+            rotulo="Modelo de cor"
+            placeholder="Não verificar"
+            [compacto]="true"
+            [opcoes]="opcoesModeloCor"
+            [erro]="erroDoCampo('modeloCor')"
+          />
+          <app-campo-texto
+            formControlName="bitsPorBanda"
+            rotulo="Bits por banda"
+            tipo="number"
+            ajuda="Vazio = não verificar."
+            [compacto]="true"
+            [erro]="erroDoCampo('bitsPorBanda')"
+          />
+          <app-campo-texto
+            formControlName="resolucaoDpi"
+            rotulo="Resolução (dpi)"
+            tipo="number"
+            ajuda="Vazio = não verificar."
+            [compacto]="true"
+            [erro]="erroDoCampo('resolucaoDpi')"
+          />
+        </div>
+        <app-campo-texto
+          formControlName="elementosLegenda"
+          rotulo="Elementos da legenda"
+          [ajuda]="ajudaLegenda"
+          [multilinha]="true"
+          [compacto]="true"
+          [erro]="erroDoCampo('elementosLegenda')"
+        />
+      </fieldset>
+    }
+
+    <div class="caixas">
+      <label class="caixa-verificacao">
+        <input type="checkbox" formControlName="ativo" />
+        Ativo
+      </label>
+    </div>
+  </form>
+  <div rodape>
+    <button type="button" app-botao variante="secundario" tamanho="pequeno" (click)="fechar.emit()">Cancelar</button>
+    <button type="submit" app-botao tamanho="pequeno" [attr.form]="idFormulario" [aCarregar]="aGravar()" [desativado]="formulario.invalid">
+      Guardar
+    </button>
+  </div>
+</app-modal>

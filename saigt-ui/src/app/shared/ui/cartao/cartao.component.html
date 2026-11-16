@@ -1,0 +1,9 @@
+@if (titulo()) {
+  <div class="cartao-cabecalho">
+    <h2 class="cartao-titulo">{{ titulo() }}</h2>
+    <ng-content select="[cabecalho-acoes]" />
+  </div>
+}
+<div class="cartao-conteudo">
+  <ng-content />
+</div>

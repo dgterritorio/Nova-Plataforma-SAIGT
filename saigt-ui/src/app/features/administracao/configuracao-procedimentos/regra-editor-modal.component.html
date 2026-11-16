@@ -1,0 +1,201 @@
+<app-modal [titulo]="titulo()" [subtitulo]="alvo()?.contexto" largura="lg" [aberto]="aberto()" (fechar)="fechar.emit()">
+  <form class="formulario" [id]="idFormulario" [formGroup]="formulario" (ngSubmit)="submeter()" novalidate>
+    @if (erroGeral(); as erro) {
+      <app-alerta tipo="erro" [attr.id]="idErroGeral" titulo="Não foi possível gravar a regra.">
+        <span class="mensagem-falha">{{ erro.mensagem }}</span>
+        @for (motivo of motivosGerais(); track motivo) {
+          <span class="mensagem-falha">{{ motivo }}</span>
+        }
+      </app-alerta>
+    }
+
+    <app-campo-texto
+      formControlName="descricao"
+      rotulo="Descrição"
+      [multilinha]="true"
+      [compacto]="true"
+      [maxlength]="tamanhoMaximoDescricao"
+      [ajuda]="'Opcional, até ' + tamanhoMaximoDescricao + ' caracteres.'"
+      [erro]="erroDescricao()"
+    />
+
+    <fieldset class="caixas">
+      <legend>Como se combinam os grupos</legend>
+      <label class="caixa-verificacao">
+        <input type="radio" name="operador" formControlName="operador" value="AND" />
+        Todos os grupos têm de se cumprir (E)
+      </label>
+      <label class="caixa-verificacao">
+        <input type="radio" name="operador" formControlName="operador" value="OR" />
+        Basta um grupo cumprir-se (OU)
+      </label>
+    </fieldset>
+
+    <div class="caixas">
+      @if (excecao()) {
+        <div>
+          <label class="caixa-verificacao">
+            <input type="checkbox" formControlName="substituiSequenciamento" [attr.aria-describedby]="idFormulario + '-ajuda-substitui'" />
+            Substitui a ordem dos Procedimentos
+          </label>
+          <p class="ajuda" [id]="idFormulario + '-ajuda-substitui'">Desmarcada: a regra soma-se à ordem. Marcada: substitui-a.</p>
+        </div>
+      }
+      <label class="caixa-verificacao">
+        <input type="checkbox" formControlName="ativo" />
+        Regra ativa
+      </label>
+    </div>
+
+    <div class="grupos">
+      @for (grupo of grupos.controls; track chave(grupo); let indiceGrupo = $index) {
+        <fieldset class="grupo">
+          <legend>Grupo {{ indiceGrupo + 1 }}</legend>
+          <p class="ajuda">As condições deste grupo têm de se cumprir todas.</p>
+
+          @for (condicao of grupo.controls.condicoes.controls; track chave(condicao); let indiceCondicao = $index) {
+            <div
+              class="condicao"
+              role="group"
+              [id]="idCondicao(condicao)"
+              [attr.aria-label]="nomeCondicao(indiceGrupo, indiceCondicao)"
+              [attr.aria-describedby]="errosServidor(condicao).length > 0 ? idErroCondicao(condicao) : null"
+            >
+              <div class="campos-condicao">
+                <app-seletor
+                  class="campo-avaliador"
+                  rotulo="Avaliador"
+                  [compacto]="true"
+                  [obrigatorio]="true"
+                  [opcoes]="opcoesAvaliador"
+                  [formControl]="condicao.controls.avaliador"
+                  [erro]="erroCampo(condicao, 'avaliador')"
+                />
+                @if (mostraTipoOcorrencia(condicao)) {
+                  <app-seletor
+                    rotulo="Tipo de ocorrência"
+                    [compacto]="true"
+                    [obrigatorio]="true"
+                    [opcoes]="opcoesTipoOcorrencia"
+                    [formControl]="condicao.controls.tipoOcorrencia"
+                    [erro]="erroCampo(condicao, 'tipoOcorrencia')"
+                  />
+                }
+                @if (mostraCodigo(condicao)) {
+                  <app-seletor
+                    rotulo="Código"
+                    [compacto]="true"
+                    [obrigatorio]="!codigoOpcional(condicao)"
+                    [permitirVazio]="codigoOpcional(condicao)"
+                    [placeholder]="codigoOpcional(condicao) ? 'Qualquer Dinâmica' : 'Selecione…'"
+                    [opcoes]="opcoesCodigo(condicao)"
+                    [formControl]="condicao.controls.codigo"
+                    [erro]="erroCampo(condicao, 'codigo')"
+                  />
+                }
+                @if (mostraEstado(condicao)) {
+                  <app-seletor
+                    rotulo="Estado"
+                    [compacto]="true"
+                    [obrigatorio]="!estadoOpcional(condicao)"
+                    [permitirVazio]="estadoOpcional(condicao)"
+                    [placeholder]="estadoOpcional(condicao) ? 'Em nenhum estado' : 'Selecione…'"
+                    [opcoes]="opcoesEstado(condicao)"
+                    [formControl]="condicao.controls.estado"
+                    [erro]="erroCampo(condicao, 'estado')"
+                  />
+                }
+                @if (condicao.controls.avaliador.value === 'INSTRUMENTO_EM_VIGOR') {
+                  <p class="sem-parametros">Sem parâmetros.</p>
+                }
+              </div>
+              <div class="acoes-condicao">
+                <app-seletor
+                  class="campo-grupo"
+                  rotulo="Grupo"
+                  [compacto]="true"
+                  [opcoes]="opcoesGrupo()"
+                  [rotuloAria]="'Grupo da ' + nomeCondicao(indiceGrupo, indiceCondicao).toLowerCase()"
+                  [formControl]="condicao.controls.grupo"
+                />
+                <label class="caixa-verificacao">
+                  <input type="checkbox" class="caixa-ativa" [formControl]="condicao.controls.ativo" />
+                  Ativa
+                </label>
+                <button
+                  app-botao
+                  type="button"
+                  variante="texto"
+                  tamanho="pequeno"
+                  class="acao-remover-condicao"
+                  [attr.aria-label]="'Remover a ' + nomeCondicao(indiceGrupo, indiceCondicao).toLowerCase()"
+                  (click)="removerCondicao(indiceGrupo, indiceCondicao)"
+                >
+                  Remover
+                </button>
+              </div>
+              @if (errosServidor(condicao).length > 0) {
+                <app-alerta tipo="erro" class="erro-condicao" [attr.id]="idErroCondicao(condicao)">
+                  @for (motivo of errosServidor(condicao); track $index) {
+                    <span class="mensagem-falha">{{ motivo }}</span>
+                  }
+                </app-alerta>
+              }
+            </div>
+          }
+
+          <div class="acoes-grupo">
+            <button
+              app-botao
+              type="button"
+              variante="contorno"
+              tamanho="pequeno"
+              class="acao-adicionar-condicao"
+              [id]="idAdicionarCondicao(grupo)"
+              [attr.aria-label]="'Adicionar condição ao grupo ' + (indiceGrupo + 1)"
+              (click)="adicionarCondicao(indiceGrupo)"
+            >
+              Adicionar condição
+            </button>
+            @if (podeRemoverGrupo(grupo)) {
+              <button
+                app-botao
+                type="button"
+                variante="texto"
+                tamanho="pequeno"
+                class="acao-remover-grupo"
+                [attr.aria-label]="'Remover grupo ' + (indiceGrupo + 1)"
+                (click)="removerGrupo(indiceGrupo)"
+              >
+                Remover grupo
+              </button>
+            }
+          </div>
+        </fieldset>
+      }
+      <div>
+        <button
+          app-botao
+          type="button"
+          variante="secundario"
+          tamanho="pequeno"
+          class="acao-adicionar-grupo"
+          [id]="idFormulario + '-adicionar-grupo'"
+          (click)="adicionarGrupo()"
+        >
+          Adicionar grupo
+        </button>
+      </div>
+    </div>
+
+    @if (semCondicaoAtiva()) {
+      <app-alerta tipo="erro" class="erro-sem-condicao">{{ mensagemSemCondicaoAtiva }}</app-alerta>
+    }
+
+    <p class="resumo" [id]="idResumo" aria-live="polite"><strong>Resumo:</strong> {{ resumo() }}</p>
+  </form>
+  <div rodape>
+    <button type="button" app-botao variante="secundario" tamanho="pequeno" (click)="fechar.emit()">Cancelar</button>
+    <button type="submit" app-botao tamanho="pequeno" [attr.form]="idFormulario" [aCarregar]="aGravar()">Guardar</button>
+  </div>
+</app-modal>

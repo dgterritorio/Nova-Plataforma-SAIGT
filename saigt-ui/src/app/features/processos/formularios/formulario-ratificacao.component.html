@@ -1,0 +1,52 @@
+@if (seccaoVisivel()) {
+  <section class="cartao-ratificacao" [attr.aria-labelledby]="idTitulo">
+    <h2 class="cabecalho" [id]="idTitulo">Ratificação</h2>
+    <div class="corpo">
+      <dl class="contexto">
+        <div>
+          <dt>Tipo de instrumento</dt>
+          <dd class="tipo-instrumento">{{ tipoInstrumento() || '—' }}</dd>
+        </div>
+      </dl>
+      <fieldset
+        class="campo modalidade"
+        role="radiogroup"
+        aria-required="true"
+        [attr.aria-invalid]="erro() ? true : null"
+        [attr.aria-describedby]="descricao()"
+      >
+        <legend class="rotulo">Tipo de procedimento <span class="obrigatorio" aria-hidden="true">*</span></legend>
+        <div class="opcoes-radio">
+          @for (opcao of opcoes; track opcao.valor) {
+            <label class="opcao-radio">
+              <input type="radio" [name]="nomeGrupo" [value]="opcao.valor" [formControl]="controlo" />
+              <span>{{ opcao.rotulo }}</span>
+            </label>
+          }
+        </div>
+        @if (bloqueado()) {
+          <p class="aviso-bloqueado" [id]="idBloqueado">{{ mensagemBloqueado }}</p>
+          <app-desbloquear-campo chave="modalidadeRatificacao" rotulo="Tipo de procedimento" />
+        }
+        @if (erro(); as mensagem) {
+          <p class="erro-campo" [id]="idErro" role="alert">{{ mensagem }}</p>
+        }
+      </fieldset>
+      <dl class="contexto">
+        <div>
+          <dt>NUT II</dt>
+          <dd class="nuts">{{ rotuloNuts() }}</dd>
+        </div>
+        <div>
+          <dt>{{ variosConcelhos() ? 'Concelhos' : 'Concelho' }}</dt>
+          <dd class="concelhos">{{ rotuloConcelhos() }}</dd>
+        </div>
+        <div class="largo">
+          <dt>Designação</dt>
+          <dd class="designacao">{{ rotuloDesignacao() }}</dd>
+        </div>
+      </dl>
+    </div>
+  </section>
+}
+<ng-content />

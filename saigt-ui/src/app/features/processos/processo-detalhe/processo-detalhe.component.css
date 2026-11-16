@@ -1,0 +1,223 @@
+/* Como no Figma (UI-040/067): o detalhe desce 43px abaixo do padding do conteúdo. */
+.detalhe {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaco-5);
+  max-width: var(--contentor-detalhe);
+  margin: 0 auto;
+  padding-top: var(--espaco-topo-ecra);
+}
+
+.estado-carregamento {
+  margin: 0;
+  font-size: var(--texto-base);
+  line-height: var(--texto-base-linha);
+  color: var(--cor-texto-secundario);
+}
+
+.banner-sucesso-acao {
+  padding: var(--espaco-2-5) var(--espaco-3);
+  border-radius: var(--raio-md);
+  background: var(--cor-sucesso-fundo);
+  font-size: var(--texto-base);
+  line-height: var(--texto-base-linha);
+  color: var(--cor-selo-sucesso);
+}
+
+.recarregar {
+  align-self: flex-start;
+}
+
+.barra-titulo {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--espaco-4);
+}
+
+/* O #64748b do Figma fica a 4,37:1 sobre o fundo da página: usa-se o tom acessível mais próximo. */
+.voltar {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  gap: var(--espaco-1-5);
+  width: 127px;
+  padding-top: var(--espaco-1);
+  font-size: var(--texto-base);
+  font-weight: var(--peso-medio);
+  line-height: var(--texto-base-linha);
+  color: var(--cor-texto-celula);
+  text-decoration: none;
+}
+
+.voltar:hover {
+  color: var(--cor-texto);
+}
+
+.voltar svg {
+  width: 16px;
+  height: 16px;
+}
+
+.titulo {
+  flex: 1;
+  min-width: 0;
+}
+
+.titulo-linha {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--espaco-3);
+}
+
+h1 {
+  margin: 0;
+  font-size: var(--texto-xl);
+  font-weight: var(--peso-semi);
+  line-height: var(--texto-xl-linha);
+  color: var(--cor-texto);
+}
+
+.etiqueta-tipo {
+  padding: var(--espaco-0-5) var(--espaco-2-5);
+  border-radius: var(--raio-sm);
+  background: var(--cor-icone-info-fundo);
+  font-size: var(--texto-base);
+  font-weight: var(--peso-semi);
+  line-height: var(--texto-base-linha);
+  color: var(--cor-primaria);
+}
+
+.subtitulo {
+  margin: 0;
+  padding-top: var(--espaco-0-5);
+  font-size: var(--texto-base);
+  line-height: var(--texto-base-linha);
+  color: var(--cor-texto-celula);
+}
+
+.acoes-cabecalho {
+  display: flex;
+  flex-shrink: 0;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: var(--espaco-2);
+}
+
+.acoes-formulario {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--espaco-2);
+}
+
+.aviso-rejeicao {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaco-1);
+  padding: var(--espaco-3) var(--espaco-4);
+  border-radius: var(--raio-md);
+  background: var(--cor-erro-fundo);
+  font-size: var(--texto-base);
+  line-height: var(--texto-base-linha);
+  color: var(--cor-selo-erro);
+}
+
+.mensagens-incm {
+  margin: 0;
+  padding-left: var(--espaco-5);
+}
+
+/* UI-071: o botão fica por baixo dos cartões, alinhado à direita. */
+.acao-corrigir {
+  display: flex;
+  justify-content: flex-end;
+}
+
+/* Detalhes do Processo: duas colunas de 396px, como no Figma. */
+.detalhes {
+  max-width: var(--largura-detalhes);
+}
+
+.detalhes-cabecalho {
+  padding-bottom: var(--espaco-2);
+  border-bottom: var(--borda-largura) solid var(--cor-borda-suave);
+}
+
+h2 {
+  margin: 0;
+  font-size: var(--texto-base);
+  font-weight: var(--peso-semi);
+  line-height: var(--texto-base-linha);
+  color: var(--cor-texto);
+}
+
+dl {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--espaco-4);
+  margin: 0;
+  padding-top: var(--espaco-3);
+}
+
+/* O #94a3b8 do Figma fica a 2,6:1 sobre branco. */
+dt {
+  padding-top: var(--espaco-1);
+  margin-bottom: var(--espaco-1);
+  font-size: var(--texto-sm);
+  line-height: var(--texto-sm-linha);
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+  color: var(--cor-texto-nav);
+}
+
+dd {
+  margin: 0;
+  font-size: var(--texto-base);
+  font-weight: var(--peso-medio);
+  line-height: var(--texto-base-linha);
+  color: var(--cor-texto);
+  overflow-wrap: anywhere;
+}
+
+.instrumentos-associados ul {
+  margin: 0;
+  padding-left: var(--espaco-5);
+}
+
+.ligacao-detalhe {
+  color: var(--cor-primaria);
+  text-decoration: none;
+}
+
+.ligacao-detalhe:hover {
+  text-decoration: underline;
+}
+
+/* Anúncio do alerta da PCM ao abrir o processo, só para o leitor de ecrã. */
+.so-leitor {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+.alerta-pcm {
+  margin-bottom: var(--espaco-4);
+}
+
+/* Sublinhada: dentro do texto do alerta, a ligação não se distingue só pela cor. */
+.ligacao-revalidacao {
+  color: var(--cor-primaria);
+  font-weight: var(--peso-medio);
+  text-decoration: underline;
+}
+
+.ligacao-revalidacao:focus-visible {
+  outline: var(--anel-foco);
+  outline-offset: var(--anel-foco-afastamento);
+}

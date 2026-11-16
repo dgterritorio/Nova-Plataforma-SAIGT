@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="2026-09-10-7-seed-tipos-instrumento-adicionais" author="nuno.miguel.silva">
+        <comment>
+            Issue #123 — 4 tipos de instrumento adicionais (PP, PU, PROT, PEOT)
+            em tipo_instrumento, a pedido explícito do utilizador — fora do
+            âmbito original da #123 ("Fora de âmbito" dizia tipo_instrumento
+            ficar só com PDM, id=1, já semeado por 2026-09-10-2-seed-catalogos-globais-pdm.xml).
+            Nomes e categoria confirmados na EF v1.4, "Análise Funcional por
+            Tipo de IGT" (tabelas IGT Planos / IGT Programas) — não inventados.
+            Changeset próprio, não uma edição da #2: aquele já tinha corrido
+            nesta base com checksum de 1 linha só; alterá-lo in-place quebra a
+            validação do Liquibase (database.md — "nunca modificar um
+            changeset já executado"). Ids a seguir ao 1 (PDM); setval no fim.
+        </comment>
+
+        <loadData tableName="tipo_instrumento" file="db/data/2026-09-10-7-tipo_instrumento.csv"
+                  relativeToChangelogFile="false" separator=";" quotchar="&quot;" encoding="UTF-8">
+            <column name="id" type="NUMERIC"/>
+            <column name="codigo" type="STRING"/>
+            <column name="nome" type="STRING"/>
+            <column name="categoria" type="STRING"/>
+            <column name="ativo" type="BOOLEAN"/>
+        </loadData>
+        <sql dbms="postgresql">SELECT setval(pg_get_serial_sequence('tipo_instrumento', 'id'), (SELECT MAX(id) FROM tipo_instrumento))</sql>
+
+        <rollback>
+            <delete tableName="tipo_instrumento">
+                <where>id BETWEEN 2 AND 5</where>
+            </delete>
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>

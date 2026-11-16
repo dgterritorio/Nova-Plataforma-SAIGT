@@ -1,0 +1,67 @@
+<fieldset class="lista" [class.lista-grelha]="disposicao() === 'grelha'">
+  <legend class="visualmente-oculto">{{ legenda() }}</legend>
+  @for (opcao of opcoes(); track opcao.valor) {
+    <label class="opcao" [class.opcao-escolhida]="opcao.valor === valor()" [class.opcao-desativada]="desativado() || opcao.desativada">
+      <input
+        type="radio"
+        class="visualmente-oculto"
+        [name]="nome"
+        [value]="opcao.valor"
+        [checked]="opcao.valor === valor()"
+        [disabled]="desativado() || opcao.desativada"
+        (change)="valor.set(opcao.valor)"
+      />
+      @if (opcao.icone; as icone) {
+        <span [class]="'opcao-icone opcao-icone-' + icone" aria-hidden="true">
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.33" stroke-linecap="round" stroke-linejoin="round">
+            @switch (icone) {
+              @case ('mais') {
+                <path d="M8 3.33v9.34M3.33 8h9.34" />
+              }
+              @case ('prancheta') {
+                <path d="M10 2H6a.67.67 0 00-.67.67v1.33c0 .37.3.67.67.67h4c.37 0 .67-.3.67-.67V2.67A.67.67 0 0010 2z" />
+                <path d="M10.67 3.33h.66A1.33 1.33 0 0112.67 4.67v8A1.33 1.33 0 0111.33 14H4.67a1.33 1.33 0 01-1.34-1.33v-8A1.33 1.33 0 014.67 3.33h.66" />
+              }
+              @case ('seta-dupla') {
+                <path d="M3.33 11.33L6.67 8 3.33 4.67M8.67 11.33L12 8 8.67 4.67" />
+              }
+            }
+          </svg>
+        </span>
+      }
+      @if (opcao.etiqueta; as etiqueta) {
+        <span class="opcao-etiqueta">{{ etiqueta }}</span>
+      }
+      <span class="opcao-texto">
+        <span class="opcao-titulo">{{ opcao.titulo }}</span>
+        @if (opcao.descricao; as descricao) {
+          <span class="opcao-descricao" [class.opcao-citacao]="opcao.citacao">{{ opcao.citacao ? '“' + descricao + '”' : descricao }}</span>
+        }
+        @if (opcao.detalhe; as detalhe) {
+          <span class="opcao-descricao opcao-detalhe">{{ detalhe }}</span>
+        }
+        @if (opcao.nota; as nota) {
+          <span class="opcao-nota">
+            {{ nota.rotulo }}
+            <span class="opcao-nota-valor" [class.opcao-nota-aviso]="nota.tom === 'aviso'">{{ nota.valor }}</span>
+          </span>
+        }
+        @if (opcao.prazo; as prazo) {
+          <span class="opcao-prazo">
+            {{ prazo.rotulo }}
+            <time class="opcao-prazo-data" [attr.datetime]="prazo.datetime">{{ prazo.data }}</time>
+            @if (prazo.selo; as selo) {
+              &ngsp;<app-selo class="opcao-prazo-selo" tom="aviso" forma="pill">{{ selo }}</app-selo>
+            }
+          </span>
+        }
+      </span>
+      @if (opcao.selo; as selo) {
+        <span class="opcao-selo">{{ selo }}</span>
+      }
+      @if (opcao.data; as data) {
+        <span class="opcao-data">{{ data }}</span>
+      }
+    </label>
+  }
+</fieldset>

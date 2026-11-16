@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="2026-11-11-13-seed-regras-precedencia-ren" author="david.raposo">
+        <comment>
+            Elegibilidade das três Dinâmicas da REN (OI-417, OI-064): a Delimitação é a Dinâmica inicial e única
+            (OCORRENCIA_NAO_EXISTE sobre DELIMITACAO, que conta como existente numa REN trazida do SNIT); a Alteração
+            e a Correção Material ou Retificação exigem a REN em vigor. Somam-se à regra sem Dinâmicas em simultâneo,
+            porque o motor exige que todas as regras ativas passem. FK resolvidas pelo código, sem ids explícitos.
+            As configurações continuam inativas e sem Procedimentos.
+        </comment>
+
+        <insert tableName="regra">
+            <column name="instrumento_dinamica_config_id"
+                    valueComputed="(SELECT idc.id FROM instrumento_dinamica_config idc JOIN tipo_instrumento ti ON ti.id = idc.tipo_instrumento_id JOIN tipo_dinamica td ON td.id = idc.tipo_dinamica_id WHERE ti.codigo = 'REN' AND td.codigo = 'DELIMITACAO')"/>
+            <column name="operador" value="AND"/>
+            <column name="substitui_sequenciamento" valueBoolean="false"/>
+            <column name="descricao" value="Delimitação é a Dinâmica inicial e única"/>
+            <column name="ativo" valueBoolean="true"/>
+        </insert>
+        <insert tableName="regra">
+            <column name="instrumento_dinamica_config_id"
+                    valueComputed="(SELECT idc.id FROM instrumento_dinamica_config idc JOIN tipo_instrumento ti ON ti.id = idc.tipo_instrumento_id JOIN tipo_dinamica td ON td.id = idc.tipo_dinamica_id WHERE ti.codigo = 'REN' AND td.codigo = 'ALTERACAO')"/>
+            <column name="operador" value="AND"/>
+            <column name="substitui_sequenciamento" valueBoolean="false"/>
+            <column name="descricao" value="Requer REN já delimitada"/>
+            <column name="ativo" valueBoolean="true"/>
+        </insert>
+        <insert tableName="regra">
+            <column name="instrumento_dinamica_config_id"
+                    valueComputed="(SELECT idc.id FROM instrumento_dinamica_config idc JOIN tipo_instrumento ti ON ti.id = idc.tipo_instrumento_id JOIN tipo_dinamica td ON td.id = idc.tipo_dinamica_id WHERE ti.codigo = 'REN' AND td.codigo = 'CORRECAO_MATERIAL_RETIFICACAO')"/>
+            <column name="operador" value="AND"/>
+            <column name="substitui_sequenciamento" valueBoolean="false"/>
+            <column name="descricao" value="Requer REN já delimitada"/>
+            <column name="ativo" valueBoolean="true"/>
+        </insert>
+        <insert tableName="condicao">
+            <column name="regra_id"
+                    valueComputed="(SELECT r.id FROM regra r WHERE r.descricao = 'Delimitação é a Dinâmica inicial e única' AND r.instrumento_dinamica_config_id = (SELECT idc.id FROM instrumento_dinamica_config idc JOIN tipo_instrumento ti ON ti.id = idc.tipo_instrumento_id JOIN tipo_dinamica td ON td.id = idc.tipo_dinamica_id WHERE ti.codigo = 'REN' AND td.codigo = 'DELIMITACAO'))"/>
+            <column name="avaliador" value="OCORRENCIA_NAO_EXISTE"/>
+            <column name="parametros" value='{"tipo_ocorrencia": "DINAMICA", "codigo": "DELIMITACAO"}'/>
+            <column name="grupo" valueNumeric="1"/>
+            <column name="ativo" valueBoolean="true"/>
+        </insert>
+        <insert tableName="condicao">
+            <column name="regra_id"
+                    valueComputed="(SELECT r.id FROM regra r WHERE r.descricao = 'Requer REN já delimitada' AND r.instrumento_dinamica_config_id = (SELECT idc.id FROM instrumento_dinamica_config idc JOIN tipo_instrumento ti ON ti.id = idc.tipo_instrumento_id JOIN tipo_dinamica td ON td.id = idc.tipo_dinamica_id WHERE ti.codigo = 'REN' AND td.codigo = 'ALTERACAO'))"/>
+            <column name="avaliador" value="INSTRUMENTO_EM_VIGOR"/>
+            <column name="parametros" value="{}"/>
+            <column name="grupo" valueNumeric="1"/>
+            <column name="ativo" valueBoolean="true"/>
+        </insert>
+        <insert tableName="condicao">
+            <column name="regra_id"
+                    valueComputed="(SELECT r.id FROM regra r WHERE r.descricao = 'Requer REN já delimitada' AND r.instrumento_dinamica_config_id = (SELECT idc.id FROM instrumento_dinamica_config idc JOIN tipo_instrumento ti ON ti.id = idc.tipo_instrumento_id JOIN tipo_dinamica td ON td.id = idc.tipo_dinamica_id WHERE ti.codigo = 'REN' AND td.codigo = 'CORRECAO_MATERIAL_RETIFICACAO'))"/>
+            <column name="avaliador" value="INSTRUMENTO_EM_VIGOR"/>
+            <column name="parametros" value="{}"/>
+            <column name="grupo" valueNumeric="1"/>
+            <column name="ativo" valueBoolean="true"/>
+        </insert>
+
+        <rollback>
+            <sql>DELETE FROM condicao WHERE regra_id IN (SELECT r.id FROM regra r
+                JOIN instrumento_dinamica_config idc ON idc.id = r.instrumento_dinamica_config_id
+                JOIN tipo_instrumento ti ON ti.id = idc.tipo_instrumento_id
+                JOIN tipo_dinamica td ON td.id = idc.tipo_dinamica_id
+                WHERE ti.codigo = 'REN' AND ((td.codigo = 'DELIMITACAO' AND r.descricao = 'Delimitação é a Dinâmica inicial e única')
+                OR (td.codigo IN ('ALTERACAO', 'CORRECAO_MATERIAL_RETIFICACAO') AND r.descricao = 'Requer REN já delimitada')))</sql>
+            <sql>DELETE FROM regra WHERE id IN (SELECT r.id FROM regra r
+                JOIN instrumento_dinamica_config idc ON idc.id = r.instrumento_dinamica_config_id
+                JOIN tipo_instrumento ti ON ti.id = idc.tipo_instrumento_id
+                JOIN tipo_dinamica td ON td.id = idc.tipo_dinamica_id
+                WHERE ti.codigo = 'REN' AND ((td.codigo = 'DELIMITACAO' AND r.descricao = 'Delimitação é a Dinâmica inicial e única')
+                OR (td.codigo IN ('ALTERACAO', 'CORRECAO_MATERIAL_RETIFICACAO') AND r.descricao = 'Requer REN já delimitada')))</sql>
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>

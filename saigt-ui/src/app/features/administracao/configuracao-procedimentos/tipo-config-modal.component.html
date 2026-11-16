@@ -1,0 +1,43 @@
+<app-modal [titulo]="titulo()" [subtitulo]="subtitulo()" largura="md" [aberto]="aberto()" (fechar)="fechar.emit()">
+  <form class="formulario" [id]="idFormulario" [formGroup]="formulario" (ngSubmit)="submeter()" novalidate>
+    @if (erroGeral(); as erro) {
+      <app-alerta tipo="erro" titulo="Não foi possível gravar o tipo.">{{ erro.mensagem }}</app-alerta>
+    }
+    @if (avisoSemFormulario()) {
+      <app-alerta tipo="info">Um tipo de Procedimento novo só tem formulário depois de desenvolvimento na aplicação.</app-alerta>
+    }
+    <app-campo-texto
+      formControlName="codigo"
+      rotulo="Código"
+      ajuda="Ex.: ALTERACAO_SIMPLIFICADA"
+      [obrigatorio]="true"
+      [compacto]="true"
+      [maxlength]="tamanhoMaximoCodigo()"
+      [erro]="erroDoCampo('codigo')"
+    />
+    <app-campo-texto
+      formControlName="nome"
+      rotulo="Nome"
+      [obrigatorio]="true"
+      [compacto]="true"
+      [maxlength]="tamanhoMaximoNome"
+      [erro]="erroDoCampo('nome')"
+    />
+    @if (comCategoria()) {
+      <app-seletor
+        formControlName="categoria"
+        rotulo="Categoria"
+        [obrigatorio]="true"
+        [compacto]="true"
+        [opcoes]="opcoesCategoria"
+        [erro]="erroDoCampo('categoria')"
+      />
+    }
+  </form>
+  <div rodape>
+    <button type="button" app-botao variante="secundario" tamanho="pequeno" (click)="fechar.emit()">Cancelar</button>
+    <button type="submit" app-botao tamanho="pequeno" [attr.form]="idFormulario" [aCarregar]="aGravar()" [desativado]="formulario.invalid">
+      Guardar
+    </button>
+  </div>
+</app-modal>

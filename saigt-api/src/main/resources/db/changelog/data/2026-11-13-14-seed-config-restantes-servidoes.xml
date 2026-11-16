@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="2026-11-13-14-seed-config-restantes-servidoes" author="arnaldo.costa">
+        <comment>
+            Configuração das restantes servidões (as SRUP sem plataforma própria), editável em backoffice. Um só tipo de
+            Instrumento, SERVIDAO, de categoria SRUP: a tipologia escolhe-se no Instrumento (lista_valores
+            TIPOLOGIA_SRUP), não é código de tipo_instrumento (DB-PROC-001, OI-464, TR-235). Três Dinâmicas comuns (EF
+            v1.5, «Restantes Servidões – Dinâmicas», l.1695 a 1705; FR-091, FR-015): a Delimitação, obrigatória e
+            inicial, cria a servidão e é única; a Alteração, repetível, e a Revogação, única, exigem a servidão em vigor,
+            e uma servidão revogada deixa de estar em vigor (TR-119). Cada Dinâmica tem um só Procedimento,
+            PUBLICACAO_SRUP, sem série do DR (escolhe-se no processo; DB-PROC-005, OI-196) e com o limite de omissão de
+            5 GB por processo. Permissões da matriz proposta do FR-189 (CM, SEC_ESTADO e IP) e da DGT (TR-236, OI-271).
+            Sem ids explícitos, tudo pelos códigos; idempotente pelo NOT EXISTS (o que o backoffice já tiver criado com
+            os mesmos códigos fica como está).
+        </comment>
+
+        <sql>
+            INSERT INTO tipo_instrumento (codigo, nome, categoria, ativo)
+            SELECT 'SERVIDAO', 'Servidão', 'SRUP', true
+            WHERE NOT EXISTS (SELECT 1 FROM tipo_instrumento WHERE codigo = 'SERVIDAO')
+        </sql>
+
+        <sql>
+            INSERT INTO instrumento_dinamica_config (tipo_instrumento_id, tipo_dinamica_id, ativo, associacao_instrumentos)
+            SELECT ti.id, td.id, true, 'UM'
+            FROM (VALUES (1, 'DELIMITACAO'), (2, 'ALTERACAO'), (3, 'REVOGACAO')) AS v (ordem, tipo_dinamica)
+            JOIN tipo_instrumento ti ON ti.codigo = 'SERVIDAO'
+            JOIN tipo_dinamica td ON td.codigo = v.tipo_dinamica
+            WHERE NOT EXISTS (SELECT 1 FROM instrumento_dinamica_config idc
+                              WHERE idc.tipo_instrumento_id = ti.id AND idc.tipo_dinamica_id = td.id)
+            ORDER BY v.ordem
+        </sql>
+
+        <sql>
+            INSERT INTO instrumento_procedimento_config (instrumento_dinamica_config_id, tipo_procedimento_id, ordem,
+                                                         obrigatorio, serie_dr, ativo, repetivel, ato_pontual,
+                                                         tamanho_maximo_processo)
+            SELECT idc.id, tp.id, 1, true, NULL, true, false, false, 5368709120
+            FROM instrumento_dinamica_config idc
+            JOIN tipo_instrumento ti ON ti.id = idc.tipo_instrumento_id AND ti.codigo = 'SERVIDAO'
+            JOIN tipo_dinamica td ON td.id = idc.tipo_dinamica_id
+                AND td.codigo IN ('DELIMITACAO', 'ALTERACAO', 'REVOGACAO')
+            JOIN tipo_procedimento tp ON tp.codigo = 'PUBLICACAO_SRUP'
+            WHERE NOT EXISTS (SELECT 1 FROM instrumento_procedimento_config ipc
+                              WHERE ipc.instrumento_dinamica_config_id = idc.id AND ipc.tipo_procedimento_id = tp.id)
+            ORDER BY idc.id
+        </sql>
+
+        <sql>
+            INSERT INTO permissao_acao (tipo_entidade, instrumento_procedimento_config_id, ativo)
+            SELECT v.tipo_entidade, ipc.id, true
+            FROM instrumento_procedimento_config ipc
+            JOIN tipo_procedimento tp ON tp.id = ipc.tipo_procedimento_id AND tp.codigo = 'PUBLICACAO_SRUP'
+            JOIN instrumento_dinamica_config idc ON idc.id = ipc.instrumento_dinamica_config_id
+            JOIN tipo_instrumento ti ON ti.id = idc.tipo_instrumento_id AND ti.codigo = 'SERVIDAO'
+            CROSS JOIN (VALUES (1, 'CM'), (2, 'SEC_ESTADO'), (3, 'IP'), (4, 'DGT')) AS v (ordem, tipo_entidade)
+            WHERE NOT EXISTS (SELECT 1 FROM permissao_acao pa
+                              WHERE pa.instrumento_procedimento_config_id = ipc.id AND pa.tipo_entidade = v.tipo_entidade)
+            ORDER BY ipc.id, v.ordem
+        </sql>
+
+        <sql>
+            INSERT INTO regra (instrumento_dinamica_config_id, operador, substitui_sequenciamento, descricao, ativo)
+            SELECT idc.id, 'AND', false, v.descricao, true
+            FROM (VALUES ('DELIMITACAO', 'Delimitação é a Dinâmica inicial e única'),
+                         ('ALTERACAO', 'Requer servidão já delimitada'),
+                         ('REVOGACAO', 'Requer servidão já delimitada e só uma Revogação')) AS v (tipo_dinamica, descricao)
+            JOIN tipo_dinamica td ON td.codigo = v.tipo_dinamica
+            JOIN tipo_instrumento ti ON ti.codigo = 'SERVIDAO'
+            JOIN instrumento_dinamica_config idc ON idc.tipo_instrumento_id = ti.id AND idc.tipo_dinamica_id = td.id
+            WHERE NOT EXISTS (SELECT 1 FROM regra r
+                              WHERE r.instrumento_dinamica_config_id = idc.id AND r.descricao = v.descricao)
+            ORDER BY idc.id
+        </sql>
+
+        <sql>
+            INSERT INTO condicao (regra_id, avaliador, parametros, grupo, ativo)
+            SELECT r.id, v.avaliador, v.parametros::jsonb, 1, true
+            FROM (VALUES (1, 'DELIMITACAO', 'Delimitação é a Dinâmica inicial e única', 'OCORRENCIA_NAO_EXISTE',
+                          '{"tipo_ocorrencia": "DINAMICA", "codigo": "DELIMITACAO"}'),
+                         (2, 'ALTERACAO', 'Requer servidão já delimitada', 'INSTRUMENTO_EM_VIGOR', '{}'),
+                         (3, 'REVOGACAO', 'Requer servidão já delimitada e só uma Revogação', 'INSTRUMENTO_EM_VIGOR', '{}'),
+                         (4, 'REVOGACAO', 'Requer servidão já delimitada e só uma Revogação', 'OCORRENCIA_NAO_EXISTE',
+                          '{"tipo_ocorrencia": "DINAMICA", "codigo": "REVOGACAO"}'))
+                 AS v (ordem, tipo_dinamica, descricao, avaliador, parametros)
+            JOIN tipo_dinamica td ON td.codigo = v.tipo_dinamica
+            JOIN tipo_instrumento ti ON ti.codigo = 'SERVIDAO'
+            JOIN instrumento_dinamica_config idc ON idc.tipo_instrumento_id = ti.id AND idc.tipo_dinamica_id = td.id
+            JOIN regra r ON r.instrumento_dinamica_config_id = idc.id AND r.descricao = v.descricao
+            WHERE NOT EXISTS (SELECT 1 FROM condicao c
+                              WHERE c.regra_id = r.id AND c.avaliador = v.avaliador AND c.parametros = v.parametros::jsonb)
+            ORDER BY v.ordem
+        </sql>
+
+        <rollback>
+            <sql>
+                DELETE FROM condicao WHERE regra_id IN (SELECT r.id FROM regra r
+                    JOIN instrumento_dinamica_config idc ON idc.id = r.instrumento_dinamica_config_id
+                    JOIN tipo_instrumento ti ON ti.id = idc.tipo_instrumento_id
+                    WHERE ti.codigo = 'SERVIDAO'
+                      AND r.descricao IN ('Delimitação é a Dinâmica inicial e única', 'Requer servidão já delimitada',
+                                          'Requer servidão já delimitada e só uma Revogação'))
+            </sql>
+            <sql>
+                DELETE FROM regra WHERE id IN (SELECT r.id FROM regra r
+                    JOIN instrumento_dinamica_config idc ON idc.id = r.instrumento_dinamica_config_id
+                    JOIN tipo_instrumento ti ON ti.id = idc.tipo_instrumento_id
+                    WHERE ti.codigo = 'SERVIDAO'
+                      AND r.descricao IN ('Delimitação é a Dinâmica inicial e única', 'Requer servidão já delimitada',
+                                          'Requer servidão já delimitada e só uma Revogação'))
+            </sql>
+            <sql>
+                DELETE FROM permissao_acao WHERE tipo_entidade IN ('CM', 'SEC_ESTADO', 'IP', 'DGT')
+                  AND instrumento_procedimento_config_id IN (SELECT ipc.id FROM instrumento_procedimento_config ipc
+                    JOIN tipo_procedimento tp ON tp.id = ipc.tipo_procedimento_id
+                    JOIN instrumento_dinamica_config idc ON idc.id = ipc.instrumento_dinamica_config_id
+                    JOIN tipo_instrumento ti ON ti.id = idc.tipo_instrumento_id
+                    WHERE tp.codigo = 'PUBLICACAO_SRUP' AND ti.codigo = 'SERVIDAO')
+            </sql>
+            <sql>
+                DELETE FROM instrumento_procedimento_config WHERE id IN (SELECT ipc.id
+                    FROM instrumento_procedimento_config ipc
+                    JOIN tipo_procedimento tp ON tp.id = ipc.tipo_procedimento_id
+                    JOIN instrumento_dinamica_config idc ON idc.id = ipc.instrumento_dinamica_config_id
+                    JOIN tipo_instrumento ti ON ti.id = idc.tipo_instrumento_id
+                    WHERE tp.codigo = 'PUBLICACAO_SRUP' AND ti.codigo = 'SERVIDAO')
+            </sql>
+            <sql>
+                DELETE FROM instrumento_dinamica_config
+                WHERE tipo_instrumento_id = (SELECT id FROM tipo_instrumento WHERE codigo = 'SERVIDAO')
+                  AND tipo_dinamica_id IN (SELECT id FROM tipo_dinamica WHERE codigo IN ('DELIMITACAO', 'ALTERACAO', 'REVOGACAO'))
+            </sql>
+            <sql>DELETE FROM tipo_instrumento WHERE codigo = 'SERVIDAO'</sql>
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>

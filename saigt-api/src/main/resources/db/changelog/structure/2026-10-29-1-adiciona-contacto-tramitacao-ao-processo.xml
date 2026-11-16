@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="2026-10-29-1-adiciona-contacto-tramitacao-ao-processo" author="margarida.marques">
+        <comment>
+            Processo: «Contacto para efeitos de tramitação processual» do formulário inicial,
+            destino do email dos eventos do processo. Opcional; 254 é o máximo de um endereço de email.
+        </comment>
+
+        <addColumn tableName="processo">
+            <column name="contacto_tramitacao" type="VARCHAR(254)"/>
+        </addColumn>
+
+        <rollback>
+            <dropColumn tableName="processo" columnName="contacto_tramitacao"/>
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>

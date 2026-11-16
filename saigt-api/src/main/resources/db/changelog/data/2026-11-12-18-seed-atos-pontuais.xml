@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="2026-11-12-18-seed-atos-pontuais" author="arnaldo.costa">
+        <comment>
+            Os 5 atos pontuais de «Outros atos e anexos» (FR-135; EF v1.5 §3.1.1: só se aplicam a decisões de início e
+            discussões públicas, iguais em todos os planos e programas) como Procedimentos `ato_pontual` de cada Dinâmica
+            ativa com Decisão de início ou Abertura de discussão pública ativa. Configuração inicial, editável em
+            backoffice. Escolhe-se pelo tipo de Procedimento, nunca pelo código do Instrumento: a série do DR e os tipos
+            de entidade copiam-se da Decisão de início da Dinâmica ou, sem ela, do primeiro Procedimento por ordem.
+            Não são obrigatórios (não bloqueiam os seguintes nem são o Procedimento final) e os pares que já existam
+            (por exemplo criados em backoffice) ficam como estão, sem permissões novas.
+        </comment>
+        <sql>WITH dinamicas AS (
+                SELECT idc.id
+                FROM instrumento_dinamica_config idc
+                WHERE idc.ativo
+                  AND EXISTS (SELECT 1 FROM instrumento_procedimento_config ipc
+                              JOIN tipo_procedimento tp ON tp.id = ipc.tipo_procedimento_id
+                              WHERE ipc.instrumento_dinamica_config_id = idc.id AND ipc.ativo
+                                AND tp.codigo IN ('DECISAO_INICIO', 'ABERTURA_DISCUSSAO_PUBLICA',
+                                                  'ABERTURA_DISCUSSAO_PUBLICA_RERAE', 'ABERTURA_DISCUSSAO_PUBLICA_DL10'))
+            ),
+            origem AS (
+                SELECT DISTINCT ON (ipc.instrumento_dinamica_config_id)
+                       ipc.instrumento_dinamica_config_id, ipc.id, ipc.serie_dr
+                FROM instrumento_procedimento_config ipc
+                JOIN dinamicas d ON d.id = ipc.instrumento_dinamica_config_id
+                JOIN tipo_procedimento tp ON tp.id = ipc.tipo_procedimento_id
+                WHERE ipc.ativo AND NOT ipc.ato_pontual
+                ORDER BY ipc.instrumento_dinamica_config_id, tp.codigo = 'DECISAO_INICIO' DESC, ipc.ordem, ipc.id
+            ),
+            novos AS (
+                INSERT INTO instrumento_procedimento_config (instrumento_dinamica_config_id, tipo_procedimento_id, ordem,
+                        obrigatorio, serie_dr, ativo, tamanho_maximo_processo, repetivel, ato_pontual)
+                SELECT o.instrumento_dinamica_config_id, tp.id, v.ordem, false, o.serie_dr, true, 5368709120, false, true
+                FROM origem o
+                CROSS JOIN (VALUES (101, 'ALTERACAO_ATO_ANEXOS'), (102, 'RETIFICACAO_ATO_ANEXOS'), (103, 'REVOGACAO_ATO'),
+                                   (104, 'PRORROGACAO_ATO'), (105, 'DECLARACAO_NULIDADE_JUDICIAL'))
+                     AS v (ordem, tipo_procedimento)
+                JOIN tipo_procedimento tp ON tp.codigo = v.tipo_procedimento
+                WHERE NOT EXISTS (SELECT 1 FROM instrumento_procedimento_config existente
+                                  WHERE existente.instrumento_dinamica_config_id = o.instrumento_dinamica_config_id
+                                    AND existente.tipo_procedimento_id = tp.id)
+                ORDER BY o.instrumento_dinamica_config_id, v.ordem
+                RETURNING id, instrumento_dinamica_config_id
+            )
+            INSERT INTO permissao_acao (tipo_entidade, instrumento_procedimento_config_id, ativo)
+            SELECT pa.tipo_entidade, n.id, true
+            FROM novos n
+            JOIN origem o ON o.instrumento_dinamica_config_id = n.instrumento_dinamica_config_id
+            JOIN permissao_acao pa ON pa.instrumento_procedimento_config_id = o.id AND pa.ativo
+            ORDER BY n.id, pa.tipo_entidade</sql>
+
+        <rollback>
+            <sql>DELETE FROM permissao_acao
+                WHERE instrumento_procedimento_config_id IN (SELECT ipc.id FROM instrumento_procedimento_config ipc
+                JOIN tipo_procedimento tp ON tp.id = ipc.tipo_procedimento_id
+                WHERE ipc.ato_pontual AND tp.codigo IN ('ALTERACAO_ATO_ANEXOS', 'RETIFICACAO_ATO_ANEXOS', 'REVOGACAO_ATO',
+                                                        'PRORROGACAO_ATO', 'DECLARACAO_NULIDADE_JUDICIAL'))</sql>
+            <sql>DELETE FROM instrumento_procedimento_config
+                WHERE ato_pontual AND tipo_procedimento_id IN (SELECT id FROM tipo_procedimento
+                WHERE codigo IN ('ALTERACAO_ATO_ANEXOS', 'RETIFICACAO_ATO_ANEXOS', 'REVOGACAO_ATO', 'PRORROGACAO_ATO',
+                                 'DECLARACAO_NULIDADE_JUDICIAL'))</sql>
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>

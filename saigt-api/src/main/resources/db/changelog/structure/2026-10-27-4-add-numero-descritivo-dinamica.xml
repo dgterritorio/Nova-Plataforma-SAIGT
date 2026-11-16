@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="2026-10-27-4-add-numero-descritivo-dinamica" author="david.raposo">
+        <comment>
+            Dinâmica (DB-PROC-013): n.º de dinâmica de 5 dígitos, descritivo e tentativa. Os números das linhas
+            existentes seguem a ordem de criação; o descritivo existente é o nome do tipo de Dinâmica.
+        </comment>
+
+        <createSequence sequenceName="seq_dinamica_numero" startValue="1" incrementBy="1"/>
+        <addColumn tableName="dinamica">
+            <column name="numero_dinamica" type="VARCHAR(20)"/>
+            <column name="descritivo" type="VARCHAR(50)"/>
+            <column name="tentativa" type="INTEGER" defaultValueNumeric="1">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+        <sql>UPDATE dinamica d SET numero_dinamica = lpad(o.n::text, 5, '0')
+            FROM (SELECT id, row_number() OVER (ORDER BY data_inicio, id) AS n FROM dinamica) o WHERE d.id = o.id</sql>
+        <sql>UPDATE dinamica d SET descritivo = left(td.nome, 50)
+            FROM instrumento_dinamica_config c JOIN tipo_dinamica td ON td.id = c.tipo_dinamica_id
+            WHERE c.id = d.instrumento_dinamica_config_id</sql>
+        <sql>SELECT setval('seq_dinamica_numero', (SELECT count(*) FROM dinamica) + 1, false)</sql>
+        <addNotNullConstraint tableName="dinamica" columnName="numero_dinamica"/>
+        <addNotNullConstraint tableName="dinamica" columnName="descritivo"/>
+        <addUniqueConstraint tableName="dinamica" columnNames="numero_dinamica" constraintName="uq_dinamica_numero"/>
+        <addDefaultValue tableName="dinamica" columnName="numero_dinamica"
+                         defaultValueComputed="lpad(CAST(nextval('seq_dinamica_numero') AS VARCHAR), 5, '0')"/>
+
+        <rollback>
+            <dropColumn tableName="dinamica" columnName="tentativa"/>
+            <dropColumn tableName="dinamica" columnName="descritivo"/>
+            <dropColumn tableName="dinamica" columnName="numero_dinamica"/>
+            <dropSequence sequenceName="seq_dinamica_numero"/>
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>

@@ -1,0 +1,22 @@
+@if (seccaoVisivel()) {
+  <section class="cartao-suspensao" [attr.aria-labelledby]="idTitulo">
+    <h2 class="cabecalho" [id]="idTitulo">Suspensão da iniciativa da CCDR</h2>
+    <div class="corpo">
+      <dl class="contexto">
+        <div>
+          <dt>Tipo de instrumento</dt>
+          <dd class="tipo-instrumento">{{ rotuloTiposInstrumento() }}</dd>
+        </div>
+        <div>
+          <dt>Tipo de procedimento</dt>
+          <dd class="tipo-procedimento">{{ tipoProcedimento() || '—' }}</dd>
+        </div>
+        <div class="largo">
+          <dt>Designação</dt>
+          <dd class="designacao">{{ designacao() || '—' }}</dd>
+        </div>
+      </dl>
+    </div>
+  </section>
+}
+<ng-content />

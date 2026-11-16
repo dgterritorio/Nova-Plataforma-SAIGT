@@ -1,0 +1,46 @@
+<div class="anexos">
+  <span class="rotulo" [id]="idCampo + '-rotulo'">{{ rotulo() }}</span>
+  <input
+    #seletor
+    type="file"
+    multiple
+    class="visualmente-oculto seletor"
+    [id]="idCampo"
+    [accept]="aceites"
+    [disabled]="desativado()"
+    [attr.aria-describedby]="ajuda() ? idCampo + '-ajuda' : null"
+    (change)="escolher($event)"
+  />
+  <label class="zona" [class.zona-desativada]="desativado()" [for]="idCampo">
+    <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.33" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <path d="M13.5 7.5l-5.3 5.3a3.3 3.3 0 01-4.7-4.7l5.6-5.6a2.2 2.2 0 013.1 3.1L6.6 11.2a1.1 1.1 0 01-1.6-1.6l5-5" />
+    </svg>
+    <span class="zona-texto">Clique para anexar documentos</span>
+    <span class="zona-formatos">PDF, Word, Excel, OpenDocument, CSV ou TXT</span>
+  </label>
+  @if (ajuda(); as texto) {
+    <p class="ajuda" [id]="idCampo + '-ajuda'">{{ texto }}</p>
+  }
+  @if (erros().length > 0) {
+    <ul class="erros" role="alert">
+      @for (erro of erros(); track $index) {
+        <li>{{ erro }}</li>
+      }
+    </ul>
+  }
+  @if (ficheiros().length > 0) {
+    <ul class="escolhidos" [attr.aria-labelledby]="idCampo + '-rotulo'">
+      @for (ficheiro of ficheiros(); track ficheiro) {
+        <li class="escolhido">
+          <span class="escolhido-nome">{{ ficheiro.name }}</span>
+          <span class="escolhido-tamanho">{{ tamanhoEmKb(ficheiro.size) }}</span>
+          <button type="button" class="escolhido-remover" [attr.aria-label]="'Remover ' + ficheiro.name" (click)="remover(ficheiro)">
+            <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true">
+              <path d="M3 3l6 6M9 3l-6 6" />
+            </svg>
+          </button>
+        </li>
+      }
+    </ul>
+  }
+</div>

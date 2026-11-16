@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <!--
+        Programas PNPOT, PS, PROT, PEOT e PIMOT. PROT e PEOT já existem (seed anterior) e só ganham configuração; PNPOT,
+        PS e PIMOT são novos. O PNPOT não tem Elaboração (FR-181). Sem ids explícitos: as linhas usam a sequência de cada
+        tabela e as FK resolvem-se pelo código. Os UPDATEs que já anteciparam estes códigos (IDTYPE do SNIT, âmbito
+        territorial, Abertura de Discussão Pública repetível, Constituição da CC visível na Dinâmica e criada pela CCDR)
+        correram antes de as linhas existirem, por isso os valores ficam escritos aqui. Sem linhas PCM: a PCM completa
+        os processos de 1.ª série pelo fluxo PCM, não por `permissao_acao`.
+    -->
+
+    <changeSet id="2026-11-11-12-seed-programas-tipo-instrumento" author="david.raposo">
+        <insert tableName="tipo_instrumento">
+            <column name="codigo" value="PNPOT"/>
+            <column name="nome" value="Programa Nacional da Política de Ordenamento do Território"/>
+            <column name="categoria" value="PROGRAMA"/>
+            <column name="snit_codigo" value="17"/>
+            <column name="ativo" valueBoolean="true"/>
+        </insert>
+        <insert tableName="tipo_instrumento">
+            <column name="codigo" value="PS"/>
+            <column name="nome" value="Programa Setorial"/>
+            <column name="categoria" value="PROGRAMA"/>
+            <column name="snit_codigo" value="46"/>
+            <column name="ativo" valueBoolean="true"/>
+        </insert>
+        <insert tableName="tipo_instrumento">
+            <column name="codigo" value="PIMOT"/>
+            <column name="nome" value="Programa Intermunicipal de Ordenamento do Território"/>
+            <column name="categoria" value="PROGRAMA"/>
+            <column name="snit_codigo" value="52"/>
+            <column name="ambito_territorial" value="INTERMUNICIPAL"/>
+            <column name="ativo" valueBoolean="true"/>
+        </insert>
+
+        <rollback>
+            <sql>DELETE FROM tipo_instrumento WHERE codigo IN ('PNPOT', 'PS', 'PIMOT')</sql>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="2026-11-11-12-seed-programas-dinamicas" author="david.raposo">
+        <sql>INSERT INTO instrumento_dinamica_config (tipo_instrumento_id, tipo_dinamica_id, ativo, associacao_instrumentos)
+            SELECT ti.id, td.id, true, 'UM'
+            FROM (VALUES (1, 'ELABORACAO'), (2, 'REVISAO'), (3, 'ALTERACAO'), (4, 'ALTERACAO_ADAPTACAO'),
+                         (5, 'CORRECAO_MATERIAL'), (6, 'REVOGACAO'))
+                 AS v (ordem, tipo_dinamica)
+            JOIN tipo_dinamica td ON td.codigo = v.tipo_dinamica
+            CROSS JOIN tipo_instrumento ti
+            WHERE ti.codigo IN ('PNPOT', 'PS', 'PROT', 'PEOT', 'PIMOT')
+              AND NOT (ti.codigo = 'PNPOT' AND v.tipo_dinamica = 'ELABORACAO')
+            ORDER BY ti.id, v.ordem</sql>
+
+        <rollback>
+            <sql>DELETE FROM instrumento_dinamica_config
+                WHERE tipo_instrumento_id IN (SELECT id FROM tipo_instrumento WHERE codigo IN ('PNPOT', 'PS', 'PROT', 'PEOT', 'PIMOT'))</sql>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="2026-11-11-12-seed-programas-procedimentos" author="david.raposo">
+        <comment>
+            Só o PIMOT tem a Constituição da Comissão Consultiva, e só na Elaboração (FR-146, DB-PROC-005). Séries da EF v1.5:
+            os Programas do Governo vão à 1.ª série, exceto a Alteração por Adaptação (2.ª série parte C); o PIMOT vai à
+            2.ª série parte H, exceto a CC (parte C). Só a Abertura de Discussão Pública se repete (OI-406). O código IDUS
+            de cada Procedimento é o do catálogo IDUS por Dinâmica e Procedimento, o mesmo dos planos.
+        </comment>
+        <sql>INSERT INTO instrumento_procedimento_config (instrumento_dinamica_config_id, tipo_procedimento_id, ordem,
+                obrigatorio, serie_dr, ativo, tamanho_maximo_processo, repetivel, ato_pontual, visivel_na_dinamica, codigo_idus)
+            SELECT idc.id, tp.id, v.ordem, true,
+                   CASE WHEN ti.codigo = 'PIMOT' AND tp.codigo = 'CONSTITUICAO_CC' THEN 'SEGUNDA_C'
+                        WHEN ti.codigo = 'PIMOT' THEN 'SEGUNDA_H'
+                        WHEN tp.codigo = 'ALTERACAO_ADAPTACAO' THEN 'SEGUNDA_C'
+                        ELSE 'PRIMEIRA' END,
+                   true, 5368709120, tp.codigo = 'ABERTURA_DISCUSSAO_PUBLICA', false, tp.codigo = 'CONSTITUICAO_CC',
+                   idus.codigo_idus
+            FROM (SELECT * FROM (VALUES ('PIMOT', 'ELABORACAO', 1, 'DECISAO_INICIO'),
+                         ('PIMOT', 'ELABORACAO', 2, 'CONSTITUICAO_CC'),
+                         ('PIMOT', 'ELABORACAO', 3, 'ABERTURA_DISCUSSAO_PUBLICA'),
+                         ('PIMOT', 'ELABORACAO', 4, 'ELABORACAO'),
+                         ('PS', 'ELABORACAO', 1, 'DECISAO_INICIO'),
+                         ('PS', 'ELABORACAO', 2, 'ABERTURA_DISCUSSAO_PUBLICA'),
+                         ('PS', 'ELABORACAO', 3, 'ELABORACAO'),
+                         ('PROT', 'ELABORACAO', 1, 'DECISAO_INICIO'),
+                         ('PROT', 'ELABORACAO', 2, 'ABERTURA_DISCUSSAO_PUBLICA'),
+                         ('PROT', 'ELABORACAO', 3, 'ELABORACAO'),
+                         ('PEOT', 'ELABORACAO', 1, 'DECISAO_INICIO'),
+                         ('PEOT', 'ELABORACAO', 2, 'ABERTURA_DISCUSSAO_PUBLICA'),
+                         ('PEOT', 'ELABORACAO', 3, 'ELABORACAO'))
+                         AS elaboracao (tipo_instrumento, tipo_dinamica, ordem, tipo_procedimento)
+                  UNION ALL
+                  SELECT programas.codigo, comuns.tipo_dinamica, comuns.ordem, comuns.tipo_procedimento
+                  FROM (VALUES ('REVISAO', 1, 'DECISAO_INICIO'),
+                         ('REVISAO', 2, 'ABERTURA_DISCUSSAO_PUBLICA'),
+                         ('REVISAO', 3, 'REVISAO'),
+                         ('ALTERACAO', 1, 'DECISAO_INICIO'),
+                         ('ALTERACAO', 2, 'ABERTURA_DISCUSSAO_PUBLICA'),
+                         ('ALTERACAO', 3, 'ALTERACAO'),
+                         ('ALTERACAO_ADAPTACAO', 1, 'ALTERACAO_ADAPTACAO'),
+                         ('CORRECAO_MATERIAL', 1, 'CORRECAO_MATERIAL'),
+                         ('REVOGACAO', 1, 'REVOGACAO'))
+                         AS comuns (tipo_dinamica, ordem, tipo_procedimento)
+                  CROSS JOIN (VALUES ('PNPOT'), ('PS'), ('PROT'), ('PEOT'), ('PIMOT')) AS programas (codigo))
+                 AS v
+            JOIN tipo_instrumento ti ON ti.codigo = v.tipo_instrumento
+            JOIN tipo_dinamica td ON td.codigo = v.tipo_dinamica
+            JOIN instrumento_dinamica_config idc ON idc.tipo_instrumento_id = ti.id AND idc.tipo_dinamica_id = td.id
+            JOIN tipo_procedimento tp ON tp.codigo = v.tipo_procedimento
+            LEFT JOIN (VALUES ('ELABORACAO', 'DECISAO_INICIO', '029'), ('ELABORACAO', 'CONSTITUICAO_CC', '038'),
+                              ('ELABORACAO', 'ABERTURA_DISCUSSAO_PUBLICA', '033'), ('ELABORACAO', 'ELABORACAO', '001'),
+                              ('REVISAO', 'DECISAO_INICIO', '030'), ('REVISAO', 'ABERTURA_DISCUSSAO_PUBLICA', '060'),
+                              ('REVISAO', 'REVISAO', '003'), ('ALTERACAO', 'DECISAO_INICIO', '031'),
+                              ('ALTERACAO', 'ABERTURA_DISCUSSAO_PUBLICA', '034'), ('ALTERACAO', 'ALTERACAO', '002'),
+                              ('ALTERACAO_ADAPTACAO', 'ALTERACAO_ADAPTACAO', '004'),
+                              ('CORRECAO_MATERIAL', 'CORRECAO_MATERIAL', '010'), ('REVOGACAO', 'REVOGACAO', '015'))
+                 AS idus (tipo_dinamica, tipo_procedimento, codigo_idus)
+                 ON idus.tipo_dinamica = v.tipo_dinamica AND idus.tipo_procedimento = v.tipo_procedimento
+            ORDER BY idc.id, v.ordem</sql>
+
+        <rollback>
+            <sql>DELETE FROM instrumento_procedimento_config
+                WHERE instrumento_dinamica_config_id IN (SELECT idc.id FROM instrumento_dinamica_config idc
+                JOIN tipo_instrumento ti ON ti.id = idc.tipo_instrumento_id
+                WHERE ti.codigo IN ('PNPOT', 'PS', 'PROT', 'PEOT', 'PIMOT'))</sql>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="2026-11-11-12-seed-programas-permissoes" author="david.raposo">
+        <comment>
+            Uma linha por Procedimento e tipo de entidade (FR-160). A Constituição da Comissão Consultiva do PIMOT é criada
+            pela CCDR em vez da CIM (EF v1.5 §3.5.1.3; OI-234), como no PDM e no PDIM.
+        </comment>
+        <sql>INSERT INTO permissao_acao (tipo_entidade, instrumento_procedimento_config_id, ativo)
+            SELECT CASE WHEN v.tipo_entidade = 'CIM' AND tp.codigo = 'CONSTITUICAO_CC' THEN 'CCDR_DR' ELSE v.tipo_entidade END,
+                   ipc.id, true
+            FROM instrumento_procedimento_config ipc
+            JOIN instrumento_dinamica_config idc ON idc.id = ipc.instrumento_dinamica_config_id
+            JOIN tipo_instrumento ti ON ti.id = idc.tipo_instrumento_id
+            JOIN tipo_procedimento tp ON tp.id = ipc.tipo_procedimento_id
+            JOIN (VALUES ('PNPOT', 1, 'SEC_ESTADO'), ('PNPOT', 2, 'DGT'),
+                         ('PS', 1, 'SEC_ESTADO'), ('PS', 2, 'APA'), ('PS', 3, 'DGT'),
+                         ('PROT', 1, 'SEC_ESTADO'), ('PROT', 2, 'DGT'),
+                         ('PEOT', 1, 'SEC_ESTADO'), ('PEOT', 2, 'APA'), ('PEOT', 3, 'DGT'),
+                         ('PIMOT', 1, 'CIM'), ('PIMOT', 2, 'DGT'))
+                 AS v (tipo_instrumento, ordem, tipo_entidade) ON v.tipo_instrumento = ti.codigo
+            ORDER BY ipc.id, v.ordem</sql>
+
+        <rollback>
+            <sql>DELETE FROM permissao_acao
+                WHERE instrumento_procedimento_config_id IN (SELECT ipc.id FROM instrumento_procedimento_config ipc
+                JOIN instrumento_dinamica_config idc ON idc.id = ipc.instrumento_dinamica_config_id
+                JOIN tipo_instrumento ti ON ti.id = idc.tipo_instrumento_id
+                WHERE ti.codigo IN ('PNPOT', 'PS', 'PROT', 'PEOT', 'PIMOT'))</sql>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="2026-11-11-12-seed-programas-regras" author="david.raposo">
+        <sql>INSERT INTO regra (instrumento_dinamica_config_id, operador, substitui_sequenciamento, descricao, ativo)
+            SELECT idc.id, 'AND', false, v.descricao, true
+            FROM (VALUES ('ELABORACAO', 'Elaboração é única'),
+                         ('REVISAO', 'Requer programa em vigor; só 1 Revisão em curso'),
+                         ('ALTERACAO', 'Requer programa em vigor'),
+                         ('ALTERACAO_ADAPTACAO', 'Requer programa em vigor'),
+                         ('CORRECAO_MATERIAL', 'Requer programa em vigor'),
+                         ('REVOGACAO', 'Requer programa em vigor; Revogação é única'))
+                 AS v (tipo_dinamica, descricao)
+            JOIN tipo_dinamica td ON td.codigo = v.tipo_dinamica
+            JOIN instrumento_dinamica_config idc ON idc.tipo_dinamica_id = td.id
+            JOIN tipo_instrumento ti ON ti.id = idc.tipo_instrumento_id AND ti.codigo IN ('PNPOT', 'PS', 'PROT', 'PEOT', 'PIMOT')
+            ORDER BY idc.id</sql>
+
+        <rollback>
+            <sql>DELETE FROM regra
+                WHERE instrumento_dinamica_config_id IN (SELECT idc.id FROM instrumento_dinamica_config idc
+                JOIN tipo_instrumento ti ON ti.id = idc.tipo_instrumento_id
+                WHERE ti.codigo IN ('PNPOT', 'PS', 'PROT', 'PEOT', 'PIMOT'))</sql>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="2026-11-11-12-seed-programas-condicoes" author="david.raposo">
+        <sql>INSERT INTO condicao (regra_id, avaliador, parametros, grupo, ativo)
+            SELECT r.id, v.avaliador, CAST(v.parametros AS jsonb), 1, true
+            FROM (VALUES ('ELABORACAO', 1, 'OCORRENCIA_NAO_EXISTE', '{"tipo_ocorrencia": "DINAMICA", "codigo": "ELABORACAO"}'),
+                         ('REVISAO', 1, 'INSTRUMENTO_EM_VIGOR', '{}'),
+                         ('REVISAO', 2, 'OCORRENCIA_NAO_EXISTE', '{"tipo_ocorrencia": "DINAMICA", "codigo": "REVISAO", "estado": "EM_CURSO"}'),
+                         ('ALTERACAO', 1, 'INSTRUMENTO_EM_VIGOR', '{}'),
+                         ('ALTERACAO_ADAPTACAO', 1, 'INSTRUMENTO_EM_VIGOR', '{}'),
+                         ('CORRECAO_MATERIAL', 1, 'INSTRUMENTO_EM_VIGOR', '{}'),
+                         ('REVOGACAO', 1, 'INSTRUMENTO_EM_VIGOR', '{}'),
+                         ('REVOGACAO', 2, 'OCORRENCIA_NAO_EXISTE', '{"tipo_ocorrencia": "DINAMICA", "codigo": "REVOGACAO"}'))
+                 AS v (tipo_dinamica, ordem, avaliador, parametros)
+            JOIN tipo_dinamica td ON td.codigo = v.tipo_dinamica
+            JOIN instrumento_dinamica_config idc ON idc.tipo_dinamica_id = td.id
+            JOIN tipo_instrumento ti ON ti.id = idc.tipo_instrumento_id AND ti.codigo IN ('PNPOT', 'PS', 'PROT', 'PEOT', 'PIMOT')
+            JOIN regra r ON r.instrumento_dinamica_config_id = idc.id
+            ORDER BY r.id, v.ordem</sql>
+
+        <rollback>
+            <sql>DELETE FROM condicao WHERE regra_id IN (SELECT r.id FROM regra r
+                JOIN instrumento_dinamica_config idc ON idc.id = r.instrumento_dinamica_config_id
+                JOIN tipo_instrumento ti ON ti.id = idc.tipo_instrumento_id
+                WHERE ti.codigo IN ('PNPOT', 'PS', 'PROT', 'PEOT', 'PIMOT'))</sql>
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>

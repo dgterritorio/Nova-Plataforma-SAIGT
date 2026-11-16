@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="2026-11-13-6-documento-config-pu-pp-intermunicipais-lista-dgt" author="david.raposo">
+        <comment>
+            Itens documentais de PU, PP, PDIM, PUIM e PPIM pela lista de documentos da DGT de 04/11
+            (SAIGT_ListaDocumentos2026-11-04_v1_f.xlsx, folha IGT_PMOTs, colunas PU, PP, PDMi, PUi e PPi; FR-193, TR-261,
+            OI-245 fechado). Os elementos x e q.a. são obrigatórios nas duas caixas (OI-548) e a Alteração Simplificada
+            DL 10/2024 tem a lista da Alteração Simplificada (OI-549). Só a página DOCUMENTOS: insere os itens que faltam e
+            atualiza a ordem e a obrigatoriedade das Decisões de início da Alteração de PU e PP, que já existiam. O
+            Procedimento resolve-se pelos códigos, para servir qualquer ambiente; a ordem e a obrigatoriedade anteriores
+            ficam no CSV para o rollback. Uma linha que o backoffice já tenha criado com o mesmo código não é inserida
+            outra vez.
+        </comment>
+
+        <createTable tableName="documento_config_carga_pu_pp">
+            <column name="instrumento" type="VARCHAR(100)"/>
+            <column name="dinamica" type="VARCHAR(100)"/>
+            <column name="procedimento" type="VARCHAR(100)"/>
+            <column name="codigo" type="VARCHAR(50)"/>
+            <column name="acao" type="VARCHAR(10)"/>
+            <column name="ordem" type="VARCHAR(10)"/>
+            <column name="obrigatorio" type="VARCHAR(5)"/>
+            <column name="ordem_anterior" type="VARCHAR(10)"/>
+            <column name="obrigatorio_anterior" type="VARCHAR(5)"/>
+            <column name="nome" type="VARCHAR(100)"/>
+            <column name="descricao" type="VARCHAR(300)"/>
+            <column name="separador" type="VARCHAR(100)"/>
+            <column name="tipo_elemento" type="VARCHAR(20)"/>
+            <column name="elemento_informacao_base" type="VARCHAR(30)"/>
+            <column name="procedimento_config_id" type="BIGINT"/>
+        </createTable>
+
+        <loadData tableName="documento_config_carga_pu_pp"
+                  file="db/data/2026-11-13-6-documento_config-pu-pp-intermunicipais-lista-dgt.csv"
+                  relativeToChangelogFile="false" separator=";" quotchar="&quot;" encoding="UTF-8">
+            <column name="instrumento" type="STRING"/>
+            <column name="dinamica" type="STRING"/>
+            <column name="procedimento" type="STRING"/>
+            <column name="codigo" type="STRING"/>
+            <column name="acao" type="STRING"/>
+            <column name="ordem" type="STRING"/>
+            <column name="obrigatorio" type="STRING"/>
+            <column name="ordem_anterior" type="STRING"/>
+            <column name="obrigatorio_anterior" type="STRING"/>
+            <column name="nome" type="STRING"/>
+            <column name="descricao" type="STRING"/>
+            <column name="separador" type="STRING"/>
+            <column name="tipo_elemento" type="STRING"/>
+            <column name="elemento_informacao_base" type="STRING"/>
+        </loadData>
+
+        <sql>UPDATE documento_config_carga_pu_pp SET procedimento_config_id = ipc.id
+            FROM instrumento_procedimento_config ipc
+            JOIN instrumento_dinamica_config idc ON idc.id = ipc.instrumento_dinamica_config_id
+            JOIN tipo_instrumento ti ON ti.id = idc.tipo_instrumento_id
+            JOIN tipo_dinamica td ON td.id = idc.tipo_dinamica_id
+            JOIN tipo_procedimento tp ON tp.id = ipc.tipo_procedimento_id
+            WHERE ti.codigo = documento_config_carga_pu_pp.instrumento
+              AND td.codigo = documento_config_carga_pu_pp.dinamica
+              AND tp.codigo = documento_config_carga_pu_pp.procedimento</sql>
+
+        <sql>UPDATE documento_config d SET ordem = c.ordem::integer, obrigatorio = c.obrigatorio::boolean
+            FROM documento_config_carga_pu_pp c
+            WHERE c.acao = 'ATUALIZAR' AND d.instrumento_procedimento_config_id = c.procedimento_config_id
+              AND d.codigo = c.codigo AND d.pagina = 'DOCUMENTOS'</sql>
+
+        <sql><![CDATA[
+            INSERT INTO documento_config (instrumento_procedimento_config_id, codigo, nome, descricao, separador, categoria,
+                tipo_elemento, formato, obrigatorio, extensoes_aceites, ordem, ativo, elemento_informacao_base,
+                link_publico_permitido, pagina, tamanho_maximo_ficheiro, tamanho_maximo_total, numero_maximo_ficheiros,
+                regras_tiff, regra_nomenclatura)
+            SELECT c.procedimento_config_id, c.codigo, c.nome, NULLIF(c.descricao, ''), c.separador,
+                CASE WHEN right(c.codigo, 4) = '_PUB' THEN 'PUBLICACAO' ELSE 'DEPOSITO' END,
+                c.tipo_elemento,
+                CASE WHEN right(c.codigo, 4) = '_PUB' THEN 'EDITAVEL' ELSE 'NAO_EDITAVEL' END,
+                c.obrigatorio::boolean,
+                CASE WHEN c.tipo_elemento = 'PECA_GRAFICA' THEN '["zip"]'
+                     WHEN right(c.codigo, 4) = '_PUB'
+                         THEN '["doc", "docx", "rtf", "odf", "odt", "xls", "xlsx", "csv", "ods", "pdf", "txt"]'
+                     ELSE '["pdf", "jpg", "png"]' END::jsonb,
+                c.ordem::integer, TRUE, NULLIF(c.elemento_informacao_base, ''),
+                right(c.codigo, 4) = '_PUB' OR c.codigo LIKE 'DELIBERACAO%' OR c.codigo = 'DESPACHO_CCDR_DEP',
+                'DOCUMENTOS', 524288000, 2147483648, 10,
+                CASE WHEN c.tipo_elemento = 'PECA_GRAFICA' THEN '{"sistemasReferencia": ["EPSG:3763", "EPSG:5014", "EPSG:5015", "EPSG:5016"], "compressoesAceites": ["NONE", "LZW"], "bandaAlfaTolerada": true, "modeloCor": null, "bitsPorBanda": null, "resolucaoDpi": null, "elementosLegenda": ["ID do plano", "N.º de folha", "Data de aprovação", "Identificação do procedimento"]}'::jsonb END,
+                'GERAL'
+            FROM documento_config_carga_pu_pp c
+            WHERE c.acao = 'INSERIR' AND c.procedimento_config_id IS NOT NULL
+              AND NOT EXISTS (SELECT 1 FROM documento_config d
+                              WHERE d.instrumento_procedimento_config_id = c.procedimento_config_id
+                                AND d.codigo = c.codigo)
+        ]]></sql>
+
+        <dropTable tableName="documento_config_carga_pu_pp"/>
+
+        <rollback>
+            <createTable tableName="documento_config_carga_pu_pp">
+                <column name="instrumento" type="VARCHAR(100)"/>
+                <column name="dinamica" type="VARCHAR(100)"/>
+                <column name="procedimento" type="VARCHAR(100)"/>
+                <column name="codigo" type="VARCHAR(50)"/>
+                <column name="acao" type="VARCHAR(10)"/>
+                <column name="ordem" type="VARCHAR(10)"/>
+                <column name="obrigatorio" type="VARCHAR(5)"/>
+                <column name="ordem_anterior" type="VARCHAR(10)"/>
+                <column name="obrigatorio_anterior" type="VARCHAR(5)"/>
+                <column name="nome" type="VARCHAR(100)"/>
+                <column name="descricao" type="VARCHAR(300)"/>
+                <column name="separador" type="VARCHAR(100)"/>
+                <column name="tipo_elemento" type="VARCHAR(20)"/>
+                <column name="elemento_informacao_base" type="VARCHAR(30)"/>
+                <column name="procedimento_config_id" type="BIGINT"/>
+            </createTable>
+            <loadData tableName="documento_config_carga_pu_pp"
+                      file="db/data/2026-11-13-6-documento_config-pu-pp-intermunicipais-lista-dgt.csv"
+                      relativeToChangelogFile="false" separator=";" quotchar="&quot;" encoding="UTF-8">
+                <column name="instrumento" type="STRING"/>
+                <column name="dinamica" type="STRING"/>
+                <column name="procedimento" type="STRING"/>
+                <column name="codigo" type="STRING"/>
+                <column name="acao" type="STRING"/>
+                <column name="ordem" type="STRING"/>
+                <column name="obrigatorio" type="STRING"/>
+                <column name="ordem_anterior" type="STRING"/>
+                <column name="obrigatorio_anterior" type="STRING"/>
+                <column name="nome" type="STRING"/>
+                <column name="descricao" type="STRING"/>
+                <column name="separador" type="STRING"/>
+                <column name="tipo_elemento" type="STRING"/>
+                <column name="elemento_informacao_base" type="STRING"/>
+            </loadData>
+            <sql>UPDATE documento_config_carga_pu_pp SET procedimento_config_id = ipc.id
+                FROM instrumento_procedimento_config ipc
+                JOIN instrumento_dinamica_config idc ON idc.id = ipc.instrumento_dinamica_config_id
+                JOIN tipo_instrumento ti ON ti.id = idc.tipo_instrumento_id
+                JOIN tipo_dinamica td ON td.id = idc.tipo_dinamica_id
+                JOIN tipo_procedimento tp ON tp.id = ipc.tipo_procedimento_id
+                WHERE ti.codigo = documento_config_carga_pu_pp.instrumento
+                  AND td.codigo = documento_config_carga_pu_pp.dinamica
+                  AND tp.codigo = documento_config_carga_pu_pp.procedimento</sql>
+            <sql>DELETE FROM documento_config d USING documento_config_carga_pu_pp c
+                WHERE c.acao = 'INSERIR' AND d.instrumento_procedimento_config_id = c.procedimento_config_id
+                  AND d.codigo = c.codigo AND d.pagina = 'DOCUMENTOS'</sql>
+            <sql>UPDATE documento_config d SET ordem = c.ordem_anterior::integer,
+                    obrigatorio = c.obrigatorio_anterior::boolean
+                FROM documento_config_carga_pu_pp c
+                WHERE c.acao = 'ATUALIZAR' AND d.instrumento_procedimento_config_id = c.procedimento_config_id
+                  AND d.codigo = c.codigo AND d.pagina = 'DOCUMENTOS'</sql>
+            <dropTable tableName="documento_config_carga_pu_pp"/>
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>

@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="2026-08-10-4-create-config-estrutura" author="david.raposo">
+        <comment>
+            Grupo 2 — configuração de estrutura: instrumento_dinamica_config, instrumento_procedimento_config.
+            Ver desenho v0.1, 01-motor-regras-ciclo-vida-processo.md §5.
+            A série do Diário da República é configurada por Procedimento (`serie_dr`), não pela categoria do Instrumento.
+        </comment>
+
+        <createTable tableName="instrumento_dinamica_config">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="tipo_instrumento_id" type="BIGINT">
+                <constraints nullable="false" foreignKeyName="fk_instrumento_dinamica_config_tipo_instrumento" references="tipo_instrumento(id)"/>
+            </column>
+            <column name="tipo_dinamica_id" type="BIGINT">
+                <constraints nullable="false" foreignKeyName="fk_instrumento_dinamica_config_tipo_dinamica" references="tipo_dinamica(id)"/>
+            </column>
+            <column name="ordem" type="INTEGER">
+                <constraints nullable="false"/>
+            </column>
+            <column name="ativo" type="BOOLEAN" defaultValueBoolean="true">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <addUniqueConstraint tableName="instrumento_dinamica_config" columnNames="tipo_instrumento_id, tipo_dinamica_id"
+                             constraintName="uq_instrumento_dinamica_config"/>
+
+        <createTable tableName="instrumento_procedimento_config">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="instrumento_dinamica_config_id" type="BIGINT">
+                <constraints nullable="false" foreignKeyName="fk_instrumento_procedimento_config_dinamica_config" references="instrumento_dinamica_config(id)"/>
+            </column>
+            <column name="tipo_procedimento_id" type="BIGINT">
+                <constraints nullable="false" foreignKeyName="fk_instrumento_procedimento_config_tipo_procedimento" references="tipo_procedimento(id)"/>
+            </column>
+            <column name="ordem" type="INTEGER">
+                <constraints nullable="false"/>
+            </column>
+            <column name="obrigatorio" type="BOOLEAN" defaultValueBoolean="true">
+                <constraints nullable="false"/>
+            </column>
+            <column name="prazo_dias" type="INTEGER"/>
+            <column name="tipo_prazo" type="VARCHAR(10)"/>
+            <column name="serie_dr" type="VARCHAR(10)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="ativo" type="BOOLEAN" defaultValueBoolean="true">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <addUniqueConstraint tableName="instrumento_procedimento_config"
+                             columnNames="instrumento_dinamica_config_id, tipo_procedimento_id"
+                             constraintName="uq_instrumento_procedimento_config"/>
+        <sql>ALTER TABLE instrumento_procedimento_config ADD CONSTRAINT ck_instrumento_procedimento_config_serie_dr
+            CHECK (serie_dr IN ('PRIMEIRA', 'SEGUNDA_H', 'SEGUNDA_C'))</sql>
+    </changeSet>
+
+</databaseChangeLog>

@@ -1,0 +1,69 @@
+<app-modal
+  titulo="Rejeitar pedido - Seleção de Documentos"
+  subtitulo="Indique quais os documentos a rejeitar, o motivo e notas adicionais para a Câmara Municipal."
+  [aberto]="aberto()"
+  largura="xl"
+  (fechar)="fechar.emit()"
+>
+  <div class="rejeicao">
+    <p class="nome-item" data-campo="nome-item">{{ item()?.nome }}</p>
+
+    @if (listasCarregadas()) {
+      @if (mostrarCategoria() || mostrarMotivo()) {
+        <div class="listas">
+          @if (mostrarCategoria()) {
+            <app-seletor
+              data-campo="categoria"
+              rotulo="Categoria"
+              [obrigatorio]="true"
+              [opcoes]="opcoesCategoria()"
+              [erro]="erroCategoria()"
+              [formControl]="controloCategoria"
+            />
+          }
+          @if (mostrarMotivo()) {
+            <app-seletor
+              data-campo="motivo"
+              rotulo="Motivo"
+              [obrigatorio]="true"
+              [opcoes]="opcoesMotivo()"
+              [erro]="erroMotivo()"
+              [formControl]="controloMotivo"
+            />
+          }
+        </div>
+      }
+    } @else if (!falhaListas()) {
+      <p class="a-carregar" role="status">A carregar…</p>
+    }
+
+    <app-campo-texto
+      data-campo="notas"
+      rotulo="Notas"
+      [obrigatorio]="true"
+      [multilinha]="true"
+      placeholder="Ex.: página 3 com a planta de enquadramento ilegível."
+      [erro]="erroNotas()"
+      [formControl]="controloNotas"
+    />
+  </div>
+
+  <app-error-banner [erro]="erro()" />
+  @if (falhaListas()) {
+    <button type="button" app-botao variante="secundario" tamanho="pequeno" class="recarregar" (click)="carregarListas()">
+      Tentar de novo
+    </button>
+  }
+  @if (conflito()) {
+    <button type="button" app-botao variante="secundario" tamanho="pequeno" class="recarregar" (click)="recarregar.emit()">
+      Recarregar
+    </button>
+  }
+
+  <div rodape class="acoes">
+    <button type="button" app-botao variante="secundario" tamanho="pequeno" (click)="fechar.emit()">Cancelar</button>
+    <button type="button" app-botao variante="perigo" tamanho="pequeno" [desativado]="!podeConfirmar()" (click)="confirmar()">
+      {{ aProcessar() ? 'A processar…' : 'Confirmar Rejeição' }}
+    </button>
+  </div>
+</app-modal>

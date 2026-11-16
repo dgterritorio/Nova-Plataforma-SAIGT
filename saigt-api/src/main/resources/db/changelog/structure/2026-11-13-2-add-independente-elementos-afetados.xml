@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="2026-11-13-2-add-independente-elementos-afetados" author="arnaldo.costa">
+        <comment>
+            Item documental exigido quaisquer que sejam os elementos afetados do processo (FR-029, FR-168): os
+            documentos instrutórios, como as provas de notificação da Correção Material, não são peças do plano e não
+            podem depender do filtro por elementos afetados. Os itens existentes ficam false pela omissão, sem mudar
+            o que a estrutura documental mostra. A coluna ainda não consta do DB-DOC-001.
+        </comment>
+
+        <sql>ALTER TABLE documento_config ADD COLUMN independente_elementos_afetados BOOLEAN NOT NULL DEFAULT false</sql>
+
+        <rollback>
+            <dropColumn tableName="documento_config" columnName="independente_elementos_afetados"/>
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>

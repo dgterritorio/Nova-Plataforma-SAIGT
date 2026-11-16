@@ -1,0 +1,86 @@
+<div class="pagina">
+  <main class="conteudo">
+    <div class="marca">
+      <img class="marca-logotipo" src="marca/saigt-logotipo-compacto.png" alt="SAIGT" width="104" height="36" />
+      <p class="marca-subtitulo">Sistema de Administração dos Instrumentos de Gestão Territorial</p>
+    </div>
+
+    <div class="cartao">
+      <h1 class="cartao-titulo">Autenticação INCM</h1>
+
+      <app-alerta tipo="sucesso" class="banner-sucesso">
+        <span class="banner-linha-titulo">
+          <span class="banner-titulo">Autenticação validada com sucesso</span>
+          <span class="banner-badge">{{ totalEntidades() === 1 ? '1 entidade' : totalEntidades() + ' entidades' }}</span>
+        </span>
+        <span class="banner-subtitulo">Selecione a entidade com que deseja continuar nesta sessão.</span>
+      </app-alerta>
+
+      @if (mensagemErro()) {
+        <app-alerta #alertaErro tipo="erro" class="alerta-escolha" tabindex="-1">{{ mensagemErro() }}</app-alerta>
+      }
+
+      <div class="secao">
+        <h2 class="secao-titulo">Escolha a entidade</h2>
+        <p class="secao-intro">
+          @if (totalEntidades() === 1) {
+            Foi encontrada uma entidade associada à sua conta INCM. Confirme-a para continuar nesta sessão de trabalho.
+          } @else {
+            Foram encontradas várias entidades associadas à sua conta INCM. Selecione aquela com que deseja continuar nesta
+            sessão de trabalho.
+          }
+        </p>
+      </div>
+
+      <ul class="lista-entidades">
+        @for (entidade of authService.entidadesElegiveis(); track entidade.incmEnrollmentId) {
+          <li>
+            <button
+              type="button"
+              class="linha-entidade"
+              [class.linha-entidade-selecionada]="selecionada() === entidade.incmEnrollmentId"
+              [class.linha-entidade-indisponivel]="indisponivel(entidade.incmEnrollmentId)"
+              [attr.data-adesao]="entidade.incmEnrollmentId"
+              [attr.aria-pressed]="selecionada() === entidade.incmEnrollmentId"
+              [disabled]="aSubmeter() || indisponivel(entidade.incmEnrollmentId)"
+              (click)="selecionar(entidade.incmEnrollmentId)"
+            >
+              <span class="linha-icone" aria-hidden="true">
+                <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round">
+                  <path d="M2.5 14.5v-9l5.5-3 5.5 3v9M1.5 14.5h13M5.5 14.5v-4h5v4M5.5 7.5h1M9.5 7.5h1" />
+                </svg>
+              </span>
+              <span class="linha-texto">
+                <span class="linha-nome">{{ entidade.nome }}</span>
+                <span class="linha-nipc">NIPC {{ formatarNipc(entidade.nipc) }}</span>
+                @if (indisponivel(entidade.incmEnrollmentId)) {
+                  <span class="linha-indisponivel">Indisponível</span>
+                }
+              </span>
+              <span class="linha-radio" aria-hidden="true"></span>
+            </button>
+          </li>
+        }
+      </ul>
+
+      <button type="button" app-botao class="continuar" [desativado]="!selecionada()" [aCarregar]="aSubmeter()" (click)="confirmar()">
+        Continuar
+      </button>
+    </div>
+
+    <p class="rodape">© 2026 SAIGT — Direção-Geral do Território</p>
+  </main>
+
+  <footer class="parceiros">
+    <div class="grupo">
+      <img src="partners/compete2020.png" alt="COMPETE 2020" />
+      <img src="partners/portugal2020.png" alt="Portugal 2020" />
+      <img src="partners/simplexplus.png" alt="SIMPLEX+" />
+    </div>
+    <div class="grupo">
+      <img src="partners/dgterritorio.png" alt="dgTerritório" />
+      <img src="partners/incm.png" alt="INCM" />
+      <img src="partners/ihru.png" alt="Instituto da Habitação e da Reabilitação Urbana" />
+    </div>
+  </footer>
+</div>

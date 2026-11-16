@@ -1,0 +1,26 @@
+id;codigo;nome;ativo
+1;"DECISAO_INICIO";"Decisão de início";true
+2;"CONSTITUICAO_CC";"Constituição da Comissão Consultiva";true
+3;"ABERTURA_DISCUSSAO_PUBLICA";"Abertura do período de discussão pública";true
+4;"ELABORACAO";"Elaboração";true
+6;"REVISAO";"Revisão";true
+8;"ALTERACAO";"Alteração";true
+9;"ABERTURA_DISCUSSAO_PUBLICA_RERAE";"Abertura do período de discussão pública (RERAE)";true
+10;"ALTERACAO_RERAE";"Alteração RERAE";true
+11;"ALTERACAO_SIMPLIFICADA";"Alteração simplificada";true
+12;"ABERTURA_DISCUSSAO_PUBLICA_DL10";"Abertura do período de discussão pública (DL 10/2024)";true
+13;"ALTERACAO_SIMPLIFICADA_DL10";"Alteração simplificada (DL 10/2024)";true
+14;"ALTERACAO_ADAPTACAO";"Alteração por adaptação";true
+15;"CORRECAO_MATERIAL";"Correção material";true
+16;"REVOGACAO";"Revogação";true
+17;"PUBLICACAO_MP";"Publicação das medidas preventivas";true
+18;"PRORROGACAO_MP";"Prorrogação das medidas preventivas";true
+19;"PUBLICACAO_NP";"Publicação das normas provisórias";true
+20;"PRORROGACAO_NP";"Prorrogação das normas provisórias";true
+21;"PUBLICACAO_SUSPENSAO";"Publicação da suspensão";true
+22;"PRORROGACAO_SUSPENSAO";"Prorrogação da suspensão";true
+23;"ALTERACAO_ATO_ANEXOS";"Alteração do ato e anexos";true
+24;"RETIFICACAO_ATO_ANEXOS";"Retificação do ato e anexos";true
+25;"REVOGACAO_ATO";"Revogação do ato";true
+26;"PRORROGACAO_ATO";"Prorrogação do ato";true
+27;"DECLARACAO_NULIDADE_JUDICIAL";"Declaração de nulidade por decisão judicial";true

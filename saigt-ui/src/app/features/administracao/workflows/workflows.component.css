@@ -1,0 +1,206 @@
+.grelha-workflows {
+  display: grid;
+  grid-template-columns: 311px minmax(0, 1fr);
+  gap: var(--espaco-5);
+  align-items: start;
+}
+
+.grupo-workflows {
+  border-bottom: var(--borda-largura) solid var(--cor-borda-suave);
+}
+
+.cabecalho-grupo {
+  display: flex;
+  align-items: center;
+  gap: var(--espaco-2);
+  width: 100%;
+  padding: var(--espaco-2-5) var(--espaco-4);
+  border: 0;
+  background: var(--cor-superficie-alt);
+  font-family: var(--fonte-base);
+  text-align: left;
+  cursor: pointer;
+}
+
+.seta-grupo {
+  width: 12px;
+  height: 12px;
+  flex-shrink: 0;
+  color: var(--cor-texto-celula);
+  transition: transform 0.15s;
+}
+
+.seta-grupo.aberto {
+  transform: rotate(90deg);
+}
+
+.codigo-grupo {
+  font-size: var(--texto-base);
+  font-weight: var(--peso-negrito);
+  line-height: var(--texto-base-linha);
+  color: var(--cor-texto-item);
+}
+
+.nome-grupo {
+  flex: 1;
+  min-width: 0;
+  font-size: var(--texto-sm);
+  line-height: var(--texto-sm-linha);
+  color: var(--cor-texto-celula);
+}
+
+.contagem-grupo {
+  padding: 0 var(--espaco-1-5);
+  border-radius: var(--raio-pill);
+  background: var(--cor-borda-suave);
+  font-size: var(--texto-xs);
+  font-weight: var(--peso-semi);
+  line-height: var(--texto-xs-linha);
+  color: var(--cor-texto-celula);
+}
+
+.lista-workflows {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.item-workflow {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaco-1);
+  width: 100%;
+  padding: var(--espaco-3-5) var(--espaco-4);
+  border: 0;
+  border-bottom: var(--borda-largura) solid var(--cor-superficie-alt);
+  background: var(--cor-superficie);
+  font-family: var(--fonte-base);
+  text-align: left;
+  cursor: pointer;
+}
+
+.item-workflow:hover {
+  background: var(--cor-superficie-alt);
+}
+
+.item-workflow:focus-visible {
+  outline: var(--anel-foco);
+  outline-offset: calc(var(--anel-foco-afastamento) * -1);
+}
+
+.item-workflow.selecionado {
+  background: var(--cor-info-fundo);
+}
+
+.linha-titulo {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--espaco-2);
+}
+
+.titulo-workflow {
+  font-size: var(--texto-base);
+  font-weight: var(--peso-semi);
+  line-height: var(--texto-base-linha);
+  color: var(--cor-texto-item);
+}
+
+.selecionado .titulo-workflow {
+  color: var(--cor-primaria);
+}
+
+.badge {
+  flex-shrink: 0;
+}
+
+/* O #90a1b9 do Figma fica a 2,6:1: usa-se o tom acessível mais próximo, também sobre o azul do escolhido. */
+.resumo-workflow {
+  font-size: var(--texto-sm);
+  font-weight: var(--peso-medio);
+  line-height: var(--texto-sm-linha);
+  color: var(--cor-texto-celula);
+}
+
+.item-vazio {
+  margin: 0;
+  padding: var(--espaco-4);
+  font-size: var(--texto-base);
+  line-height: var(--texto-base-linha);
+  color: var(--cor-texto-celula);
+}
+
+.cabecalho-detalhe {
+  padding: var(--espaco-4) var(--espaco-5);
+  border-bottom: var(--borda-largura) solid var(--cor-borda-suave);
+}
+
+.cabecalho-detalhe h2 {
+  margin: 0;
+  font-size: var(--texto-base);
+  font-weight: var(--peso-semi);
+  line-height: var(--texto-base-linha);
+  color: var(--cor-titulo-cartao);
+}
+
+.lista-passos {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaco-3);
+  margin: 0;
+  padding: var(--espaco-5);
+  list-style: none;
+}
+
+.passo {
+  display: flex;
+  align-items: center;
+  gap: var(--espaco-3);
+  padding: var(--espaco-4);
+  border: var(--borda-largura) solid var(--cor-borda);
+  border-radius: var(--raio-lg);
+  background: var(--cor-superficie-alt);
+}
+
+.numero-passo {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: var(--raio-pill);
+  background: var(--cor-primaria);
+  font-size: var(--texto-sm);
+  font-weight: var(--peso-negrito);
+  line-height: var(--texto-sm-linha);
+  color: var(--cor-primaria-contraste);
+}
+
+.nome-passo {
+  margin: 0;
+  font-size: var(--texto-base);
+  font-weight: var(--peso-semi);
+  line-height: var(--texto-base-linha);
+  color: var(--cor-texto-item);
+}
+
+/* O #62748e do Figma fica abaixo de 4,5:1 sobre #f8fafc. */
+.detalhe-passo {
+  margin: 0;
+  font-size: var(--texto-sm);
+  line-height: var(--texto-sm-linha);
+  color: var(--cor-texto-passo);
+}
+
+.passo-vazio {
+  font-size: var(--texto-base);
+  line-height: var(--texto-base-linha);
+  color: var(--cor-texto-celula);
+}
+
+@media (width <= 900px) {
+  .grelha-workflows {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}

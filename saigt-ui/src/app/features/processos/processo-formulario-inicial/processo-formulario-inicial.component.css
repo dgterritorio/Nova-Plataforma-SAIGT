@@ -1,0 +1,383 @@
+.cartao-geral {
+  overflow: hidden;
+  background: var(--cor-superficie);
+  border: var(--borda-largura) solid var(--cor-borda);
+  border-radius: var(--raio-lg);
+}
+
+.cabecalho {
+  margin: 0;
+  background: var(--cor-cabecalho-cartao);
+  border-bottom: var(--borda-largura) solid var(--cor-borda-suave);
+  font-size: var(--texto-base);
+  font-weight: var(--peso-negrito);
+  line-height: var(--texto-base-linha);
+  color: var(--cor-texto);
+}
+
+.alternar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: var(--espaco-4) var(--espaco-5);
+  border: 0;
+  background: none;
+  font: inherit;
+  color: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.alternar:focus-visible {
+  outline: var(--anel-foco);
+  outline-offset: calc(var(--anel-foco-afastamento) * -1);
+}
+
+.chevron {
+  width: var(--espaco-4);
+  height: var(--espaco-4);
+  color: var(--cor-texto-secundario);
+}
+
+.chevron-recolhido {
+  transform: rotate(180deg);
+}
+
+.campos > dl.contexto {
+  display: block;
+  margin: 0;
+}
+
+.corpo {
+  padding: var(--espaco-5);
+}
+
+.contexto,
+.leitura,
+.campos {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--espaco-4) var(--espaco-6);
+  margin: 0;
+}
+
+.contexto {
+  margin-bottom: var(--espaco-5);
+}
+
+.leitura .largo,
+.contexto .largo,
+.campos .campo-largo {
+  grid-column: 1 / -1;
+}
+
+.instrumentos-associados ul {
+  margin: 0;
+  padding-left: var(--espaco-5);
+}
+
+.instrumentos-associados .tipo-instrumento {
+  color: var(--cor-texto-secundario);
+}
+
+.contexto dt,
+.leitura dt {
+  font-size: var(--texto-rotulo);
+  font-weight: var(--peso-negrito);
+  letter-spacing: 0.3px;
+  text-transform: uppercase;
+  color: var(--cor-texto-secundario);
+}
+
+.contexto dd,
+.leitura dd {
+  margin: var(--espaco-0-5) 0 0;
+  font-size: var(--texto-base);
+  line-height: var(--texto-base-linha);
+  color: var(--cor-texto);
+  overflow-wrap: anywhere;
+}
+
+.campo {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaco-1-5);
+  margin: 0;
+  padding: 0;
+  border: 0;
+  min-width: 0;
+}
+
+.rotulo {
+  margin: 0;
+  padding: 0;
+  font-size: var(--texto-base);
+  font-weight: var(--peso-medio);
+  line-height: var(--texto-base-linha);
+  color: var(--cor-texto-rotulo);
+}
+
+textarea,
+input[type='text'],
+input[type='email'],
+input[type='date'] {
+  box-sizing: border-box;
+  width: 100%;
+  padding: var(--espaco-2-5) var(--espaco-4);
+  border: var(--borda-largura) solid var(--cor-borda);
+  border-radius: var(--raio-md);
+  background: var(--cor-superficie);
+  font-family: var(--fonte-base);
+  font-size: var(--texto-base);
+  line-height: var(--texto-base-linha);
+  color: var(--cor-texto);
+}
+
+input[type='text'],
+input[type='email'],
+input[type='date'] {
+  height: var(--altura-controlo);
+}
+
+textarea {
+  min-height: calc(var(--altura-controlo) * 2);
+  resize: vertical;
+}
+
+textarea:focus-visible,
+input:focus-visible {
+  outline: var(--anel-foco);
+  outline-offset: var(--anel-foco-afastamento);
+}
+
+textarea:disabled,
+input:disabled {
+  background: var(--cor-superficie-alt);
+  color: var(--cor-texto-secundario);
+  cursor: not-allowed;
+}
+
+.opcoes-radio {
+  display: flex;
+  gap: var(--espaco-6);
+}
+
+.opcoes-checkbox {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaco-3);
+}
+
+.opcao-radio,
+.campo-checkbox {
+  display: flex;
+  align-items: center;
+  gap: var(--espaco-2-5);
+  font-size: var(--texto-base);
+  line-height: var(--texto-base-linha);
+  color: var(--cor-texto);
+}
+
+.campo-checkbox {
+  align-items: flex-start;
+}
+
+.campo-checkbox input {
+  margin-top: var(--espaco-0-5);
+}
+
+/* O Figma separa estas perguntas do resto do cartão por uma linha; fica no contentor, porque a legenda de um fieldset corta a borda. */
+.seccao {
+  padding-top: var(--espaco-5);
+  border-top: var(--borda-largura) solid var(--cor-borda-suave);
+}
+
+.elementos {
+  gap: var(--espaco-3);
+}
+
+.elementos .rotulo {
+  margin-bottom: var(--espaco-1-5);
+  font-weight: var(--peso-negrito);
+  color: var(--cor-texto);
+}
+
+.erro-campo {
+  margin: 0;
+  font-size: var(--texto-sm);
+  line-height: var(--texto-sm-linha);
+  color: var(--cor-erro);
+}
+
+.aviso-bloqueado {
+  margin: 0;
+  font-size: var(--texto-sm);
+  line-height: var(--texto-sm-linha);
+  color: var(--cor-texto-secundario);
+}
+
+@media (width <= 720px) {
+  .contexto,
+  .leitura,
+  .campos {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* GeoConform no fim da Informação Geral, como no Figma: duas opções em cartões. */
+.geoconform {
+  gap: var(--espaco-3);
+}
+
+.geoconform .rotulo {
+  font-weight: var(--peso-medio);
+  color: var(--cor-texto-forte);
+}
+
+.opcoes-geoconform {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--espaco-2);
+}
+
+.opcao-geoconform {
+  display: flex;
+  gap: var(--espaco-2-5);
+  align-items: center;
+  padding: var(--espaco-3);
+  border: var(--borda-largura) solid var(--cor-borda);
+  border-radius: var(--raio-md);
+  background: var(--cor-superficie);
+  font-size: var(--texto-base);
+  font-weight: var(--peso-medio);
+  line-height: var(--texto-base-linha);
+  color: var(--cor-texto);
+  cursor: pointer;
+}
+
+/* O botão de opção fica visível: a escolha não pode depender só da cor da borda (WCAG 1.4.1). */
+.opcao-geoconform input {
+  width: 16px;
+  height: 16px;
+  margin: 0;
+  accent-color: var(--cor-primaria);
+}
+
+.opcao-geoconform-escolhida {
+  border-color: var(--cor-primaria);
+}
+
+.opcao-geoconform input:focus-visible {
+  outline: none;
+}
+
+.opcao-geoconform:has(input:focus-visible) {
+  outline: var(--anel-foco);
+  outline-offset: var(--anel-foco-afastamento);
+}
+
+.opcao-geoconform:has(input:disabled) {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+/* Pergunta da planta nova na Publicação da Alteração: as mesmas opções em cartões do GeoConform. */
+.planta-nova {
+  gap: var(--espaco-3);
+}
+
+.planta-nova .rotulo {
+  font-weight: var(--peso-medio);
+  color: var(--cor-texto-forte);
+}
+
+.ajuda-campo {
+  margin: 0;
+  font-size: var(--texto-sm);
+  line-height: var(--texto-sm-linha);
+  color: var(--cor-texto-secundario);
+}
+
+select {
+  box-sizing: border-box;
+  width: 100%;
+  height: var(--altura-controlo);
+  padding: 0 var(--espaco-4);
+  border: var(--borda-largura) solid var(--cor-borda);
+  border-radius: var(--raio-md);
+  background: var(--cor-superficie);
+  font-family: var(--fonte-base);
+  font-size: var(--texto-base);
+  color: var(--cor-texto);
+}
+
+select:focus-visible {
+  outline: var(--anel-foco);
+  outline-offset: var(--anel-foco-afastamento);
+}
+
+select:disabled {
+  background: var(--cor-superficie-alt);
+  color: var(--cor-texto-secundario);
+  cursor: not-allowed;
+}
+
+.localizacao-campos {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--espaco-4) var(--espaco-6);
+}
+
+.subgrupo-motivos {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  min-width: 0;
+}
+
+.rotulo-subgrupo {
+  margin: 0 0 var(--espaco-1-5);
+  padding: 0;
+  font-size: var(--texto-sm);
+  font-weight: var(--peso-medio);
+  line-height: var(--texto-sm-linha);
+  color: var(--cor-texto-secundario);
+}
+
+.marca-obrigatoria {
+  margin-left: var(--espaco-0-5);
+  color: var(--cor-erro);
+}
+
+.so-leitor {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+@media (width <= 720px) {
+  .localizacao-campos {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Associação da REN a um IGT em curso: bloco próprio, separado como as outras perguntas no fim do cartão. */
+.associacao-igt {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaco-4);
+}
+
+.titulo-bloco {
+  margin: 0;
+  font-size: var(--texto-base);
+  font-weight: var(--peso-negrito);
+  line-height: var(--texto-base-linha);
+  color: var(--cor-texto);
+}

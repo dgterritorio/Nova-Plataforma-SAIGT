@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="2026-11-12-10-tipo-dinamica-inicio-sem-igt" author="david.raposo">
+        <comment>
+            Tipo de Dinâmica que se inicia sem escolher primeiro um IGT: aparece no assistente no grupo «Processo sem
+            Associação a IGT» (UI-002, UI-018). Editável em backoffice.
+        </comment>
+
+        <addColumn tableName="tipo_dinamica">
+            <column name="inicio_sem_igt" type="BOOLEAN" defaultValueBoolean="false">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+
+        <rollback>
+            <dropColumn tableName="tipo_dinamica" columnName="inicio_sem_igt"/>
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>

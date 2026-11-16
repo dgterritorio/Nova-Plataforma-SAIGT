@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="2026-11-14-1-documento-config-programas-lista-dgt" author="david.raposo">
+        <comment>
+            Itens documentais dos programas (PNPOT, PS, PROT e PEOT, folha IGT_Progamas) e dos programas
+            intermunicipais (PIMOT, folha IGT_Prog_InterM) pela lista de documentos da DGT de 04/11
+            (SAIGT_ListaDocumentos2026-11-04_v1_f.xlsx; FR-193, TR-261, OI-245 fechado). As colunas G e H da folha
+            IGT_Progamas leem-se pelo conteúdo: G = PROT, H = PEOT (OI-550). Os elementos x e q.a. são obrigatórios nas
+            duas caixas (OI-548); os só de depósito do PIMOT, marcados dep, ficam opcionais (OI-552). O PNPOT não tem
+            Elaboração; a Suspensão e as Medidas Preventivas do Governo do PIMOT ficam sem itens (OI-552). Só a página
+            DOCUMENTOS e só inserções. O Procedimento resolve-se pelos códigos, para servir qualquer ambiente. Uma linha
+            que o backoffice já tenha criado com o mesmo código não é inserida outra vez.
+        </comment>
+
+        <createTable tableName="documento_config_carga_programas">
+            <column name="instrumento" type="VARCHAR(100)"/>
+            <column name="dinamica" type="VARCHAR(100)"/>
+            <column name="procedimento" type="VARCHAR(100)"/>
+            <column name="codigo" type="VARCHAR(50)"/>
+            <column name="ordem" type="VARCHAR(10)"/>
+            <column name="obrigatorio" type="VARCHAR(5)"/>
+            <column name="nome" type="VARCHAR(100)"/>
+            <column name="descricao" type="VARCHAR(300)"/>
+            <column name="separador" type="VARCHAR(100)"/>
+            <column name="tipo_elemento" type="VARCHAR(20)"/>
+            <column name="procedimento_config_id" type="BIGINT"/>
+        </createTable>
+
+        <loadData tableName="documento_config_carga_programas"
+                  file="db/data/2026-11-14-1-documento_config-programas-lista-dgt.csv"
+                  relativeToChangelogFile="false" separator=";" quotchar="&quot;" encoding="UTF-8">
+            <column name="instrumento" type="STRING"/>
+            <column name="dinamica" type="STRING"/>
+            <column name="procedimento" type="STRING"/>
+            <column name="codigo" type="STRING"/>
+            <column name="ordem" type="STRING"/>
+            <column name="obrigatorio" type="STRING"/>
+            <column name="nome" type="STRING"/>
+            <column name="descricao" type="STRING"/>
+            <column name="separador" type="STRING"/>
+            <column name="tipo_elemento" type="STRING"/>
+        </loadData>
+
+        <sql>UPDATE documento_config_carga_programas SET procedimento_config_id = ipc.id
+            FROM instrumento_procedimento_config ipc
+            JOIN instrumento_dinamica_config idc ON idc.id = ipc.instrumento_dinamica_config_id
+            JOIN tipo_instrumento ti ON ti.id = idc.tipo_instrumento_id
+            JOIN tipo_dinamica td ON td.id = idc.tipo_dinamica_id
+            JOIN tipo_procedimento tp ON tp.id = ipc.tipo_procedimento_id
+            WHERE ti.codigo = documento_config_carga_programas.instrumento
+              AND td.codigo = documento_config_carga_programas.dinamica
+              AND tp.codigo = documento_config_carga_programas.procedimento</sql>
+
+        <sql><![CDATA[
+            INSERT INTO documento_config (instrumento_procedimento_config_id, codigo, nome, descricao, separador, categoria,
+                tipo_elemento, formato, obrigatorio, extensoes_aceites, ordem, ativo, elemento_informacao_base,
+                link_publico_permitido, pagina, tamanho_maximo_ficheiro, tamanho_maximo_total, numero_maximo_ficheiros,
+                regras_tiff, regra_nomenclatura)
+            SELECT c.procedimento_config_id, c.codigo, c.nome, NULLIF(c.descricao, ''), c.separador,
+                CASE WHEN right(c.codigo, 4) = '_PUB' THEN 'PUBLICACAO' ELSE 'DEPOSITO' END,
+                c.tipo_elemento,
+                CASE WHEN right(c.codigo, 4) = '_PUB' THEN 'EDITAVEL' ELSE 'NAO_EDITAVEL' END,
+                c.obrigatorio::boolean,
+                CASE WHEN c.tipo_elemento = 'PECA_GRAFICA' THEN '["zip"]'
+                     WHEN right(c.codigo, 4) = '_PUB'
+                         THEN '["doc", "docx", "rtf", "odf", "odt", "xls", "xlsx", "csv", "ods", "pdf", "txt"]'
+                     ELSE '["pdf", "jpg", "png"]' END::jsonb,
+                c.ordem::integer, TRUE, NULL,
+                right(c.codigo, 4) = '_PUB' OR c.codigo LIKE 'DELIBERACAO%' OR c.codigo IN ('DESPACHO_CCDR_DEP', 'RCM_DEP'),
+                'DOCUMENTOS', 524288000, 2147483648, 10,
+                CASE WHEN c.tipo_elemento = 'PECA_GRAFICA' THEN '{"sistemasReferencia": ["EPSG:3763", "EPSG:5014", "EPSG:5015", "EPSG:5016"], "compressoesAceites": ["NONE", "LZW"], "bandaAlfaTolerada": true, "modeloCor": null, "bitsPorBanda": null, "resolucaoDpi": null, "elementosLegenda": ["ID do plano", "N.º de folha", "Data de aprovação", "Identificação do procedimento"]}'::jsonb END,
+                'GERAL'
+            FROM documento_config_carga_programas c
+            WHERE c.procedimento_config_id IS NOT NULL
+              AND NOT EXISTS (SELECT 1 FROM documento_config d
+                              WHERE d.instrumento_procedimento_config_id = c.procedimento_config_id
+                                AND d.codigo = c.codigo)
+        ]]></sql>
+
+        <dropTable tableName="documento_config_carga_programas"/>
+
+        <rollback>
+            <createTable tableName="documento_config_carga_programas">
+                <column name="instrumento" type="VARCHAR(100)"/>
+                <column name="dinamica" type="VARCHAR(100)"/>
+                <column name="procedimento" type="VARCHAR(100)"/>
+                <column name="codigo" type="VARCHAR(50)"/>
+                <column name="ordem" type="VARCHAR(10)"/>
+                <column name="obrigatorio" type="VARCHAR(5)"/>
+                <column name="nome" type="VARCHAR(100)"/>
+                <column name="descricao" type="VARCHAR(300)"/>
+                <column name="separador" type="VARCHAR(100)"/>
+                <column name="tipo_elemento" type="VARCHAR(20)"/>
+                <column name="procedimento_config_id" type="BIGINT"/>
+            </createTable>
+            <loadData tableName="documento_config_carga_programas"
+                      file="db/data/2026-11-14-1-documento_config-programas-lista-dgt.csv"
+                      relativeToChangelogFile="false" separator=";" quotchar="&quot;" encoding="UTF-8">
+                <column name="instrumento" type="STRING"/>
+                <column name="dinamica" type="STRING"/>
+                <column name="procedimento" type="STRING"/>
+                <column name="codigo" type="STRING"/>
+                <column name="ordem" type="STRING"/>
+                <column name="obrigatorio" type="STRING"/>
+                <column name="nome" type="STRING"/>
+                <column name="descricao" type="STRING"/>
+                <column name="separador" type="STRING"/>
+                <column name="tipo_elemento" type="STRING"/>
+            </loadData>
+            <sql>UPDATE documento_config_carga_programas SET procedimento_config_id = ipc.id
+                FROM instrumento_procedimento_config ipc
+                JOIN instrumento_dinamica_config idc ON idc.id = ipc.instrumento_dinamica_config_id
+                JOIN tipo_instrumento ti ON ti.id = idc.tipo_instrumento_id
+                JOIN tipo_dinamica td ON td.id = idc.tipo_dinamica_id
+                JOIN tipo_procedimento tp ON tp.id = ipc.tipo_procedimento_id
+                WHERE ti.codigo = documento_config_carga_programas.instrumento
+                  AND td.codigo = documento_config_carga_programas.dinamica
+                  AND tp.codigo = documento_config_carga_programas.procedimento</sql>
+            <sql>DELETE FROM documento_config d USING documento_config_carga_programas c
+                WHERE d.instrumento_procedimento_config_id = c.procedimento_config_id
+                  AND d.codigo = c.codigo AND d.pagina = 'DOCUMENTOS'</sql>
+            <dropTable tableName="documento_config_carga_programas"/>
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>

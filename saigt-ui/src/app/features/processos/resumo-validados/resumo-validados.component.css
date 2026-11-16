@@ -1,0 +1,328 @@
+/* Medidas do UI-041. Os traços do Figma são por dentro: bordas de 1px com o padding menos 1px. */
+.resumo {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaco-4-5);
+  margin-top: var(--espaco-5);
+}
+
+.visualmente-oculto {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.voltar-linha {
+  display: flex;
+}
+
+/* Sobre o fundo da página, o cinzento do Figma (#6b7a9b) e o texto secundário não chegam a 4,5:1. */
+.voltar {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--espaco-1);
+  padding: 0;
+  border: 0;
+  background: none;
+  font: inherit;
+  font-size: var(--texto-sm);
+  line-height: var(--texto-sm-linha);
+  color: var(--cor-texto-celula);
+  cursor: pointer;
+}
+
+.voltar svg {
+  width: 14px;
+  height: 14px;
+}
+
+.voltar:hover {
+  color: var(--cor-primaria);
+}
+
+.cartoes,
+.par {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--espaco-4-5);
+}
+
+@media (width <= 768px) {
+  .cartoes,
+  .par {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+.dados {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaco-4);
+  margin: 0;
+}
+
+.dados dt {
+  font-size: var(--texto-rotulo);
+  font-weight: var(--peso-semi);
+  line-height: var(--texto-xs-linha);
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  color: var(--cor-texto-secundario);
+}
+
+.dados dd {
+  margin: var(--espaco-0-5) 0 0;
+  font-size: var(--texto-base);
+  font-weight: var(--peso-medio);
+  line-height: var(--texto-base-linha);
+  color: var(--cor-texto-rotulo);
+  overflow-wrap: anywhere;
+}
+
+.dados .valor-forte {
+  font-weight: var(--peso-semi);
+  color: var(--cor-titulo-pagina);
+}
+
+.aviso-gravar {
+  margin: 0;
+  font-size: var(--texto-sm);
+  line-height: var(--texto-sm-linha);
+  color: var(--cor-texto-celula);
+}
+
+.campos {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaco-4-5);
+}
+
+.painel {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: var(--espaco-7);
+  min-width: 0;
+  padding: var(--espaco-2-5);
+  border: var(--borda-largura) solid var(--cor-borda-painel);
+  border-radius: var(--raio-lg);
+  background: var(--cor-superficie);
+  filter: var(--sombra-cabecalho);
+}
+
+.grupo {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--espaco-2);
+  width: 100%;
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.grupo-rotulo {
+  padding: 0;
+  font-size: var(--texto-rotulo-painel);
+  font-weight: var(--peso-medio);
+  line-height: var(--texto-rotulo-painel-linha);
+  letter-spacing: 0.525px;
+  text-transform: uppercase;
+  color: var(--cor-rotulo-indicador);
+}
+
+.opcoes-sim-nao {
+  display: flex;
+  gap: var(--espaco-6);
+}
+
+.opcao {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--espaco-2-5);
+  font-size: var(--texto-base);
+  font-weight: var(--peso-medio);
+  line-height: var(--texto-base-linha);
+  color: var(--cor-texto-rotulo);
+  cursor: pointer;
+}
+
+.opcao input {
+  width: 16px;
+  height: 16px;
+  margin: 0;
+  accent-color: var(--cor-primaria);
+}
+
+.seletor {
+  box-sizing: border-box;
+  width: 100%;
+  height: 33px;
+  padding: 0 var(--espaco-1-5);
+  border: var(--borda-largura) solid var(--cor-borda);
+  border-radius: var(--raio-painel-campo);
+  background: var(--cor-superficie);
+  font: inherit;
+  font-size: var(--texto-painel);
+  color: var(--cor-texto-rotulo);
+}
+
+.painel-cabecalho {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaco-0-5);
+  width: 100%;
+  padding: var(--espaco-3-5) var(--espaco-4-5) var(--espaco-3-5);
+  border-bottom: var(--borda-largura) solid var(--cor-borda-suave);
+}
+
+.painel-titulo {
+  font-size: var(--texto-painel);
+  font-weight: var(--peso-semi);
+  line-height: var(--texto-painel-linha);
+  color: var(--cor-titulo-cartao);
+}
+
+/* O cinzento do Figma (#90a1b9) não chega a 4,5:1 sobre branco: usa-se o texto secundário. */
+.painel-subtitulo {
+  font-size: var(--texto-rotulo-painel);
+  line-height: var(--texto-rotulo-painel-linha);
+  color: var(--cor-texto-secundario);
+}
+
+.campo-texto {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaco-1);
+  width: 100%;
+}
+
+.caixa-texto {
+  box-sizing: border-box;
+  width: 100%;
+  min-height: 102px;
+  padding: var(--espaco-2);
+  border: var(--borda-largura) solid var(--cor-borda);
+  border-radius: var(--raio-md);
+  font: inherit;
+  font-size: var(--texto-base);
+  line-height: var(--texto-base-linha);
+  color: var(--cor-texto-rotulo);
+  resize: vertical;
+}
+
+.contador {
+  align-self: flex-end;
+  margin: 0;
+  font-size: var(--texto-xs);
+  line-height: var(--texto-xs-linha);
+  color: var(--cor-texto-secundario);
+}
+
+.erro-campo {
+  margin: 0;
+  font-size: var(--texto-sm);
+  line-height: var(--texto-sm-linha);
+  color: var(--cor-erro);
+}
+
+.gravar {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--espaco-1-5);
+  padding: var(--espaco-2) var(--espaco-3-5);
+  border: var(--borda-largura) solid var(--cor-borda);
+  border-radius: var(--raio-painel-campo);
+  background: var(--cor-superficie);
+  font: inherit;
+  font-size: var(--texto-rotulo-painel);
+  font-weight: var(--peso-medio);
+  line-height: var(--texto-rotulo-painel-linha);
+  color: var(--cor-texto-botao-gravar);
+  cursor: pointer;
+}
+
+.gravar svg {
+  width: 12px;
+  height: 12px;
+}
+
+.gravar:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.gravar:focus-visible {
+  outline: var(--anel-foco);
+  outline-offset: var(--anel-foco-afastamento);
+}
+
+.gravar:hover:not(:disabled) {
+  background: var(--cor-superficie-alt);
+}
+
+.valor-lido {
+  width: 100%;
+  margin: 0;
+  font-size: var(--texto-base);
+  font-weight: var(--peso-medio);
+  line-height: var(--texto-base-linha);
+  color: var(--cor-texto-rotulo);
+  overflow-wrap: anywhere;
+}
+
+.valor-texto {
+  box-sizing: border-box;
+  padding: 0 var(--espaco-4-5) var(--espaco-2-5);
+  white-space: pre-wrap;
+}
+
+.mensagens:empty {
+  display: none;
+}
+
+.sucesso {
+  margin: 0;
+  padding: var(--espaco-2-5) var(--espaco-3-5);
+  border: var(--borda-largura) solid var(--cor-sucesso-borda);
+  border-radius: var(--raio-md);
+  background: var(--cor-alerta-sucesso-fundo);
+  font-size: var(--texto-base);
+  line-height: var(--texto-base-linha);
+  color: var(--cor-alerta-sucesso);
+}
+
+.recarregar {
+  align-self: flex-start;
+}
+
+.rodape {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--espaco-3);
+  margin-top: var(--espaco-2-5);
+}
+
+.rodape .enviar-pcm {
+  height: 42px;
+  color: var(--cor-texto-secundario);
+}
+
+.publicar {
+  margin-left: auto;
+}
+
+.voltar:focus-visible,
+.seletor:focus-visible,
+.caixa-texto:focus-visible,
+.opcao input:focus-visible {
+  outline: var(--anel-foco);
+  outline-offset: var(--anel-foco-afastamento);
+}

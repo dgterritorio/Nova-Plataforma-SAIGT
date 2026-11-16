@@ -1,0 +1,39 @@
+.cabecalho-serie {
+    display: flex;
+    gap: var(--espaco-3);
+    align-items: center;
+}
+
+.titulo-serie {
+    margin: 0;
+    font-size: var(--texto-base);
+    font-weight: var(--peso-negrito);
+    line-height: var(--texto-base-linha);
+    color: var(--cor-titulo-metadados);
+}
+
+.coluna-inteira {
+    grid-column: 1 / -1;
+}
+
+.acoes-fichas {
+    display: flex;
+    margin-top: var(--espaco-6);
+}
+
+.opcao-reproduzir {
+    display: flex;
+    gap: var(--espaco-3);
+    align-items: flex-start;
+}
+
+.ajuda-campo {
+    font-size: var(--texto-xs);
+    color: var(--cor-texto-secundario);
+}
+
+.rodape-confirmacao {
+    display: flex;
+    gap: var(--espaco-3);
+    justify-content: flex-end;
+}

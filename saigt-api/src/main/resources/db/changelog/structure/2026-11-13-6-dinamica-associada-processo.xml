@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="2026-11-13-6-dinamica-associada-processo" author="arnaldo.costa">
+        <comment>
+            Associação de um processo à Dinâmica de um IGT em curso no mesmo município (DB-PROC-014, BL-PROC-062,
+            FR-014): processo.dinamica_associada_id, nula nas linhas existentes. tipo_instrumento_associavel diz a que
+            tipos de Instrumento se pode associar um processo de cada tipo, e instrumento_dinamica_config.
+            admite_associacao_igt (DB-PROC-004) em que Dinâmicas (EF v1.5 l.1599-1600). Sem códigos no Java: a regra
+            fica nestas duas configurações e no serviço. Sem ON DELETE: Dinâmicas e tipos não se apagam.
+        </comment>
+
+        <addColumn tableName="processo">
+            <column name="dinamica_associada_id" type="UUID"/>
+        </addColumn>
+
+        <addForeignKeyConstraint constraintName="fk_processo_dinamica_associada"
+                                 baseTableName="processo" baseColumnNames="dinamica_associada_id"
+                                 referencedTableName="dinamica" referencedColumnNames="id"/>
+
+        <createIndex tableName="processo" indexName="idx_processo_dinamica_associada">
+            <column name="dinamica_associada_id"/>
+        </createIndex>
+
+        <createTable tableName="tipo_instrumento_associavel">
+            <column name="tipo_instrumento_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="tipo_instrumento_associavel_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addPrimaryKey tableName="tipo_instrumento_associavel" constraintName="pk_tipo_instrumento_associavel"
+                       columnNames="tipo_instrumento_id, tipo_instrumento_associavel_id"/>
+
+        <addForeignKeyConstraint constraintName="fk_tipo_instrumento_associavel_origem"
+                                 baseTableName="tipo_instrumento_associavel" baseColumnNames="tipo_instrumento_id"
+                                 referencedTableName="tipo_instrumento" referencedColumnNames="id"/>
+
+        <addForeignKeyConstraint constraintName="fk_tipo_instrumento_associavel_destino"
+                                 baseTableName="tipo_instrumento_associavel"
+                                 baseColumnNames="tipo_instrumento_associavel_id"
+                                 referencedTableName="tipo_instrumento" referencedColumnNames="id"/>
+
+        <sql>
+            ALTER TABLE tipo_instrumento_associavel ADD CONSTRAINT ck_tipo_instrumento_associavel_distintos
+                CHECK (tipo_instrumento_id &lt;&gt; tipo_instrumento_associavel_id)
+        </sql>
+
+        <addColumn tableName="instrumento_dinamica_config">
+            <column name="admite_associacao_igt" type="BOOLEAN" defaultValueBoolean="false">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+
+        <rollback>
+            <dropColumn tableName="instrumento_dinamica_config" columnName="admite_associacao_igt"/>
+            <dropTable tableName="tipo_instrumento_associavel"/>
+            <dropIndex tableName="processo" indexName="idx_processo_dinamica_associada"/>
+            <dropForeignKeyConstraint baseTableName="processo" constraintName="fk_processo_dinamica_associada"/>
+            <dropColumn tableName="processo" columnName="dinamica_associada_id"/>
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>

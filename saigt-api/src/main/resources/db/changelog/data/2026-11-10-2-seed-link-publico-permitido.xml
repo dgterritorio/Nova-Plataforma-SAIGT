@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="2026-11-10-2-seed-link-publico-permitido" author="david.raposo">
+        <comment>
+            Tipos de documento com link público (DB-DOC-001, OI-491, OI-430): todos os de publicação e os atos
+            enviados à PCGT, que são públicos: o despacho de constituição da Comissão Consultiva e as deliberações da
+            Câmara e da Assembleia Municipal, incluindo DELIBERACAO_CM_DEP, que só existe em depósito.
+        </comment>
+        <sql>UPDATE documento_config SET link_publico_permitido = TRUE
+            WHERE categoria = 'PUBLICACAO'
+               OR codigo IN ('DESPACHO_CCDR_DEP', 'DELIBERACAO_CM_DEP', 'DELIBERACAO_AM_DEP', 'DELIBERACAO_DEP')</sql>
+        <rollback>
+            <sql>UPDATE documento_config SET link_publico_permitido = FALSE</sql>
+        </rollback>
+    </changeSet>
+</databaseChangeLog>

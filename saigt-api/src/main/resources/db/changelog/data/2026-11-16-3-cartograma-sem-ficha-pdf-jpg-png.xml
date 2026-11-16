@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="2026-11-16-3-cartograma-sem-ficha-pdf-jpg-png" author="david.raposo">
+        <comment>
+            O Cartograma da página dos Documentos (CARTOGRAMA_PUB e CARTOGRAMA_DEP, da lista de documentos da DGT de 04/11)
+            é um esquema das folhas, não uma planta georreferenciada: passa a OUTROS, em pdf, jpg ou png, sem regras TIFF,
+            como o «Cartograma das folhas» da página das Plantas (EF v1.5 §3.1.2). Deixa de gerar ficha de Conjunto de
+            Dados MOTU. As linhas escolhem-se pelo código, nunca pelos ids; categoria, formato, obrigatoriedade, ordem,
+            separador, nome, limites e link público ficam como estão.
+        </comment>
+
+        <sql>UPDATE documento_config SET tipo_elemento = 'OUTROS', extensoes_aceites = '["pdf", "jpg", "png"]'::jsonb,
+            regras_tiff = NULL
+            WHERE ativo AND codigo IN ('CARTOGRAMA_PUB', 'CARTOGRAMA_DEP')</sql>
+
+        <rollback>
+            <!-- As regras TIFF de omissão do changeset 2026-11-11-14-add-regras-tiff-documento-config. -->
+            <sql>UPDATE documento_config SET tipo_elemento = 'PECA_GRAFICA', extensoes_aceites = '["zip"]'::jsonb,
+                regras_tiff = '{"sistemasReferencia": ["EPSG:3763", "EPSG:5014", "EPSG:5015", "EPSG:5016"],
+                "compressoesAceites": ["NONE", "LZW"], "bandaAlfaTolerada": true, "modeloCor": null, "bitsPorBanda": null,
+                "resolucaoDpi": null, "elementosLegenda": ["ID do plano", "N.º de folha", "Data de aprovação",
+                "Identificação do procedimento"]}'::jsonb
+                WHERE ativo AND codigo IN ('CARTOGRAMA_PUB', 'CARTOGRAMA_DEP')</sql>
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>

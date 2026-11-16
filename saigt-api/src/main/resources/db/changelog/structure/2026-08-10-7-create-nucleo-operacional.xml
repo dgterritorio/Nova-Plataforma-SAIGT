@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="2026-08-10-7-create-nucleo-operacional" author="david.raposo">
+        <comment>
+            Grupo 5 (restante) — instrumento, dinamica, processo, processo_documento.
+            Hierarquia Instrumento -> Dinâmica -> Processo -> Ato (§4, §6, §11, §16-18).
+            `instrumento.numero` é texto único, gerado a partir da sequência (o formato final está por decidir);
+            `designacao` é o nome do IGT e pode repetir-se.
+            `processo.incm_enrollment_id` e `dr_parte_id` congelam, na submissão, os valores que a INCM exige.
+        </comment>
+
+        <createSequence sequenceName="seq_instrumento_numero_sequencial" startValue="1" incrementBy="1"/>
+
+        <createTable tableName="instrumento">
+            <column name="id" type="UUID">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="tipo_instrumento_id" type="BIGINT">
+                <constraints nullable="false" foreignKeyName="fk_instrumento_tipo_instrumento" references="tipo_instrumento(id)"/>
+            </column>
+            <column name="entidade_id" type="BIGINT">
+                <constraints nullable="false" foreignKeyName="fk_instrumento_entidade" references="entidade(id)"/>
+            </column>
+            <column name="numero" type="VARCHAR(30)">
+                <constraints nullable="false" unique="true" uniqueConstraintName="uq_instrumento_numero"/>
+            </column>
+            <column name="designacao" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="responsavel_id" type="UUID">
+                <constraints nullable="false" foreignKeyName="fk_instrumento_responsavel" references="utilizador(id)"/>
+            </column>
+            <column name="estado" type="VARCHAR(20)" defaultValue="ATIVO">
+                <constraints nullable="false"/>
+            </column>
+            <column name="criado_por" type="UUID">
+                <constraints nullable="false" foreignKeyName="fk_instrumento_criado_por" references="utilizador(id)"/>
+            </column>
+            <column name="origem_dados" type="VARCHAR(20)" defaultValue="NATIVO">
+                <constraints nullable="false"/>
+            </column>
+            <column name="criado_em" type="TIMESTAMP WITH TIME ZONE" defaultValueComputed="CURRENT_TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+            <column name="atualizado_em" type="TIMESTAMP WITH TIME ZONE" defaultValueComputed="CURRENT_TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <createIndex tableName="instrumento" indexName="idx_instrumento_entidade">
+            <column name="entidade_id"/>
+        </createIndex>
+        <createIndex tableName="instrumento" indexName="idx_instrumento_origem">
+            <column name="origem_dados"/>
+        </createIndex>
+
+        <createTable tableName="dinamica">
+            <column name="id" type="UUID">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="instrumento_id" type="UUID">
+                <constraints nullable="false" foreignKeyName="fk_dinamica_instrumento" references="instrumento(id)"/>
+            </column>
+            <column name="instrumento_dinamica_config_id" type="BIGINT">
+                <constraints nullable="false" foreignKeyName="fk_dinamica_config" references="instrumento_dinamica_config(id)"/>
+            </column>
+            <column name="origem_dados" type="VARCHAR(20)" defaultValue="NATIVO">
+                <constraints nullable="false"/>
+            </column>
+            <column name="estado" type="VARCHAR(20)" defaultValue="EM_CURSO">
+                <constraints nullable="false"/>
+            </column>
+            <column name="data_inicio" type="TIMESTAMP WITH TIME ZONE" defaultValueComputed="CURRENT_TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+            <column name="data_conclusao" type="TIMESTAMP WITH TIME ZONE"/>
+            <column name="criado_por" type="UUID">
+                <constraints nullable="false" foreignKeyName="fk_dinamica_criado_por" references="utilizador(id)"/>
+            </column>
+            <column name="criado_em" type="TIMESTAMP WITH TIME ZONE" defaultValueComputed="CURRENT_TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+            <column name="atualizado_em" type="TIMESTAMP WITH TIME ZONE" defaultValueComputed="CURRENT_TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <createIndex tableName="dinamica" indexName="idx_dinamica_instrumento">
+            <column name="instrumento_id"/>
+        </createIndex>
+        <createIndex tableName="dinamica" indexName="idx_dinamica_origem">
+            <column name="instrumento_id"/>
+            <column name="origem_dados"/>
+        </createIndex>
+
+        <createTable tableName="processo">
+            <column name="id" type="UUID">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="dinamica_id" type="UUID">
+                <constraints nullable="false" foreignKeyName="fk_processo_dinamica" references="dinamica(id)"/>
+            </column>
+            <column name="instrumento_procedimento_config_id" type="BIGINT">
+                <constraints nullable="false" foreignKeyName="fk_processo_procedimento_config" references="instrumento_procedimento_config(id)"/>
+            </column>
+            <column name="estado" type="VARCHAR(30)" defaultValue="EM_SUBMISSAO">
+                <constraints nullable="false"/>
+            </column>
+            <column name="numero_tentativa" type="INTEGER" defaultValueNumeric="1">
+                <constraints nullable="false"/>
+            </column>
+            <column name="versao" type="BIGINT" defaultValueNumeric="0">
+                <constraints nullable="false"/>
+            </column>
+            <column name="criado_por" type="UUID">
+                <constraints nullable="false" foreignKeyName="fk_processo_criado_por" references="utilizador(id)"/>
+            </column>
+            <column name="numero_dr" type="VARCHAR(50)"/>
+            <column name="data_publicacao_dr" type="DATE"/>
+            <column name="data_limite" type="DATE"/>
+            <column name="pcm_atribuido_a" type="UUID">
+                <constraints nullable="true" foreignKeyName="fk_processo_pcm_atribuido_a" references="utilizador(id)"/>
+            </column>
+            <column name="formulario_schema_id" type="BIGINT">
+                <constraints nullable="true" foreignKeyName="fk_processo_formulario_schema" references="formulario_schema(id)"/>
+            </column>
+            <column name="origem_dados" type="VARCHAR(20)" defaultValue="NATIVO">
+                <constraints nullable="false"/>
+            </column>
+            <column name="pcgt_confirmado" type="BOOLEAN" defaultValueBoolean="false">
+                <constraints nullable="false"/>
+            </column>
+            <column name="tipo_ato_id" type="BIGINT">
+                <constraints nullable="true" foreignKeyName="fk_processo_tipo_ato" references="tipo_ato(id)"/>
+            </column>
+            <column name="incm_enrollment_id" type="VARCHAR(100)"/>
+            <column name="dr_parte_id" type="BIGINT"/>
+            <column name="dados_formulario" type="JSONB"/>
+            <column name="data_submissao" type="TIMESTAMP WITH TIME ZONE"/>
+            <column name="alertas_enviados" type="JSONB"/>
+            <column name="codigo_estado_incm" type="INTEGER"/>
+            <column name="incm_act_identifier" type="VARCHAR(100)"/>
+            <column name="sumario" type="VARCHAR(2000)"/>
+            <column name="data_assinatura" type="DATE"/>
+            <column name="norma_legal" type="VARCHAR(500)"/>
+            <column name="tipo_informacao" type="VARCHAR(20)"/>
+            <column name="publicar_suplemento" type="BOOLEAN"/>
+            <column name="data_suplemento" type="DATE"/>
+            <column name="idus_sistema" type="VARCHAR(2)"/>
+            <column name="idus_id_tmp" type="VARCHAR(50)"/>
+            <column name="idus_id_definitivo" type="VARCHAR(50)"/>
+            <column name="idus_ordem_tmp" type="VARCHAR(50)"/>
+            <column name="idus_ordem_definitiva" type="VARCHAR(50)"/>
+            <column name="idus_tmp" type="VARCHAR(200)"/>
+            <column name="idus_definitivo" type="VARCHAR(200)"/>
+            <column name="id_snit" type="VARCHAR(50)"/>
+            <column name="proc_pcgt" type="VARCHAR(50)"/>
+            <column name="proc_geoconforme" type="VARCHAR(50)"/>
+            <column name="criado_em" type="TIMESTAMP WITH TIME ZONE" defaultValueComputed="CURRENT_TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+            <column name="atualizado_em" type="TIMESTAMP WITH TIME ZONE" defaultValueComputed="CURRENT_TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <addUniqueConstraint tableName="processo"
+                             columnNames="dinamica_id, instrumento_procedimento_config_id, numero_tentativa"
+                             constraintName="uq_processo_tentativa"/>
+        <createIndex tableName="processo" indexName="idx_processo_dinamica">
+            <column name="dinamica_id"/>
+        </createIndex>
+        <createIndex tableName="processo" indexName="idx_processo_dinamica_config">
+            <column name="dinamica_id"/>
+            <column name="instrumento_procedimento_config_id"/>
+        </createIndex>
+        <createIndex tableName="processo" indexName="idx_processo_estado">
+            <column name="estado"/>
+        </createIndex>
+        <sql>CREATE INDEX idx_processo_data_limite ON processo (data_limite)
+            WHERE estado NOT IN ('PUBLICADO', 'ANULADO', 'ANULADO_INCM')</sql>
+        <createIndex tableName="processo" indexName="idx_processo_criado_por">
+            <column name="criado_por"/>
+        </createIndex>
+
+        <createTable tableName="processo_documento">
+            <column name="id" type="UUID">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="processo_id" type="UUID">
+                <constraints nullable="false" foreignKeyName="fk_processo_documento_processo" references="processo(id)"/>
+            </column>
+            <column name="documento_config_id" type="BIGINT">
+                <constraints nullable="true" foreignKeyName="fk_processo_documento_documento_config" references="documento_config(id)"/>
+            </column>
+            <column name="nome_ficheiro" type="VARCHAR(300)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="caminho_ficheiro" type="VARCHAR(500)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="hash_sha256" type="VARCHAR(64)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="token_publico" type="VARCHAR(100)">
+                <constraints nullable="true" unique="true" uniqueConstraintName="uq_processo_documento_token_publico"/>
+            </column>
+            <column name="tamanho_bytes" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="criado_por" type="UUID">
+                <constraints nullable="false" foreignKeyName="fk_processo_documento_criado_por" references="utilizador(id)"/>
+            </column>
+            <column name="criado_em" type="TIMESTAMP WITH TIME ZONE" defaultValueComputed="CURRENT_TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+            <column name="atualizado_em" type="TIMESTAMP WITH TIME ZONE" defaultValueComputed="CURRENT_TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <sql>CREATE INDEX idx_processo_documento_token_publico ON processo_documento (token_publico)
+            WHERE token_publico IS NOT NULL</sql>
+
+        <rollback>
+            <sql>DROP INDEX IF EXISTS idx_processo_data_limite</sql>
+            <sql>DROP INDEX IF EXISTS idx_processo_documento_token_publico</sql>
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>

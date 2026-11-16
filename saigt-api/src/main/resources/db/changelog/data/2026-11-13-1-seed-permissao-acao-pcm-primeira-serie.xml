@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="2026-11-13-1-seed-permissao-acao-pcm-primeira-serie" author="arnaldo.costa">
+        <comment>
+            Linha `PCM` ativa em cada Procedimento de 1.ª série (BL-PCM-001, TR-117): sem ela a PCM não passa a Camada 3
+            no processo que a DGT lhe atribui. A única condição é a série da configuração, nunca o tipo de Instrumento
+            nem o Procedimento. A linha não deixa a PCM criar: o AutorizacaoService recusa-o (FR-153). Idempotente pelo
+            NOT EXISTS (uq_permissao_acao). Um seed posterior que crie configurações de 1.ª série acrescenta a sua linha
+            `PCM`; em backoffice a linha configura-se com as restantes permissões.
+        </comment>
+        <sql>INSERT INTO permissao_acao (tipo_entidade, instrumento_procedimento_config_id, ativo)
+            SELECT 'PCM', c.id, true
+            FROM instrumento_procedimento_config c
+            WHERE c.serie_dr = 'PRIMEIRA'
+              AND NOT EXISTS (SELECT 1 FROM permissao_acao p
+                              WHERE p.instrumento_procedimento_config_id = c.id AND p.tipo_entidade = 'PCM')
+            ORDER BY c.id</sql>
+        <rollback>
+            <sql>DELETE FROM permissao_acao WHERE tipo_entidade = 'PCM' AND instrumento_procedimento_config_id IN (
+                SELECT id FROM instrumento_procedimento_config WHERE serie_dr = 'PRIMEIRA')</sql>
+        </rollback>
+    </changeSet>
+</databaseChangeLog>

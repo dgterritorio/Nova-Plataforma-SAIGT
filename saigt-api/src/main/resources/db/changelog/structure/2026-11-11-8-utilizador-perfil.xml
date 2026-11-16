@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="2026-11-11-8-utilizador-perfil" author="arnaldo.costa">
+        <comment>
+            Perfil do utilizador DGT (DB-IAM-001): `telemovel` passa a `telefone` (os valores mantêm-se) e nasce a
+            `morada`, ambos facultativos e editados pelo próprio no Perfil. Rollback: retira a `morada` (perde o que
+            lá estiver) e repõe o nome `telemovel`.
+        </comment>
+        <renameColumn tableName="utilizador" oldColumnName="telemovel" newColumnName="telefone" columnDataType="VARCHAR(30)"/>
+        <addColumn tableName="utilizador">
+            <column name="morada" type="VARCHAR(300)"/>
+        </addColumn>
+
+        <rollback>
+            <dropColumn tableName="utilizador" columnName="morada"/>
+            <renameColumn tableName="utilizador" oldColumnName="telefone" newColumnName="telemovel" columnDataType="VARCHAR(30)"/>
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>

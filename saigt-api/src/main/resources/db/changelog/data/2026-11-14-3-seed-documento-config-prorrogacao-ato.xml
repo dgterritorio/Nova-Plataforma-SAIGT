@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="2026-11-14-3-seed-documento-config-prorrogacao-ato" author="arnaldo.costa">
+        <comment>
+            Itens documentais da Prorrogação do ato (`PRORROGACAO_ATO`, ato pontual de «Outros atos e anexos») em cada
+            configuração ativa: o Texto do ato e a Deliberação de aprovação da prorrogação, um item por caixa (publicação
+            e depósito), como a lista do SSAIGT nas Prorrogações das Medidas Preventivas e da Suspensão. Seed provisório
+            até a DGT enviar a lista (OI-245, premissa em uso, OI-506). O Texto do ato leva a Informação Base
+            (`TEXTO_ATO`): é de lá que vem o prazo que recalcula a data de caducidade da Dinâmica (decisão de 04/11); a
+            Deliberação não leva. Extensões, limites e link público como nos itens de publicação e depósito dos
+            restantes procedimentos; obrigatórios só na publicação. O Procedimento escolhe-se pelo código, nunca pelo id.
+            Idempotente pelo NOT EXISTS: um item já criado em backoffice com o mesmo código fica como está.
+        </comment>
+        <sql>
+            INSERT INTO documento_config (instrumento_procedimento_config_id, codigo, separador, nome, categoria,
+                                          tipo_elemento, formato, obrigatorio, extensoes_aceites, ordem, ativo,
+                                          elemento_informacao_base, tamanho_maximo_ficheiro, tamanho_maximo_total,
+                                          numero_maximo_ficheiros, link_publico_permitido)
+            SELECT ipc.id, item.codigo || caixa.sufixo, item.separador, item.nome, caixa.categoria, 'PECA_ESCRITA',
+                   caixa.formato, caixa.categoria = 'PUBLICACAO',
+                   (CASE WHEN caixa.categoria = 'PUBLICACAO'
+                         THEN '["doc","docx","rtf","odf","odt","xls","xlsx","csv","ods","pdf","txt"]'
+                         ELSE '["pdf","jpg","png"]' END)::jsonb,
+                   item.ordem * 2 - CASE WHEN caixa.categoria = 'PUBLICACAO' THEN 1 ELSE 0 END, true,
+                   item.elemento_informacao_base, 524288000, 2147483648, 10, caixa.categoria = 'PUBLICACAO'
+            FROM instrumento_procedimento_config ipc
+            JOIN tipo_procedimento tp ON tp.id = ipc.tipo_procedimento_id
+            CROSS JOIN (VALUES
+                ('TEXTO_ATO', 'Texto do Ato', 'Texto do ato a publicar no Diário da República', 'TEXTO_ATO', 1),
+                ('DELIBERACAO', 'Deliberação', 'Deliberação de aprovação da prorrogação', NULL, 2)
+            ) AS item(codigo, separador, nome, elemento_informacao_base, ordem)
+            CROSS JOIN (VALUES ('PUBLICACAO', 'EDITAVEL', '_PUB'), ('DEPOSITO', 'NAO_EDITAVEL', '_DEP'))
+                AS caixa(categoria, formato, sufixo)
+            WHERE tp.codigo = 'PRORROGACAO_ATO'
+              AND ipc.ativo
+              AND NOT EXISTS (SELECT 1 FROM documento_config d
+                              WHERE d.instrumento_procedimento_config_id = ipc.id
+                                AND d.codigo = item.codigo || caixa.sufixo)
+            ORDER BY ipc.id, item.ordem, caixa.sufixo DESC
+        </sql>
+        <rollback>
+            <sql>
+                DELETE FROM documento_config
+                WHERE codigo IN ('TEXTO_ATO_PUB', 'TEXTO_ATO_DEP', 'DELIBERACAO_PUB', 'DELIBERACAO_DEP')
+                  AND instrumento_procedimento_config_id IN (
+                      SELECT ipc.id FROM instrumento_procedimento_config ipc
+                      JOIN tipo_procedimento tp ON tp.id = ipc.tipo_procedimento_id
+                      WHERE tp.codigo = 'PRORROGACAO_ATO')
+            </sql>
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>

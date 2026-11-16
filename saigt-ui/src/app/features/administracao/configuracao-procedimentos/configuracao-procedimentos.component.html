@@ -1,0 +1,35 @@
+<app-shell breadcrumb="Configuração de Procedimentos">
+  <div class="conteudo">
+    <div class="cabecalho">
+      <div>
+        <h1>Configuração de Procedimentos</h1>
+        <p class="subtitulo">Tipos, Dinâmicas, Procedimentos, permissões e regras, sem desenvolvimento técnico</p>
+      </div>
+    </div>
+
+    <app-separadores #separadoresRef rotulo="Configuração de Procedimentos" [separadores]="separadores" [(ativo)]="ativo" (mudou)="mudarSeparador()" />
+
+    <div class="painel" role="tabpanel" [id]="separadoresRef.idPainel(ativo())" [attr.aria-labelledby]="separadoresRef.idSeparador(ativo())">
+      @switch (ativo()) {
+        @case ('tipos') {
+          <app-configuracao-tipos />
+        }
+        @case ('dinamicas') {
+          <app-configuracao-dinamicas />
+        }
+        @case ('procedimentos') {
+          <app-configuracao-procedimentos-dinamica (itensDocumentais)="abrirItensDocumentais($event)" />
+        }
+        @case ('regras') {
+          <app-configuracao-regras />
+        }
+        @case ('itens-documentais') {
+          <app-configuracao-itens-documentais [selecaoInicial]="selecaoItens()" />
+        }
+        @case ('atos-redes') {
+          <app-configuracao-atos-redes />
+        }
+      }
+    </div>
+  </div>
+</app-shell>

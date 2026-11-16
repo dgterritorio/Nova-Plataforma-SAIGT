@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="2026-10-23-1-seed-catalogo-15-tipos-ato" author="david.raposo">
+        <comment>
+            Catálogo `tipo_ato` com os 15 tipos da EF v1.5 e a série de cada um (OI-236, DB-PROC-010).
+            Complementa 2026-09-17-1-seed-tipo-ato: os 8 tipos existentes mantêm o `id`
+            (`processo.tipo_ato_id` referencia-os) e ganham a série que lhes falta e a nova `ordem`;
+            os 9 em falta entram com ids 9–17. "Resolução do Conselho de Ministros" e "Regulamento"
+            não constam da lista: ficam `ativo = false`, nunca apagados.
+
+            Os `ActTypeId` reais vêm da INCM (`AvailableActTypeList` do `ValidateUser`) e ainda não
+            são conhecidos. Mantêm-se os do mock (`saigt-implementation/docker/incm-mock/mappings/`):
+            ids já em uso conservados, 30–38 nos novos da 1.ª série e 40–44 nos novos da 2.ª. Os de
+            produção entram por changeset de correção (UPDATE das duas colunas, nunca DELETE).
+        </comment>
+
+        <!-- Existentes: serie em falta + ordem. DL, EDITAL mantêm a série. -->
+        <update tableName="tipo_ato">
+            <column name="ordem" valueNumeric="10"/>
+            <where>codigo = 'DL'</where>
+        </update>
+        <update tableName="tipo_ato">
+            <column name="incm_act_type_id_serie_2" valueNumeric="44"/>
+            <column name="ordem" valueNumeric="15"/>
+            <where>codigo = 'PORT'</where>
+        </update>
+        <update tableName="tipo_ato">
+            <column name="incm_act_type_id_serie_1" valueNumeric="30"/>
+            <column name="ordem" valueNumeric="2"/>
+            <where>codigo = 'AVISO'</where>
+        </update>
+        <update tableName="tipo_ato">
+            <column name="incm_act_type_id_serie_1" valueNumeric="37"/>
+            <column name="ordem" valueNumeric="12"/>
+            <where>codigo = 'DESP'</where>
+        </update>
+        <update tableName="tipo_ato">
+            <column name="incm_act_type_id_serie_1" valueNumeric="31"/>
+            <column name="ordem" valueNumeric="4"/>
+            <where>codigo = 'DECL'</where>
+        </update>
+        <update tableName="tipo_ato">
+            <column name="ordem" valueNumeric="13"/>
+            <where>codigo = 'EDITAL'</where>
+        </update>
+
+        <!-- Fora da lista da EF v1.5: inativos, depois dos 15. -->
+        <update tableName="tipo_ato">
+            <column name="ordem" valueNumeric="16"/>
+            <column name="ativo" valueBoolean="false"/>
+            <where>codigo = 'RCM'</where>
+        </update>
+        <update tableName="tipo_ato">
+            <column name="ordem" valueNumeric="17"/>
+            <column name="ativo" valueBoolean="false"/>
+            <where>codigo = 'REGUL'</where>
+        </update>
+
+        <loadData tableName="tipo_ato" file="db/data/2026-10-23-1-tipo_ato.csv"
+                  relativeToChangelogFile="false" separator=";" quotchar="&quot;" encoding="UTF-8">
+            <column name="id" type="NUMERIC"/>
+            <column name="codigo" type="STRING"/>
+            <column name="nome" type="STRING"/>
+            <column name="incm_act_type_id_serie_2" type="NUMERIC"/>
+            <column name="ordem" type="NUMERIC"/>
+            <column name="ativo" type="BOOLEAN"/>
+            <column name="incm_act_type_id_serie_1" type="NUMERIC"/>
+        </loadData>
+
+        <sql dbms="postgresql">SELECT setval(pg_get_serial_sequence('tipo_ato', 'id'), (SELECT MAX(id) FROM tipo_ato))</sql>
+
+        <rollback>
+            <delete tableName="tipo_ato">
+                <where>id BETWEEN 9 AND 17</where>
+            </delete>
+            <sql>UPDATE tipo_ato SET ordem = 1 WHERE codigo = 'DL'</sql>
+            <sql>UPDATE tipo_ato SET incm_act_type_id_serie_2 = NULL, ordem = 2 WHERE codigo = 'PORT'</sql>
+            <sql>UPDATE tipo_ato SET incm_act_type_id_serie_1 = NULL, ordem = 4 WHERE codigo = 'AVISO'</sql>
+            <sql>UPDATE tipo_ato SET incm_act_type_id_serie_1 = NULL, ordem = 5 WHERE codigo = 'DESP'</sql>
+            <sql>UPDATE tipo_ato SET incm_act_type_id_serie_1 = NULL, ordem = 6 WHERE codigo = 'DECL'</sql>
+            <sql>UPDATE tipo_ato SET ordem = 7 WHERE codigo = 'EDITAL'</sql>
+            <sql>UPDATE tipo_ato SET ordem = 3, ativo = TRUE WHERE codigo = 'RCM'</sql>
+            <sql>UPDATE tipo_ato SET ordem = 8, ativo = TRUE WHERE codigo = 'REGUL'</sql>
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>

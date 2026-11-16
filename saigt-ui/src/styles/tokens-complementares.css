@@ -1,0 +1,10 @@
+/*
+  Cores do Figma que a exportação do tokens.css não apanha, porque só existem dentro de SVG.
+  Ficam aqui, à mão, para o tokens.css continuar a ser só o gerado. Quando a exportação as trouxer, saem daqui.
+*/
+:root {
+  --color-2fa3e7: #2fa3e7; /* barras de "Tempo médio de instrução por tipo" (UI-058) */
+  --color-6366f1: #6366f1; /* ícone de "Tempo médio" (UI-058) */
+  --color-b9f8cf: #b9f8cf; /* conector de passo concluído nas Plantas (Figma 2111:3561) */
+  --color-016630: #016630; /* TIFF escolhido na tabela das Plantas (Figma 2111:3561) */
+}

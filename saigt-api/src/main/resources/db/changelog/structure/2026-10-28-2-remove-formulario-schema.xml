@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="2026-10-28-2-remove-formulario-schema" author="margarida.marques">
+        <comment>
+            Os formulários são fixos, definidos na aplicação: nenhuma definição de formulário fica na BD
+            . O rollback repõe a estrutura sem dados.
+        </comment>
+
+        <dropForeignKeyConstraint baseTableName="processo" constraintName="fk_processo_formulario_schema"/>
+        <dropColumn tableName="processo" columnName="formulario_schema_id"/>
+        <dropTable tableName="formulario_schema"/>
+
+        <rollback>
+            <createTable tableName="formulario_schema">
+                <column name="id" type="BIGINT" autoIncrement="true">
+                    <constraints primaryKey="true" nullable="false"/>
+                </column>
+                <column name="instrumento_procedimento_config_id" type="BIGINT">
+                    <constraints nullable="false" foreignKeyName="fk_formulario_schema_procedimento_config" references="instrumento_procedimento_config(id)"/>
+                </column>
+                <column name="versao" type="INTEGER" defaultValueNumeric="1">
+                    <constraints nullable="false"/>
+                </column>
+                <column name="schema" type="JSONB">
+                    <constraints nullable="false"/>
+                </column>
+                <column name="ativo" type="BOOLEAN" defaultValueBoolean="true">
+                    <constraints nullable="false"/>
+                </column>
+                <column name="criado_por" type="VARCHAR(200)">
+                    <constraints nullable="false"/>
+                </column>
+                <column name="criado_em" type="TIMESTAMP WITH TIME ZONE" defaultValueComputed="CURRENT_TIMESTAMP">
+                    <constraints nullable="false"/>
+                </column>
+            </createTable>
+            <addUniqueConstraint tableName="formulario_schema" columnNames="instrumento_procedimento_config_id, versao"
+                                 constraintName="uq_formulario_schema_versao"/>
+            <addColumn tableName="processo">
+                <column name="formulario_schema_id" type="BIGINT">
+                    <constraints nullable="true" foreignKeyName="fk_processo_formulario_schema" references="formulario_schema(id)"/>
+                </column>
+            </addColumn>
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="2026-09-10-6-seed-motor-regras-pdm" author="nuno.miguel.silva">
+        <comment>
+            Issue #123 — Grupo 4: regra (9) + condicao (11). Fonte:
+            pdm-mapeamento-configuracao.md §13.6. Uma regra por dinâmica com
+            pré-requisito, todas de nível Dinâmica (instrumento_procedimento_config_id
+            vazio). Avaliadores INSTRUMENTO_EM_VIGOR/OCORRENCIA_NAO_EXISTE já
+            implementados (DEC-DTB-125) — nada a construir no motor. Ids
+            explícitos + setval.
+        </comment>
+
+        <loadData tableName="regra" file="db/data/2026-09-10-6-regra.csv"
+                  relativeToChangelogFile="false" separator=";" quotchar="&quot;" encoding="UTF-8">
+            <column name="id" type="NUMERIC"/>
+            <column name="instrumento_dinamica_config_id" type="NUMERIC"/>
+            <column name="operador" type="STRING"/>
+            <column name="descricao" type="STRING"/>
+            <column name="substitui_sequenciamento" type="BOOLEAN"/>
+            <column name="ativo" type="BOOLEAN"/>
+        </loadData>
+        <sql dbms="postgresql">SELECT setval(pg_get_serial_sequence('regra', 'id'), (SELECT MAX(id) FROM regra))</sql>
+
+        <loadData tableName="condicao" file="db/data/2026-09-10-6-condicao.csv"
+                  relativeToChangelogFile="false" separator=";" quotchar="&quot;" encoding="UTF-8">
+            <column name="id" type="NUMERIC"/>
+            <column name="regra_id" type="NUMERIC"/>
+            <column name="avaliador" type="STRING"/>
+            <column name="parametros" type="STRING"/>
+            <column name="grupo" type="NUMERIC"/>
+            <column name="ativo" type="BOOLEAN"/>
+        </loadData>
+        <sql dbms="postgresql">SELECT setval(pg_get_serial_sequence('condicao', 'id'), (SELECT MAX(id) FROM condicao))</sql>
+
+        <rollback>
+            <delete tableName="condicao">
+                <where>id BETWEEN 401 AND 411</where>
+            </delete>
+            <delete tableName="regra">
+                <where>id BETWEEN 301 AND 309</where>
+            </delete>
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>

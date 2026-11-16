@@ -1,0 +1,81 @@
+:host {
+  display: block;
+  margin-bottom: var(--espaco-4);
+}
+
+.cabecalho {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--espaco-3);
+  padding: var(--espaco-4) var(--espaco-5) 0;
+}
+
+.titulo {
+  margin: 0;
+  font-family: var(--fonte-destaque);
+  font-size: var(--texto-base);
+  font-weight: var(--peso-negrito);
+  line-height: var(--texto-base-linha);
+  color: var(--cor-texto-titulo);
+}
+
+.corpo {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaco-4);
+  padding: var(--espaco-3) var(--espaco-5) var(--espaco-5);
+}
+
+.estado,
+.resumo {
+  margin: 0;
+  font-size: var(--texto-sm);
+  line-height: var(--texto-sm-linha);
+  color: var(--cor-texto-secundario);
+}
+
+.resumo {
+  font-weight: var(--peso-semi);
+  color: var(--cor-texto-cartao);
+}
+
+.erro {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--espaco-2);
+}
+
+.grupo-titulo {
+  margin: 0 0 var(--espaco-2);
+  font-size: var(--texto-sm);
+  font-weight: var(--peso-semi);
+  line-height: var(--texto-sm-linha);
+  color: var(--cor-texto-titulo);
+}
+
+.nome-ficheiro {
+  display: block;
+  overflow-wrap: anywhere;
+  color: var(--cor-texto-cartao);
+}
+
+.desbloqueio {
+  display: block;
+  margin-top: var(--espaco-1);
+  font-size: var(--texto-xs);
+  line-height: var(--texto-xs-linha);
+  color: var(--cor-texto-secundario);
+}
+
+.detalhe {
+  overflow-wrap: anywhere;
+}
+
+.erro-descarga {
+  margin: 0;
+  font-size: var(--texto-sm);
+  color: var(--cor-erro);
+}

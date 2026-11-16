@@ -1,0 +1,7 @@
+id;instrumento_procedimento_config_id;codigo;separador;nome;categoria;tipo_elemento;formato;obrigatorio;extensoes_aceites;ordem;ativo
+1;209;"DELIBERACAO_PUB";"Deliberação";"Deliberação do início de alteração do plano territorial";"PUBLICACAO";"PECA_ESCRITA";"EDITAVEL";true;"[""doc"",""docx"",""rtf"",""odf"",""odt"",""xls"",""xlsx"",""csv"",""ods"",""pdf"",""txt""]";1;true
+2;209;"DELIBERACAO_DEP";"Deliberação";"Deliberação do início de alteração do plano territorial";"DEPOSITO";"PECA_ESCRITA";"NAO_EDITAVEL";false;"[""pdf"",""jpg"",""png""]";2;true
+3;209;"TEXTO_ATO_PUB";"Texto do Ato";"Texto do ato a publicar no Diário da República";"PUBLICACAO";"PECA_ESCRITA";"EDITAVEL";true;"[""doc"",""docx"",""rtf"",""odf"",""odt"",""xls"",""xlsx"",""csv"",""ods"",""pdf"",""txt""]";3;true
+4;209;"TEXTO_ATO_DEP";"Texto do Ato";"Texto do ato a publicar no Diário da República";"DEPOSITO";"PECA_ESCRITA";"NAO_EDITAVEL";false;"[""pdf"",""jpg"",""png""]";4;true
+5;209;"PLANTA_LOCALIZACAO_PUB";"Planta de Localização";"Planta com área de intervenção";"PUBLICACAO";"PECA_GRAFICA";"EDITAVEL";true;"[""gpkg"",""zip""]";5;true
+6;209;"PLANTA_LOCALIZACAO_DEP";"Planta de Localização";"Planta com área de intervenção";"DEPOSITO";"PECA_GRAFICA";"NAO_EDITAVEL";false;"[""tif"",""tiff"",""tfw""]";6;true

@@ -1,0 +1,961 @@
+:host {
+    display: block;
+    font-family: 'Inter', sans-serif;
+}
+
+.estado-carregamento,
+.estado-vazio {
+    margin: 0 0 16px;
+    font-size: 14px;
+    color: var(--cor-texto-celula);
+}
+
+.grupo {
+    margin-top: 16px;
+}
+
+.grupo h2 {
+    margin: 0 0 10px;
+    font-size: 15px;
+    font-weight: 600;
+    color: #0f172b;
+}
+
+.acordeao {
+    background: #fff;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    margin-bottom: 10px;
+    overflow: hidden;
+}
+
+.acordeao-cabecalho {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    padding: 14px 20px;
+    border: none;
+    background: none;
+    font: inherit;
+    cursor: pointer;
+    text-align: left;
+}
+
+.icone {
+    color: #1a56a0;
+    flex-shrink: 0;
+}
+
+.acordeao-titulo {
+    flex: 1;
+    font-size: 14px;
+    font-weight: 600;
+    color: #0f172b;
+}
+
+.seta {
+    width: 8px;
+    height: 8px;
+    border-right: 2px solid #64748b;
+    border-bottom: 2px solid #64748b;
+    transform: rotate(45deg);
+    transition: transform 0.15s;
+}
+
+.seta.aberta {
+    transform: rotate(-135deg);
+}
+
+.caixas {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    padding: 0 20px 16px;
+}
+
+.coluna {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.caixas > .caixa {
+    grid-column: 1 / -1;
+}
+
+.caixa {
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+    padding: 12px 14px;
+    background: #f8fafc;
+}
+
+.caixa-pendente {
+    border-color: #fcd34d;
+}
+
+.caixa-cabecalho {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.caixa-titulo {
+    flex: 1;
+    font-size: 13px;
+    font-weight: 600;
+    color: #334155;
+}
+
+.item-nome {
+    margin-top: 4px;
+    font-size: 12px;
+    color: #64748b;
+}
+
+.pendencia {
+    margin: 6px 0 0;
+    font-size: 12px;
+    color: #b45309;
+}
+
+.ficheiros {
+    list-style: none;
+    margin: 10px 0 0;
+    padding: 0;
+    display: grid;
+    gap: 8px;
+}
+
+.ficheiro {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 8px;
+    padding: 8px 10px;
+    background: #fff;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+}
+
+.ficheiro-rejeitado {
+    border-color: var(--cor-erro);
+    background: var(--cor-erro-fundo);
+}
+
+.ficheiro-rejeitado-aviso {
+    color: var(--cor-erro);
+}
+
+.ficheiro-info {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    min-width: 0;
+}
+
+.ficheiro-nome {
+    font-size: 13px;
+    font-weight: 600;
+    color: #0f172b;
+    word-break: break-word;
+}
+
+.ficheiro-meta {
+    font-size: 11px;
+    color: #64748b;
+}
+
+.ficheiro-acoes {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.acao {
+    position: relative;
+    padding: 4px 10px;
+    border: 1px solid #e2e8f0;
+    border-radius: 6px;
+    background: #fff;
+    font: inherit;
+    font-size: 11px;
+    font-weight: 600;
+    color: #334155;
+    cursor: pointer;
+}
+
+.acao:disabled {
+    opacity: 0.6;
+    cursor: default;
+}
+
+.acao-perigo {
+    color: #991b1b;
+}
+
+.zona {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    margin-top: 10px;
+    padding: 14px;
+    border: 1px dashed #94a3b8;
+    border-radius: 8px;
+    background: #fff;
+    cursor: pointer;
+}
+
+.aviso-geoconform {
+    margin-top: 10px;
+}
+
+.zona-sobre {
+    border-color: #1a56a0;
+    background: #eff6ff;
+}
+
+.zona-texto {
+    font-size: 12px;
+    font-weight: 600;
+    color: #1a56a0;
+}
+
+.zona-dica {
+    font-size: 11px;
+    color: #64748b;
+}
+
+.ficheiro-tag {
+    font-style: italic;
+}
+
+.tags {
+    margin: var(--espaco-2-5) 0 0;
+    padding: var(--espaco-2) var(--espaco-3);
+    border: 1px solid var(--cor-borda);
+    border-radius: var(--raio-md);
+}
+
+.tags-legenda {
+    padding: 0 var(--espaco-1);
+    font-size: var(--texto-xs);
+    font-weight: var(--peso-semi);
+    color: var(--cor-texto);
+}
+
+.tag {
+    display: flex;
+    align-items: center;
+    gap: var(--espaco-2);
+    margin-top: var(--espaco-1);
+}
+
+.tag-caixa {
+    margin: 0;
+}
+
+.tag-caixa:focus-visible {
+    outline: 2px solid var(--cor-primaria);
+    outline-offset: 2px;
+}
+
+.tag-rotulo {
+    font-size: var(--texto-xs);
+    color: var(--cor-texto);
+    cursor: pointer;
+}
+
+.erro-item {
+    margin: 8px 0 0;
+    font-size: 12px;
+    color: #991b1b;
+}
+
+.informacao-base {
+    margin: 0 20px 16px;
+    padding: 12px 14px;
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+    background: #f8fafc;
+}
+
+.informacao-base-titulo {
+    margin: 0 0 10px;
+    font-size: 13px;
+    font-weight: 600;
+    color: #334155;
+}
+
+.informacao-base-campos {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    gap: 12px;
+    align-items: start;
+}
+
+.informacao-base .campo {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    min-width: 0;
+    margin: 0;
+    padding: 0;
+    border: none;
+}
+
+.informacao-base .campo-largo {
+    grid-column: 1 / -1;
+}
+
+.informacao-base .rotulo {
+    padding: 0;
+    font-size: 13px;
+    color: #334155;
+}
+
+.informacao-base input[type='number'],
+.informacao-base input[type='date'],
+.informacao-base .prazo select,
+.informacao-base textarea {
+    box-sizing: border-box;
+    width: 100%;
+    padding: 8px 10px;
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    background: #fff;
+    font: inherit;
+    font-size: 14px;
+}
+
+.informacao-base input:disabled,
+.informacao-base select:disabled,
+.informacao-base textarea:disabled {
+    background: var(--cor-superficie-alt);
+    color: var(--cor-texto-secundario);
+    cursor: not-allowed;
+}
+
+.informacao-base textarea {
+    min-height: 72px;
+    resize: vertical;
+}
+
+.prazo {
+    display: flex;
+    gap: 8px;
+}
+
+.prazo-parte {
+    display: flex;
+    flex: 1;
+    align-items: center;
+    gap: 6px;
+    min-width: 0;
+    font-size: 13px;
+    color: #64748b;
+}
+
+.opcoes {
+    display: flex;
+    gap: 16px;
+    padding-top: 8px;
+}
+
+.opcao {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 14px;
+    color: #0f172b;
+}
+
+.erro-campo {
+    margin: 0;
+    font-size: 12px;
+    color: #991b1b;
+}
+
+.ajuda-campo {
+    margin: 0;
+    font-size: var(--texto-sm);
+    color: var(--cor-texto-secundario);
+}
+
+.aviso-bloqueado {
+    margin: 0;
+    font-size: 12px;
+    color: var(--cor-texto-secundario);
+}
+
+.informacao-base-leitura {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px 16px;
+    margin: 0;
+}
+
+.informacao-base-leitura dt {
+    font-size: 12px;
+    color: #64748b;
+}
+
+.informacao-base-leitura dd {
+    margin: 2px 0 0;
+    font-size: 14px;
+    color: #0f172b;
+    overflow-wrap: anywhere;
+}
+
+.informacao-base-acao {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 12px;
+}
+
+.acao-recarregar {
+    margin-bottom: 12px;
+}
+
+.ficheiro-input {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    opacity: 0;
+    overflow: hidden;
+}
+
+.zona:focus-within,
+.acao:focus-within {
+    outline: 2px solid #1a56a0;
+    outline-offset: 2px;
+}
+
+@media (max-width: 720px) {
+    .caixas,
+    .informacao-base-campos,
+    .informacao-base-leitura {
+        grid-template-columns: 1fr;
+    }
+}
+
+.observacoes {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding: 0 20px 16px;
+}
+
+.observacoes .rotulo {
+    font-size: 13px;
+    font-weight: 600;
+    color: #334155;
+}
+
+.observacoes-ajuda {
+    margin: 0;
+    font-size: 12px;
+    color: #64748b;
+}
+
+.observacoes textarea {
+    box-sizing: border-box;
+    width: 100%;
+    min-height: 72px;
+    padding: 8px 10px;
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    font: inherit;
+    font-size: 14px;
+    resize: vertical;
+}
+
+.observacoes textarea:focus-visible {
+    outline: 2px solid #1a56a0;
+    outline-offset: 2px;
+}
+
+/* Dentro do cartão do formulário (Figma UI-009): faixas de secção a toda a largura, separadores sem moldura. */
+:host(.embutido) {
+    font-family: var(--fonte-base);
+}
+
+:host(.embutido) .estado-carregamento,
+:host(.embutido) .estado-vazio,
+:host(.embutido) .acao-recarregar {
+    margin: var(--espaco-5) var(--espaco-6);
+}
+
+:host(.embutido) .grupo {
+    display: flex;
+    flex-direction: column;
+    gap: var(--espaco-6);
+    margin: 0;
+    padding-bottom: var(--espaco-6);
+}
+
+:host(.embutido) .grupo h2 {
+    margin: 0;
+    padding: var(--espaco-6);
+    background: var(--cor-cabecalho-cartao);
+    border-top: var(--borda-largura) solid var(--cor-borda);
+    border-bottom: var(--borda-largura) solid var(--cor-borda);
+    font-size: var(--texto-base);
+    font-weight: var(--peso-semi);
+    line-height: var(--texto-base-linha);
+    color: var(--cor-texto);
+}
+
+:host(.embutido) .acordeao {
+    margin: 0;
+    background: none;
+    border: 0;
+    border-radius: 0;
+    overflow: visible;
+}
+
+:host(.embutido) .acordeao-cabecalho {
+    gap: var(--espaco-2);
+    padding: 0;
+}
+
+:host(.embutido) .acordeao-cabecalho:focus-visible,
+:host(.embutido) .informacao-base-alternar:focus-visible,
+:host(.embutido) .seletor-prazo:focus-visible {
+    outline: var(--anel-foco);
+    outline-offset: var(--anel-foco-afastamento);
+}
+
+:host(.embutido) .icone-caixa {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    width: var(--espaco-8);
+    height: var(--espaco-8);
+    border-radius: var(--raio-md);
+    background: var(--cor-icone-info-fundo);
+}
+
+:host(.embutido) .icone {
+    color: var(--cor-primaria);
+}
+
+:host(.embutido) .acordeao-titulo {
+    font-size: var(--texto-lg);
+    font-weight: var(--peso-semi);
+    line-height: var(--texto-lg-linha);
+    color: var(--cor-texto);
+}
+
+:host(.embutido) .seta {
+    border-color: var(--cor-texto-secundario);
+}
+
+:host(.embutido) .caixas {
+    gap: var(--espaco-4);
+    padding: var(--espaco-4) 0 0;
+}
+
+:host(.embutido) .caixa {
+    display: flex;
+    flex-direction: column;
+    padding: 0;
+    background: none;
+    border: 0;
+    border-radius: 0;
+}
+
+:host(.embutido) .caixa-cabecalho {
+    gap: var(--espaco-2);
+}
+
+:host(.embutido) .caixa-titulo {
+    flex: 0 1 auto;
+    font-size: var(--texto-base);
+    font-weight: var(--peso-medio);
+    line-height: var(--texto-base-linha);
+    color: var(--cor-texto-caixa);
+}
+
+:host(.embutido) .item-nome {
+    margin-top: var(--espaco-1);
+    font-size: var(--texto-sm);
+    line-height: var(--texto-sm-linha);
+    color: var(--cor-texto-secundario);
+}
+
+:host(.embutido) .pendencia {
+    margin: var(--espaco-1) 0 0;
+    font-size: var(--texto-sm);
+    line-height: var(--texto-sm-linha);
+    color: var(--cor-aviso);
+}
+
+:host(.embutido) .zona {
+    gap: var(--espaco-1-5);
+    margin-top: var(--espaco-2);
+    padding: var(--espaco-5);
+    background: var(--cor-superficie-tabela);
+    border: var(--borda-largura-zona) dashed var(--cor-borda-filtro);
+    border-radius: var(--raio-lg);
+}
+
+:host(.embutido) .zona-sobre {
+    background: var(--cor-info-fundo);
+    border-color: var(--cor-primaria);
+}
+
+:host(.embutido) .zona:focus-within {
+    outline: var(--anel-foco);
+    outline-offset: var(--anel-foco-afastamento);
+}
+
+:host(.embutido) .zona-icone {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: var(--espaco-8);
+    height: var(--espaco-8);
+    border: var(--borda-largura) solid var(--cor-borda-filtro);
+    border-radius: var(--raio-pill);
+    background: var(--cor-superficie);
+    color: var(--cor-icone-carregar);
+    filter: var(--sombra-menu);
+}
+
+:host(.embutido) .zona-texto {
+    font-size: var(--texto-sm);
+    font-weight: var(--peso-semi);
+    line-height: var(--texto-sm-linha);
+    color: var(--cor-texto-caixa);
+}
+
+:host(.embutido) .zona-dica {
+    font-size: var(--texto-sm);
+    line-height: var(--texto-sm-linha);
+    color: var(--cor-texto-secundario);
+}
+
+:host(.embutido) .informacao-base {
+    display: flex;
+    flex-direction: column;
+    gap: var(--espaco-3);
+    margin: var(--espaco-6) 0 0;
+    padding: var(--espaco-2-5);
+    background: var(--cor-fundo-informacao-base);
+    border: var(--borda-largura) solid var(--cor-borda-informacao-base);
+    border-radius: var(--raio-md);
+}
+
+:host(.embutido) .informacao-base-titulo {
+    margin: 0;
+    font-size: var(--texto-base);
+    font-weight: var(--peso-semi);
+    line-height: var(--texto-base-linha);
+    color: var(--cor-texto);
+}
+
+:host(.embutido) .informacao-base-alternar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding: 0;
+    border: 0;
+    background: none;
+    font: inherit;
+    color: inherit;
+    text-align: left;
+    cursor: pointer;
+}
+
+/* As três colunas do Figma: 344px, 231px e 295px com 36px entre elas. */
+:host(.embutido) .informacao-base-campos {
+    grid-template-columns: 344fr 231fr 295fr;
+    gap: var(--espaco-3) var(--espaco-9);
+}
+
+:host(.embutido) .informacao-base .campo {
+    gap: var(--espaco-2);
+}
+
+/* A legend de um fieldset não conta para o gap: sem esta margem o Prazo ficava 8px acima da data. */
+:host(.embutido) .informacao-base legend.rotulo {
+    margin-bottom: var(--espaco-2);
+}
+
+/* A pendência passa para baixo da zona de carregamento, para as caixas Publicação e Depósito ficarem alinhadas. */
+:host(.embutido) .caixa .pendencia {
+    order: 1;
+}
+
+:host(.embutido) .informacao-base .rotulo {
+    font-family: var(--fonte-campo);
+    font-size: var(--texto-base);
+    font-weight: var(--peso-normal);
+    line-height: var(--texto-campo-linha);
+    color: var(--cor-texto-rotulo);
+}
+
+:host(.embutido) .informacao-base input[type='number'],
+:host(.embutido) .informacao-base input[type='date'],
+:host(.embutido) .informacao-base .prazo select {
+    height: var(--altura-controlo);
+    padding: 0 var(--espaco-4);
+    border-color: var(--cor-borda-campo-informacao-base);
+    border-radius: var(--raio-sm);
+    font-family: var(--fonte-campo);
+    font-size: var(--texto-base);
+    color: var(--cor-texto);
+}
+
+/* Três linhas de texto, como os 82px do Figma. O #94a3b8 dos placeholders fica a 2,56:1: usam o cinza acessível. */
+:host(.embutido) .informacao-base textarea,
+:host(.embutido) .observacoes textarea {
+    min-height: calc(3 * var(--texto-base-linha) + 2 * var(--espaco-caixa-texto-vertical));
+    padding: var(--espaco-caixa-texto-vertical) var(--espaco-caixa-texto-horizontal);
+    border-color: var(--cor-borda);
+    border-radius: var(--raio-md);
+    font-size: var(--texto-base);
+    line-height: var(--texto-base-linha);
+    color: var(--cor-texto);
+}
+
+:host(.embutido) .informacao-base textarea::placeholder,
+:host(.embutido) .observacoes textarea::placeholder {
+    font-weight: var(--peso-medio);
+    color: var(--cor-texto-secundario);
+}
+
+:host(.embutido) .opcoes {
+    gap: var(--espaco-4-5);
+    padding-top: var(--espaco-2);
+}
+
+:host(.embutido) .opcao {
+    gap: var(--espaco-2);
+    font-weight: var(--peso-medio);
+    color: var(--cor-texto);
+}
+
+:host(.embutido) .opcao input {
+    width: var(--espaco-5);
+    height: var(--espaco-5);
+    margin: var(--espaco-0-5);
+    accent-color: var(--cor-primaria);
+}
+
+:host(.embutido) .seletor-prazo {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--espaco-2);
+    box-sizing: border-box;
+    width: 100%;
+    height: var(--altura-controlo);
+    padding: 0 var(--espaco-4);
+    border: var(--borda-largura) solid var(--cor-borda-campo-informacao-base);
+    border-radius: var(--raio-sm);
+    background: var(--cor-superficie);
+    font-family: var(--fonte-campo);
+    font-size: var(--texto-base);
+    line-height: var(--texto-campo-linha);
+    color: var(--cor-texto);
+    text-align: left;
+    cursor: pointer;
+}
+
+:host(.embutido) .seletor-prazo:disabled {
+    background: var(--cor-superficie-alt);
+    color: var(--cor-texto-secundario);
+    cursor: not-allowed;
+}
+
+:host(.embutido) .seletor-prazo-seta {
+    flex-shrink: 0;
+    color: var(--cor-texto-secundario);
+    transition: transform 0.15s;
+}
+
+:host(.embutido) .seletor-prazo-seta.aberta {
+    transform: rotate(180deg);
+}
+
+:host(.embutido) .prazo {
+    margin-top: var(--espaco-2);
+    padding: var(--espaco-3);
+    background: var(--cor-superficie);
+    border: var(--borda-largura) solid var(--cor-borda-campo-informacao-base);
+    border-radius: var(--raio-sm);
+}
+
+:host(.embutido) .prazo[hidden] {
+    display: none;
+}
+
+:host(.embutido) .prazo-parte {
+    font-family: var(--fonte-campo);
+    font-size: var(--texto-base);
+    color: var(--cor-texto-rotulo);
+}
+
+/* Os corpos dos acordeões só existem para o aria-controls: não mudam o layout. */
+.acordeao-corpo,
+.informacao-base-corpo {
+    display: contents;
+}
+
+:host(.embutido) .informacao-base-acao {
+    margin-top: 0;
+}
+
+@media (max-width: 720px) {
+    :host(.embutido) .caixas,
+    :host(.embutido) .informacao-base-campos {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Texto só para leitores de ecrã: o Figma não o mostra, mas a informação continua acessível. */
+.so-leitor {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    padding: 0;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+    border: 0;
+}
+
+:host(.embutido) .marca-caixa {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    width: var(--espaco-4);
+    height: var(--espaco-4);
+    border: var(--borda-largura) solid var(--cor-borda-marca);
+    border-radius: var(--raio-xs);
+    background: var(--cor-superficie);
+    color: transparent;
+}
+
+:host(.embutido) .marca-caixa-com {
+    border-color: var(--cor-primaria);
+    background: var(--cor-primaria);
+    color: var(--cor-primaria-contraste);
+}
+
+:host(.embutido) .observacoes {
+    padding: var(--espaco-3) 0 0;
+}
+
+:host(.embutido) .observacoes-rotulo {
+    display: flex;
+    align-items: center;
+    gap: var(--espaco-2);
+    padding-bottom: var(--espaco-2);
+    font-size: var(--texto-base);
+    font-weight: var(--peso-medio);
+    line-height: var(--texto-base-linha);
+    color: var(--cor-texto-secundario);
+}
+
+:host(.embutido) .observacoes-ajuda {
+    margin: 0 0 var(--espaco-2);
+    font-size: var(--texto-sm);
+    line-height: var(--texto-sm-linha);
+    color: var(--cor-texto-secundario);
+}
+
+/* Figma: a data mostra uma seta para baixo, não o calendário do navegador (que continua a abrir ao clicar). */
+:host(.embutido) .informacao-base input[type='date']::-webkit-calendar-picker-indicator {
+    width: var(--espaco-6);
+    height: var(--espaco-6);
+    background: var(--cor-texto-secundario);
+    mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m7 10 5 5 5-5'/%3E%3C/svg%3E") center / var(--espaco-6) no-repeat;
+    cursor: pointer;
+}
+
+.observacoes-leitura {
+    margin: 4px 0 0;
+    font-size: 12px;
+    color: var(--cor-texto-secundario);
+    overflow-wrap: anywhere;
+}
+
+.observacoes-leitura span {
+    font-weight: 600;
+}
+
+.erro-descarga {
+    margin: 0 0 16px;
+    font-size: 14px;
+    color: var(--cor-erro);
+}
+
+.ficheiro-desbloqueio {
+    color: var(--cor-texto);
+    word-break: break-word;
+    white-space: pre-line;
+}
+
+.desbloqueio {
+    display: flex;
+    flex-direction: column;
+    gap: var(--espaco-2);
+}
+
+.desbloqueio-ficheiro {
+    margin: 0;
+    font-size: var(--texto-base);
+    word-break: break-word;
+}
+
+.desbloqueio .rotulo {
+    font-size: var(--texto-base);
+    color: var(--cor-texto);
+}
+
+.desbloqueio textarea {
+    box-sizing: border-box;
+    width: 100%;
+    min-height: 120px;
+    padding: var(--espaco-2) var(--espaco-2-5);
+    border: 1px solid var(--cor-borda-controlo);
+    border-radius: var(--raio-md);
+    background: var(--cor-superficie);
+    font: inherit;
+    font-size: var(--texto-base);
+    resize: vertical;
+}
+
+.desbloqueio textarea[aria-invalid='true'] {
+    border-color: var(--cor-erro);
+}
+
+.desbloqueio-dicas {
+    display: flex;
+    justify-content: space-between;
+    gap: var(--espaco-2);
+    font-size: var(--texto-sm);
+    color: var(--cor-texto-secundario);
+}
+
+.desbloqueio-ajuda {
+    margin: 0;
+}
+
+.obrigatorio {
+    color: var(--cor-erro);
+}
+
+.destino {
+    margin-bottom: var(--espaco-4);
+}

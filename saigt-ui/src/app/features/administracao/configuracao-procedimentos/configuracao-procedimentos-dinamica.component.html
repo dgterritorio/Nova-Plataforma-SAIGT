@@ -1,0 +1,148 @@
+<div class="barra-filtros">
+  <app-seletor
+    class="seletor-tipo-instrumento"
+    rotulo="Tipo de Instrumento"
+    [compacto]="true"
+    [opcoes]="opcoesTipoInstrumento()"
+    [formControl]="tipoInstrumento"
+  />
+  <app-seletor
+    class="seletor-dinamica"
+    rotulo="Dinâmica"
+    placeholder="Sem Dinâmicas"
+    [compacto]="true"
+    [opcoes]="opcoesDinamica()"
+    [formControl]="dinamica"
+  />
+
+  <div class="filtros-direita">
+    <div class="grupo-filtros" role="group" aria-label="Estado do Procedimento">
+      @for (opcao of opcoesEstado; track opcao.valor) {
+        <button
+          type="button"
+          class="filtro filtro-estado"
+          [class.ativo]="filtroEstado() === opcao.valor"
+          [attr.aria-pressed]="filtroEstado() === opcao.valor"
+          (click)="mudarFiltroEstado(opcao.valor)"
+        >
+          {{ opcao.rotulo }}
+        </button>
+      }
+    </div>
+    <span class="contador">{{ total() }} Procedimentos</span>
+    <button
+      app-botao
+      type="button"
+      tamanho="pequeno"
+      class="botao-adicionar"
+      [desativado]="dinamicaConfigId() === null"
+      (click)="adicionar()"
+    >
+      Adicionar Procedimento
+    </button>
+  </div>
+</div>
+
+@if (mensagemSucesso(); as mensagem) {
+  <app-alerta tipo="sucesso">{{ mensagem }}</app-alerta>
+}
+<app-error-banner [erro]="erroAcao()" />
+
+@if (erro()) {
+  <app-error-banner [erro]="erro()" />
+} @else {
+  <app-cartao variante="elevado" espacamento="nenhum">
+    <app-tabela
+      familia="compacta"
+      [legenda]="legenda()"
+      [colunas]="colunas"
+      [linhas]="linhas()"
+      [aCarregar]="aCarregar()"
+      mensagemVazia="Sem Procedimentos para os filtros indicados."
+    >
+      <ng-template appCelula="ordem" let-procedimento>{{ procedimento.ordem }}</ng-template>
+      <ng-template appCelula="procedimento" let-procedimento>
+        <span class="celula-nome">{{ procedimento.tipoProcedimento.nome }}</span>
+      </ng-template>
+      <ng-template appCelula="obrigatorio" let-procedimento>{{ simNao(procedimento.obrigatorio) }}</ng-template>
+      <ng-template appCelula="serie" let-procedimento>{{ rotuloSerie(procedimento) }}</ng-template>
+      <ng-template appCelula="repetivel" let-procedimento>{{ simNao(procedimento.repetivel) }}</ng-template>
+      <ng-template appCelula="atoPontual" let-procedimento>{{ simNao(procedimento.atoPontual) }}</ng-template>
+      <ng-template appCelula="limite" let-procedimento>{{ rotuloLimite(procedimento) }}</ng-template>
+      <ng-template appCelula="formulario" let-procedimento>
+        @if (procedimento.formulario) {
+          {{ rotuloFormulario(procedimento) }}
+        } @else {
+          <app-selo tom="aviso" forma="pill">Sem formulário</app-selo>
+        }
+      </ng-template>
+      <ng-template appCelula="estado" let-procedimento>
+        <app-selo [tom]="procedimento.ativo ? 'sucesso' : 'cinza'" forma="pill">
+          <span icone class="status-ponto" aria-hidden="true"></span>
+          {{ procedimento.ativo ? 'Ativo' : 'Inativo' }}
+        </app-selo>
+      </ng-template>
+      <ng-template appCelula="acoes" let-procedimento>
+        <div class="menu-acoes">
+          <button
+            type="button"
+            class="btn-acoes"
+            [attr.aria-label]="'Mais opções para ' + procedimento.tipoProcedimento.nome"
+            [attr.aria-expanded]="menuAbertoId() === procedimento.id"
+            (click)="alternarMenu(procedimento, $event)"
+          >
+            <svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
+              <circle cx="4" cy="8" r="1" /><circle cx="8" cy="8" r="1" /><circle cx="12" cy="8" r="1" />
+            </svg>
+          </button>
+          @if (menuAbertoId() === procedimento.id) {
+            <!-- eslint-disable-next-line @angular-eslint/template/click-events-have-key-events, @angular-eslint/template/interactive-supports-focus -- só impede o click de fechar o próprio menu, não é uma interação do utilizador -->
+            <div
+              class="dropdown-menu"
+              [style.top.px]="menuPosicao().topo"
+              [style.right.px]="menuPosicao().direita"
+              (click)="$event.stopPropagation()"
+            >
+              <button type="button" class="acao-editar" (click)="editar(procedimento)">Editar</button>
+              <button type="button" class="acao-permissoes" (click)="abrirPermissoes(procedimento)">Permissões</button>
+              <button type="button" class="acao-itens-documentais" (click)="abrirItensDocumentais(procedimento)">Itens documentais</button>
+              <button type="button" class="acao-estado" (click)="pedirAlternarEstado(procedimento)">
+                {{ procedimento.ativo ? 'Desativar' : 'Reativar' }}
+              </button>
+            </div>
+          }
+        </div>
+      </ng-template>
+      <app-paginacao
+        rodape
+        [pagina]="pagina() + 1"
+        [tamanhoPagina]="tamanhoPagina"
+        [total]="total()"
+        etiquetaItens="Procedimentos"
+        (paginaMudou)="irParaPagina($event - 1)"
+      />
+    </app-tabela>
+  </app-cartao>
+}
+
+<app-procedimento-config-modal
+  [aberto]="modalAberto()"
+  [dinamica]="nomeDinamica()"
+  [tiposProcedimento]="tiposProcedimento()"
+  [procedimento]="emEdicao()"
+  [aGravar]="aGravar()"
+  [erroServidor]="erroModal()"
+  (guardar)="guardar($event)"
+  (fechar)="fecharModal()"
+/>
+
+<app-permissoes-procedimento-modal [aberto]="permissoesDe() !== null" [procedimento]="permissoesDe()" (fechar)="fecharPermissoes()" />
+
+<app-confirmacao-modal
+  [aberto]="confirmacao() !== null"
+  [titulo]="tituloConfirmacao()"
+  [mensagem]="mensagemConfirmacao()"
+  [aProcessar]="aProcessar()"
+  (sim)="confirmarAlternarEstado()"
+  (nao)="cancelarConfirmacao()"
+/>

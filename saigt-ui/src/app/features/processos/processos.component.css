@@ -1,0 +1,116 @@
+.conteudo {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaco-6);
+  max-width: var(--contentor-lista);
+  margin: 0 auto;
+}
+
+h1 {
+  margin: 0;
+  font-size: var(--texto-xl);
+  font-weight: var(--peso-semi);
+  line-height: var(--texto-xl-linha);
+  color: var(--cor-texto);
+}
+
+.barra {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--espaco-3);
+  padding: var(--espaco-4);
+  background: var(--cor-superficie);
+  border: var(--borda-largura) solid var(--cor-borda);
+  border-radius: var(--raio-lg);
+}
+
+.filtros {
+  display: flex;
+  align-items: center;
+  gap: var(--espaco-2);
+  flex-wrap: wrap;
+  padding: var(--espaco-3);
+  background: var(--cor-superficie);
+  border: var(--borda-largura) solid var(--cor-borda);
+  border-radius: var(--raio-lg);
+}
+
+.filtros-form {
+  display: contents;
+}
+
+.barra app-campo-pesquisa {
+  flex: 1 1 240px;
+  min-width: 0;
+}
+
+.filtros select {
+  height: var(--altura-controlo-sm);
+  padding: 0 var(--espaco-2-5);
+  border: var(--borda-largura) solid var(--cor-borda);
+  border-radius: var(--raio-md);
+  background: var(--cor-superficie);
+  font-family: var(--fonte-base);
+  font-size: var(--texto-sm);
+  color: var(--cor-texto-rotulo);
+}
+
+.filtros select:focus-visible {
+  outline: var(--anel-foco);
+  outline-offset: var(--anel-foco-afastamento);
+}
+
+.designacao-instrumento {
+  font-weight: var(--peso-semi);
+}
+
+.ligacao-processo {
+  font-weight: var(--peso-semi);
+  color: var(--cor-primaria);
+  text-decoration: none;
+}
+
+.ligacao-processo:hover {
+  text-decoration: underline;
+}
+
+.numero-instrumento {
+  display: block;
+  font-size: var(--texto-xs);
+  line-height: var(--texto-xs-linha);
+  color: var(--cor-texto-nav);
+}
+
+.tipo-igt {
+  font-weight: var(--peso-medio);
+  color: var(--cor-texto);
+}
+
+/* O selo da devolução pela PCM ao lado do estado: texto, não só cor. */
+.estado-celula {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--espaco-1);
+}
+
+.filtro-situacao-pcm {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--espaco-1);
+}
+
+.concelhos-mais {
+  color: var(--cor-texto-secundario);
+  white-space: nowrap;
+}
+
+.visualmente-oculto {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="2026-11-12-13-tipo-dinamica-designacao-unica" author="david.raposo">
+        <comment>
+            Tipo de Dinâmica cujo `descritivo` é a Designação da Dinâmica e não se repete no mesmo tipo, sem distinguir
+            maiúsculas nem espaços nas pontas (EF v1.5 §3.1.2: Suspensão e Medidas Preventivas do Governo e Suspensão da
+            CCDR, «Escrita Livre, mas deverá ser única»). Editável em backoffice.
+        </comment>
+
+        <addColumn tableName="tipo_dinamica">
+            <column name="designacao_unica" type="BOOLEAN" defaultValueBoolean="false">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+
+        <sql>
+            UPDATE tipo_dinamica SET designacao_unica = TRUE
+            WHERE codigo IN ('SUSPENSAO_CCDR', 'SUSPENSAO_GOVERNO', 'MEDIDAS_PREVENTIVAS_GOVERNO')
+        </sql>
+
+        <rollback>
+            <dropColumn tableName="tipo_dinamica" columnName="designacao_unica"/>
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>

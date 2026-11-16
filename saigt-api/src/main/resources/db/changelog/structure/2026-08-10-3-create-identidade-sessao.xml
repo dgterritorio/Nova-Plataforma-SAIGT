@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="2026-08-10-3-create-identidade-sessao" author="david.raposo">
+        <comment>
+            Grupo 5 (parcial) — identidade e sessão: utilizador, utilizador_entidade, sessao.
+            Ver desenho v0.1, 02-autenticacao-autorizacao-seguranca.md §8.8-8.9.
+            `perfil_interno` só se aplica a utilizadores AD_DGT e nunca vem dos grupos do AD.
+            `utilizador_entidade` é uma projeção de leitura da lista de adesões refeita a cada login;
+            nunca serve para autorização (essa vive no token).
+            A FK de auditoria para utilizador é adicionada aqui porque utilizador só existe a partir daqui.
+        </comment>
+
+        <createTable tableName="utilizador">
+            <column name="id" type="UUID">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="nome" type="VARCHAR(200)"/>
+            <column name="email" type="VARCHAR(200)">
+                <constraints nullable="false" unique="true" uniqueConstraintName="uq_utilizador_email"/>
+            </column>
+            <column name="cargo" type="VARCHAR(200)"/>
+            <column name="telemovel" type="VARCHAR(30)"/>
+            <column name="origem_autenticacao" type="VARCHAR(10)" defaultValue="AD_DGT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="perfil_interno" type="VARCHAR(20)"/>
+            <column name="desativado_em" type="TIMESTAMP WITH TIME ZONE"/>
+            <column name="criado_em" type="TIMESTAMP WITH TIME ZONE" defaultValueComputed="CURRENT_TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+            <column name="atualizado_em" type="TIMESTAMP WITH TIME ZONE" defaultValueComputed="CURRENT_TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <sql>ALTER TABLE utilizador ADD CONSTRAINT ck_utilizador_perfil_interno_origem
+            CHECK ((origem_autenticacao = 'AD_DGT' AND perfil_interno IS NOT NULL)
+                OR (origem_autenticacao = 'INCM' AND perfil_interno IS NULL))</sql>
+        <sql>ALTER TABLE utilizador ADD CONSTRAINT ck_utilizador_perfil_interno_valor
+            CHECK (perfil_interno IS NULL OR perfil_interno IN ('MASTER', 'TECNICO', 'VISITANTE'))</sql>
+
+        <addForeignKeyConstraint baseTableName="auditoria" baseColumnNames="utilizador_id"
+                                  referencedTableName="utilizador" referencedColumnNames="id"
+                                  constraintName="fk_auditoria_utilizador"/>
+
+        <createTable tableName="utilizador_entidade">
+            <column name="utilizador_id" type="UUID">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_utilizador_entidade"
+                             foreignKeyName="fk_utilizador_entidade_utilizador" references="utilizador(id)"/>
+            </column>
+            <column name="entidade_id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_utilizador_entidade"
+                             foreignKeyName="fk_utilizador_entidade_entidade" references="entidade(id)"/>
+            </column>
+            <column name="sincronizado_em" type="TIMESTAMP WITH TIME ZONE">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <createIndex tableName="utilizador_entidade" indexName="idx_utilizador_entidade_entidade">
+            <column name="entidade_id"/>
+        </createIndex>
+
+        <createTable tableName="sessao">
+            <column name="jti" type="VARCHAR(100)">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="utilizador_id" type="UUID">
+                <constraints nullable="false" foreignKeyName="fk_sessao_utilizador" references="utilizador(id)"/>
+            </column>
+            <column name="emitido_em" type="TIMESTAMP WITH TIME ZONE" defaultValueComputed="CURRENT_TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+            <column name="expira_em" type="TIMESTAMP WITH TIME ZONE">
+                <constraints nullable="false"/>
+            </column>
+            <column name="revogado_em" type="TIMESTAMP WITH TIME ZONE"/>
+            <column name="tipo" type="VARCHAR(20)" defaultValue="ATIVA">
+                <constraints nullable="false"/>
+            </column>
+            <column name="contexto_sessao" type="JSONB"/>
+        </createTable>
+        <sql>CREATE INDEX idx_sessao_utilizador_ativa ON sessao (utilizador_id) WHERE revogado_em IS NULL AND tipo = 'ATIVA'</sql>
+        <sql>ALTER TABLE sessao ADD CONSTRAINT ck_sessao_pre_autenticacao_contexto
+            CHECK (tipo &lt;&gt; 'PRE_AUTENTICACAO' OR contexto_sessao IS NOT NULL)</sql>
+
+        <rollback>
+            <sql>DROP INDEX IF EXISTS idx_sessao_utilizador_ativa</sql>
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>

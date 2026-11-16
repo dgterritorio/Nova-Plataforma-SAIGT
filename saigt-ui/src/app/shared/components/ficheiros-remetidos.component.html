@@ -1,0 +1,42 @@
+<app-cartao titulo="Ficheiros remetidos" espacamento="nenhum">
+  @if (documentos() !== null) {
+    <app-selo cabecalho-acoes forma="pill" class="total">{{ textoTotal() }}</app-selo>
+  }
+
+  @if (erro()) {
+    <div class="mensagem">
+      <app-error-banner [erro]="erro()" />
+    </div>
+  } @else if (!aCarregar() && documentos()?.length === 0) {
+    <p class="mensagem estado">Sem ficheiros remetidos.</p>
+  } @else {
+    <app-tabela familia="compacta" [colunas]="colunas" [linhas]="documentos() ?? []" [aCarregar]="aCarregar()">
+      <ng-template appCelula="nomeFicheiro" let-documento>
+        <span class="ficheiro">
+          <span class="ficheiro-icone" aria-hidden="true">
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round">
+              <path d="M9.5 1.5H4a1 1 0 00-1 1v11a1 1 0 001 1h8a1 1 0 001-1V5L9.5 1.5z" />
+              <path d="M9.5 1.5V5H13M5.5 8.5h5M5.5 11h5" stroke-linecap="round" />
+            </svg>
+          </span>
+          <span class="ficheiro-nome">{{ documento.nomeFicheiro }}</span>
+        </span>
+      </ng-template>
+      <ng-template appCelula="extensao" let-documento>
+        <span class="ficheiro-tipo">{{ documento.extensao.toUpperCase() }}</span>
+      </ng-template>
+      <ng-template appCelula="criadoEm" let-documento>
+        <span class="ficheiro-data">{{ documento.criadoEm | date: 'dd/MM/yyyy HH:mm' }}</span>
+      </ng-template>
+      <ng-template appCelula="estado">
+        <app-selo tom="sucesso" forma="pill">
+          <svg icone viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" aria-hidden="true">
+            <circle cx="6" cy="6" r="4.5" />
+            <path d="M4.2 6.1l1.2 1.2 2.4-2.6" stroke-linejoin="round" />
+          </svg>
+          Recebido
+        </app-selo>
+      </ng-template>
+    </app-tabela>
+  }
+</app-cartao>

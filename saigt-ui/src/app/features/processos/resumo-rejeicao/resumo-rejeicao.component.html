@@ -1,0 +1,121 @@
+<section class="resumo" aria-labelledby="resumo-rejeicao-titulo">
+  <h2 class="visualmente-oculto" id="resumo-rejeicao-titulo" tabindex="-1" #titulo>Resumo da rejeição</h2>
+
+  <div class="cartoes">
+    <app-cartao titulo="Dados do processo">
+      <dl class="dados">
+        <div><dt>Designação</dt><dd class="valor-forte">{{ processo().designacaoInstrumento || '—' }}</dd></div>
+        <div><dt>Tipo de instrumento</dt><dd>{{ processo().tipoInstrumento || '—' }}</dd></div>
+        <div><dt>Tipo de procedimento</dt><dd>{{ processo().nomeProcedimento || '—' }}</dd></div>
+        <div><dt>Concelho</dt><dd>{{ concelhos() || '—' }}</dd></div>
+        <div><dt>Submissão do processo n.º</dt><dd class="valor-mono">{{ processo().submissao ?? '—' }}</dd></div>
+      </dl>
+    </app-cartao>
+
+    <app-cartao titulo="Dados do recibo">
+      <dl class="dados">
+        <div><dt>Número de recibo</dt><dd class="valor-mono valor-destaque">{{ processo().numeroProcesso || '—' }}</dd></div>
+        <div>
+          <dt>Data e hora de submissão</dt>
+          <dd class="valor-mono">
+            @if (processo().dataSubmissao; as data) {
+              {{ data | date: 'dd/MM/yyyy HH:mm:ss' }}
+            } @else {
+              —
+            }
+          </dd>
+        </div>
+        <div><dt>Total de ficheiros remetidos</dt><dd>{{ totalFicheiros() ?? '—' }}</dd></div>
+      </dl>
+      <p class="dados-nota">Registo de data e hora de submissão do processo na plataforma. Este recibo constitui prova oficial de entrega.</p>
+    </app-cartao>
+  </div>
+
+  <app-cartao espacamento="nenhum" class="quadro">
+    <div class="quadro-cabecalho">
+      <span class="quadro-marcador" aria-hidden="true"></span>
+      <h2 class="quadro-titulo" id="elementos-rejeitados-titulo">Elementos Rejeitados</h2>
+      <span class="contagem" data-campo="contagem">{{ textoElementos() }}</span>
+    </div>
+    @if (erroCarregamento()) {
+      <div class="erro-carregamento">
+        <app-error-banner [erro]="erroCarregamento()" />
+        <button type="button" app-botao variante="secundario" tamanho="pequeno" (click)="carregar()">Tentar novamente</button>
+      </div>
+    } @else {
+      <app-tabela
+        familia="compacta"
+        legenda="Elementos rejeitados"
+        [colunas]="colunas"
+        [linhas]="linhas()"
+        [aCarregar]="aCarregar()"
+        mensagemVazia="Não há itens rejeitados."
+      >
+        <ng-template appCelula="separador" let-linha><span class="separador">{{ linha.separador }}</span></ng-template>
+        <ng-template appCelula="nomeFicheiro" let-linha>
+          @if (linha.nomeFicheiro) {
+            <span class="ficheiro">
+              <svg class="ficheiro-icone" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M7 1H3a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4z" />
+                <path d="M7 1v3h3M4.5 6.5h3M4.5 8.5h3" />
+              </svg>
+              {{ linha.nomeFicheiro }}
+            </span>
+          } @else {
+            —
+          }
+        </ng-template>
+        <ng-template appCelula="categoria" let-linha>
+          @if (linha.categoria) {
+            <app-selo class="categoria" tom="laranja" forma="pill">{{ linha.categoria }}</app-selo>
+          } @else {
+            —
+          }
+        </ng-template>
+        <ng-template appCelula="motivo" let-linha><span class="motivo">{{ linha.motivo ?? '—' }}</span></ng-template>
+        <ng-template appCelula="notas" let-linha><span class="notas">{{ linha.notas }}</span></ng-template>
+      </app-tabela>
+    }
+    <p class="aviso-notificacao">
+      Após revisão desta mensagem, o responsável associa-a ao processo — esta associação notifica automaticamente o
+      município de que o processo foi recusado.
+    </p>
+  </app-cartao>
+
+  <div class="acoes">
+    <button type="button" app-botao variante="secundario" (click)="anterior.emit()">Anterior</button>
+    <button type="button" app-botao [desativado]="!podeRecusar()" (click)="abrirRecusa()">Recusar</button>
+  </div>
+</section>
+
+<app-modal
+  titulo="Recusar processo"
+  subtitulo="As notas gerais seguem com a recusa para a entidade, junto com os elementos rejeitados."
+  [aberto]="recusaAberta()"
+  largura="md"
+  (fechar)="fecharRecusa()"
+>
+  <app-campo-texto
+    data-campo="notas-gerais"
+    rotulo="Notas gerais"
+    [multilinha]="true"
+    ajuda="Opcional."
+    [formControl]="controloNotas"
+  />
+
+  <app-error-banner [erro]="erro()" [mensagemDoServidor]="true" />
+  @if (conflito()) {
+    <button type="button" app-botao variante="secundario" tamanho="pequeno" class="recarregar" (click)="pedirRecarregar()">
+      Recarregar
+    </button>
+  }
+
+  <div rodape class="acoes-modal">
+    <button type="button" app-botao variante="secundario" tamanho="pequeno" [desativado]="aConfirmar()" (click)="fecharRecusa()">
+      Cancelar
+    </button>
+    <button type="button" app-botao variante="perigo" tamanho="pequeno" [desativado]="!podeConfirmar()" [aCarregar]="aConfirmar()" (click)="confirmar()">
+      Confirmar Rejeição
+    </button>
+  </div>
+</app-modal>

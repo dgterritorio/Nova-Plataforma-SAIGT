@@ -1,0 +1,222 @@
+.lista {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaco-2);
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.lista-grelha {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--espaco-4);
+}
+
+.opcao {
+  display: flex;
+  align-items: center;
+  gap: var(--espaco-3);
+  padding: var(--espaco-3) var(--espaco-4);
+  border: var(--borda-largura-opcao) solid var(--cor-borda-controlo);
+  border-radius: var(--raio-md);
+  background: var(--cor-superficie);
+  cursor: pointer;
+}
+
+.lista-grelha .opcao {
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--espaco-3);
+  padding: var(--espaco-5);
+  border-radius: var(--raio-lg);
+}
+
+.opcao:hover {
+  border-color: var(--cor-texto-terciario);
+}
+
+.opcao:has(input:focus-visible) {
+  outline: var(--anel-foco);
+  outline-offset: var(--anel-foco-afastamento);
+}
+
+.opcao-escolhida,
+.opcao-escolhida:hover {
+  border-color: var(--cor-primaria);
+  background: var(--cor-info-fundo);
+}
+
+/* Na grelha (Novo IGT / IGT Existente, Ação), o Figma marca a escolha só pela borda. */
+.lista-grelha .opcao-escolhida {
+  background: var(--cor-superficie);
+}
+
+.opcao-desativada {
+  background: var(--cor-superficie-alt);
+  color: var(--cor-texto-secundario);
+  cursor: not-allowed;
+}
+
+.opcao-desativada:hover {
+  border-color: var(--cor-borda-controlo);
+}
+
+.opcao-icone {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: var(--raio-md);
+  background: var(--cor-etiqueta-fundo);
+  color: var(--cor-primaria);
+}
+
+.opcao-icone svg {
+  width: 16px;
+  height: 16px;
+}
+
+/* Novo IGT e IGT Existente: no Figma, ícones de 20px em caixas de 40px, azul e verde. */
+.opcao-icone-mais,
+.opcao-icone-prancheta {
+  width: 40px;
+  height: 40px;
+}
+
+.opcao-icone-mais {
+  background: var(--cor-icone-info-fundo);
+}
+
+.opcao-icone-prancheta {
+  background: var(--cor-icone-sucesso-fundo);
+  color: var(--cor-acao-sucesso);
+}
+
+.opcao-icone-mais svg,
+.opcao-icone-prancheta svg {
+  width: 20px;
+  height: 20px;
+}
+
+.opcao-etiqueta {
+  min-width: 36px;
+  padding: var(--espaco-0-5) var(--espaco-1-5);
+  border-radius: var(--raio-sm);
+  background: var(--cor-etiqueta-fundo);
+  font-family: var(--fonte-mono);
+  font-size: var(--texto-sm);
+  font-weight: var(--peso-negrito);
+  line-height: var(--texto-sm-linha);
+  color: var(--cor-neutra);
+  text-align: center;
+}
+
+.opcao-escolhida .opcao-etiqueta {
+  background: var(--cor-primaria);
+  color: var(--cor-primaria-contraste);
+}
+
+.opcao-texto {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: var(--espaco-0-5);
+  min-width: 0;
+}
+
+.opcao-titulo {
+  font-size: var(--texto-base);
+  font-weight: var(--peso-semi);
+  line-height: var(--texto-base-linha);
+  color: var(--cor-titulo-assistente);
+}
+
+.opcao-descricao {
+  font-size: var(--texto-sm);
+  line-height: var(--texto-sm-linha);
+  color: var(--cor-texto-passo);
+}
+
+.opcao-citacao {
+  font-style: italic;
+}
+
+.opcao-nota {
+  display: flex;
+  align-items: center;
+  gap: var(--espaco-1-5);
+  margin-top: var(--espaco-1-5);
+  font-size: var(--texto-xs);
+  line-height: var(--texto-xs-linha);
+  color: var(--cor-texto-passo);
+}
+
+.opcao-nota-valor {
+  padding: var(--espaco-0-5) var(--espaco-2);
+  border-radius: var(--raio-sm);
+  background: var(--cor-sucesso-fundo);
+  font-weight: var(--peso-medio);
+  color: var(--cor-sucesso);
+}
+
+.opcao-nota-aviso {
+  background: var(--cor-selo-aviso-fundo);
+  color: var(--cor-aviso);
+}
+
+.opcao-prazo {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--espaco-1-5);
+  margin-top: var(--espaco-1-5);
+  font-size: var(--texto-xs);
+  line-height: var(--texto-xs-linha);
+  color: var(--cor-texto-passo);
+}
+
+.opcao-prazo-data {
+  font-family: var(--fonte-mono);
+}
+
+.opcao-data {
+  align-self: flex-start;
+  font-family: var(--fonte-mono);
+  font-size: var(--texto-xs);
+  line-height: var(--texto-xs-linha);
+  color: var(--cor-texto-passo);
+}
+
+.opcao-selo {
+  padding: var(--espaco-0-5) var(--espaco-2);
+  border-radius: var(--raio-pill);
+  background: var(--cor-sucesso-fundo);
+  font-size: var(--texto-xs);
+  font-weight: var(--peso-medio);
+  line-height: var(--texto-xs-linha);
+  color: var(--cor-selo-sucesso);
+}
+
+.visualmente-oculto {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+/* Uma opção sozinha fica na coluna da direita, como no Figma da Ação. */
+.lista-grelha .opcao:only-of-type {
+  grid-column: 2;
+}
+
+.opcao-escolhida .opcao-descricao,
+.opcao-escolhida .opcao-nota,
+.opcao-escolhida .opcao-prazo,
+.opcao-escolhida .opcao-data {
+  color: var(--cor-texto-passo-escolhido);
+}

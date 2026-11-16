@@ -1,0 +1,130 @@
+<div class="barra-filtros">
+  <div class="grupo-filtros" role="group" aria-label="Catálogo">
+    @for (opcao of opcoesCatalogo; track opcao.valor) {
+      <button
+        type="button"
+        class="filtro filtro-catalogo"
+        [class.ativo]="catalogo() === opcao.valor"
+        [attr.aria-pressed]="catalogo() === opcao.valor"
+        (click)="mudarCatalogo(opcao.valor)"
+      >
+        {{ opcao.rotulo }}
+      </button>
+    }
+  </div>
+
+  <div class="filtros-direita">
+    <div class="grupo-filtros" role="group" aria-label="Estado do tipo">
+      @for (opcao of opcoesEstado; track opcao.valor) {
+        <button
+          type="button"
+          class="filtro filtro-estado"
+          [class.ativo]="filtroEstado() === opcao.valor"
+          [attr.aria-pressed]="filtroEstado() === opcao.valor"
+          (click)="mudarFiltroEstado(opcao.valor)"
+        >
+          {{ opcao.rotulo }}
+        </button>
+      }
+    </div>
+    <span class="contador">{{ total() }} tipos</span>
+    <button app-botao type="button" tamanho="pequeno" class="botao-adicionar" (click)="adicionar()">Adicionar tipo</button>
+  </div>
+</div>
+
+@if (mensagemSucesso(); as mensagem) {
+  <app-alerta tipo="sucesso">{{ mensagem }}</app-alerta>
+}
+<app-error-banner [erro]="erroAcao()" />
+
+@if (erro()) {
+  <app-error-banner [erro]="erro()" />
+} @else {
+  <app-cartao variante="elevado" espacamento="nenhum">
+    <app-tabela
+      familia="compacta"
+      [legenda]="nomeCatalogo()"
+      [colunas]="colunas()"
+      [linhas]="linhas()"
+      [aCarregar]="aCarregar()"
+      mensagemVazia="Sem tipos para os filtros indicados."
+    >
+      <ng-template appCelula="codigo" let-tipo>
+        <span class="celula-codigo">{{ tipo.codigo }}</span>
+      </ng-template>
+      <ng-template appCelula="nome" let-tipo>
+        <span class="celula-nome">{{ tipo.nome }}</span>
+      </ng-template>
+      <ng-template appCelula="categoria" let-tipo>{{ rotuloCategoria(tipo) }}</ng-template>
+      <ng-template appCelula="formulario" let-tipo>
+        @if (formulario(tipo); as nome) {
+          {{ nome }}
+        } @else {
+          <app-selo tom="aviso" forma="pill">Sem formulário</app-selo>
+        }
+      </ng-template>
+      <ng-template appCelula="estado" let-tipo>
+        <app-selo [tom]="tipo.ativo ? 'sucesso' : 'cinza'" forma="pill">
+          <span icone class="status-ponto" aria-hidden="true"></span>
+          {{ tipo.ativo ? 'Ativo' : 'Inativo' }}
+        </app-selo>
+      </ng-template>
+      <ng-template appCelula="acoes" let-tipo>
+        <div class="menu-acoes">
+          <button
+            type="button"
+            class="btn-acoes"
+            [attr.aria-label]="'Mais opções para ' + tipo.codigo"
+            [attr.aria-expanded]="menuAbertoId() === tipo.id"
+            (click)="alternarMenu(tipo, $event)"
+          >
+            <svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
+              <circle cx="4" cy="8" r="1" /><circle cx="8" cy="8" r="1" /><circle cx="12" cy="8" r="1" />
+            </svg>
+          </button>
+          @if (menuAbertoId() === tipo.id) {
+            <!-- eslint-disable-next-line @angular-eslint/template/click-events-have-key-events, @angular-eslint/template/interactive-supports-focus -- só impede o click de fechar o próprio menu, não é uma interação do utilizador -->
+            <div
+              class="dropdown-menu"
+              [style.top.px]="menuPosicao().topo"
+              [style.right.px]="menuPosicao().direita"
+              (click)="$event.stopPropagation()"
+            >
+              <button type="button" class="acao-editar" (click)="editar(tipo)">Editar</button>
+              <button type="button" class="acao-estado" (click)="pedirAlternarEstado(tipo)">
+                {{ tipo.ativo ? 'Desativar' : 'Reativar' }}
+              </button>
+            </div>
+          }
+        </div>
+      </ng-template>
+      <app-paginacao
+        rodape
+        [pagina]="pagina() + 1"
+        [tamanhoPagina]="tamanhoPagina"
+        [total]="total()"
+        etiquetaItens="tipos"
+        (paginaMudou)="irParaPagina($event - 1)"
+      />
+    </app-tabela>
+  </app-cartao>
+}
+
+<app-tipo-config-modal
+  [aberto]="modalAberto()"
+  [catalogo]="catalogo()"
+  [tipo]="emEdicao()"
+  [aGravar]="aGravar()"
+  [erroServidor]="erroModal()"
+  (guardar)="guardar($event)"
+  (fechar)="fecharModal()"
+/>
+
+<app-confirmacao-modal
+  [aberto]="confirmacao() !== null"
+  [titulo]="tituloConfirmacao()"
+  [mensagem]="mensagemConfirmacao()"
+  [aProcessar]="aProcessar()"
+  (sim)="confirmarAlternarEstado()"
+  (nao)="cancelarConfirmacao()"
+/>

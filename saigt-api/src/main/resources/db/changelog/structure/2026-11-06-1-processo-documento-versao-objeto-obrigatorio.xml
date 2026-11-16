@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="2026-11-06-1-processo-documento-versao-objeto-obrigatorio" author="pedro.paixao">
+        <comment>
+            DB-DOC-002: `versao_objeto` passa a obrigatório e a linha ganha `versao` para o controlo otimista. As
+            linhas sem `versionId` ficam com `null`, o identificador que o S3 dá aos objetos de um bucket sem
+            versionamento. `token_publico` e `exposto_em` ficam até a remoção do link público antigo.
+        </comment>
+
+        <sql>UPDATE processo_documento SET versao_objeto = 'null' WHERE versao_objeto IS NULL</sql>
+        <addNotNullConstraint tableName="processo_documento" columnName="versao_objeto"
+                              columnDataType="VARCHAR(100)"/>
+
+        <addColumn tableName="processo_documento">
+            <column name="versao" type="BIGINT" defaultValueNumeric="0">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+
+        <rollback>
+            <dropColumn tableName="processo_documento" columnName="versao"/>
+            <dropNotNullConstraint tableName="processo_documento" columnName="versao_objeto"
+                                   columnDataType="VARCHAR(100)"/>
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>

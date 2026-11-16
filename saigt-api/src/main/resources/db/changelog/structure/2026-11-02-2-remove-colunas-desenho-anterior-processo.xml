@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="2026-11-02-2-remove-colunas-desenho-anterior-processo" author="margarida.marques">
+        <comment>
+            Colunas do desenho anterior, nunca escritas: o IDUS passa a tabelas próprias do domínio INT e
+            o processo deixa de guardar o estado de PCGT, GeoConform, SNIT e INCM. O rollback repõe-nas vazias.
+        </comment>
+
+        <dropColumn tableName="processo">
+            <column name="pcgt_confirmado"/>
+            <column name="codigo_estado_incm"/>
+            <column name="idus_sistema"/>
+            <column name="idus_id_tmp"/>
+            <column name="idus_id_definitivo"/>
+            <column name="idus_ordem_tmp"/>
+            <column name="idus_ordem_definitiva"/>
+            <column name="idus_tmp"/>
+            <column name="idus_definitivo"/>
+            <column name="id_snit"/>
+            <column name="proc_pcgt"/>
+            <column name="proc_geoconforme"/>
+        </dropColumn>
+
+        <rollback>
+            <addColumn tableName="processo">
+                <column name="pcgt_confirmado" type="BOOLEAN" defaultValueBoolean="false">
+                    <constraints nullable="false"/>
+                </column>
+                <column name="codigo_estado_incm" type="INTEGER"/>
+                <column name="idus_sistema" type="VARCHAR(2)"/>
+                <column name="idus_id_tmp" type="VARCHAR(50)"/>
+                <column name="idus_id_definitivo" type="VARCHAR(50)"/>
+                <column name="idus_ordem_tmp" type="VARCHAR(50)"/>
+                <column name="idus_ordem_definitiva" type="VARCHAR(50)"/>
+                <column name="idus_tmp" type="VARCHAR(200)"/>
+                <column name="idus_definitivo" type="VARCHAR(200)"/>
+                <column name="id_snit" type="VARCHAR(50)"/>
+                <column name="proc_pcgt" type="VARCHAR(50)"/>
+                <column name="proc_geoconforme" type="VARCHAR(50)"/>
+            </addColumn>
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>

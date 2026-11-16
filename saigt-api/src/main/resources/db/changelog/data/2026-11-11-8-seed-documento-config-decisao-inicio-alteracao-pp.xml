@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="2026-11-11-8-seed-documento-config-decisao-inicio-alteracao-pp" author="david.raposo">
+        <comment>
+            Itens documentais da Decisão de início da Alteração de PP (procedimento 2207), iguais aos da Alteração de
+            PDM (209). A lista vem da EF v1.5 e ainda não está confirmada com a DGT (OI-245), por isso é seed. O link
+            público e os limites por item ficam como os do 209, que os receberam por UPDATE em changesets anteriores.
+            Sem id explícito, para a sequência o atribuir.
+        </comment>
+
+        <insert tableName="documento_config">
+            <column name="instrumento_procedimento_config_id" valueNumeric="2207"/>
+            <column name="codigo" value="DELIBERACAO_PUB"/>
+            <column name="separador" value="Deliberação"/>
+            <column name="nome" value="Deliberação do início de alteração do plano territorial"/>
+            <column name="categoria" value="PUBLICACAO"/>
+            <column name="tipo_elemento" value="PECA_ESCRITA"/>
+            <column name="formato" value="EDITAVEL"/>
+            <column name="obrigatorio" valueBoolean="true"/>
+            <column name="extensoes_aceites" value='["doc","docx","rtf","odf","odt","xls","xlsx","csv","ods","pdf","txt"]'/>
+            <column name="ordem" valueNumeric="1"/>
+            <column name="ativo" valueBoolean="true"/>
+            <column name="elemento_informacao_base" value="DELIBERACAO"/>
+            <column name="link_publico_permitido" valueBoolean="true"/>
+            <column name="tamanho_maximo_ficheiro" valueNumeric="524288000"/>
+            <column name="tamanho_maximo_total" valueNumeric="2147483648"/>
+            <column name="numero_maximo_ficheiros" valueNumeric="10"/>
+        </insert>
+        <insert tableName="documento_config">
+            <column name="instrumento_procedimento_config_id" valueNumeric="2207"/>
+            <column name="codigo" value="DELIBERACAO_DEP"/>
+            <column name="separador" value="Deliberação"/>
+            <column name="nome" value="Deliberação do início de alteração do plano territorial"/>
+            <column name="categoria" value="DEPOSITO"/>
+            <column name="tipo_elemento" value="PECA_ESCRITA"/>
+            <column name="formato" value="NAO_EDITAVEL"/>
+            <column name="obrigatorio" valueBoolean="false"/>
+            <column name="extensoes_aceites" value='["pdf","jpg","png"]'/>
+            <column name="ordem" valueNumeric="2"/>
+            <column name="ativo" valueBoolean="true"/>
+            <column name="elemento_informacao_base" value="DELIBERACAO"/>
+            <column name="link_publico_permitido" valueBoolean="true"/>
+            <column name="tamanho_maximo_ficheiro" valueNumeric="524288000"/>
+            <column name="tamanho_maximo_total" valueNumeric="2147483648"/>
+            <column name="numero_maximo_ficheiros" valueNumeric="10"/>
+        </insert>
+        <insert tableName="documento_config">
+            <column name="instrumento_procedimento_config_id" valueNumeric="2207"/>
+            <column name="codigo" value="TEXTO_ATO_PUB"/>
+            <column name="separador" value="Texto do Ato"/>
+            <column name="nome" value="Texto do ato a publicar no Diário da República"/>
+            <column name="categoria" value="PUBLICACAO"/>
+            <column name="tipo_elemento" value="PECA_ESCRITA"/>
+            <column name="formato" value="EDITAVEL"/>
+            <column name="obrigatorio" valueBoolean="true"/>
+            <column name="extensoes_aceites" value='["doc","docx","rtf","odf","odt","xls","xlsx","csv","ods","pdf","txt"]'/>
+            <column name="ordem" valueNumeric="3"/>
+            <column name="ativo" valueBoolean="true"/>
+            <column name="elemento_informacao_base" value="TEXTO_ATO"/>
+            <column name="link_publico_permitido" valueBoolean="true"/>
+            <column name="tamanho_maximo_ficheiro" valueNumeric="524288000"/>
+            <column name="tamanho_maximo_total" valueNumeric="2147483648"/>
+            <column name="numero_maximo_ficheiros" valueNumeric="10"/>
+        </insert>
+        <insert tableName="documento_config">
+            <column name="instrumento_procedimento_config_id" valueNumeric="2207"/>
+            <column name="codigo" value="TEXTO_ATO_DEP"/>
+            <column name="separador" value="Texto do Ato"/>
+            <column name="nome" value="Texto do ato a publicar no Diário da República"/>
+            <column name="categoria" value="DEPOSITO"/>
+            <column name="tipo_elemento" value="PECA_ESCRITA"/>
+            <column name="formato" value="NAO_EDITAVEL"/>
+            <column name="obrigatorio" valueBoolean="false"/>
+            <column name="extensoes_aceites" value='["pdf","jpg","png"]'/>
+            <column name="ordem" valueNumeric="4"/>
+            <column name="ativo" valueBoolean="true"/>
+            <column name="elemento_informacao_base" value="TEXTO_ATO"/>
+            <column name="link_publico_permitido" valueBoolean="false"/>
+            <column name="tamanho_maximo_ficheiro" valueNumeric="524288000"/>
+            <column name="tamanho_maximo_total" valueNumeric="2147483648"/>
+            <column name="numero_maximo_ficheiros" valueNumeric="10"/>
+        </insert>
+        <insert tableName="documento_config">
+            <column name="instrumento_procedimento_config_id" valueNumeric="2207"/>
+            <column name="codigo" value="PLANTA_LOCALIZACAO_PUB"/>
+            <column name="separador" value="Planta de Localização"/>
+            <column name="nome" value="Planta com área de intervenção"/>
+            <column name="categoria" value="PUBLICACAO"/>
+            <column name="tipo_elemento" value="PECA_GRAFICA"/>
+            <column name="formato" value="EDITAVEL"/>
+            <column name="obrigatorio" valueBoolean="true"/>
+            <column name="extensoes_aceites" value='["zip"]'/>
+            <column name="ordem" valueNumeric="5"/>
+            <column name="ativo" valueBoolean="true"/>
+            <column name="link_publico_permitido" valueBoolean="true"/>
+            <column name="tamanho_maximo_ficheiro" valueNumeric="524288000"/>
+            <column name="tamanho_maximo_total" valueNumeric="2147483648"/>
+            <column name="numero_maximo_ficheiros" valueNumeric="10"/>
+        </insert>
+        <insert tableName="documento_config">
+            <column name="instrumento_procedimento_config_id" valueNumeric="2207"/>
+            <column name="codigo" value="PLANTA_LOCALIZACAO_DEP"/>
+            <column name="separador" value="Planta de Localização"/>
+            <column name="nome" value="Planta com área de intervenção"/>
+            <column name="categoria" value="DEPOSITO"/>
+            <column name="tipo_elemento" value="PECA_GRAFICA"/>
+            <column name="formato" value="NAO_EDITAVEL"/>
+            <column name="obrigatorio" valueBoolean="false"/>
+            <column name="extensoes_aceites" value='["zip"]'/>
+            <column name="ordem" valueNumeric="6"/>
+            <column name="ativo" valueBoolean="true"/>
+            <column name="link_publico_permitido" valueBoolean="false"/>
+            <column name="tamanho_maximo_ficheiro" valueNumeric="524288000"/>
+            <column name="tamanho_maximo_total" valueNumeric="2147483648"/>
+            <column name="numero_maximo_ficheiros" valueNumeric="10"/>
+        </insert>
+
+        <rollback>
+            <delete tableName="documento_config">
+                <where>instrumento_procedimento_config_id = 2207 AND codigo IN ('DELIBERACAO_PUB', 'DELIBERACAO_DEP',
+                    'TEXTO_ATO_PUB', 'TEXTO_ATO_DEP', 'PLANTA_LOCALIZACAO_PUB', 'PLANTA_LOCALIZACAO_DEP')</where>
+            </delete>
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>

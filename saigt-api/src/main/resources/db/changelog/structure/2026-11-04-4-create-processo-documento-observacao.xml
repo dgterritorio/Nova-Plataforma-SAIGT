@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="2026-11-04-4-create-processo-documento-observacao" author="arnaldo.costa">
+        <comment>
+            Observações de um item documental do Processo (DB-DOC-004, FR-137): um item obrigatório sem
+            ficheiro mas com observações deixa de estar pendente. Uma linha por processo e item.
+        </comment>
+
+        <createTable tableName="processo_documento_observacao">
+            <column name="processo_id" type="UUID">
+                <constraints nullable="false" foreignKeyName="fk_processo_documento_observacao_processo" references="processo(id)"/>
+            </column>
+            <column name="documento_config_id" type="BIGINT">
+                <constraints nullable="false" foreignKeyName="fk_processo_documento_observacao_config" references="documento_config(id)"/>
+            </column>
+            <column name="observacoes" type="TEXT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <addPrimaryKey tableName="processo_documento_observacao" columnNames="processo_id, documento_config_id"
+                       constraintName="pk_processo_documento_observacao"/>
+        <sql>
+            ALTER TABLE processo_documento_observacao
+                ADD CONSTRAINT ck_processo_documento_observacao_nao_vazia CHECK (length(trim(observacoes)) > 0)
+        </sql>
+
+        <rollback>
+            <dropTable tableName="processo_documento_observacao"/>
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>

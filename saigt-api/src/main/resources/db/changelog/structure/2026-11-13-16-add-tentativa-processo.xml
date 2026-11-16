@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="2026-11-13-16-add-tentativa-processo" author="arnaldo.costa">
+        <comment>
+            Tentativa do processo (DB-PROC-014, TR-224, TR-230): `tentativa`, copiada de `dinamica.tentativa` na
+            criação e fixa, com 1 nos processos existentes, que são todos da primeira; `aproveita_atos_anteriores`,
+            informativo, só a partir da segunda Tentativa. A ocorrência passa a contar-se dentro da Tentativa.
+        </comment>
+
+        <sql>
+            ALTER TABLE processo ADD COLUMN tentativa INTEGER NOT NULL DEFAULT 1
+                CONSTRAINT ck_processo_tentativa CHECK (tentativa >= 1)
+        </sql>
+        <sql>
+            ALTER TABLE processo ADD COLUMN aproveita_atos_anteriores BOOLEAN
+                CONSTRAINT ck_processo_aproveita_atos_anteriores CHECK (aproveita_atos_anteriores IS NULL OR tentativa >= 2)
+        </sql>
+        <sql>ALTER TABLE processo DROP CONSTRAINT uq_processo_ocorrencia</sql>
+        <sql>
+            ALTER TABLE processo ADD CONSTRAINT uq_processo_ocorrencia
+                UNIQUE (dinamica_id, tentativa, instrumento_procedimento_config_id, ocorrencia)
+        </sql>
+
+        <rollback>
+            <sql>ALTER TABLE processo DROP CONSTRAINT uq_processo_ocorrencia</sql>
+            <sql>
+                ALTER TABLE processo ADD CONSTRAINT uq_processo_ocorrencia
+                    UNIQUE (dinamica_id, instrumento_procedimento_config_id, ocorrencia)
+            </sql>
+            <dropColumn tableName="processo" columnName="aproveita_atos_anteriores"/>
+            <dropColumn tableName="processo" columnName="tentativa"/>
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>

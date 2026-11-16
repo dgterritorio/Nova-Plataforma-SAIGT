@@ -1,0 +1,155 @@
+/* Figma 2111:4090 («5.1.1.Metadados»). */
+:host {
+    display: block;
+}
+
+.estado {
+    margin: 0;
+    font-size: var(--texto-sm);
+    color: var(--cor-texto-secundario);
+}
+
+.cartoes {
+    display: flex;
+    flex-direction: column;
+    gap: var(--espaco-6);
+}
+
+.cartao {
+    overflow: hidden;
+    padding: 1px;
+    background: var(--cor-superficie);
+    border: var(--borda-largura) solid var(--cor-borda);
+    border-radius: var(--raio-xl);
+    box-shadow: var(--sombra-cartao);
+}
+
+.titulo {
+    margin: 0;
+    padding: var(--espaco-4) var(--espaco-6);
+    font-size: var(--texto-base);
+    font-weight: var(--peso-negrito);
+    line-height: var(--texto-base-linha);
+    color: var(--cor-titulo-metadados);
+}
+
+.grelha {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: calc(var(--espaco-6) * 2);
+    padding: 0 var(--espaco-6) var(--espaco-6);
+}
+
+.leitura {
+    row-gap: var(--espaco-3);
+    margin: 0;
+    padding-top: var(--espaco-2);
+}
+
+.coluna {
+    display: flex;
+    flex-direction: column;
+}
+
+.leitura-simples {
+    margin: var(--espaco-5) 0 0;
+}
+
+.par {
+    display: flex;
+    flex-direction: column;
+}
+
+.par dt,
+.par dd {
+    margin: 0;
+    font-size: var(--texto-base);
+    font-weight: var(--peso-medio);
+    line-height: var(--texto-base-linha);
+}
+
+.par dt {
+    min-height: var(--espaco-6);
+    color: var(--cor-texto-rotulo);
+}
+
+.par dd {
+    color: var(--cor-texto);
+    overflow-wrap: anywhere;
+}
+
+.campo {
+    display: flex;
+    flex-direction: column;
+    padding-top: var(--espaco-5);
+}
+
+.rotulo {
+    display: flex;
+    gap: var(--espaco-2);
+    align-items: flex-start;
+    min-height: 28px;
+    padding-bottom: var(--espaco-2);
+    font-size: var(--texto-base);
+    font-weight: var(--peso-medio);
+    line-height: var(--texto-base-linha);
+    color: var(--cor-texto-rotulo);
+}
+
+.obrigatorio {
+    font-size: var(--texto-sm);
+    line-height: var(--texto-sm-linha);
+    color: var(--cor-erro);
+}
+
+.entrada {
+    width: 100%;
+    min-height: 42px;
+    padding: var(--espaco-caixa-texto-vertical) var(--espaco-caixa-texto-horizontal);
+    background: var(--cor-superficie);
+    border: var(--borda-largura) solid var(--cor-borda);
+    border-radius: var(--raio-md);
+    font: inherit;
+    font-size: var(--texto-base);
+    color: var(--cor-texto);
+}
+
+.entrada::placeholder {
+    color: var(--cor-texto-terciario);
+}
+
+.entrada:focus-visible {
+    outline: var(--anel-foco);
+    outline-offset: var(--anel-foco-afastamento);
+}
+
+.entrada[aria-invalid='true'] {
+    border-color: var(--cor-erro);
+}
+
+.area {
+    min-height: 105px;
+    resize: vertical;
+}
+
+.data {
+    max-width: 366px;
+}
+
+.erro-geral {
+    display: block;
+    margin: 0 0 var(--espaco-4);
+}
+
+.erro {
+    margin-top: var(--espaco-1);
+    font-size: var(--texto-sm);
+    line-height: var(--texto-sm-linha);
+    color: var(--cor-erro);
+}
+
+@media (width <= 720px) {
+    .grelha {
+        grid-template-columns: 1fr;
+    }
+}

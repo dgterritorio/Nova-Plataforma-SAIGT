@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="2026-11-12-16-seed-matriz-permissao-acao-programas" author="david.raposo">
+        <comment>
+            A matriz de tipos de entidade (2026-11-11-4, FR-189 e EF v1.5) corre antes do seed dos Programas
+            (2026-11-11-12), que só dá SEC_ESTADO, APA e DGT. Acrescenta o que a matriz pede e esse seed não dá:
+            CCDR_DR no PROT, ICNF no PS, ICNF e DGPC no PEOT, fora da Constituição da CC e das Dinâmicas da CCDR e do
+            Governo, que têm regra própria. Idempotente pelo NOT EXISTS; o rollback apaga só essas combinações.
+        </comment>
+        <sql>
+            INSERT INTO permissao_acao (instrumento_procedimento_config_id, tipo_entidade, ativo)
+            SELECT c.id, m.tipo_entidade, true
+            FROM instrumento_procedimento_config c
+            JOIN instrumento_dinamica_config d ON d.id = c.instrumento_dinamica_config_id
+            JOIN tipo_instrumento ti ON ti.id = d.tipo_instrumento_id
+            JOIN tipo_dinamica td ON td.id = d.tipo_dinamica_id
+            JOIN tipo_procedimento tp ON tp.id = c.tipo_procedimento_id
+            JOIN (VALUES ('PROT', 'CCDR_DR'), ('PS', 'ICNF'), ('PEOT', 'ICNF'), ('PEOT', 'DGPC'))
+                 AS m(tipo_instrumento, tipo_entidade) ON m.tipo_instrumento = ti.codigo
+            WHERE tp.codigo &lt;&gt; 'CONSTITUICAO_CC'
+              AND td.codigo NOT IN ('SUSPENSAO_CCDR', 'SUSPENSAO_GOVERNO', 'MEDIDAS_PREVENTIVAS_GOVERNO', 'RATIFICACAO')
+              AND NOT EXISTS (SELECT 1 FROM permissao_acao pa
+                              WHERE pa.instrumento_procedimento_config_id = c.id AND pa.tipo_entidade = m.tipo_entidade)
+        </sql>
+        <rollback>
+            <sql>
+                DELETE FROM permissao_acao pa
+                USING instrumento_procedimento_config c, instrumento_dinamica_config d, tipo_instrumento ti,
+                      tipo_dinamica td, tipo_procedimento tp
+                WHERE c.id = pa.instrumento_procedimento_config_id
+                  AND d.id = c.instrumento_dinamica_config_id
+                  AND ti.id = d.tipo_instrumento_id
+                  AND td.id = d.tipo_dinamica_id
+                  AND tp.id = c.tipo_procedimento_id
+                  AND (ti.codigo, pa.tipo_entidade) IN (('PROT', 'CCDR_DR'), ('PS', 'ICNF'), ('PEOT', 'ICNF'), ('PEOT', 'DGPC'))
+                  AND tp.codigo &lt;&gt; 'CONSTITUICAO_CC'
+                  AND td.codigo NOT IN ('SUSPENSAO_CCDR', 'SUSPENSAO_GOVERNO', 'MEDIDAS_PREVENTIVAS_GOVERNO', 'RATIFICACAO')
+            </sql>
+        </rollback>
+    </changeSet>
+</databaseChangeLog>

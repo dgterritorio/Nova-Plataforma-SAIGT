@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="2026-11-09-4-snit-codigo-catalogos" author="david.raposo">
+        <comment>
+            IDs das tabelas de referência do SNIT enviados no registo da publicação (typeId, procedureId), separados dos
+            códigos do IDUS (OI-501). Sem FK para snit_referencia, que só é única por (lista, codigo): a validação contra a
+            réplica é da aplicação. Nulo = sem correspondência confirmada com o SNIT.
+        </comment>
+
+        <addColumn tableName="tipo_instrumento">
+            <column name="snit_codigo" type="VARCHAR(20)"/>
+        </addColumn>
+        <addColumn tableName="tipo_dinamica">
+            <column name="snit_codigo" type="VARCHAR(20)"/>
+        </addColumn>
+        <addColumn tableName="tipo_procedimento">
+            <column name="snit_codigo" type="VARCHAR(20)"/>
+        </addColumn>
+
+        <rollback>
+            <dropColumn tableName="tipo_procedimento" columnName="snit_codigo"/>
+            <dropColumn tableName="tipo_dinamica" columnName="snit_codigo"/>
+            <dropColumn tableName="tipo_instrumento" columnName="snit_codigo"/>
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>

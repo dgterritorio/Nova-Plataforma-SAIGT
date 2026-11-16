@@ -1,0 +1,259 @@
+<app-shell breadcrumb="Gestão de Notificações">
+  <div class="conteudo">
+    <div class="cabecalho">
+      <div>
+        <h1>Gestão de Notificações</h1>
+        <p class="subtitulo">Pedidos de apoio, regularizações, alertas gerais e notícias</p>
+      </div>
+    </div>
+
+    <app-separadores
+      #separadoresRef
+      rotulo="Tipos de notificação"
+      [separadores]="separadores()"
+      [ativo]="separador()"
+      (mudou)="mudarSeparador($event)"
+    />
+
+    <div
+      #painel
+      class="painel"
+      role="tabpanel"
+      tabindex="-1"
+      [id]="separadoresRef.idPainel(separador())"
+      [attr.aria-labelledby]="separadoresRef.idSeparador(separador())"
+    >
+      <div class="barra-filtros">
+        <app-seletor
+          class="filtro-estado"
+          rotulo="Estado"
+          [compacto]="true"
+          [opcoes]="opcoesEstado"
+          [formControl]="filtroEstadoControlo"
+        />
+        <span class="contador">{{ total() }} {{ total() === 1 ? 'notificação' : 'notificações' }}</span>
+      </div>
+
+      @if (erro(); as mensagem) {
+        <div class="erro-lista">
+          <app-alerta tipo="erro">{{ mensagem }}</app-alerta>
+          <button app-botao type="button" variante="secundario" tamanho="pequeno" class="tentar-de-novo" (click)="tentarDeNovo()">
+            Tentar de novo
+          </button>
+        </div>
+      } @else {
+        <app-cartao variante="elevado" espacamento="nenhum">
+          <app-tabela
+            familia="compacta"
+            larguraMinima="880px"
+            [colunas]="colunas"
+            [linhas]="itens()"
+            [aCarregar]="aCarregar()"
+            [clicavel]="true"
+            mensagemVazia="Sem notificações."
+            (linhaClicada)="abrir($event)"
+          >
+            <ng-template appCelula="titulo" let-n>
+              <span class="celula-titulo">{{ n.titulo }}</span>
+            </ng-template>
+            <ng-template appCelula="remetente" let-n>
+              <span class="celula-texto">{{ remetente(n.criadoPorNome) }}</span>
+            </ng-template>
+            <ng-template appCelula="processo" let-n>
+              @if (n.processoId) {
+                <a
+                  class="ligacao-processo"
+                  [routerLink]="rotaProcesso(n.processoId)"
+                  (click)="$event.stopPropagation()"
+                  (keydown.enter)="$event.stopPropagation()"
+                >
+                  {{ n.numeroProcesso ?? 'Abrir processo' }}
+                </a>
+              } @else {
+                <span class="celula-texto">{{ n.descricaoIgt ?? '—' }}</span>
+              }
+            </ng-template>
+            <ng-template appCelula="criadoEm" let-n>
+              <time class="celula-data" [attr.datetime]="n.criadoEm">{{ formatarDataHora(n.criadoEm) }}</time>
+            </ng-template>
+            <ng-template appCelula="estado" let-n>
+              <app-selo forma="pill" class="selo-estado" [tom]="selo(n).tom">{{ selo(n).rotulo }}</app-selo>
+            </ng-template>
+            <app-paginacao
+              rodape
+              [pagina]="pagina() + 1"
+              [tamanhoPagina]="tamanhoPagina"
+              [total]="total()"
+              etiquetaItens="notificações"
+              (paginaMudou)="irParaPagina($event - 1)"
+            />
+          </app-tabela>
+        </app-cartao>
+      }
+    </div>
+  </div>
+</app-shell>
+
+<app-modal largura="lg" [aberto]="!!selecionada()" [titulo]="selecionada()?.titulo ?? ''" (fechar)="fecharDetalhe()">
+  <div class="anuncio" aria-live="polite">
+    @if (sucesso(); as mensagem) {
+      <app-alerta tipo="sucesso" class="alerta-sucesso">{{ mensagem }}</app-alerta>
+    }
+  </div>
+  <app-error-banner class="erro-acao" [erro]="erroAcao()" />
+
+  @if (detalhe(); as n) {
+    <div class="detalhe">
+      <div #estadoDetalheRef class="selos" tabindex="-1">
+        <app-selo forma="pill" [tom]="tipoDetalhe()!.tom">{{ tipoDetalhe()!.rotulo }}</app-selo>
+        <app-selo forma="pill" class="selo-detalhe" [tom]="estadoDetalhe()!.tom">{{ estadoDetalhe()!.rotulo }}</app-selo>
+      </div>
+
+      <dl class="campos">
+        <div class="campo">
+          <dt>Remetente</dt>
+          <dd>{{ remetente(n.criadoPorNome) }}</dd>
+        </div>
+        <div class="campo">
+          <dt>Recebida em</dt>
+          <dd><time [attr.datetime]="n.criadoEm">{{ formatarDataHora(n.criadoEm) }}</time></dd>
+        </div>
+        @if (n.prazo) {
+          <div class="campo">
+            <dt>Prazo</dt>
+            <dd><time [attr.datetime]="n.prazo">{{ formatarDia(n.prazo) }}</time></dd>
+          </div>
+        }
+        @if (n.processoId) {
+          <div class="campo">
+            <dt>Processo</dt>
+            <dd><a class="ligacao-processo" [routerLink]="rotaProcesso(n.processoId)">{{ n.numeroProcesso ?? 'Abrir processo' }}</a></dd>
+          </div>
+        }
+        @if (n.idIgtSnit) {
+          <div class="campo">
+            <dt>ID IGT SNIT</dt>
+            <dd>{{ n.idIgtSnit }}</dd>
+          </div>
+        }
+        @if (n.descricaoIgt) {
+          <div class="campo campo-largo">
+            <dt>Descrição IGT</dt>
+            <dd>{{ n.descricaoIgt }}</dd>
+          </div>
+        }
+      </dl>
+
+      <p class="texto-notificacao">{{ n.texto }}</p>
+
+      @if (n.documentos.length > 0) {
+        <section class="bloco" aria-labelledby="gestao-notificacao-anexos">
+          <h3 class="seccao" id="gestao-notificacao-anexos">Documentos anexos</h3>
+          <ul class="lista-simples">
+            @for (documento of n.documentos; track documento.id) {
+              <li class="documento">
+                <svg class="documento-icone" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.33" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M8 2.7v7.3M5 7.3L8 10.3l3-3M3.3 13.3h9.4" />
+                </svg>
+                <button
+                  type="button"
+                  class="documento-nome documento-descarregar"
+                  [attr.aria-label]="'Descarregar ' + documento.nomeFicheiro"
+                  [attr.aria-busy]="aDescarregar() === documento.id"
+                  (click)="descarregar(documento)"
+                >{{ documento.nomeFicheiro }}</button>
+                <span class="documento-tamanho">{{ tamanhoEmKb(documento.tamanhoBytes) }}</span>
+              </li>
+            }
+          </ul>
+          @if (erroDescarga(); as mensagem) {
+            <app-alerta tipo="erro" class="erro-descarga">{{ mensagem }}</app-alerta>
+          }
+        </section>
+      }
+
+      @if (comConversacao()) {
+        <section class="bloco" aria-labelledby="gestao-notificacao-historico">
+          <h3 class="seccao" id="gestao-notificacao-historico">Histórico conversacional</h3>
+          @if (n.mensagens.length > 0) {
+            <ol class="lista-simples">
+              @for (mensagem of n.mensagens; track mensagem.id) {
+                <li class="mensagem">
+                  <p class="mensagem-autor">
+                    {{ mensagem.autorNome }} · <time [attr.datetime]="mensagem.criadoEm">{{ formatarDataHora(mensagem.criadoEm) }}</time>
+                  </p>
+                  <p class="mensagem-texto">{{ mensagem.texto }}</p>
+                </li>
+              }
+            </ol>
+          } @else {
+            <p class="sem-mensagens">Sem mensagens.</p>
+          }
+        </section>
+      }
+
+      @if (ehRegularizacao() && n.estado === 'ATIVA') {
+        <p class="nota-regularizacao">Esta notificação resolve-se com o registo do procedimento.</p>
+      }
+
+      @if (podeResponder()) {
+        <form class="resposta" novalidate (submit)="responder($event)">
+          <app-campo-texto
+            rotulo="Resposta"
+            [obrigatorio]="true"
+            [multilinha]="true"
+            [maxlength]="maximoResposta"
+            [ajuda]="contador()"
+            [erro]="erroResposta()"
+            [formControl]="controloResposta"
+            (focusout)="marcarTocado()"
+          />
+          <div class="resposta-barra">
+            <button app-botao type="submit" tamanho="pequeno" class="botao-responder" [desativado]="!respostaValida()" [aCarregar]="aEnviar()">
+              {{ rotuloResponder() }}
+            </button>
+          </div>
+        </form>
+      }
+
+      @if (temOperacoes()) {
+        <div class="operacoes" role="group" aria-label="Ações da notificação">
+          @if (podeLer()) {
+            <button app-botao type="button" variante="secundario" tamanho="pequeno" class="operacao operacao-ler" [desativado]="aOperar() !== null && aOperar() !== 'LER'" [aCarregar]="aOperar() === 'LER'" (click)="marcarComoLido()">
+              Marcar como lido
+            </button>
+          }
+          @if (podeResolver()) {
+            <button app-botao type="button" variante="secundario" tamanho="pequeno" class="operacao operacao-resolver" [desativado]="aOperar() !== null" (click)="pedirConfirmacao('RESOLVER')">
+              Resolver sem responder
+            </button>
+          }
+          @if (podeRemover()) {
+            <button app-botao type="button" variante="contorno" tamanho="pequeno" class="operacao operacao-remover" [desativado]="aOperar() !== null" (click)="pedirConfirmacao('REMOVER')">
+              {{ rotuloRemover() }}
+            </button>
+          }
+        </div>
+      }
+    </div>
+  } @else if (erroDetalhe(); as mensagem) {
+    <app-alerta tipo="erro">{{ mensagem }}</app-alerta>
+  } @else {
+    <p class="estado">A carregar a notificação…</p>
+  }
+
+  <div rodape>
+    <button app-botao type="button" variante="secundario" tamanho="pequeno" class="fechar-detalhe" (click)="fecharDetalhe()">Fechar</button>
+  </div>
+</app-modal>
+
+<app-confirmacao-modal
+  [aberto]="!!confirmacao()"
+  [titulo]="tituloConfirmacao()"
+  [mensagem]="mensagemConfirmacao()"
+  [rotuloSim]="rotuloSimConfirmacao()"
+  rotuloNao="Cancelar"
+  [aProcessar]="aOperar() !== null"
+  (sim)="confirmar()"
+  (nao)="cancelarConfirmacao()"
+/>

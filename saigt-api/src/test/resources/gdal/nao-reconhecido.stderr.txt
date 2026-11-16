@@ -1,0 +1,2 @@
+ERROR 4: `falso.tif' not recognized as being in a supported file format.
+gdalinfo failed - unable to open 'falso.tif'.

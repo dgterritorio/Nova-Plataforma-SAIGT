@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="2026-10-27-5-estados-dinamica-lld" author="david.raposo">
+        <preConditions onFail="HALT"
+                       onFailMessage="Há Dinâmicas ou condições de regra com CANCELADA: o LLD não tem este estado (OI-416). Decidir o destino delas antes de migrar.">
+            <sqlCheck expectedResult="0">SELECT count(*) FROM dinamica WHERE estado = 'CANCELADA'</sqlCheck>
+            <sqlCheck expectedResult="0">SELECT count(*) FROM condicao
+                WHERE parametros ->> 'tipo_ocorrencia' = 'DINAMICA' AND parametros ->> 'estado' = 'CANCELADA'</sqlCheck>
+        </preConditions>
+        <comment>Estados da Dinâmica (DB-PROC-013): EM_CURSO, TERMINADA e CADUCADA; CONCLUIDA passa a TERMINADA.</comment>
+
+        <sql>UPDATE dinamica SET estado = 'TERMINADA' WHERE estado = 'CONCLUIDA'</sql>
+        <sql>UPDATE condicao SET parametros = jsonb_set(parametros, '{estado}', '"TERMINADA"')
+            WHERE parametros ->> 'tipo_ocorrencia' = 'DINAMICA' AND parametros ->> 'estado' = 'CONCLUIDA'</sql>
+        <sql>ALTER TABLE dinamica ADD CONSTRAINT ck_dinamica_estado
+            CHECK (estado IN ('EM_CURSO', 'TERMINADA', 'CADUCADA'))</sql>
+
+        <rollback>
+            <sql>ALTER TABLE dinamica DROP CONSTRAINT ck_dinamica_estado</sql>
+            <sql>UPDATE dinamica SET estado = 'CONCLUIDA' WHERE estado = 'TERMINADA'</sql>
+            <sql>UPDATE dinamica SET estado = 'EM_CURSO' WHERE estado = 'CADUCADA'</sql>
+            <sql>UPDATE condicao SET parametros = jsonb_set(parametros, '{estado}', '"CONCLUIDA"')
+                WHERE parametros ->> 'tipo_ocorrencia' = 'DINAMICA' AND parametros ->> 'estado' = 'TERMINADA'</sql>
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>

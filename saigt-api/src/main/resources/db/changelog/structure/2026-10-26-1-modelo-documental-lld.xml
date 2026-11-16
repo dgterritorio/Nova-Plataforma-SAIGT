@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="2026-10-26-1-modelo-documental-lld" author="david.raposo">
+        <comment>
+            Modelo documental do LLD (DB-DOC-001, DB-DOC-002, DB-PROC-014): o item passa a dizer a caixa, o tipo de
+            elemento e o formato; o documento guarda a caixa, a extensão, a origem, a versão do objeto e o bloqueio.
+            As colunas NOT NULL entram anuláveis, são preenchidas nas linhas existentes e só depois ficam obrigatórias.
+        </comment>
+
+        <addColumn tableName="documento_config">
+            <column name="codigo" type="VARCHAR(50)"/>
+            <column name="separador" type="VARCHAR(100)"/>
+            <column name="tipo_elemento" type="VARCHAR(20)"/>
+            <column name="formato" type="VARCHAR(20)"/>
+        </addColumn>
+        <sql>UPDATE documento_config
+            SET codigo = 'ITEM_' || id,
+                separador = nome,
+                tipo_elemento = 'OUTROS',
+                formato = CASE WHEN categoria = 'PUBLICACAO' THEN 'EDITAVEL' ELSE 'NAO_EDITAVEL' END</sql>
+        <addNotNullConstraint tableName="documento_config" columnName="codigo" columnDataType="VARCHAR(50)"/>
+        <addNotNullConstraint tableName="documento_config" columnName="separador" columnDataType="VARCHAR(100)"/>
+        <addNotNullConstraint tableName="documento_config" columnName="tipo_elemento" columnDataType="VARCHAR(20)"/>
+        <addNotNullConstraint tableName="documento_config" columnName="formato" columnDataType="VARCHAR(20)"/>
+        <addUniqueConstraint tableName="documento_config" columnNames="instrumento_procedimento_config_id, codigo"
+                             constraintName="uq_documento_config_codigo"/>
+        <sql>ALTER TABLE documento_config ADD CONSTRAINT ck_documento_config_categoria
+            CHECK (categoria IN ('PUBLICACAO', 'DEPOSITO'))</sql>
+        <sql>ALTER TABLE documento_config ADD CONSTRAINT ck_documento_config_tipo_elemento
+            CHECK (tipo_elemento IN ('PECA_ESCRITA', 'PECA_GRAFICA', 'OUTROS'))</sql>
+        <sql>ALTER TABLE documento_config ADD CONSTRAINT ck_documento_config_formato
+            CHECK (formato IN ('EDITAVEL', 'NAO_EDITAVEL'))</sql>
+        <addDefaultValue tableName="documento_config" columnName="obrigatorio" columnDataType="BOOLEAN"
+                         defaultValueBoolean="false"/>
+
+        <addColumn tableName="processo_documento">
+            <column name="categoria" type="VARCHAR(20)"/>
+            <column name="extensao" type="VARCHAR(10)"/>
+            <column name="origem" type="VARCHAR(20)" defaultValue="CARREGADO">
+                <constraints nullable="false"/>
+            </column>
+            <column name="versao_objeto" type="VARCHAR(100)"/>
+            <column name="bloqueado_edicao" type="BOOLEAN" defaultValueBoolean="false">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+        <sql>UPDATE processo_documento pd
+            SET categoria = COALESCE((SELECT dc.categoria FROM documento_config dc WHERE dc.id = pd.documento_config_id),
+                                     'DEPOSITO'),
+                extensao = COALESCE(left(lower(substring(pd.nome_ficheiro from '\.([^.]*)$')), 10), '')</sql>
+        <addNotNullConstraint tableName="processo_documento" columnName="categoria" columnDataType="VARCHAR(20)"/>
+        <addNotNullConstraint tableName="processo_documento" columnName="extensao" columnDataType="VARCHAR(10)"/>
+        <sql>ALTER TABLE processo_documento ADD CONSTRAINT ck_processo_documento_categoria
+            CHECK (categoria IN ('PUBLICACAO', 'DEPOSITO'))</sql>
+        <sql>ALTER TABLE processo_documento ADD CONSTRAINT ck_processo_documento_origem
+            CHECK (origem IN ('CARREGADO', 'GERADO', 'GEOCONFORM'))</sql>
+        <sql>ALTER TABLE processo_documento ALTER COLUMN token_publico TYPE UUID USING token_publico::uuid</sql>
+        <createIndex tableName="processo_documento" indexName="idx_processo_documento_processo_categoria">
+            <column name="processo_id"/>
+            <column name="categoria"/>
+        </createIndex>
+
+        <addColumn tableName="processo">
+            <column name="elementos_afetados" type="JSONB"/>
+        </addColumn>
+
+        <rollback>
+            <dropColumn tableName="processo" columnName="elementos_afetados"/>
+
+            <dropIndex tableName="processo_documento" indexName="idx_processo_documento_processo_categoria"/>
+            <sql>ALTER TABLE processo_documento ALTER COLUMN token_publico TYPE VARCHAR(100) USING token_publico::text</sql>
+            <dropColumn tableName="processo_documento" columnName="bloqueado_edicao"/>
+            <dropColumn tableName="processo_documento" columnName="versao_objeto"/>
+            <dropColumn tableName="processo_documento" columnName="origem"/>
+            <dropColumn tableName="processo_documento" columnName="extensao"/>
+            <dropColumn tableName="processo_documento" columnName="categoria"/>
+
+            <addDefaultValue tableName="documento_config" columnName="obrigatorio" columnDataType="BOOLEAN"
+                             defaultValueBoolean="true"/>
+            <sql>ALTER TABLE documento_config DROP CONSTRAINT ck_documento_config_categoria</sql>
+            <dropColumn tableName="documento_config" columnName="formato"/>
+            <dropColumn tableName="documento_config" columnName="tipo_elemento"/>
+            <dropColumn tableName="documento_config" columnName="separador"/>
+            <dropColumn tableName="documento_config" columnName="codigo"/>
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="2026-11-13-2-entidade-dados-validate-user" author="david.raposo">
+        <comment>
+            A entidade guarda todos os campos da adesão devolvidos pelo ValidateUser, refrescados a cada login, e a adesão
+            inteira em dados_incm. O NIPC e a descrição INCM continuam a não mudar com o login: só o Master os altera.
+        </comment>
+
+        <addColumn tableName="entidade">
+            <column name="morada_arteria" type="VARCHAR(200)"/>
+            <column name="morada_numero" type="VARCHAR(20)"/>
+            <column name="morada_piso" type="VARCHAR(20)"/>
+            <column name="morada_codigo_postal" type="VARCHAR(20)"/>
+            <column name="morada_designacao_postal" type="VARCHAR(200)"/>
+            <column name="morada_localidade" type="VARCHAR(200)"/>
+            <column name="incm_enrollment_id" type="VARCHAR(100)"/>
+            <column name="dr_parte_id" type="BIGINT"/>
+            <column name="dr_parte_letra" type="VARCHAR(10)"/>
+            <column name="dr_parte_descricao" type="VARCHAR(200)"/>
+            <column name="atos_serie1" type="JSONB"/>
+            <column name="atos_serie2" type="JSONB"/>
+            <column name="dados_incm" type="JSONB"/>
+        </addColumn>
+
+        <rollback>
+            <dropColumn tableName="entidade" columnName="morada_arteria"/>
+            <dropColumn tableName="entidade" columnName="morada_numero"/>
+            <dropColumn tableName="entidade" columnName="morada_piso"/>
+            <dropColumn tableName="entidade" columnName="morada_codigo_postal"/>
+            <dropColumn tableName="entidade" columnName="morada_designacao_postal"/>
+            <dropColumn tableName="entidade" columnName="morada_localidade"/>
+            <dropColumn tableName="entidade" columnName="incm_enrollment_id"/>
+            <dropColumn tableName="entidade" columnName="dr_parte_id"/>
+            <dropColumn tableName="entidade" columnName="dr_parte_letra"/>
+            <dropColumn tableName="entidade" columnName="dr_parte_descricao"/>
+            <dropColumn tableName="entidade" columnName="atos_serie1"/>
+            <dropColumn tableName="entidade" columnName="atos_serie2"/>
+            <dropColumn tableName="entidade" columnName="dados_incm"/>
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>

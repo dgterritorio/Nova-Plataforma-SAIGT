@@ -1,0 +1,3 @@
+tipo;codigo;descricao;ordem;ativo
+"MOTIVO_REJEICAO_DGT";"DOC_INCOMPLETA";"Documentação incompleta";1;true
+"MOTIVO_REJEICAO_DGT";"PRAZO_EXPIRADO";"Incumprimento de prazo legal";2;true

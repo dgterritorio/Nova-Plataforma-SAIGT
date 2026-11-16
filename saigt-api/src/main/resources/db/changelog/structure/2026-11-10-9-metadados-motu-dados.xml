@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="2026-11-10-9-metadados-motu-dados" author="joao.pereira">
+        <comment>
+            Campos do perfil MOTU do registo (Série hoje, Conjunto depois) em JSONB, como processo_metadados.dados.
+            Rascunho: os registos existentes ficam com {}.
+        </comment>
+
+        <sql>ALTER TABLE metadados_motu ADD COLUMN dados JSONB NOT NULL DEFAULT '{}'::jsonb</sql>
+
+        <rollback>
+            <dropColumn tableName="metadados_motu" columnName="dados"/>
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="2026-11-09-2-instrumento-nut-ii" author="arnaldo.costa">
+        <comment>
+            NUT II escolhida no formulário da Elaboração de um IGT novo (código da tabela nut). Sem FK: enquanto a
+            réplica do SNIT não traz a NUT II de cada concelho, é a única fonte da NUT II do Instrumento.
+        </comment>
+
+        <addColumn tableName="instrumento">
+            <column name="nut_ii_codigo" type="VARCHAR(10)"/>
+        </addColumn>
+
+        <rollback>
+            <dropColumn tableName="instrumento" columnName="nut_ii_codigo"/>
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>

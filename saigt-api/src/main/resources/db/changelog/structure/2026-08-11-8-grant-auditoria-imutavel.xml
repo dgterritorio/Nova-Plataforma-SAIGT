@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="2026-08-11-8-grant-auditoria-imutavel" author="david.raposo">
+        <comment>
+            §11 — auditoria imutável ao nível da BD: a aplicação só tem permissão de criação e leitura.
+            saigt_app (ver docker/postgres/init/01-init.sql) passa a ser o role de runtime do saigt-api;
+            este changeset dá-lhe acesso normal a todas as tabelas e depois revoga especificamente
+            UPDATE/DELETE em auditoria. Issue #19.
+        </comment>
+        <sql splitStatements="true" stripComments="false">
+            GRANT SELECT, INSERT, UPDATE, DELETE ON ALL TABLES IN SCHEMA public TO saigt_app;
+            GRANT USAGE, SELECT ON ALL SEQUENCES IN SCHEMA public TO saigt_app;
+            ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT SELECT, INSERT, UPDATE, DELETE ON TABLES TO saigt_app;
+            ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT USAGE, SELECT ON SEQUENCES TO saigt_app;
+            REVOKE UPDATE, DELETE ON auditoria FROM saigt_app;
+        </sql>
+        <rollback>
+            <sql splitStatements="true">
+                GRANT UPDATE, DELETE ON auditoria TO saigt_app;
+            </sql>
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>

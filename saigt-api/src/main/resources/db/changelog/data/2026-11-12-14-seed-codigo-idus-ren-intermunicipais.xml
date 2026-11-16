@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="2026-11-12-14-seed-codigo-idus-ren-intermunicipais" author="david.raposo">
+        <comment>
+            Segmento IGT do IDUS (DB-PROC-001: o IDTYPE da IGT_TYPE com zero à esquerda) dos tipos criados depois do seed
+            2026-11-04-5, de IDUS_Tabelas_SNIT_20261009.XLSX, folha B: REN 37, PDIM 53, PUIM 54, PPIM 55. A EF v1.5
+            (Identificador Único) aplica o IDUS aos Planos e à REN; sem o código, os processos destes tipos gravavam-se
+            sem IDUS. O pcgt_codigo dos intermunicipais fica nulo: a correspondência de tipos com a PCGT está no OI-361.
+            O UPDATE é pelo código do tipo e só preenche o que está vazio.
+        </comment>
+
+        <sql>UPDATE tipo_instrumento SET codigo_idus = '37' WHERE codigo = 'REN' AND codigo_idus IS NULL</sql>
+        <sql>UPDATE tipo_instrumento SET codigo_idus = '53' WHERE codigo = 'PDIM' AND codigo_idus IS NULL</sql>
+        <sql>UPDATE tipo_instrumento SET codigo_idus = '54' WHERE codigo = 'PUIM' AND codigo_idus IS NULL</sql>
+        <sql>UPDATE tipo_instrumento SET codigo_idus = '55' WHERE codigo = 'PPIM' AND codigo_idus IS NULL</sql>
+
+        <rollback>
+            <sql>UPDATE tipo_instrumento SET codigo_idus = NULL WHERE codigo IN ('REN', 'PDIM', 'PUIM', 'PPIM')</sql>
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>

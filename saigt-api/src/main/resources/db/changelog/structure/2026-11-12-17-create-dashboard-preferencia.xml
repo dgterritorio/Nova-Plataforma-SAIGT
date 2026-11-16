@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="2026-11-12-17-create-dashboard-preferencia" author="arnaldo.costa">
+        <comment>
+            Preferências do dashboard de KPIs por utilizador (DB-REP-001). Sem CHECK sobre kpi_codigo: o código é
+            validado na API contra o catálogo e a preferência de um KPI retirado fica e é ignorada. Sem ON DELETE:
+            os utilizadores não se apagam (anonimização). O rollback apaga a tabela.
+        </comment>
+
+        <createTable tableName="dashboard_preferencia">
+            <column name="utilizador_id" type="UUID">
+                <constraints nullable="false"/>
+            </column>
+            <column name="kpi_codigo" type="VARCHAR(60)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="visivel" type="BOOLEAN">
+                <constraints nullable="false"/>
+            </column>
+            <column name="ordem" type="SMALLINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="atualizado_em" type="TIMESTAMP WITH TIME ZONE">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <addPrimaryKey tableName="dashboard_preferencia" columnNames="utilizador_id, kpi_codigo"
+                       constraintName="pk_dashboard_preferencia"/>
+        <addForeignKeyConstraint baseTableName="dashboard_preferencia" baseColumnNames="utilizador_id"
+                                 constraintName="fk_dashboard_preferencia_utilizador"
+                                 referencedTableName="utilizador" referencedColumnNames="id"/>
+        <addUniqueConstraint tableName="dashboard_preferencia" columnNames="utilizador_id, ordem"
+                             constraintName="uq_dashboard_preferencia_ordem"/>
+        <sql>ALTER TABLE dashboard_preferencia ADD CONSTRAINT ck_dashboard_preferencia_ordem CHECK (ordem &gt;= 0)</sql>
+
+        <rollback>
+            <dropTable tableName="dashboard_preferencia"/>
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="2026-11-10-1-create-documento-link-publico" author="david.raposo">
+        <comment>
+            Link público de um documento para a INCM ou a PCGT (DB-DOC-007, BL-DOC-027, OI-491): uma linha, sem cópia
+            do objeto. No máximo um link ativo por documento e destino. O token fica em claro, porque o URL é
+            reutilizado nos reenvios; só dá acesso a atos públicos. As linhas saem com o documento quando este é
+            removido, depois de revogadas.
+        </comment>
+
+        <createTable tableName="documento_link_publico">
+            <column name="id" type="UUID">
+                <constraints primaryKey="true" primaryKeyName="pk_documento_link_publico" nullable="false"/>
+            </column>
+            <column name="processo_documento_id" type="UUID">
+                <constraints nullable="false" foreignKeyName="fk_documento_link_publico_processo_documento"
+                             references="processo_documento(id)" deleteCascade="true"/>
+            </column>
+            <column name="destino" type="VARCHAR(10)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="token" type="UUID">
+                <constraints nullable="false" unique="true" uniqueConstraintName="uq_documento_link_publico_token"/>
+            </column>
+            <column name="criado_em" type="TIMESTAMP WITH TIME ZONE">
+                <constraints nullable="false"/>
+            </column>
+            <column name="revogado_em" type="TIMESTAMP WITH TIME ZONE"/>
+            <column name="motivo_revogacao" type="VARCHAR(20)"/>
+        </createTable>
+
+        <createIndex tableName="documento_link_publico" indexName="idx_documento_link_publico_processo_documento_id">
+            <column name="processo_documento_id"/>
+        </createIndex>
+        <sql>CREATE UNIQUE INDEX uq_documento_link_publico_ativo ON documento_link_publico (processo_documento_id, destino)
+            WHERE revogado_em IS NULL</sql>
+        <sql>ALTER TABLE documento_link_publico ADD CONSTRAINT ck_documento_link_publico_destino
+            CHECK (destino IN ('INCM', 'PCGT'))</sql>
+        <sql>ALTER TABLE documento_link_publico ADD CONSTRAINT ck_documento_link_publico_revogacao
+            CHECK ((revogado_em IS NULL AND motivo_revogacao IS NULL)
+                OR (revogado_em IS NOT NULL AND motivo_revogacao IN ('SUBSTITUICAO', 'REMOCAO')))</sql>
+
+        <addForeignKeyConstraint baseTableName="documento_descarga" baseColumnNames="documento_link_publico_id"
+                                 constraintName="fk_documento_descarga_documento_link_publico"
+                                 referencedTableName="documento_link_publico" referencedColumnNames="id"
+                                 onDelete="SET NULL"/>
+
+        <rollback>
+            <dropForeignKeyConstraint baseTableName="documento_descarga"
+                                      constraintName="fk_documento_descarga_documento_link_publico"/>
+            <dropTable tableName="documento_link_publico"/>
+        </rollback>
+    </changeSet>
+</databaseChangeLog>

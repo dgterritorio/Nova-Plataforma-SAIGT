@@ -1,0 +1,447 @@
+<app-shell breadcrumb="Processos">
+  <div class="detalhe">
+    @if (erro()) {
+      <app-error-banner [erro]="erro()" />
+    }
+    @if (conflito()) {
+      <button type="button" app-botao variante="contorno" tamanho="pequeno" class="recarregar" (click)="recarregar()">Recarregar</button>
+    }
+    @if (mensagemSucesso()) {
+      <div class="banner-sucesso-acao" role="status">{{ mensagemSucesso() }}</div>
+    }
+    <p class="so-leitor" aria-live="polite">{{ anuncioPcm() }}</p>
+
+    @if (aCarregar()) {
+      <p class="estado-carregamento">A carregar…</p>
+    } @else if (processo(); as p) {
+      <div class="barra-titulo">
+        <a class="voltar" [routerLink]="rotas.PROCESSOS">
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.33" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M12.667 8H3.333M8 12.667L3.333 8 8 3.333" />
+          </svg>
+          Processos
+        </a>
+        <div class="titulo">
+          <div class="titulo-linha">
+            <h1>{{ p.designacaoInstrumento }}</h1>
+            <span class="etiqueta-tipo">{{ p.tipoInstrumento }}</span>
+            <app-estado-processo-badge [estado]="p.estado" />
+            @if (p.estado === 'VALIDADO_DGT' && p.pcmAtribuidoAId) {
+              <app-selo tom="violeta" forma="pill" data-campo="com-a-pcm">Com a PCM</app-selo>
+            }
+          </div>
+          <p class="subtitulo">{{ p.nomeDinamica }}</p>
+        </div>
+        <div class="acoes-cabecalho">
+          <a app-botao variante="contorno" class="ver-historico" [routerLink]="rotas.PROCESSO_HISTORICO(p.id)">
+            <svg icone viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.33" stroke-linecap="round" aria-hidden="true">
+              <path d="M2.5 8a5.5 5.5 0 105.5-5.5A5.6 5.6 0 004 4.3M2.5 2.5v2.5H5M8 5v3l2 1.5" />
+            </svg>
+            Ver histórico
+          </a>
+          @if (podeEditar() && !emEdicao()) {
+            <button type="button" app-botao variante="contorno" (click)="iniciarEdicao()">{{ pcmPodeAcrescentar() ? 'Corrigir processo' : 'Editar rascunho' }}</button>
+          }
+          @if (podeResgatar()) {
+            <button type="button" app-botao variante="contorno" (click)="confirmacaoResgatarAberta.set(true)">Resgatar submissão</button>
+          }
+          @if (podeAlterar()) {
+            <button type="button" app-botao variante="contorno" (click)="alteracoesAbertas.set(true)">Alterações</button>
+          }
+          @if (podeValidar()) {
+            <a app-botao variante="contorno" class="validar-documentos" [routerLink]="rotas.PROCESSO_VALIDACAO(p.id)">Validar documentos</a>
+          }
+          @if (podePedirApoio()) {
+            <button type="button" app-botao variante="contorno" class="pedir-apoio" (click)="pedirApoioAberto.set(true)">Pedir apoio</button>
+          }
+        </div>
+      </div>
+
+      @if (pcmPodeAcrescentar()) {
+        <app-alerta tipo="info" titulo="Processo enviado pela DGT" class="alerta-pcm" data-campo="alerta-pcm">
+          {{ textoAlertaPcm }}
+        </app-alerta>
+      }
+      @if (devolucaoPcm()) {
+        <app-alerta tipo="info" class="alerta-pcm" data-campo="alerta-devolvido-pcm">
+          {{ textoDevolucaoPcm() }}
+          @if (revalidacaoPcm()) {
+            {{ textoRevalidacaoPcm }}
+            <a class="ligacao-revalidacao" [routerLink]="rotas.PROCESSO_VALIDACAO(p.id)">Validar os documentos acrescentados pela PCM</a>
+          }
+        </app-alerta>
+      }
+
+      @switch (recusaVisivel()) {
+        @case ('DGT') {
+          <div class="aviso-rejeicao" role="status">
+            <strong>Rejeitado pela DGT</strong>
+            @if (p.ultimaRejeicaoDgt; as rejeicao) {
+              @if (rejeicao.motivoDescricao ?? rejeicao.motivoCodigo; as motivo) {
+                <span>Motivo: {{ motivo }} · {{ rejeicao.data | date: 'dd/MM/yyyy HH:mm' }}</span>
+              } @else {
+                <span>{{ rejeicao.data | date: 'dd/MM/yyyy HH:mm' }}</span>
+                @if (rejeicao.notasGerais) {
+                  <span class="notas-gerais">Notas gerais: {{ rejeicao.notasGerais }}</span>
+                }
+              }
+            } @else {
+              <span>Motivo não disponível.</span>
+            }
+          </div>
+        }
+        @case ('INCM') {
+          <div class="aviso-rejeicao" role="status">
+            <strong>Anulado pela INCM</strong>
+            @if (p.ultimaRejeicaoIncm; as recusa) {
+              <span>{{ recusa.data | date: 'dd/MM/yyyy HH:mm' }}</span>
+              @if (recusa.mensagens.length > 0) {
+                <ul class="mensagens-incm">
+                  @for (mensagem of recusa.mensagens; track $index) {
+                    <li>{{ mensagem }}</li>
+                  }
+                </ul>
+              } @else {
+                <span>Motivo não disponível.</span>
+              }
+            } @else {
+              <span>Motivo não disponível.</span>
+            }
+          </div>
+        }
+      }
+
+      @switch (p.formulario) {
+        @case ('INFORMACAO_GERAL') {
+          <ng-container [ngTemplateOutlet]="formularioInicial" />
+        }
+        @case ('DISCUSSAO_PUBLICA') {
+          <ng-container [ngTemplateOutlet]="formularioInicial" />
+        }
+        @case ('PUBLICACAO_ALTERACAO') {
+          <ng-container [ngTemplateOutlet]="formularioInicial" />
+        }
+        @case ('SRUP') {
+          @if (emEdicao()) {
+            <app-processo-formulario-srup [tipoInstrumento]="nomeTipoInstrumento(p.tipoInstrumento)" [dinamica]="p.nomeDinamica">
+              <ng-container [ngTemplateOutlet]="formularioInicial" />
+            </app-processo-formulario-srup>
+          }
+        }
+        @case ('RATIFICACAO') {
+          @if (emEdicao()) {
+            <app-formulario-ratificacao
+              [tipoInstrumento]="nomeTipoInstrumento(p.tipoInstrumento)"
+              [territorio]="p.territorio"
+              [designacao]="p.designacaoInstrumento"
+              [instrumentosAbrangidos]="p.instrumentosAbrangidos"
+              [valorInicial]="p.modalidadeRatificacao"
+              [bloqueado]="p.camposBloqueados.includes('modalidadeRatificacao')"
+              [aCarregar]="aGuardar()"
+              [erroServidor]="erroModalidadeRatificacao()"
+            >
+              <ng-container [ngTemplateOutlet]="formularioInicial" />
+            </app-formulario-ratificacao>
+          }
+        }
+        @case ('SUSPENSAO_CCDR') {
+          @if (emEdicao()) {
+            <app-formulario-suspensao-ccdr
+              [tipoInstrumento]="nomeTipoInstrumento(p.tipoInstrumento)"
+              [tipoProcedimento]="p.nomeProcedimento"
+              [designacao]="p.designacaoInstrumento"
+              [instrumentosAbrangidos]="p.instrumentosAbrangidos"
+              [nomesTipos]="nomesTiposInstrumento()"
+            >
+              <ng-container [ngTemplateOutlet]="formularioInicial" />
+            </app-formulario-suspensao-ccdr>
+          }
+        }
+        @case ('SUSPENSAO_MP_GOVERNO') {
+          @if (emEdicao()) {
+            <app-formulario-governo
+              variante="PUBLICACAO"
+              [tipoInstrumento]="nomeTipoInstrumento(p.tipoInstrumento)"
+              [tipoProcedimento]="p.nomeProcedimento"
+              [designacao]="p.designacaoInstrumento"
+              [instrumentosAbrangidos]="p.instrumentosAbrangidos"
+              [nomesTipos]="nomesTiposInstrumento()"
+            >
+              <ng-container [ngTemplateOutlet]="formularioInicial" />
+            </app-formulario-governo>
+          }
+        }
+        @case ('PRORROGACAO_GOVERNO') {
+          @if (emEdicao()) {
+            <app-formulario-governo
+              variante="PRORROGACAO"
+              [tipoInstrumento]="nomeTipoInstrumento(p.tipoInstrumento)"
+              [tipoProcedimento]="p.nomeProcedimento"
+              [designacao]="p.designacaoInstrumento"
+              [instrumentosAbrangidos]="p.instrumentosAbrangidos"
+              [nomesTipos]="nomesTiposInstrumento()"
+            >
+              <ng-container [ngTemplateOutlet]="formularioInicial" />
+            </app-formulario-governo>
+          }
+        }
+        @case ('SGIFR') {
+          <ng-container [ngTemplateOutlet]="formularioInicial" />
+        }
+        @case ('REN') {
+          <ng-container [ngTemplateOutlet]="formularioInicial" />
+        }
+        @default {
+          @if (mostrarAvisoSemFormulario()) {
+            <app-alerta tipo="aviso">{{ avisoSemFormulario }}</app-alerta>
+          }
+        }
+      }
+      <ng-template #formularioInicial>
+        @if (emEdicao()) {
+          <app-processo-formulario-inicial
+            [formulario]="p.formulario"
+            [dataAssinaturaNoFormulario]="p.dataAssinaturaNoFormulario ?? false"
+            [serieDr]="p.serieDr"
+            [seriesDrEscolhiveis]="p.seriesDrEscolhiveis"
+            (serieEscolhida)="aoEscolherSerie()"
+            [valoresIniciais]="valoresIniciais()"
+            [tipoInstrumento]="nomeTipoInstrumento(p.tipoInstrumento)"
+            [categoriaInstrumento]="p.categoriaInstrumento"
+            [entidadeInstrutoraObrigatoria]="p.entidadeInstrutoraObrigatoria"
+            [tipoProcedimento]="p.formulario === 'REN' ? p.nomeDinamica : p.nomeProcedimento"
+            [modalidadeRatificacao]="p.modalidadeRatificacao"
+            [designacaoInstrumento]="p.designacaoInstrumento"
+            [instrumentosAbrangidos]="p.instrumentosAbrangidos"
+            [territorio]="p.territorio"
+            [tipoAtoNome]="p.tipoAtoNome"
+            [tiposAtoDisponiveis]="p.tiposAtoDisponiveis"
+            [aCarregar]="aGuardar()"
+            [camposBloqueados]="p.camposBloqueados"
+            [pedeFundamentacaoRjigt]="p.pedeFundamentacaoRjigt"
+            [opcoesFundamentacaoRjigt]="p.opcoesFundamentacaoRjigt"
+            [pedeLocalizacao]="p.pedeLocalizacao"
+            [pedeMotivoAlteracao]="p.pedeMotivoAlteracao"
+            [exigeOpcaoGeoconform]="p.exigeOpcaoGeoconform"
+            [perguntaGeoconform]="p.perguntaGeoconform"
+            [comGeoconform]="p.comGeoconform"
+            [pedeElementosAfetados]="pedeElementosAfetados(p)"
+            [aceitaDinamicaAssociada]="p.aceitaDinamicaAssociada"
+            [dinamicaAssociada]="p.dinamicaAssociada"
+            [processoId]="p.id"
+            [redesDefesaDisponiveis]="p.redesDefesaDisponiveis ?? []"
+            [motivosProcedimentoDisponiveis]="p.motivosProcedimentoDisponiveis ?? []"
+            [pedeDiplomaCorrigido]="p.pedeDiplomaCorrigido ?? false"
+            [tipoInformacaoFixo]="p.tipoInformacaoFixo ?? null"
+            [pedeRegiao]="p.pedeRegiao ?? false"
+            [opcoesRegiao]="p.opcoesRegiao ?? []"
+            [pedeCimAm]="p.pedeCimAm ?? false"
+            [opcoesCimAm]="p.opcoesCimAm ?? []"
+          />
+          <app-processo-documentos
+            [processoId]="p.id"
+            [editavel]="true"
+            [modoAcrescentar]="pcmPodeAcrescentar()"
+            [informacaoBase]="informacaoBaseGravada().informacaoBase"
+            [dataAssinatura]="informacaoBaseGravada().dataAssinatura"
+            [errosCampo]="errosInformacaoBase()"
+            [camposBloqueados]="p.camposBloqueados"
+            [dataLimiteDinamica]="p.dataCaducidadeDinamica"
+            [processo]="p"
+            [pedidoRascunho]="pedidoRascunho"
+            (informacaoBaseAlterada)="informacaoBaseEmEdicao.set($event)"
+            (associacaoGravada)="aoAssociarInstrumentos()"
+            (destinoGravado)="aoGravarDestino($event)"
+          />
+          <div class="acoes-formulario">
+            <button type="button" app-botao variante="secundario" [desativado]="aGuardar()" (click)="cancelarEdicao()">Cancelar</button>
+            <button type="button" app-botao [desativado]="aGuardar() || mensagemSucesso() !== null" (click)="guardarRascunho()">
+              {{ aGuardar() ? 'A guardar…' : 'Guardar' }}
+            </button>
+            @if (submeterDisponivel()) {
+              <button type="button" app-botao [desativado]="aGuardar() || mensagemSucesso() !== null" (click)="avancarParaPublicar()">
+                Avançar para Submissão
+              </button>
+            }
+            @if (devolverDgtDisponivel()) {
+              <button
+                type="button"
+                app-botao
+                class="devolver-dgt"
+                [desativado]="aGuardar() || aDevolver() || mensagemSucesso() !== null"
+                (click)="confirmacaoDevolverAberta.set(true)"
+              >
+                {{ aDevolver() ? 'A submeter…' : 'Submeter à DGT' }}
+              </button>
+            }
+          </div>
+        }
+      </ng-template>
+
+      <app-cartao>
+        <div class="detalhes">
+          <div class="detalhes-cabecalho">
+            <h2>Detalhes do Processo</h2>
+          </div>
+          <dl>
+            <div>
+              <dt>Instrumento</dt>
+              <dd>{{ p.designacaoInstrumento }}</dd>
+            </div>
+            <div><dt>Número</dt><dd>{{ p.numeroInstrumento }}</dd></div>
+            <div><dt>Tipo de Instrumento</dt><dd>{{ p.tipoInstrumento }}</dd></div>
+            <div><dt>Tipo de Procedimento</dt><dd>{{ p.nomeProcedimento }}</dd></div>
+            @if (p.atoPontual && p.processoReferidoId && p.numeroProcessoReferido) {
+              <div class="ato-referido">
+                <dt>Ato a que respeita</dt>
+                <dd>
+                  <a class="ligacao-detalhe ligacao-ato-referido" [routerLink]="rotas.PROCESSO_DETALHE(p.processoReferidoId)">{{ resumoAtoReferido(p) }}</a>
+                </dd>
+              </div>
+            }
+            <div><dt>Designação</dt><dd>{{ p.designacaoInstrumento }}</dd></div>
+            @if (p.formulario === 'REN') {
+              @if (p.motivoProcedimento; as motivo) {
+                <div class="dados-ren"><dt>Motivo do procedimento</dt><dd>{{ motivo.descricao }}</dd></div>
+              }
+              @if (p.diplomaCorrigido) {
+                <div class="dados-ren"><dt>Diploma que corrige ou retifica</dt><dd>{{ p.diplomaCorrigido }}</dd></div>
+              }
+              @if (p.regiaoCodigo) {
+                <div class="dados-ren"><dt>Região</dt><dd>{{ territorioRen().regiao ?? p.regiaoCodigo }}</dd></div>
+              }
+              @if (p.municipioCodigo) {
+                <div class="dados-ren"><dt>Município (REN)</dt><dd>{{ territorioRen().municipio ?? p.municipioCodigo }}</dd></div>
+              }
+            }
+            <div class="instrumentos-associados">
+              <dt>Instrumentos associados</dt>
+              <dd>
+                @if (p.instrumentosAbrangidos.length > 0) {
+                  <ul>
+                    @for (instrumento of p.instrumentosAbrangidos; track instrumento.id) {
+                      <li>{{ instrumento.designacao }} ({{ instrumento.tipoInstrumento }})</li>
+                    }
+                  </ul>
+                } @else {
+                  Sem IGT associado
+                }
+              </dd>
+            </div>
+            <div><dt>Data de início</dt><dd>{{ p.criadoEm | date: 'dd/MM/yyyy' }}</dd></div>
+            <div><dt>Município</dt><dd>{{ rotuloConcelhos(p.territorio.concelhos) }}</dd></div>
+            <div><dt>Entidade promotora</dt><dd>{{ p.entidadeNome }}</dd></div>
+            <div><dt>N.º do processo</dt><dd>{{ p.numeroProcesso }}</dd></div>
+            <div><dt>Dinâmica</dt><dd>{{ p.numeroDinamica }} — {{ p.descritivoDinamica }}</dd></div>
+            @if (p.regiao) {
+              <div class="regiao-sgifr"><dt>Região</dt><dd>{{ p.regiaoDescricao ?? p.regiao }}</dd></div>
+            }
+            @if (p.cimAm) {
+              <div class="cim-am-sgifr"><dt>CIM / AM</dt><dd>{{ p.cimAmDescricao ?? p.cimAm }}</dd></div>
+            }
+            @if (igtAssociado(); as igt) {
+              <div class="igt-associado"><dt>IGT associado</dt><dd>{{ igt }}</dd></div>
+            }
+            <div class="destino-processo"><dt>Destino</dt><dd>{{ rotulosDestino[p.destino] }}</dd></div>
+            <div><dt>Submissão do Processo n.º</dt><dd>{{ p.submissao ?? '—' }}</dd></div>
+            <div><dt>Autor</dt><dd>{{ p.autorNome }}</dd></div>
+            <div>
+              <dt>Data de submissão</dt>
+              <dd>{{ p.dataSubmissao ? (p.dataSubmissao | date: 'dd/MM/yyyy HH:mm') : '—' }}</dd>
+            </div>
+            @if (p.numeroDr) {
+              <div class="publicacao-dr"><dt>N.º do Diário da República</dt><dd>{{ p.numeroDr }}</dd></div>
+              <div class="publicacao-dr"><dt>Data de publicação</dt><dd>{{ p.dataPublicacaoDr | date: 'dd/MM/yyyy' }}</dd></div>
+              @if (linkDr(); as link) {
+                <div class="publicacao-dr">
+                  <dt>Publicação</dt>
+                  <dd>
+                    <a
+                      class="ligacao-detalhe ligacao-dr"
+                      [href]="link"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label="Ver publicação no Diário da República (abre noutra janela)"
+                    >Ver publicação</a>
+                  </dd>
+                </div>
+              }
+            }
+          </dl>
+        </div>
+      </app-cartao>
+
+      <app-processo-recusas [processoId]="p.id" />
+      @if (!emEdicao()) {
+        <app-ficheiros-processo [processoId]="p.id" />
+        <app-historico-documental [processoId]="p.id" />
+      }
+
+      @if (devolverDgtDisponivel() && !emEdicao()) {
+        <div class="acao-corrigir">
+          <button type="button" app-botao class="devolver-dgt" [desativado]="aDevolver()" (click)="confirmacaoDevolverAberta.set(true)">
+            Submeter à DGT
+          </button>
+        </div>
+      }
+
+      @if (podeCorrigir() && !emEdicao()) {
+        <div class="acao-corrigir">
+          <button type="button" app-botao [desativado]="aCorrigir()" (click)="confirmacaoCorrigirAberta.set(true)">
+            Corrigir Processo
+          </button>
+        </div>
+      }
+
+      <app-confirmacao-modal
+        [aberto]="confirmacaoResgatarAberta()"
+        titulo="Resgatar submissão"
+        mensagem="Pretende resgatar esta submissão? A tentativa volta a Em Submissão e fica novamente editável."
+        [aProcessar]="aResgatar()"
+        (sim)="resgatar()"
+        (nao)="confirmacaoResgatarAberta.set(false)"
+      />
+
+      <app-confirmacao-modal
+        [aberto]="confirmacaoDevolverAberta()"
+        titulo="Submeter à DGT"
+        mensagem="O processo volta à DGT e deixa de estar disponível para si. Pretende continuar?"
+        rotuloSim="Submeter"
+        rotuloNao="Cancelar"
+        [aProcessar]="aDevolver()"
+        (sim)="confirmarDevolucao()"
+        (nao)="confirmacaoDevolverAberta.set(false)"
+      />
+
+      <app-confirmacao-modal
+        [aberto]="confirmacaoCorrigirAberta()"
+        titulo="Corrigir processo"
+        mensagem="O processo volta a Em Submissão para o corrigir e submeter de novo à DGT. Pretende continuar?"
+        rotuloSim="Corrigir"
+        rotuloNao="Cancelar"
+        [aProcessar]="aCorrigir()"
+        (sim)="corrigir()"
+        (nao)="confirmacaoCorrigirAberta.set(false)"
+      />
+
+      <app-alteracoes-modal
+        [aberto]="alteracoesAbertas()"
+        [processo]="p"
+        (fechar)="alteracoesAbertas.set(false)"
+        (alterado)="aoAlterar($event)"
+        (recarregar)="recarregar()"
+        (desatualizado)="aoDesatualizar($event)"
+      />
+
+      @if (podePedirApoio()) {
+        <app-criar-notificacao-modal
+          [aberto]="pedirApoioAberto()"
+          [processoFixo]="processoDoPedidoApoio()"
+          (fechar)="pedirApoioAberto.set(false)"
+          (criada)="pedidoApoioEnviado()"
+        />
+      }
+    }
+    <app-desbloquear-campo-modal />
+  </div>
+</app-shell>

@@ -1,0 +1,50 @@
+<fieldset class="pergunta" [attr.aria-describedby]="descritoPorPergunta()">
+  <legend class="rotulo">{{ pergunta }}</legend>
+  <div class="opcoes">
+    <label class="opcao" [class.opcao-escolhida]="resposta() === 'SIM'">
+      <input type="radio" [name]="id + '-resposta'" value="SIM" [checked]="resposta() === 'SIM'" [disabled]="bloqueado()" (change)="responder('SIM')" />
+      <span>Sim</span>
+    </label>
+    <label class="opcao" [class.opcao-escolhida]="resposta() === 'NAO'">
+      <input type="radio" [name]="id + '-resposta'" value="NAO" [checked]="resposta() === 'NAO'" [disabled]="bloqueado()" (change)="responder('NAO')" />
+      <span>Não</span>
+    </label>
+  </div>
+  @if (resposta() === 'NAO') {
+    <p class="ajuda" [id]="idAjuda">{{ ajuda }}</p>
+    @if (erro(); as mensagem) {
+      <p class="erro" [id]="idErro">{{ mensagem }}</p>
+    }
+  }
+</fieldset>
+
+@if (resposta() === 'SIM') {
+  <app-seletor
+    class="campo"
+    rotulo="Instrumento de Gestão Territorial"
+    placeholder="Selecione a dinâmica do IGT"
+    [permitirVazio]="true"
+    [opcoes]="opcoes()"
+    [ajuda]="ajuda"
+    [erro]="erro()"
+    [descritoPorAdicional]="descritoPorSeletor()"
+    [formControl]="controloSeletor"
+  />
+  @if (listaVazia()) {
+    <app-alerta tipo="info" [id]="idVazia">{{ mensagemSemDinamicas }}</app-alerta>
+  }
+  @if (indisponivel()) {
+    <app-alerta tipo="aviso" [id]="idIndisponivel">{{ mensagemIndisponivel }}</app-alerta>
+  }
+  @if (erroLista(); as erroDaLista) {
+    <div class="erro-lista">
+      <app-error-banner [erro]="erroDaLista" />
+      <button type="button" app-botao variante="secundario" tamanho="pequeno" (click)="tentarNovamente()">Tentar novamente</button>
+    </div>
+  }
+  @if (temMais() && !aCarregar() && !erroLista()) {
+    <button type="button" app-botao variante="secundario" tamanho="pequeno" class="mostrar-mais" (click)="mostrarMais()">Mostrar mais</button>
+  }
+}
+<!-- A região existe sempre: um leitor de ecrã só anuncia o que muda dentro de uma região já presente. -->
+<p class="carregamento" role="status" [class.carregamento-vazio]="!aCarregar()">{{ aCarregar() ? 'A carregar dinâmicas…' : '' }}</p>

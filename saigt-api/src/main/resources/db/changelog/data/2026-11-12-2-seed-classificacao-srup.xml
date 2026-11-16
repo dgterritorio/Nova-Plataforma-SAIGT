@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="2026-11-12-2-seed-classificacao-srup" author="pedro.paixao">
+        <comment>
+            Classificação das servidões da EF v1.5 §3.7.3: 9 Domínios, 33 Classes e as 74 Tipologias das aplicações
+            dedicadas, pela ordem da EF. Códigos sequenciais D01-D09, C01-C33 e T001-T074; o `pai_id` resolve-se por
+            (`tipo`, `codigo`), sem ids explícitos. Ficam sem seed as tipologias que a EF não fixa (C02, C03, C07,
+            C08, C09, C16, C22, C24, C28, C29, C30 e as linhas cuja ocorrência não é uma Classe): o Master cria-as.
+            O rollback apaga as tipologias primeiro e desliga-as dos Instrumentos.
+        </comment>
+        <sql splitStatements="true" endDelimiter=";">
+        INSERT INTO lista_valores (tipo, codigo, descricao, ordem, ativo, pai_id)
+        VALUES ('DOMINIO_SRUP', 'D01', 'Atividades Perigosas', 1, TRUE, NULL);
+        INSERT INTO lista_valores (tipo, codigo, descricao, ordem, ativo, pai_id)
+        VALUES ('DOMINIO_SRUP', 'D02', 'Domínio Público Marítimo', 2, TRUE, NULL);
+        INSERT INTO lista_valores (tipo, codigo, descricao, ordem, ativo, pai_id)
+        VALUES ('DOMINIO_SRUP', 'D03', 'Equipamentos', 3, TRUE, NULL);
+        INSERT INTO lista_valores (tipo, codigo, descricao, ordem, ativo, pai_id)
+        VALUES ('DOMINIO_SRUP', 'D04', 'Infraestruturas', 4, TRUE, NULL);
+        INSERT INTO lista_valores (tipo, codigo, descricao, ordem, ativo, pai_id)
+        VALUES ('DOMINIO_SRUP', 'D05', 'Património Edificado', 5, TRUE, NULL);
+        INSERT INTO lista_valores (tipo, codigo, descricao, ordem, ativo, pai_id)
+        VALUES ('DOMINIO_SRUP', 'D06', 'Recursos Agrícolas e Florestais', 6, TRUE, NULL);
+        INSERT INTO lista_valores (tipo, codigo, descricao, ordem, ativo, pai_id)
+        VALUES ('DOMINIO_SRUP', 'D07', 'Recursos Ecológicos', 7, TRUE, NULL);
+        INSERT INTO lista_valores (tipo, codigo, descricao, ordem, ativo, pai_id)
+        VALUES ('DOMINIO_SRUP', 'D08', 'Recursos Geológicos', 8, TRUE, NULL);
+        INSERT INTO lista_valores (tipo, codigo, descricao, ordem, ativo, pai_id)
+        VALUES ('DOMINIO_SRUP', 'D09', 'Recursos Hídricos', 9, TRUE, NULL);
+        INSERT INTO lista_valores (tipo, codigo, descricao, ordem, ativo, pai_id)
+        SELECT 'CLASSE_SRUP', 'C01', 'Instalações com Produtos Explosivos', 1, TRUE, id FROM lista_valores WHERE tipo = 'DOMINIO_SRUP' AND codigo = 'D01';
+        INSERT INTO lista_valores (tipo, codigo, descricao, ordem, ativo, pai_id)
+        SELECT 'CLASSE_SRUP', 'C02', 'Estabelecimentos com Substâncias Perigosas', 2, TRUE, id FROM lista_valores WHERE tipo = 'DOMINIO_SRUP' AND codigo = 'D01';
+        INSERT INTO lista_valores (tipo, codigo, descricao, ordem, ativo, pai_id)
+        SELECT 'CLASSE_SRUP', 'C03', 'Domínio Público Marítimo', 3, TRUE, id FROM lista_valores WHERE tipo = 'DOMINIO_SRUP' AND codigo = 'D02';
+        INSERT INTO lista_valores (tipo, codigo, descricao, ordem, ativo, pai_id)
+        SELECT 'CLASSE_SRUP', 'C04', 'Estabelecimentos Prisionais e Tutelares de Menores', 4, TRUE, id FROM lista_valores WHERE tipo = 'DOMINIO_SRUP' AND codigo = 'D03';
+        INSERT INTO lista_valores (tipo, codigo, descricao, ordem, ativo, pai_id)
+        SELECT 'CLASSE_SRUP', 'C05', 'Instalações Aduaneiras', 5, TRUE, id FROM lista_valores WHERE tipo = 'DOMINIO_SRUP' AND codigo = 'D03';
+        INSERT INTO lista_valores (tipo, codigo, descricao, ordem, ativo, pai_id)
+        SELECT 'CLASSE_SRUP', 'C06', 'Defesa Nacional', 6, TRUE, id FROM lista_valores WHERE tipo = 'DOMINIO_SRUP' AND codigo = 'D03';
+        INSERT INTO lista_valores (tipo, codigo, descricao, ordem, ativo, pai_id)
+        SELECT 'CLASSE_SRUP', 'C07', 'Abastecimento de Água', 7, TRUE, id FROM lista_valores WHERE tipo = 'DOMINIO_SRUP' AND codigo = 'D04';
+        INSERT INTO lista_valores (tipo, codigo, descricao, ordem, ativo, pai_id)
+        SELECT 'CLASSE_SRUP', 'C08', 'Drenagem de Águas Residuais', 8, TRUE, id FROM lista_valores WHERE tipo = 'DOMINIO_SRUP' AND codigo = 'D04';
+        INSERT INTO lista_valores (tipo, codigo, descricao, ordem, ativo, pai_id)
+        SELECT 'CLASSE_SRUP', 'C09', 'Rede Elétrica', 9, TRUE, id FROM lista_valores WHERE tipo = 'DOMINIO_SRUP' AND codigo = 'D04';
+        INSERT INTO lista_valores (tipo, codigo, descricao, ordem, ativo, pai_id)
+        SELECT 'CLASSE_SRUP', 'C10', 'Gasodutos e Oleodutos', 10, TRUE, id FROM lista_valores WHERE tipo = 'DOMINIO_SRUP' AND codigo = 'D04';
+        INSERT INTO lista_valores (tipo, codigo, descricao, ordem, ativo, pai_id)
+        SELECT 'CLASSE_SRUP', 'C11', 'Rede Rodoviária Nacional e Regional', 11, TRUE, id FROM lista_valores WHERE tipo = 'DOMINIO_SRUP' AND codigo = 'D04';
+        INSERT INTO lista_valores (tipo, codigo, descricao, ordem, ativo, pai_id)
+        SELECT 'CLASSE_SRUP', 'C12', 'Rede Ferroviária', 12, TRUE, id FROM lista_valores WHERE tipo = 'DOMINIO_SRUP' AND codigo = 'D04';
+        INSERT INTO lista_valores (tipo, codigo, descricao, ordem, ativo, pai_id)
+        SELECT 'CLASSE_SRUP', 'C13', 'Aeroportos e Aeródromos', 13, TRUE, id FROM lista_valores WHERE tipo = 'DOMINIO_SRUP' AND codigo = 'D04';
+        INSERT INTO lista_valores (tipo, codigo, descricao, ordem, ativo, pai_id)
+        SELECT 'CLASSE_SRUP', 'C14', 'Telecomunicações', 14, TRUE, id FROM lista_valores WHERE tipo = 'DOMINIO_SRUP' AND codigo = 'D04';
+        INSERT INTO lista_valores (tipo, codigo, descricao, ordem, ativo, pai_id)
+        SELECT 'CLASSE_SRUP', 'C15', 'Sinalização Marítima', 15, TRUE, id FROM lista_valores WHERE tipo = 'DOMINIO_SRUP' AND codigo = 'D04';
+        INSERT INTO lista_valores (tipo, codigo, descricao, ordem, ativo, pai_id)
+        SELECT 'CLASSE_SRUP', 'C16', 'Marcos Geodésicos', 16, TRUE, id FROM lista_valores WHERE tipo = 'DOMINIO_SRUP' AND codigo = 'D04';
+        INSERT INTO lista_valores (tipo, codigo, descricao, ordem, ativo, pai_id)
+        SELECT 'CLASSE_SRUP', 'C17', 'Imóveis Classificados', 17, TRUE, id FROM lista_valores WHERE tipo = 'DOMINIO_SRUP' AND codigo = 'D05';
+        INSERT INTO lista_valores (tipo, codigo, descricao, ordem, ativo, pai_id)
+        SELECT 'CLASSE_SRUP', 'C18', 'Edifícios de Interesse Público', 18, TRUE, id FROM lista_valores WHERE tipo = 'DOMINIO_SRUP' AND codigo = 'D05';
+        INSERT INTO lista_valores (tipo, codigo, descricao, ordem, ativo, pai_id)
+        SELECT 'CLASSE_SRUP', 'C19', 'Reserva Agrícola Nacional', 19, TRUE, id FROM lista_valores WHERE tipo = 'DOMINIO_SRUP' AND codigo = 'D06';
+        INSERT INTO lista_valores (tipo, codigo, descricao, ordem, ativo, pai_id)
+        SELECT 'CLASSE_SRUP', 'C20', 'Obras de Aproveitamento Hidroagrícola', 20, TRUE, id FROM lista_valores WHERE tipo = 'DOMINIO_SRUP' AND codigo = 'D06';
+        INSERT INTO lista_valores (tipo, codigo, descricao, ordem, ativo, pai_id)
+        SELECT 'CLASSE_SRUP', 'C21', 'Regime Florestal', 21, TRUE, id FROM lista_valores WHERE tipo = 'DOMINIO_SRUP' AND codigo = 'D06';
+        INSERT INTO lista_valores (tipo, codigo, descricao, ordem, ativo, pai_id)
+        SELECT 'CLASSE_SRUP', 'C22', 'Povoamentos Florestais Percorridos por Incêndio', 22, TRUE, id FROM lista_valores WHERE tipo = 'DOMINIO_SRUP' AND codigo = 'D06';
+        INSERT INTO lista_valores (tipo, codigo, descricao, ordem, ativo, pai_id)
+        SELECT 'CLASSE_SRUP', 'C23', 'Árvores de Interesse Público', 23, TRUE, id FROM lista_valores WHERE tipo = 'DOMINIO_SRUP' AND codigo = 'D06';
+        INSERT INTO lista_valores (tipo, codigo, descricao, ordem, ativo, pai_id)
+        SELECT 'CLASSE_SRUP', 'C24', 'Espécies Agrícolas e Florestais', 24, TRUE, id FROM lista_valores WHERE tipo = 'DOMINIO_SRUP' AND codigo = 'D06';
+        INSERT INTO lista_valores (tipo, codigo, descricao, ordem, ativo, pai_id)
+        SELECT 'CLASSE_SRUP', 'C25', 'Áreas Protegidas', 25, TRUE, id FROM lista_valores WHERE tipo = 'DOMINIO_SRUP' AND codigo = 'D07';
+        INSERT INTO lista_valores (tipo, codigo, descricao, ordem, ativo, pai_id)
+        SELECT 'CLASSE_SRUP', 'C26', 'Rede Natura 2000 – ZEC', 26, TRUE, id FROM lista_valores WHERE tipo = 'DOMINIO_SRUP' AND codigo = 'D07';
+        INSERT INTO lista_valores (tipo, codigo, descricao, ordem, ativo, pai_id)
+        SELECT 'CLASSE_SRUP', 'C27', 'Rede Natura 2000 – ZPE', 27, TRUE, id FROM lista_valores WHERE tipo = 'DOMINIO_SRUP' AND codigo = 'D07';
+        INSERT INTO lista_valores (tipo, codigo, descricao, ordem, ativo, pai_id)
+        SELECT 'CLASSE_SRUP', 'C28', 'Águas de Nascente', 28, TRUE, id FROM lista_valores WHERE tipo = 'DOMINIO_SRUP' AND codigo = 'D08';
+        INSERT INTO lista_valores (tipo, codigo, descricao, ordem, ativo, pai_id)
+        SELECT 'CLASSE_SRUP', 'C29', 'Águas Minerais Naturais', 29, TRUE, id FROM lista_valores WHERE tipo = 'DOMINIO_SRUP' AND codigo = 'D08';
+        INSERT INTO lista_valores (tipo, codigo, descricao, ordem, ativo, pai_id)
+        SELECT 'CLASSE_SRUP', 'C30', 'Pedreiras', 30, TRUE, id FROM lista_valores WHERE tipo = 'DOMINIO_SRUP' AND codigo = 'D08';
+        INSERT INTO lista_valores (tipo, codigo, descricao, ordem, ativo, pai_id)
+        SELECT 'CLASSE_SRUP', 'C31', 'Domínio Público Hídrico', 31, TRUE, id FROM lista_valores WHERE tipo = 'DOMINIO_SRUP' AND codigo = 'D09';
+        INSERT INTO lista_valores (tipo, codigo, descricao, ordem, ativo, pai_id)
+        SELECT 'CLASSE_SRUP', 'C32', 'Albufeiras de Águas Públicas Classificadas', 32, TRUE, id FROM lista_valores WHERE tipo = 'DOMINIO_SRUP' AND codigo = 'D09';
+        INSERT INTO lista_valores (tipo, codigo, descricao, ordem, ativo, pai_id)
+        SELECT 'CLASSE_SRUP', 'C33', 'Captações de Água Subterrânea para Abastecimento Público', 33, TRUE, id FROM lista_valores WHERE tipo = 'DOMINIO_SRUP' AND codigo = 'D09';
+        INSERT INTO lista_valores (tipo, codigo, descricao, ordem, ativo, pai_id)
+        SELECT 'TIPOLOGIA_SRUP', 'T001', 'Regime florestal', 1, TRUE, id FROM lista_valores WHERE tipo = 'CLASSE_SRUP' AND codigo = 'C21';
+        INSERT INTO lista_valores (tipo, codigo, descricao, ordem, ativo, pai_id)
+        SELECT 'TIPOLOGIA_SRUP', 'T002', 'parcial', 2, TRUE, id FROM lista_valores WHERE tipo = 'CLASSE_SRUP' AND codigo = 'C21';
+        INSERT INTO lista_valores (tipo, codigo, descricao, ordem, ativo, pai_id)
+        SELECT 'TIPOLOGIA_SRUP', 'T003', 'parcial — desafetação', 3, TRUE, id FROM lista_valores WHERE tipo = 'CLASSE_SRUP' AND codigo = 'C21';
+        INSERT INTO lista_valores (tipo, codigo, descricao, ordem, ativo, pai_id)
+        SELECT 'TIPOLOGIA_SRUP', 'T004', 'parcial obrigatório', 4, TRUE, id FROM lista_valores WHERE tipo = 'CLASSE_SRUP' AND codigo = 'C21';
+        INSERT INTO lista_valores (tipo, codigo, descricao, ordem, ativo, pai_id)
+        SELECT 'TIPOLOGIA_SRUP', 'T005', 'total', 5, TRUE, id FROM lista_valores WHERE tipo = 'CLASSE_SRUP' AND codigo = 'C21';
+        INSERT INTO lista_valores (tipo, codigo, descricao, ordem, ativo, pai_id)
+        SELECT 'TIPOLOGIA_SRUP', 'T006', 'total — desafetação', 6, TRUE, id FROM lista_valores WHERE tipo = 'CLASSE_SRUP' AND codigo = 'C21';
+        INSERT INTO lista_valores (tipo, codigo, descricao, ordem, ativo, pai_id)
+        SELECT 'TIPOLOGIA_SRUP', 'T007', 'total/parcial', 7, TRUE, id FROM lista_valores WHERE tipo = 'CLASSE_SRUP' AND codigo = 'C21';
+        INSERT INTO lista_valores (tipo, codigo, descricao, ordem, ativo, pai_id)
+        SELECT 'TIPOLOGIA_SRUP', 'T008', 'total/parcial obrigatório', 8, TRUE, id FROM lista_valores WHERE tipo = 'CLASSE_SRUP' AND codigo = 'C21';
+        INSERT INTO lista_valores (tipo, codigo, descricao, ordem, ativo, pai_id)
+        SELECT 'TIPOLOGIA_SRUP', 'T009', 'Reserva Agrícola Nacional', 9, TRUE, id FROM lista_valores WHERE tipo = 'CLASSE_SRUP' AND codigo = 'C19';
+        INSERT INTO lista_valores (tipo, codigo, descricao, ordem, ativo, pai_id)
+        SELECT 'TIPOLOGIA_SRUP', 'T010', 'Interesse local', 10, TRUE, id FROM lista_valores WHERE tipo = 'CLASSE_SRUP' AND codigo = 'C20';
+        INSERT INTO lista_valores (tipo, codigo, descricao, ordem, ativo, pai_id)
+        SELECT 'TIPOLOGIA_SRUP', 'T011', 'Interesse regional', 11, TRUE, id FROM lista_valores WHERE tipo = 'CLASSE_SRUP' AND codigo = 'C20';
+        INSERT INTO lista_valores (tipo, codigo, descricao, ordem, ativo, pai_id)
+        SELECT 'TIPOLOGIA_SRUP', 'T012', 'Árvore isolada', 12, TRUE, id FROM lista_valores WHERE tipo = 'CLASSE_SRUP' AND codigo = 'C23';
+        INSERT INTO lista_valores (tipo, codigo, descricao, ordem, ativo, pai_id)
+        SELECT 'TIPOLOGIA_SRUP', 'T013', 'Conjunto de árvores', 13, TRUE, id FROM lista_valores WHERE tipo = 'CLASSE_SRUP' AND codigo = 'C23';
+        INSERT INTO lista_valores (tipo, codigo, descricao, ordem, ativo, pai_id)
+        SELECT 'TIPOLOGIA_SRUP', 'T014', 'Aeroportos e aeródromos', 14, TRUE, id FROM lista_valores WHERE tipo = 'CLASSE_SRUP' AND codigo = 'C13';
+        INSERT INTO lista_valores (tipo, codigo, descricao, ordem, ativo, pai_id)
+        SELECT 'TIPOLOGIA_SRUP', 'T015', 'Aeroporto de navegação aérea', 15, TRUE, id FROM lista_valores WHERE tipo = 'CLASSE_SRUP' AND codigo = 'C13';
+        INSERT INTO lista_valores (tipo, codigo, descricao, ordem, ativo, pai_id)
+        SELECT 'TIPOLOGIA_SRUP', 'T016', 'Heliporto', 16, TRUE, id FROM lista_valores WHERE tipo = 'CLASSE_SRUP' AND codigo = 'C13';
+        INSERT INTO lista_valores (tipo, codigo, descricao, ordem, ativo, pai_id)
+        SELECT 'TIPOLOGIA_SRUP', 'T017', 'Radiofarol', 17, TRUE, id FROM lista_valores WHERE tipo = 'CLASSE_SRUP' AND codigo = 'C13';
+        INSERT INTO lista_valores (tipo, codigo, descricao, ordem, ativo, pai_id)
+        SELECT 'TIPOLOGIA_SRUP', 'T018', 'Estação', 18, TRUE, id FROM lista_valores WHERE tipo = 'CLASSE_SRUP' AND codigo = 'C10';
+        INSERT INTO lista_valores (tipo, codigo, descricao, ordem, ativo, pai_id)
+        SELECT 'TIPOLOGIA_SRUP', 'T019', 'Gás natural', 19, TRUE, id FROM lista_valores WHERE tipo = 'CLASSE_SRUP' AND codigo = 'C10';
+        INSERT INTO lista_valores (tipo, codigo, descricao, ordem, ativo, pai_id)
+        SELECT 'TIPOLOGIA_SRUP', 'T020', 'Gás petróleo liquefeito e produtos refinados', 20, TRUE, id FROM lista_valores WHERE tipo = 'CLASSE_SRUP' AND codigo = 'C10';
+        INSERT INTO lista_valores (tipo, codigo, descricao, ordem, ativo, pai_id)
+        SELECT 'TIPOLOGIA_SRUP', 'T021', 'Zona non aedificandi', 21, TRUE, id FROM lista_valores WHERE tipo = 'CLASSE_SRUP' AND codigo = 'C12';
+        INSERT INTO lista_valores (tipo, codigo, descricao, ordem, ativo, pai_id)
+        SELECT 'TIPOLOGIA_SRUP', 'T022', 'Zona non aedificandi', 22, TRUE, id FROM lista_valores WHERE tipo = 'CLASSE_SRUP' AND codigo = 'C11';
+        INSERT INTO lista_valores (tipo, codigo, descricao, ordem, ativo, pai_id)
+        SELECT 'TIPOLOGIA_SRUP', 'T023', 'Zona non aedificandi — reserva', 23, TRUE, id FROM lista_valores WHERE tipo = 'CLASSE_SRUP' AND codigo = 'C11';
+        INSERT INTO lista_valores (tipo, codigo, descricao, ordem, ativo, pai_id)
+        SELECT 'TIPOLOGIA_SRUP', 'T024', 'Zona de proteção', 24, TRUE, id FROM lista_valores WHERE tipo = 'CLASSE_SRUP' AND codigo = 'C15';
+        INSERT INTO lista_valores (tipo, codigo, descricao, ordem, ativo, pai_id)
+        SELECT 'TIPOLOGIA_SRUP', 'T025', 'Zona de desobstrução aos feixes', 25, TRUE, id FROM lista_valores WHERE tipo = 'CLASSE_SRUP' AND codigo = 'C14';
+        INSERT INTO lista_valores (tipo, codigo, descricao, ordem, ativo, pai_id)
+        SELECT 'TIPOLOGIA_SRUP', 'T026', 'Zona de libertação primária', 26, TRUE, id FROM lista_valores WHERE tipo = 'CLASSE_SRUP' AND codigo = 'C14';
+        INSERT INTO lista_valores (tipo, codigo, descricao, ordem, ativo, pai_id)
+        SELECT 'TIPOLOGIA_SRUP', 'T027', 'Zona de libertação secundária', 27, TRUE, id FROM lista_valores WHERE tipo = 'CLASSE_SRUP' AND codigo = 'C14';
+        INSERT INTO lista_valores (tipo, codigo, descricao, ordem, ativo, pai_id)
+        SELECT 'TIPOLOGIA_SRUP', 'T028', 'Instalações aéreas', 28, TRUE, id FROM lista_valores WHERE tipo = 'CLASSE_SRUP' AND codigo = 'C06';
+        INSERT INTO lista_valores (tipo, codigo, descricao, ordem, ativo, pai_id)
+        SELECT 'TIPOLOGIA_SRUP', 'T029', 'Instalações navais', 29, TRUE, id FROM lista_valores WHERE tipo = 'CLASSE_SRUP' AND codigo = 'C06';
+        INSERT INTO lista_valores (tipo, codigo, descricao, ordem, ativo, pai_id)
+        SELECT 'TIPOLOGIA_SRUP', 'T030', 'Instalações terrestres', 30, TRUE, id FROM lista_valores WHERE tipo = 'CLASSE_SRUP' AND codigo = 'C06';
+        INSERT INTO lista_valores (tipo, codigo, descricao, ordem, ativo, pai_id)
+        SELECT 'TIPOLOGIA_SRUP', 'T031', 'Estabelecimento prisional', 31, TRUE, id FROM lista_valores WHERE tipo = 'CLASSE_SRUP' AND codigo = 'C04';
+        INSERT INTO lista_valores (tipo, codigo, descricao, ordem, ativo, pai_id)
+        SELECT 'TIPOLOGIA_SRUP', 'T032', 'Estabelecimento tutelar de menores', 32, TRUE, id FROM lista_valores WHERE tipo = 'CLASSE_SRUP' AND codigo = 'C04';
+        INSERT INTO lista_valores (tipo, codigo, descricao, ordem, ativo, pai_id)
+        SELECT 'TIPOLOGIA_SRUP', 'T033', 'Estabelecimento prisional e tutelar de menores', 33, TRUE, id FROM lista_valores WHERE tipo = 'CLASSE_SRUP' AND codigo = 'C04';
+        INSERT INTO lista_valores (tipo, codigo, descricao, ordem, ativo, pai_id)
+        SELECT 'TIPOLOGIA_SRUP', 'T034', 'Alfândegas', 34, TRUE, id FROM lista_valores WHERE tipo = 'CLASSE_SRUP' AND codigo = 'C05';
+        INSERT INTO lista_valores (tipo, codigo, descricao, ordem, ativo, pai_id)
+        SELECT 'TIPOLOGIA_SRUP', 'T035', 'Delegações e controlo aduaneiro', 35, TRUE, id FROM lista_valores WHERE tipo = 'CLASSE_SRUP' AND codigo = 'C05';
+        INSERT INTO lista_valores (tipo, codigo, descricao, ordem, ativo, pai_id)
+        SELECT 'TIPOLOGIA_SRUP', 'T036', 'Fábrica', 36, TRUE, id FROM lista_valores WHERE tipo = 'CLASSE_SRUP' AND codigo = 'C01';
+        INSERT INTO lista_valores (tipo, codigo, descricao, ordem, ativo, pai_id)
+        SELECT 'TIPOLOGIA_SRUP', 'T037', 'Oficina', 37, TRUE, id FROM lista_valores WHERE tipo = 'CLASSE_SRUP' AND codigo = 'C01';
+        INSERT INTO lista_valores (tipo, codigo, descricao, ordem, ativo, pai_id)
+        SELECT 'TIPOLOGIA_SRUP', 'T038', 'Paiol', 38, TRUE, id FROM lista_valores WHERE tipo = 'CLASSE_SRUP' AND codigo = 'C01';
+        INSERT INTO lista_valores (tipo, codigo, descricao, ordem, ativo, pai_id)
+        SELECT 'TIPOLOGIA_SRUP', 'T039', 'Edifícios públicos', 39, TRUE, id FROM lista_valores WHERE tipo = 'CLASSE_SRUP' AND codigo = 'C18';
+        INSERT INTO lista_valores (tipo, codigo, descricao, ordem, ativo, pai_id)
+        SELECT 'TIPOLOGIA_SRUP', 'T040', 'Bem de interesse municipal', 40, TRUE, id FROM lista_valores WHERE tipo = 'CLASSE_SRUP' AND codigo = 'C17';
+        INSERT INTO lista_valores (tipo, codigo, descricao, ordem, ativo, pai_id)
+        SELECT 'TIPOLOGIA_SRUP', 'T041', 'Bem móvel de interesse nacional', 41, TRUE, id FROM lista_valores WHERE tipo = 'CLASSE_SRUP' AND codigo = 'C17';
+        INSERT INTO lista_valores (tipo, codigo, descricao, ordem, ativo, pai_id)
+        SELECT 'TIPOLOGIA_SRUP', 'T042', 'Bens de interesse nacional', 42, TRUE, id FROM lista_valores WHERE tipo = 'CLASSE_SRUP' AND codigo = 'C17';
+        INSERT INTO lista_valores (tipo, codigo, descricao, ordem, ativo, pai_id)
+        SELECT 'TIPOLOGIA_SRUP', 'T043', 'Bens de interesse público', 43, TRUE, id FROM lista_valores WHERE tipo = 'CLASSE_SRUP' AND codigo = 'C17';
+        INSERT INTO lista_valores (tipo, codigo, descricao, ordem, ativo, pai_id)
+        SELECT 'TIPOLOGIA_SRUP', 'T044', 'Conjunto de interesse municipal/nacional/público', 44, TRUE, id FROM lista_valores WHERE tipo = 'CLASSE_SRUP' AND codigo = 'C17';
+        INSERT INTO lista_valores (tipo, codigo, descricao, ordem, ativo, pai_id)
+        SELECT 'TIPOLOGIA_SRUP', 'T045', 'Imóvel de interesse municipal/público', 45, TRUE, id FROM lista_valores WHERE tipo = 'CLASSE_SRUP' AND codigo = 'C17';
+        INSERT INTO lista_valores (tipo, codigo, descricao, ordem, ativo, pai_id)
+        SELECT 'TIPOLOGIA_SRUP', 'T046', 'Monumento de interesse municipal/público', 46, TRUE, id FROM lista_valores WHERE tipo = 'CLASSE_SRUP' AND codigo = 'C17';
+        INSERT INTO lista_valores (tipo, codigo, descricao, ordem, ativo, pai_id)
+        SELECT 'TIPOLOGIA_SRUP', 'T047', 'Monumento nacional', 47, TRUE, id FROM lista_valores WHERE tipo = 'CLASSE_SRUP' AND codigo = 'C17';
+        INSERT INTO lista_valores (tipo, codigo, descricao, ordem, ativo, pai_id)
+        SELECT 'TIPOLOGIA_SRUP', 'T048', 'Paisagem cultural', 48, TRUE, id FROM lista_valores WHERE tipo = 'CLASSE_SRUP' AND codigo = 'C17';
+        INSERT INTO lista_valores (tipo, codigo, descricao, ordem, ativo, pai_id)
+        SELECT 'TIPOLOGIA_SRUP', 'T049', 'Património mundial', 49, TRUE, id FROM lista_valores WHERE tipo = 'CLASSE_SRUP' AND codigo = 'C17';
+        INSERT INTO lista_valores (tipo, codigo, descricao, ordem, ativo, pai_id)
+        SELECT 'TIPOLOGIA_SRUP', 'T050', 'Sítio de interesse municipal/nacional/público', 50, TRUE, id FROM lista_valores WHERE tipo = 'CLASSE_SRUP' AND codigo = 'C17';
+        INSERT INTO lista_valores (tipo, codigo, descricao, ordem, ativo, pai_id)
+        SELECT 'TIPOLOGIA_SRUP', 'T051', 'Valor concelhio', 51, TRUE, id FROM lista_valores WHERE tipo = 'CLASSE_SRUP' AND codigo = 'C17';
+        INSERT INTO lista_valores (tipo, codigo, descricao, ordem, ativo, pai_id)
+        SELECT 'TIPOLOGIA_SRUP', 'T052', 'Zona especial de proteção', 52, TRUE, id FROM lista_valores WHERE tipo = 'CLASSE_SRUP' AND codigo = 'C17';
+        INSERT INTO lista_valores (tipo, codigo, descricao, ordem, ativo, pai_id)
+        SELECT 'TIPOLOGIA_SRUP', 'T053', 'Condicionada', 53, TRUE, id FROM lista_valores WHERE tipo = 'CLASSE_SRUP' AND codigo = 'C32';
+        INSERT INTO lista_valores (tipo, codigo, descricao, ordem, ativo, pai_id)
+        SELECT 'TIPOLOGIA_SRUP', 'T054', 'Protegida', 54, TRUE, id FROM lista_valores WHERE tipo = 'CLASSE_SRUP' AND codigo = 'C32';
+        INSERT INTO lista_valores (tipo, codigo, descricao, ordem, ativo, pai_id)
+        SELECT 'TIPOLOGIA_SRUP', 'T055', 'Utilização condicionada', 55, TRUE, id FROM lista_valores WHERE tipo = 'CLASSE_SRUP' AND codigo = 'C32';
+        INSERT INTO lista_valores (tipo, codigo, descricao, ordem, ativo, pai_id)
+        SELECT 'TIPOLOGIA_SRUP', 'T056', 'Utilização livre', 56, TRUE, id FROM lista_valores WHERE tipo = 'CLASSE_SRUP' AND codigo = 'C32';
+        INSERT INTO lista_valores (tipo, codigo, descricao, ordem, ativo, pai_id)
+        SELECT 'TIPOLOGIA_SRUP', 'T057', 'Aquíferos', 57, TRUE, id FROM lista_valores WHERE tipo = 'CLASSE_SRUP' AND codigo = 'C33';
+        INSERT INTO lista_valores (tipo, codigo, descricao, ordem, ativo, pai_id)
+        SELECT 'TIPOLOGIA_SRUP', 'T058', 'Captações de águas subterrâneas', 58, TRUE, id FROM lista_valores WHERE tipo = 'CLASSE_SRUP' AND codigo = 'C33';
+        INSERT INTO lista_valores (tipo, codigo, descricao, ordem, ativo, pai_id)
+        SELECT 'TIPOLOGIA_SRUP', 'T059', 'Lagoa', 59, TRUE, id FROM lista_valores WHERE tipo = 'CLASSE_SRUP' AND codigo = 'C31';
+        INSERT INTO lista_valores (tipo, codigo, descricao, ordem, ativo, pai_id)
+        SELECT 'TIPOLOGIA_SRUP', 'T060', 'Ribeira', 60, TRUE, id FROM lista_valores WHERE tipo = 'CLASSE_SRUP' AND codigo = 'C31';
+        INSERT INTO lista_valores (tipo, codigo, descricao, ordem, ativo, pai_id)
+        SELECT 'TIPOLOGIA_SRUP', 'T061', 'Rio', 61, TRUE, id FROM lista_valores WHERE tipo = 'CLASSE_SRUP' AND codigo = 'C31';
+        INSERT INTO lista_valores (tipo, codigo, descricao, ordem, ativo, pai_id)
+        SELECT 'TIPOLOGIA_SRUP', 'T062', 'Paisagem protegida', 62, TRUE, id FROM lista_valores WHERE tipo = 'CLASSE_SRUP' AND codigo = 'C25';
+        INSERT INTO lista_valores (tipo, codigo, descricao, ordem, ativo, pai_id)
+        SELECT 'TIPOLOGIA_SRUP', 'T063', 'Paisagem protegida (local)', 63, TRUE, id FROM lista_valores WHERE tipo = 'CLASSE_SRUP' AND codigo = 'C25';
+        INSERT INTO lista_valores (tipo, codigo, descricao, ordem, ativo, pai_id)
+        SELECT 'TIPOLOGIA_SRUP', 'T064', 'Paisagem protegida (regional)', 64, TRUE, id FROM lista_valores WHERE tipo = 'CLASSE_SRUP' AND codigo = 'C25';
+        INSERT INTO lista_valores (tipo, codigo, descricao, ordem, ativo, pai_id)
+        SELECT 'TIPOLOGIA_SRUP', 'T065', 'Monumento natural', 65, TRUE, id FROM lista_valores WHERE tipo = 'CLASSE_SRUP' AND codigo = 'C25';
+        INSERT INTO lista_valores (tipo, codigo, descricao, ordem, ativo, pai_id)
+        SELECT 'TIPOLOGIA_SRUP', 'T066', 'Parque nacional', 66, TRUE, id FROM lista_valores WHERE tipo = 'CLASSE_SRUP' AND codigo = 'C25';
+        INSERT INTO lista_valores (tipo, codigo, descricao, ordem, ativo, pai_id)
+        SELECT 'TIPOLOGIA_SRUP', 'T067', 'Parque natural', 67, TRUE, id FROM lista_valores WHERE tipo = 'CLASSE_SRUP' AND codigo = 'C25';
+        INSERT INTO lista_valores (tipo, codigo, descricao, ordem, ativo, pai_id)
+        SELECT 'TIPOLOGIA_SRUP', 'T068', 'Parque natural (local)', 68, TRUE, id FROM lista_valores WHERE tipo = 'CLASSE_SRUP' AND codigo = 'C25';
+        INSERT INTO lista_valores (tipo, codigo, descricao, ordem, ativo, pai_id)
+        SELECT 'TIPOLOGIA_SRUP', 'T069', 'Reserva botânica', 69, TRUE, id FROM lista_valores WHERE tipo = 'CLASSE_SRUP' AND codigo = 'C25';
+        INSERT INTO lista_valores (tipo, codigo, descricao, ordem, ativo, pai_id)
+        SELECT 'TIPOLOGIA_SRUP', 'T070', 'Reserva natural', 70, TRUE, id FROM lista_valores WHERE tipo = 'CLASSE_SRUP' AND codigo = 'C25';
+        INSERT INTO lista_valores (tipo, codigo, descricao, ordem, ativo, pai_id)
+        SELECT 'TIPOLOGIA_SRUP', 'T071', 'Sítio classificado', 71, TRUE, id FROM lista_valores WHERE tipo = 'CLASSE_SRUP' AND codigo = 'C25';
+        INSERT INTO lista_valores (tipo, codigo, descricao, ordem, ativo, pai_id)
+        SELECT 'TIPOLOGIA_SRUP', 'T072', 'Zona de proteção especial', 72, TRUE, id FROM lista_valores WHERE tipo = 'CLASSE_SRUP' AND codigo = 'C27';
+        INSERT INTO lista_valores (tipo, codigo, descricao, ordem, ativo, pai_id)
+        SELECT 'TIPOLOGIA_SRUP', 'T073', 'Lista Nacional de Sítios — 1ª fase', 73, TRUE, id FROM lista_valores WHERE tipo = 'CLASSE_SRUP' AND codigo = 'C26';
+        INSERT INTO lista_valores (tipo, codigo, descricao, ordem, ativo, pai_id)
+        SELECT 'TIPOLOGIA_SRUP', 'T074', 'Lista Nacional de Sítios — 2ª fase', 74, TRUE, id FROM lista_valores WHERE tipo = 'CLASSE_SRUP' AND codigo = 'C26';
+        </sql>
+
+        <rollback>
+            <sql>UPDATE instrumento SET tipologia_srup_id = NULL WHERE tipologia_srup_id IS NOT NULL</sql>
+            <sql>DELETE FROM lista_valores WHERE tipo = 'TIPOLOGIA_SRUP'</sql>
+            <sql>DELETE FROM lista_valores WHERE tipo = 'CLASSE_SRUP'</sql>
+            <sql>DELETE FROM lista_valores WHERE tipo = 'DOMINIO_SRUP'</sql>
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>

@@ -1,0 +1,131 @@
+.anexos {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaco-2);
+}
+
+.rotulo {
+  font-size: var(--texto-base);
+  font-weight: var(--peso-medio);
+  line-height: var(--texto-base-linha);
+  color: var(--cor-texto-rotulo);
+}
+
+.visualmente-oculto {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.zona {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--espaco-1);
+  padding: var(--espaco-4);
+  border: var(--borda-largura) dashed var(--cor-borda-controlo);
+  border-radius: var(--raio-lg);
+  background: var(--cor-superficie);
+  color: var(--cor-texto-secundario);
+  text-align: center;
+  cursor: pointer;
+}
+
+.zona svg {
+  width: 16px;
+  height: 16px;
+}
+
+.seletor:focus-visible + .zona {
+  outline: var(--anel-foco);
+  outline-offset: var(--anel-foco-afastamento);
+}
+
+.zona-desativada {
+  background: var(--cor-superficie-alt);
+  color: var(--cor-texto-terciario);
+  cursor: not-allowed;
+}
+
+.zona-texto {
+  font-size: var(--texto-base);
+  line-height: var(--texto-base-linha);
+  color: var(--cor-texto-rotulo);
+}
+
+.zona-desativada .zona-texto {
+  color: var(--cor-texto-terciario);
+}
+
+.zona-formatos,
+.ajuda {
+  margin: 0;
+  font-size: var(--texto-sm);
+  line-height: var(--texto-sm-linha);
+  color: var(--cor-texto-secundario);
+}
+
+.erros {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: var(--texto-sm);
+  line-height: var(--texto-sm-linha);
+  color: var(--cor-erro);
+}
+
+.escolhidos {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaco-1);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.escolhido {
+  display: flex;
+  align-items: center;
+  gap: var(--espaco-2);
+  padding: var(--espaco-2) var(--espaco-3);
+  border: var(--borda-largura) solid var(--cor-borda);
+  border-radius: var(--raio-md);
+}
+
+.escolhido-nome {
+  flex: 1 1 auto;
+  min-width: 0;
+  font-size: var(--texto-sm);
+  line-height: var(--texto-sm-linha);
+  color: var(--cor-texto-rotulo);
+  overflow-wrap: anywhere;
+}
+
+.escolhido-tamanho {
+  font-size: var(--texto-xs);
+  line-height: var(--texto-xs-linha);
+  color: var(--cor-texto-secundario);
+}
+
+.escolhido-remover {
+  display: inline-flex;
+  padding: var(--espaco-1);
+  border: 0;
+  border-radius: var(--raio-sm);
+  background: none;
+  color: var(--cor-texto-secundario);
+  cursor: pointer;
+}
+
+.escolhido-remover svg {
+  width: 12px;
+  height: 12px;
+}
+
+.escolhido-remover:focus-visible {
+  outline: var(--anel-foco);
+  outline-offset: var(--anel-foco-afastamento);
+}

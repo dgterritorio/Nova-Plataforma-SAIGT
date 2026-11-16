@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="2026-11-10-6-create-metadados-motu" author="margarida.marques">
+        <comment>
+            Ficha de metadados MOTU do processo: uma Série por processo e uma ficha de Conjunto por peça gráfica de
+            publicação, ligada à planta. Só as colunas estruturais; os campos do perfil MOTU entram depois.
+            As FK não apagam em cascata: a aplicação apaga a ficha de Conjunto antes do documento.
+        </comment>
+
+        <createTable tableName="metadados_motu">
+            <column name="id" type="UUID">
+                <constraints primaryKey="true" primaryKeyName="pk_metadados_motu" nullable="false"/>
+            </column>
+            <column name="processo_id" type="UUID">
+                <constraints nullable="false" foreignKeyName="fk_metadados_motu_processo" references="processo(id)"/>
+            </column>
+            <column name="tipo" type="VARCHAR(10)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="opcional" type="BOOLEAN" defaultValueBoolean="false">
+                <constraints nullable="false"/>
+            </column>
+            <column name="processo_documento_id" type="UUID">
+                <constraints foreignKeyName="fk_metadados_motu_processo_documento" references="processo_documento(id)"/>
+            </column>
+            <column name="completo" type="BOOLEAN" defaultValueBoolean="false">
+                <constraints nullable="false"/>
+            </column>
+            <column name="criado_em" type="TIMESTAMP WITH TIME ZONE">
+                <constraints nullable="false"/>
+            </column>
+            <column name="atualizado_em" type="TIMESTAMP WITH TIME ZONE">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <sql>ALTER TABLE metadados_motu ADD CONSTRAINT ck_metadados_motu_tipo CHECK (tipo IN ('SERIE', 'CDG'))</sql>
+        <sql>ALTER TABLE metadados_motu ADD CONSTRAINT ck_metadados_motu_tipo_documento CHECK (
+            (tipo = 'SERIE' AND processo_documento_id IS NULL AND opcional = FALSE)
+            OR (tipo = 'CDG' AND (opcional = TRUE OR processo_documento_id IS NOT NULL)))</sql>
+
+        <createIndex tableName="metadados_motu" indexName="idx_metadados_motu_processo_id">
+            <column name="processo_id"/>
+        </createIndex>
+        <sql>CREATE UNIQUE INDEX uq_metadados_motu_serie ON metadados_motu (processo_id) WHERE tipo = 'SERIE'</sql>
+        <sql>CREATE UNIQUE INDEX uq_metadados_motu_cdg_documento ON metadados_motu (processo_documento_id)
+            WHERE tipo = 'CDG' AND opcional = FALSE</sql>
+
+        <addColumn tableName="planta">
+            <column name="metadados_motu_id" type="UUID">
+                <constraints foreignKeyName="fk_planta_metadados_motu" references="metadados_motu(id)"/>
+            </column>
+        </addColumn>
+        <createIndex tableName="planta" indexName="idx_planta_metadados_motu_id">
+            <column name="metadados_motu_id"/>
+        </createIndex>
+
+        <rollback>
+            <dropIndex tableName="planta" indexName="idx_planta_metadados_motu_id"/>
+            <dropForeignKeyConstraint baseTableName="planta" constraintName="fk_planta_metadados_motu"/>
+            <dropColumn tableName="planta" columnName="metadados_motu_id"/>
+            <dropTable tableName="metadados_motu"/>
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>

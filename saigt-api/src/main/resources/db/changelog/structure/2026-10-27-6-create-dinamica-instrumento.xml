@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="2026-10-27-6-create-dinamica-instrumento" author="david.raposo">
+        <comment>Ligação da Dinâmica aos Instrumentos (DB-PROC-018), preenchida a partir de dinamica.instrumento_id.</comment>
+
+        <createTable tableName="dinamica_instrumento">
+            <column name="dinamica_id" type="UUID">
+                <constraints nullable="false" foreignKeyName="fk_dinamica_instrumento_dinamica" references="dinamica(id)"/>
+            </column>
+            <column name="instrumento_id" type="UUID">
+                <constraints nullable="false" foreignKeyName="fk_dinamica_instrumento_instrumento" references="instrumento(id)"/>
+            </column>
+        </createTable>
+        <addPrimaryKey tableName="dinamica_instrumento" columnNames="dinamica_id, instrumento_id"
+                       constraintName="pk_dinamica_instrumento"/>
+        <createIndex tableName="dinamica_instrumento" indexName="idx_dinamica_instrumento_instrumento">
+            <column name="instrumento_id"/>
+        </createIndex>
+        <sql>INSERT INTO dinamica_instrumento (dinamica_id, instrumento_id) SELECT id, instrumento_id FROM dinamica</sql>
+
+        <rollback>
+            <dropTable tableName="dinamica_instrumento"/>
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>

@@ -1,0 +1,106 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+
+<Meta title="Fundamentos" />
+
+export const GRUPOS = [
+  { titulo: 'Cores', prefixos: ['--cor-'] },
+  { titulo: 'Tipografia', prefixos: ['--fonte-', '--texto-', '--peso-'] },
+  { titulo: 'Espaçamentos', prefixos: ['--espaco-'] },
+  { titulo: 'Raios', prefixos: ['--raio-'] },
+  { titulo: 'Sombras', prefixos: ['--sombra-'] },
+  { titulo: 'Bordas, alturas, contentores e foco', prefixos: ['--borda-', '--altura-', '--contentor-', '--largura-', '--anel-foco'] },
+];
+
+export const tokensSemanticos = () => {
+  const nomes = new Set();
+  for (const folha of Array.from(document.styleSheets)) {
+    let regras = [];
+    try {
+      regras = Array.from(folha.cssRules);
+    } catch {
+      continue;
+    }
+    for (const regra of regras) {
+      if (regra.selectorText !== ':root') continue;
+      for (const propriedade of Array.from(regra.style)) {
+        if (GRUPOS.some((grupo) => grupo.prefixos.some((prefixo) => propriedade.startsWith(prefixo)))) nomes.add(propriedade);
+      }
+    }
+  }
+  const valor = (nome) => getComputedStyle(document.documentElement).getPropertyValue(nome).trim();
+  return [...nomes].map((nome) => ({ nome, valor: valor(nome) }));
+};
+
+export const celula = { padding: 'var(--espaco-1-5) var(--espaco-3)', borderBottom: 'var(--borda-largura) solid var(--cor-borda-suave)', verticalAlign: 'middle', textAlign: 'left' };
+
+export const Amostra = ({ grupo, nome }) => {
+  if (grupo === 'Cores') {
+    return <span style={{ display: 'inline-block', width: 48, height: 28, borderRadius: 'var(--raio-sm-md)', border: 'var(--borda-largura) solid var(--cor-borda)', background: `var(${nome})` }} />;
+  }
+  if (grupo === 'Espaçamentos') {
+    return <span style={{ display: 'inline-block', height: 12, width: `var(${nome})`, background: 'var(--cor-primaria)' }} />;
+  }
+  if (grupo === 'Raios') {
+    return <span style={{ display: 'inline-block', width: 48, height: 32, border: 'var(--borda-largura-opcao) solid var(--cor-primaria)', borderRadius: `var(${nome})` }} />;
+  }
+  if (grupo === 'Sombras') {
+    const sombra = nome === '--sombra-cabecalho' || nome === '--sombra-menu' ? { filter: `var(${nome})` } : { boxShadow: `var(${nome})` };
+    return <span style={{ display: 'inline-block', width: 64, height: 36, borderRadius: 'var(--raio-md)', background: 'var(--cor-superficie)', ...sombra }} />;
+  }
+  if (nome.startsWith('--texto-') && !nome.endsWith('-linha')) {
+    return <span style={{ fontSize: `var(${nome})`, color: 'var(--cor-texto)' }}>Instrumentos de Gestão Territorial</span>;
+  }
+  if (nome.startsWith('--peso-')) {
+    return <span style={{ fontWeight: `var(${nome})`, color: 'var(--cor-texto)' }}>Processo submetido</span>;
+  }
+  if (nome.startsWith('--fonte-')) {
+    return <span style={{ fontFamily: `var(${nome})`, color: 'var(--cor-texto)' }}>Ação à DGT — 0123456789</span>;
+  }
+  return null;
+};
+
+export const Tokens = () => {
+  const tokens = tokensSemanticos();
+  return (
+    <div>
+      <p>
+        {tokens.length} tokens de <code>src/styles/semantica.css</code>, lidos da página: o nome e o valor final, depois de
+        resolvidos os tokens do Figma (<code>tokens.css</code>). A lista acompanha sozinha qualquer mudança ao ficheiro.
+      </p>
+      {GRUPOS.map((grupo) => {
+        const doGrupo = tokens.filter((token) => grupo.prefixos.some((prefixo) => token.nome.startsWith(prefixo)));
+        return (
+          <section key={grupo.titulo}>
+            <h2>{grupo.titulo}</h2>
+            <table style={{ borderCollapse: 'collapse', width: '100%' }}>
+              <thead>
+                <tr>
+                  <th scope="col" style={celula}>Token</th>
+                  <th scope="col" style={celula}>Valor</th>
+                  <th scope="col" style={celula}>Amostra</th>
+                </tr>
+              </thead>
+              <tbody>
+                {doGrupo.map((token) => (
+                  <tr key={token.nome}>
+                    <td style={celula}><code>{token.nome}</code></td>
+                    <td style={celula}><code>{token.valor}</code></td>
+                    <td style={celula}><Amostra grupo={grupo.titulo} nome={token.nome} /></td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </section>
+        );
+      })}
+    </div>
+  );
+};
+
+# Fundamentos do design
+
+Os componentes e os ecrãs do SAIGT só usam estes tokens semânticos. Cada um aponta para um token do Figma em
+`src/styles/tokens.css` (ou, para as poucas cores que a exportação não traz, `src/styles/tokens-complementares.css`).
+Nunca se usam hex, `rgb()` ou `hsl()` nem os tokens do Figma diretamente.
+
+<Tokens />

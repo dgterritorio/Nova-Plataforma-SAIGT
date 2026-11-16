@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="2026-10-27-2-add-exposto-em-processo-documento" author="margarida.marques">
+        <comment>
+            Momento da exposição pública de cada documento PUBLICACAO à INCM (DB-DOC-002, BL-DOC-005): anda sempre a
+            par com `token_publico`. Os documentos já expostos ficam com `atualizado_em`, a melhor aproximação.
+        </comment>
+
+        <addColumn tableName="processo_documento">
+            <column name="exposto_em" type="TIMESTAMP WITH TIME ZONE"/>
+        </addColumn>
+        <sql>UPDATE processo_documento SET exposto_em = atualizado_em WHERE token_publico IS NOT NULL</sql>
+        <sql>ALTER TABLE processo_documento ADD CONSTRAINT ck_processo_documento_exposicao
+            CHECK ((token_publico IS NULL) = (exposto_em IS NULL))</sql>
+
+        <rollback>
+            <sql>ALTER TABLE processo_documento DROP CONSTRAINT ck_processo_documento_exposicao</sql>
+            <dropColumn tableName="processo_documento" columnName="exposto_em"/>
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>

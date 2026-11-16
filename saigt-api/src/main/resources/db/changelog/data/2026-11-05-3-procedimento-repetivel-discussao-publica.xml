@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="2026-11-05-3-procedimento-repetivel-discussao-publica" author="david.raposo">
+        <preConditions onFail="MARK_RAN">
+            <columnExists tableName="instrumento_procedimento_config" columnName="repetivel"/>
+        </preConditions>
+        <comment>
+            A Abertura de Discussão Pública repete-se em sequência na mesma Dinâmica (OI-310, FR-161; OI-406 fechado a
+            03/11: o Master configura por Procedimento e só esta se repete). O UPDATE usa o código do tipo e não ids,
+            para servir PDM, PU e PP e qualquer ambiente. As variantes ABERTURA_DISCUSSAO_PUBLICA_RERAE e
+            ABERTURA_DISCUSSAO_PUBLICA_DL10 ficam não repetíveis: a EF não prevê repetição nelas.
+        </comment>
+
+        <sql>UPDATE instrumento_procedimento_config SET repetivel = true
+            WHERE tipo_procedimento_id IN (SELECT id FROM tipo_procedimento WHERE codigo = 'ABERTURA_DISCUSSAO_PUBLICA')</sql>
+
+        <rollback>
+            <sql>UPDATE instrumento_procedimento_config SET repetivel = false
+                WHERE tipo_procedimento_id IN (SELECT id FROM tipo_procedimento WHERE codigo = 'ABERTURA_DISCUSSAO_PUBLICA')</sql>
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>

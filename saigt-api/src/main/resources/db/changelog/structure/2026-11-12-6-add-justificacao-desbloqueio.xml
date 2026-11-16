@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="2026-11-12-6-add-justificacao-desbloqueio" author="david.raposo">
+        <comment>
+            Processo documento: justificação do último desbloqueio de um ficheiro validado na correção, visível à
+            DGT na validação. Mantém-se quando o ficheiro volta a ficar bloqueado numa correção seguinte.
+        </comment>
+
+        <addColumn tableName="processo_documento">
+            <column name="justificacao_desbloqueio" type="TEXT"/>
+        </addColumn>
+
+        <rollback>
+            <dropColumn tableName="processo_documento" columnName="justificacao_desbloqueio"/>
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>

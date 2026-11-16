@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="2026-11-09-6-drop-processo-planta" author="pedro.paixao">
+        <comment>
+            As plantas ficam só na tabela planta. O rollback recria processo_planta vazia; as linhas voltam a ser
+            copiadas pelo rollback do changeset anterior.
+        </comment>
+
+        <dropTable tableName="processo_planta"/>
+
+        <rollback>
+            <createTable tableName="processo_planta">
+                <column name="id" type="BIGINT" autoIncrement="true">
+                    <constraints primaryKey="true" nullable="false"/>
+                </column>
+                <column name="processo_id" type="UUID">
+                    <constraints nullable="false" foreignKeyName="fk_processo_planta_processo"
+                                 references="processo(id)" deleteCascade="true"/>
+                </column>
+                <column name="ordem" type="INT">
+                    <constraints nullable="false"/>
+                </column>
+                <column name="tipo" type="VARCHAR(100)">
+                    <constraints nullable="false"/>
+                </column>
+                <column name="nome" type="VARCHAR(300)">
+                    <constraints nullable="false"/>
+                </column>
+                <column name="folha" type="VARCHAR(20)"/>
+                <column name="nome_tiff" type="VARCHAR(300)">
+                    <constraints nullable="false"/>
+                </column>
+            </createTable>
+            <addUniqueConstraint tableName="processo_planta" columnNames="processo_id, ordem"
+                                 constraintName="uk_processo_planta_ordem"/>
+            <addUniqueConstraint tableName="processo_planta" columnNames="processo_id, nome_tiff"
+                                 constraintName="uk_processo_planta_tiff"/>
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>

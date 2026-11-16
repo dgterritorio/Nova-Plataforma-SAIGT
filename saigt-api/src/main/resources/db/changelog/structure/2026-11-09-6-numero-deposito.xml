@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="2026-11-09-6-numero-deposito" author="david.raposo">
+        <comment>
+            N.º de depósito do processo do procedimento final (DB-PROC-014, OI-506): Região.DICO/SiglaIGT/CódDinâmica/
+            Ano/Sequencial, atribuído na publicação, com sequencial anual por série (a REN tem série própria) e o código
+            do município da tabela que a plataforma atual usa (t4_codigo_municipio).
+        </comment>
+
+        <addColumn tableName="processo">
+            <column name="numero_deposito" type="VARCHAR(50)"/>
+        </addColumn>
+        <sql>CREATE UNIQUE INDEX uk_processo_numero_deposito ON processo (numero_deposito)
+            WHERE numero_deposito IS NOT NULL</sql>
+
+        <addColumn tableName="tipo_instrumento">
+            <column name="serie_numero_deposito" type="VARCHAR(10)" defaultValue="GERAL">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+        <sql>ALTER TABLE tipo_instrumento ADD CONSTRAINT ck_tipo_instrumento_serie_numero_deposito
+            CHECK (serie_numero_deposito IN ('GERAL', 'REN'))</sql>
+
+        <createTable tableName="sequencia_numero_deposito">
+            <column name="serie" type="VARCHAR(10)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="ano" type="INTEGER">
+                <constraints nullable="false"/>
+            </column>
+            <column name="ultimo_sequencial" type="INTEGER" defaultValueNumeric="0">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <addPrimaryKey tableName="sequencia_numero_deposito" columnNames="serie, ano"
+                       constraintName="pk_sequencia_numero_deposito"/>
+        <sql>ALTER TABLE sequencia_numero_deposito ADD CONSTRAINT ck_sequencia_numero_deposito_serie
+            CHECK (serie IN ('GERAL', 'REN'))</sql>
+        <sql>ALTER TABLE sequencia_numero_deposito ADD CONSTRAINT ck_sequencia_numero_deposito_ultimo_sequencial
+            CHECK (ultimo_sequencial &gt;= 0)</sql>
+
+        <createTable tableName="municipio_codigo_deposito">
+            <column name="dtcc" type="CHAR(4)">
+                <constraints primaryKey="true" primaryKeyName="pk_municipio_codigo_deposito" nullable="false"/>
+            </column>
+            <column name="codigo_regiao" type="CHAR(2)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="codigo_municipio" type="VARCHAR(8)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <sql>ALTER TABLE municipio_codigo_deposito ADD CONSTRAINT ck_municipio_codigo_deposito_codigo_municipio
+            CHECK (codigo_municipio ~ '^[0-9]{2}\.[0-9]{2}\.[0-9]{2}$' AND left(codigo_municipio, 2) = codigo_regiao)</sql>
+
+        <rollback>
+            <dropTable tableName="municipio_codigo_deposito"/>
+            <dropTable tableName="sequencia_numero_deposito"/>
+            <dropColumn tableName="tipo_instrumento" columnName="serie_numero_deposito"/>
+            <sql>DROP INDEX uk_processo_numero_deposito</sql>
+            <dropColumn tableName="processo" columnName="numero_deposito"/>
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>

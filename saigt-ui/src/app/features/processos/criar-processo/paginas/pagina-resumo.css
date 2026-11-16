@@ -1,0 +1,137 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaco-4);
+}
+
+h2 {
+  margin: 0;
+  font-size: var(--texto-xl);
+  font-weight: var(--peso-semi);
+  line-height: var(--texto-xl-linha);
+  color: var(--cor-texto);
+}
+
+/* Pela ordem do DOM, a grelha põe Designação, Tipo de procedimento e Submissão à esquerda, como no Figma. */
+.dados {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--espaco-4) var(--espaco-6);
+  margin: 0;
+}
+
+/* O #90a1b9 do Figma fica a 2,6:1 sobre branco: usa-se o cinzento acessível mais próximo. */
+.dados dt {
+  font-size: var(--texto-rotulo);
+  font-weight: var(--peso-semi);
+  line-height: var(--texto-xs-linha);
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  color: var(--cor-texto-secundario);
+}
+
+.dados dd {
+  margin: var(--espaco-0-5) 0 0;
+  font-size: var(--texto-base);
+  font-weight: var(--peso-medio);
+  line-height: var(--texto-base-linha);
+  color: var(--cor-texto-rotulo);
+  overflow-wrap: anywhere;
+}
+
+.dados .valor-forte {
+  font-weight: var(--peso-semi);
+  color: var(--cor-titulo-pagina);
+}
+
+.dados .valor-mono {
+  font-family: var(--fonte-mono);
+}
+
+.confirmacao {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaco-2);
+  padding: var(--espaco-5);
+  border: var(--borda-largura) solid var(--cor-borda);
+  border-radius: var(--raio-lg);
+  background: var(--cor-superficie);
+  box-shadow: var(--sombra-cartao);
+}
+
+.caixa-confirmacao {
+  display: flex;
+  align-items: center;
+  gap: var(--espaco-3);
+  padding: var(--espaco-3);
+  border: var(--borda-largura) solid var(--cor-borda);
+  border-radius: var(--raio-md);
+  font-size: var(--texto-base);
+  font-weight: var(--peso-medio);
+  line-height: var(--texto-base-linha);
+  color: var(--cor-texto);
+}
+
+.caixa-confirmacao input {
+  flex-shrink: 0;
+  width: 16px;
+  height: 16px;
+  margin: 0;
+  accent-color: var(--cor-primaria);
+}
+
+.caixa-confirmacao.com-erro {
+  border-color: var(--cor-erro);
+}
+
+.erro-campo {
+  margin: 0;
+  font-size: var(--texto-sm);
+  line-height: var(--texto-sm-linha);
+  color: var(--cor-erro);
+}
+
+.caixa-confirmacao input:focus-visible {
+  outline: var(--anel-foco);
+  outline-offset: var(--anel-foco-afastamento);
+}
+
+.nota {
+  margin: 0;
+  padding: var(--espaco-2) 0 0 var(--espaco-8);
+  font-size: var(--texto-base);
+  line-height: var(--texto-base-linha-paragrafo);
+  color: var(--cor-texto-celula);
+}
+
+.nota strong {
+  font-weight: var(--peso-negrito);
+}
+
+.grupo-pendencias {
+  margin-top: var(--espaco-2);
+}
+
+.grupo-titulo {
+  margin: 0;
+  font-weight: var(--peso-semi);
+}
+
+.lista-pendencias {
+  margin: var(--espaco-1) 0;
+  padding-left: var(--espaco-5);
+}
+
+.ir-para {
+  padding-left: 0;
+}
+
+@media (width <= 640px) {
+  .dados {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .nota {
+    padding-left: 0;
+  }
+}

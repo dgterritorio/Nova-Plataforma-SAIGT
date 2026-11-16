@@ -1,0 +1,273 @@
+<app-shell breadcrumb="Gestão de Entidades">
+  <div class="conteudo">
+    <div class="cabecalho">
+      <h1>Gestão de Entidades</h1>
+      @if (souAdmin()) {
+        <button app-botao type="button" tamanho="pequeno" class="adicionar" (click)="abrirCriar()">
+          <svg icone viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true">
+            <path d="M8 3.5v9M3.5 8h9" />
+          </svg>
+          Adicionar Entidade
+        </button>
+      }
+    </div>
+
+    <div class="barra-filtros">
+      <app-campo-pesquisa
+        class="pesquisa-entidades"
+        placeholder="Pesquisar por entidade ou código…"
+        (pesquisar)="aoMudarPesquisa($event)"
+      />
+
+      <div class="filtros-direita">
+        <app-seletor
+          class="filtro-tipo"
+          rotulo="Tipo de entidade"
+          placeholder="Todos os tipos"
+          [rotuloOculto]="true"
+          [permitirVazio]="true"
+          [compacto]="true"
+          [opcoes]="opcoesTipo"
+          [formControl]="filtroTipoControlo"
+        />
+        <div class="filtros-estado" role="group" aria-label="Estado da entidade">
+          @for (opcao of opcoesEstado; track opcao.valor) {
+            <button
+              type="button"
+              class="filtro"
+              [class.ativo]="filtroEstado() === opcao.valor"
+              [attr.aria-pressed]="filtroEstado() === opcao.valor"
+              (click)="mudarFiltroEstado(opcao.valor)"
+            >
+              {{ opcao.rotulo }}
+            </button>
+          }
+        </div>
+        <span class="contador">{{ totalElementos() }} entidades</span>
+      </div>
+    </div>
+
+    @if (sucesso(); as mensagem) {
+      <app-alerta tipo="sucesso" class="alerta-sucesso">{{ mensagem }}</app-alerta>
+    }
+    <app-error-banner [erro]="erroAcao()" />
+
+    @if (erro()) {
+      <app-error-banner [erro]="erro()" />
+    } @else {
+      <app-cartao variante="elevado" espacamento="nenhum">
+        <app-tabela
+          familia="compacta"
+          [colunas]="colunas"
+          [linhas]="entidades()"
+          [aCarregar]="loading()"
+          mensagemVazia="Sem entidades para os filtros indicados."
+        >
+          <ng-template appCelula="nome" let-entidade>
+            <span class="celula-nome">{{ descricao(entidade) }}</span>
+            @if (linhaSecundaria(entidade); as linha) {
+              <span class="celula-nota">{{ linha }}</span>
+            } @else {
+              <app-selo tom="aviso" class="selo-sem-codigo">Sem código ou tipo</app-selo>
+            }
+          </ng-template>
+          <ng-template appCelula="contacto" let-entidade>
+            <span class="celula-contacto">{{ entidade.contactoPrincipal?.telefone ?? '—' }}</span>
+          </ng-template>
+          <ng-template appCelula="email" let-entidade>
+            <span class="celula-email">{{ entidade.contactoPrincipal?.email ?? '—' }}</span>
+          </ng-template>
+          <ng-template appCelula="atualizadoEm" let-entidade>
+            <span class="celula-data">{{ entidade.atualizadoEm ? (entidade.atualizadoEm | date: 'dd/MM/yyyy') : '—' }}</span>
+          </ng-template>
+          <ng-template appCelula="estado" let-entidade>
+            <app-selo [tom]="entidade.ativo ? 'sucesso' : 'cinza'" forma="pill" class="status">
+              <span icone class="status-ponto" aria-hidden="true"></span>
+              {{ entidade.ativo ? 'Ativa' : 'Inativa' }}
+            </app-selo>
+          </ng-template>
+          <ng-template appCelula="acoes" let-entidade>
+            @if (souAdmin()) {
+              <div class="menu-acoes">
+                <button
+                  #botaoMenu
+                  type="button"
+                  class="btn-acoes"
+                  [attr.aria-label]="'Mais opções para ' + descricao(entidade)"
+                  [attr.aria-expanded]="menuAbertoId() === entidade.id"
+                  (click)="alternarMenu(entidade.id, $event)"
+                >
+                  <svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
+                    <circle cx="4" cy="8" r="1" /><circle cx="8" cy="8" r="1" /><circle cx="12" cy="8" r="1" />
+                  </svg>
+                </button>
+                @if (menuAbertoId() === entidade.id) {
+                  <!-- eslint-disable-next-line @angular-eslint/template/click-events-have-key-events, @angular-eslint/template/interactive-supports-focus -- só impede o click de fechar o próprio menu, não é uma interação do utilizador -->
+                  <div
+                    class="dropdown-menu"
+                    [style.top.px]="menuPosicao().topo"
+                    [style.right.px]="menuPosicao().direita"
+                    (click)="$event.stopPropagation()"
+                  >
+                    <button type="button" (click)="abrirEditar(entidade, botaoMenu)">Editar entidade</button>
+                    <button type="button" (click)="abrirContactos(entidade, botaoMenu)">Contactos</button>
+                    <button type="button" class="opcao-perigo" (click)="pedirEliminar(entidade, botaoMenu)">Eliminar</button>
+                  </div>
+                }
+              </div>
+            }
+          </ng-template>
+          <app-paginacao
+            rodape
+            [pagina]="pagina() + 1"
+            [tamanhoPagina]="tamanhoPagina"
+            [total]="totalElementos()"
+            etiquetaItens="entidades"
+            (paginaMudou)="irParaPagina($event - 1)"
+          />
+        </app-tabela>
+      </app-cartao>
+    }
+  </div>
+</app-shell>
+
+<app-entidade-modal
+  [aberto]="entidadeModalAberto()"
+  [modo]="modoModal()"
+  [entidade]="entidadeEmEdicao()"
+  (gravada)="aoGravarEntidade()"
+  (fechar)="fecharEntidadeModal()"
+/>
+
+<app-confirmacao-modal
+  titulo="Eliminar entidade"
+  rotuloSim="Eliminar"
+  rotuloNao="Cancelar"
+  [aberto]="!!entidadeAEliminar()"
+  [mensagem]="mensagemEliminar()"
+  [aProcessar]="aEliminar()"
+  (sim)="confirmarEliminar()"
+  (nao)="entidadeAEliminar.set(null)"
+/>
+
+<app-modal
+  largura="xl"
+  [aberto]="!!entidadeContactos()"
+  [titulo]="'Contactos de ' + descricao(entidadeContactos())"
+  [descritoPor]="idExplicacaoContactos"
+  (fechar)="fecharContactos()"
+>
+  <p class="explicacao-contactos" [id]="idExplicacaoContactos">
+    Só pode haver um contacto principal ativo. Para o trocar, retire primeiro o principal atual e depois marque o novo. Os contactos não se apagam: desativam-se.
+  </p>
+  @if (contactosErroAcao(); as mensagem) {
+    <app-alerta tipo="erro" class="alerta-contactos">{{ mensagem }}</app-alerta>
+  }
+  @if (contactosErro(); as erroContactos) {
+    <app-alerta tipo="erro" class="alerta-contactos">{{ erroContactos.mensagem }}</app-alerta>
+  } @else {
+    <div class="barra-contactos">
+      <button app-botao type="button" variante="secundario" tamanho="pequeno" class="adicionar-contacto" (click)="abrirCriarContacto()">
+        Adicionar contacto
+      </button>
+    </div>
+    <app-tabela
+      familia="compacta"
+      [legenda]="'Contactos de ' + descricao(entidadeContactos())"
+      [colunas]="colunasContactos"
+      [linhas]="contactos()"
+      [aCarregar]="contactosACarregar()"
+      mensagemVazia="Esta entidade ainda não tem contactos."
+    >
+      <ng-template appCelula="email" let-contacto>
+        <span class="celula-email celula-email-contacto">{{ contacto.email }}</span>
+      </ng-template>
+      <ng-template appCelula="descricao" let-contacto>{{ contacto.descricao ?? '—' }}</ng-template>
+      <ng-template appCelula="telefone" let-contacto><span class="celula-telefone">{{ contacto.telefone ?? '—' }}</span></ng-template>
+      <ng-template appCelula="principal" let-contacto>
+        @if (contacto.principal) {
+          <app-selo tom="info">Principal</app-selo>
+        } @else {
+          <span class="visualmente-oculto">Não principal</span><span aria-hidden="true">—</span>
+        }
+      </ng-template>
+      <ng-template appCelula="estado" let-contacto>
+        <app-selo [tom]="contacto.ativo ? 'sucesso' : 'cinza'" forma="pill" class="status">
+          <span icone class="status-ponto" aria-hidden="true"></span>
+          {{ contacto.ativo ? 'Ativo' : 'Inativo' }}
+        </app-selo>
+      </ng-template>
+      <ng-template appCelula="acoes" let-contacto>
+        <div class="acoes-contacto">
+          <button type="button" class="acao-contacto" [attr.aria-label]="'Editar ' + contacto.email" (click)="abrirEditarContacto(contacto)">
+            Editar
+          </button>
+          @if (contacto.principal) {
+            <button
+              type="button"
+              class="acao-contacto"
+              [attr.aria-label]="'Retirar principal a ' + contacto.email"
+              [disabled]="aProcessarContacto()"
+              (click)="alterarContacto(contacto, { principal: false })"
+            >
+              Retirar principal
+            </button>
+          } @else if (contacto.ativo) {
+            <button
+              type="button"
+              class="acao-contacto"
+              [attr.aria-label]="'Marcar como principal ' + contacto.email"
+              [disabled]="aProcessarContacto()"
+              (click)="alterarContacto(contacto, { principal: true })"
+            >
+              Marcar como principal
+            </button>
+          }
+          @if (contacto.ativo) {
+            <button
+              type="button"
+              class="acao-contacto"
+              [attr.aria-label]="'Desativar ' + contacto.email"
+              [disabled]="aProcessarContacto()"
+              (click)="contactoADesativar.set(contacto)"
+            >
+              Desativar
+            </button>
+          } @else {
+            <button
+              type="button"
+              class="acao-contacto"
+              [attr.aria-label]="'Reativar ' + contacto.email"
+              [disabled]="aProcessarContacto()"
+              (click)="alterarContacto(contacto, { ativo: true })"
+            >
+              Reativar
+            </button>
+          }
+        </div>
+      </ng-template>
+    </app-tabela>
+  }
+  <div rodape>
+    <button type="button" app-botao variante="secundario" tamanho="pequeno" (click)="fecharContactos()">Fechar</button>
+  </div>
+</app-modal>
+
+<app-contacto-modal
+  [aberto]="contactoModalAberto()"
+  [entidadeId]="entidadeContactos()?.id ?? null"
+  [contacto]="contactoEmEdicao()"
+  (gravado)="aoGravarContacto()"
+  (fechar)="fecharContactoModal()"
+/>
+
+<app-confirmacao-modal
+  titulo="Desativar contacto"
+  rotuloSim="Desativar"
+  rotuloNao="Cancelar"
+  [aberto]="!!contactoADesativar()"
+  [mensagem]="'Desativar o contacto ' + (contactoADesativar()?.email ?? '') + '? Deixa de receber as cópias das notificações e pode ser reativado mais tarde.'"
+  [aProcessar]="aProcessarContacto()"
+  (sim)="confirmarDesativar()"
+  (nao)="contactoADesativar.set(null)"
+/>

@@ -1,0 +1,367 @@
+codigo;descricao_incm;descricao_saigt;tipo_entidade;nipc;dico
+1001;Agência Portuguesa do Ambiente, IP;Agência Portuguesa do Ambiente, IP;APA;510306624;
+7001;Área Metropolitana de Lisboa;Área Metropolitana de Lisboa;AM;502826126;
+7002;Área Metropolitana do Porto;Área Metropolitana do Porto;AM;502823305;
+2001;CI-AMAL - Comunidade Intermunicipal do Algarve;CI-AMAL - Comunidade Intermunicipal do Algarve;CIM;502971096;
+2002;CIM do Ave - Comunidade Intermunicipal do Ave;CIM do Ave - Comunidade Intermunicipal do Ave;CIM;508887780;
+2003;CIMAC - Comunidade Intermunicipal do Alentejo Central;CIMAC - Comunidade Intermunicipal do Alentejo Central;CIM;509364390;
+2004;CIMAL - Comunidade Intermunicipal do Alentejo Litoral;CIMAL - Comunidade Intermunicipal do Alentejo Litoral;CIM;509075541;
+2005;CIMBAL - Comunidade Intermunicipal do Baixo Alentejo;CIMBAL - Comunidade Intermunicipal do Baixo Alentejo;CIM;509761534;
+2006;CIMRL - Comunidade Intermunicipal da Região de Leiria;CIMRL - Comunidade Intermunicipal da Região de Leiria;CIM;508035546;
+8001;Comissão de Coordenação e Desenvolvimento Regional de Lisboa e Vale do Tejo, IP;Comissão de Coordenação e Desenvolvimento Regional de Lisboa e Vale do Tejo, IP;CCDR_DR;517622610;
+8002;Comissão de Coordenação e Desenvolvimento Regional do Alentejo, IP;Comissão de Coordenação e Desenvolvimento Regional do Alentejo, IP;CCDR_DR;517699044;
+8003;Comissão de Coordenação e Desenvolvimento Regional do Algarve, IP;Comissão de Coordenação e Desenvolvimento Regional do Algarve, IP;CCDR_DR;517638827;
+8004;Comissão de Coordenação e Desenvolvimento Regional do Centro, IP;Comissão de Coordenação e Desenvolvimento Regional do Centro, IP;CCDR_DR;517638754;
+8005;Comissão de Coordenação e Desenvolvimento Regional do Norte, IP;Comissão de Coordenação e Desenvolvimento Regional do Norte, IP;CCDR_DR;517713233;
+2007;Comunidade Intermunicipal da Beira Baixa;Comunidade Intermunicipal da Beira Baixa;CIM;508831725;
+2008;Comunidade Intermunicipal da Lezíria do Tejo;Comunidade Intermunicipal da Lezíria do Tejo;CIM;508787033;
+2009;Comunidade Intermunicipal da Região de Aveiro;Comunidade Intermunicipal da Região de Aveiro;CIM;508771935;
+2010;Comunidade Intermunicipal da Região de Coimbra;Comunidade Intermunicipal da Região de Coimbra;CIM;508354617;
+2011;Comunidade Intermunicipal das Beiras e Serra da Estrela;Comunidade Intermunicipal das Beiras e Serra da Estrela;CIM;513025766;
+2012;Comunidade Intermunicipal das Terras de Trás-os-Montes;Comunidade Intermunicipal das Terras de Trás-os-Montes;CIM;510957544;
+2013;Comunidade Intermunicipal do Alto Alentejo;Comunidade Intermunicipal do Alto Alentejo;CIM;509020690;
+2014;Comunidade Intermunicipal do Alto Minho;Comunidade Intermunicipal do Alto Minho;CIM;508754496;
+2015;Comunidade Intermunicipal do Alto Tâmega e Barroso;Comunidade Intermunicipal do Alto Tâmega e Barroso;CIM;510957579;
+2016;Comunidade Intermunicipal do Cávado;Comunidade Intermunicipal do Cávado;CIM;508779472;
+2017;Comunidade Intermunicipal do Douro;Comunidade Intermunicipal do Douro;CIM;508779200;
+2018;Comunidade Intermunicipal do Médio Tejo;Comunidade Intermunicipal do Médio Tejo;CIM;502106506;
+2019;Comunidade Intermunicipal do Oeste;Comunidade Intermunicipal do Oeste;CIM;502266694;
+2020;Comunidade Intermunicipal do Tâmega e Sousa;Comunidade Intermunicipal do Tâmega e Sousa;CIM;508889910;
+2021;Comunidade Intermunicipal Viseu Dão Lafões;Comunidade Intermunicipal Viseu Dão Lafões;CIM;508047790;
+8006;Direção Regional dos Recursos Florestais e Ordenamento Territorial;Direção Regional dos Recursos Florestais e Ordenamento Territorial;CCDR_DR;600087123;
+6001;Direção-Geral do Território;Direção-Geral do Território;DGT;600084965;
+3001;Gabinete da Ministra da Administração Interna;Gabinete da Ministra da Administração Interna;SEC_ESTADO;600025861;
+3002;Gabinete da Ministra da Coesão Territorial;Gabinete da Ministra da Coesão Territorial;SEC_ESTADO;600087328;
+3003;Gabinete da Ministra da Modernização do Estado e da Administração Pública;Gabinete da Ministra da Modernização do Estado e da Administração Pública;SEC_ESTADO;600087336;
+3004;Gabinete da Ministra do Ambiente e Energia;Gabinete da Ministra do Ambiente e Energia;SEC_ESTADO;600086291;
+3005;Gabinete da Secretária de Estado Adjunta e da Modernização Administrativa;Gabinete da Secretária de Estado Adjunta e da Modernização Administrativa;SEC_ESTADO;600086828;
+3006;Gabinete da Secretária de Estado da Administração Pública;Gabinete da Secretária de Estado da Administração Pública;SEC_ESTADO;600087735;
+3007;Gabinete do Ministro da Administração Interna;Gabinete do Ministro da Administração Interna;SEC_ESTADO;600025861;
+3008;Gabinete do Ministro da Agricultura e Mar;Gabinete do Ministro da Agricultura e Mar;SEC_ESTADO;600053679;
+3009;Gabinete do Ministro da Economia e da Coesão Territorial;Gabinete do Ministro da Economia e da Coesão Territorial;SEC_ESTADO;600084493;
+3010;Gabinete do Ministro das Infraestruturas e Habitação;Gabinete do Ministro das Infraestruturas e Habitação;SEC_ESTADO;600087883;
+3011;Gabinete do Secretário de Estado Adjunto e da Administração Interna;Gabinete do Secretário de Estado Adjunto e da Administração Interna;SEC_ESTADO;600025853;
+3012;Gabinete do Secretário de Estado da Administração Interna;Gabinete do Secretário de Estado da Administração Interna;SEC_ESTADO;600083519;
+3013;Gabinete do Secretário de Estado da Administração Local e Ordenamento do Território;Gabinete do Secretário de Estado da Administração Local e Ordenamento do Território;SEC_ESTADO;600087859;
+3014;Gabinete do Secretário de Estado da Administração Local e Reforma Administrativa;Gabinete do Secretário de Estado da Administração Local e Reforma Administrativa;SEC_ESTADO;600084574;
+3015;Gabinete do Secretário de Estado da Agricultura;Gabinete do Secretário de Estado da Agricultura;SEC_ESTADO;600080595;
+3016;Gabinete do Secretário de Estado da Conservação da Natureza e Florestas;Gabinete do Secretário de Estado da Conservação da Natureza e Florestas;SEC_ESTADO;600086283;
+3017;Gabinete do Secretário de Estado da Modernização Administrativa;Gabinete do Secretário de Estado da Modernização Administrativa;SEC_ESTADO;600082792;
+4001;Gabinete do Secretário de Estado da Presidência do Conselho de Ministros;Gabinete do Secretário de Estado da Presidência do Conselho de Ministros;PCM;600087719;
+3018;Gabinete do Secretário de Estado das Florestas;Gabinete do Secretário de Estado das Florestas;SEC_ESTADO;600088049;
+3019;Gabinete do Secretário de Estado das Infraestruturas;Gabinete do Secretário de Estado das Infraestruturas;SEC_ESTADO;600087816;
+3020;Gabinete do Secretário de Estado do Ambiente;Gabinete do Secretário de Estado do Ambiente;SEC_ESTADO;600084655;
+1002;Infraestruturas de Portugal, SA;Infraestruturas de Portugal, SA;IP;503933813;
+1003;Instituto da Conservação da Natureza e das Florestas, IP;Instituto da Conservação da Natureza e das Florestas, IP;ICNF;510342647;
+5001;Município da Amadora;Município da Amadora;CM;505456010;1115
+5002;Município da Batalha;Município da Batalha;CM;501290206;1004
+5003;Município da Calheta;Município de Calheta-Madeira;CM;511233639;3101
+5004;Município da Chamusca;Município de Chamusca;CM;501305564;1407
+5005;Município da Covilhã;Município da Covilhã;CM;505330768;0503
+5006;Município da Figueira da Foz;Município de Figueira da Foz;CM;501305580;0605
+5007;Município da Golegã;Município da Golegã;CM;506563774;1412
+5008;Município da Guarda;Município da Guarda;CM;501131140;0907
+5009;Município da Horta;Município de Horta;CM;512073821;4701
+5010;Município da Lourinhã;Município da Lourinhã;CM;502177101;1108
+5011;Município da Lousã;Município da Lousã;CM;501121528;0607
+5012;Município da Madalena;Município de Madalena;CM;512070946;4602
+5013;Município da Maia;Município da Maia;CM;505387131;1306
+5014;Município da Marinha Grande;Município da Marinha Grande;CM;505776758;1010
+5015;Município da Mealhada;Município da Mealhada;CM;506792382;0111
+5016;Município da Moita;Município da Moita;CM;506791220;1506
+5017;Município da Murtosa;Município de Murtosa;CM;506791238;0112
+5018;Município da Nazaré;Município da Nazaré;CM;507012100;1011
+5019;Município da Póvoa de Lanhoso;Município de Póvoa de Lanhoso;CM;506632920;0309
+5020;Município da Póvoa de Varzim;Município da Póvoa de Varzim;CM;506741400;1313
+5021;Município da Povoação;Município de Povoação;CM;512065047;4204
+5022;Município da Praia da Vitória;Município da Praia da Vitória;CM;512044023;4302
+5023;Município da Ribeira Grande;Município de Ribeira Grande;CM;512013241;4205
+5024;Município da Sertã;Município da Sertã;CM;506963837;0509
+5025;Município da Trofa;Município da Trofa;CM;504296434;1318
+5026;Município das Caldas da Rainha;Município de Caldas da Rainha;CM;501222634;1006
+5027;Município das Lajes do Pico;Município de Lajes do Pico;CM;512074143;4601
+5028;Município de Abrantes;Município de Abrantes;CM;502661038;1401
+5029;Município de Águeda;Município de Águeda;CM;501090436;0101
+5030;Município de Aguiar da Beira;Município de Aguiar da Beira;CM;506809307;0901
+5031;Município de Alandroal;Município de Alandroal;CM;506772527;0701
+5032;Município de Albergaria-a-Velha;Município de Albergaria-a-Velha;CM;506783146;0102
+5033;Município de Albufeira;Município de Albufeira;CM;503539473;0801
+5034;Município de Alcácer do Sal;Município de Alcácer do Sal;CM;502150319;1501
+5035;Município de Alcanena;Município de Alcanena;CM;500745773;1402
+5036;Município de Alcobaça;Município de Alcobaça;CM;506874249;1001
+5037;Município de Alcochete;Município de Alcochete;CM;506788490;1502
+5038;Município de Alcoutim;Município de Alcoutim;CM;506772446;0802
+5039;Município de Alenquer;Município de Alenquer;CM;501305734;1101
+5040;Município de Alfândega da Fé;Município de Alfândega da Fé;CM;506647498;0401
+5041;Município de Alijó;Município de Alijó;CM;506859487;1701
+5042;Município de Aljezur;Município de Aljezur;CM;505932512;0803
+5043;Município de Aljustrel;Município de Aljustrel;CM;501122486;0201
+5044;Município de Almada;Município de Almada;CM;500051054;1503
+5045;Município de Almeida;Município de Almeida;CM;506625419;0902
+5046;Município de Almeirim;Município de Almeirim;CM;501273433;1403
+5047;Município de Almodôvar;Município de Almodôvar;CM;506816184;0202
+5048;Município de Alpiarça;Município de Alpiarça;CM;501133097;1404
+5049;Município de Alter do Chão;Município de Alter do Chão;CM;501132872;1201
+5050;Município de Alvaiázere;Município de Alvaiázere;CM;506605949;1002
+5051;Município de Alvito;Município de Alvito;CM;501288120;0203
+5052;Município de Amarante;Município de Amarante;CM;501102752;1301
+5053;Município de Amares;Município de Amares;CM;506797627;0301
+5054;Município de Anadia;Município de Anadia;CM;501294163;0103
+5055;Município de Angra do Heroísmo;Município de Angra do Heroísmo;CM;512044040;4301
+5056;Município de Ansião;Município de Ansião;CM;506605930;1003
+5057;Município de Arcos de Valdevez;Município de Arcos de Valdevez;CM;505211696;1601
+5058;Município de Arganil;Município de Arganil;CM;506833232;0601
+5059;Município de Armamar;Município de Armamar;CM;506843190;1801
+5060;Município de Arouca;Município de Arouca;CM;506808122;0104
+5061;Município de Arraiolos;Município de Arraiolos;CM;501258027;0702
+5062;Município de Arronches;Município de Arronches;CM;501155996;1202
+5063;Município de Arruda dos Vinhos;Município de Arruda dos Vinhos;CM;505307685;1102
+5064;Município de Aveiro;Município de Aveiro;CM;505931192;0105
+5065;Município de Avis;Município de Avis;CM;502789824;1203
+5066;Município de Azambuja;Município de Azambuja;CM;506821480;1103
+5067;Município de Baião;Município de Baião;CM;506854299;1302
+5068;Município de Barcelos;Município de Barcelos;CM;505584760;0302
+5069;Município de Barrancos;Município de Barrancos;CM;501081216;0204
+5070;Município de Beja;Município de Beja;CM;504884620;0205
+5071;Município de Belmonte;Município de Belmonte;CM;506695956;0501
+5072;Município de Benavente;Município de Benavente;CM;506676056;1405
+5073;Município de Borba;Município de Borba;CM;503956546;0703
+5074;Município de Boticas;Município de Boticas;CM;506886964;1702
+5075;Município de Braga;Município de Braga;CM;506901173;0303
+5076;Município de Bragança;Município de Bragança;CM;506215547;0402
+5077;Município de Cabeceiras de Basto;Município de Cabeceiras de Basto;CM;505330334;0304
+5078;Município de Calheta - São Jorge;Município de Calheta;CM;512074089;4501
+5079;Município de Câmara de Lobos;Município de Câmara de Lobos;CM;511233620;3102
+5080;Município de Caminha;Município de Caminha;CM;500843139;1602
+5081;Município de Campo Maior;Município de Campo Maior;CM;501175229;1204
+5082;Município de Cantanhede;Município de Cantanhede;CM;506087000;0602
+5083;Município de Carrazeda de Ansiães;Município de Carrazeda de Ansiães;CM;506666018;0403
+5084;Município de Carregal do Sal;Município de Carregal do Sal;CM;506684920;1802
+5085;Município de Cascais;Município de Cascais;CM;505187531;1105
+5086;Município de Castanheira de Pera;Município de Castanheira de Pêra;CM;506731324;1007
+5087;Município de Castelo Branco;Município de Castelo Branco;CM;501143530;0502
+5088;Município de Castelo de Paiva;Município de Castelo de Paiva;CM;502678917;0106
+5089;Município de Castelo de Vide;Município de Castelo de Vide;CM;506796035;1205
+5090;Município de Castro Daire;Município de Castro Daire;CM;506716210;1803
+5091;Município de Castro Marim;Município de Castro Marim;CM;506801969;0804
+5092;Município de Castro Verde;Município de Castro Verde;CM;501135960;0206
+5093;Município de Celorico da Beira;Município de Celorico da Beira;CM;506849635;0903
+5094;Município de Celorico de Basto;Município de Celorico de Basto;CM;506884929;0305
+5095;Município de Chaves;Município de Chaves;CM;501205551;1703
+5096;Município de Cinfães;Município de Cinfães;CM;506693651;1804
+5097;Município de Coimbra;Município de Coimbra;CM;506415082;0603
+5098;Município de Condeixa-a-Nova;Município de Condeixa-a-Nova;CM;501275380;0604
+5099;Município de Constância;Município de Constância;CM;506826546;1408
+5100;Município de Coruche;Município de Coruche;CM;506722422;1409
+5101;Município de Cuba;Município de Cuba;CM;500832935;0207
+5102;Município de Elvas;Município de Elvas;CM;501272968;1207
+5103;Município de Espinho;Município de Espinho;CM;501158740;0107
+5104;Município de Esposende;Município de Esposende;CM;506617599;0306
+5105;Município de Estarreja;Município de Estarreja;CM;501190082;0108
+5106;Município de Estremoz;Município de Estremoz;CM;506556590;0704
+5107;Município de Évora;Município de Évora;CM;504828576;0705
+5108;Município de Fafe;Município de Fafe;CM;506841561;0307
+5109;Município de Faro;Município de Faro;CM;506579425;0805
+5110;Município de Felgueiras;Município de Felgueiras;CM;501091823;1303
+5111;Município de Ferreira do Alentejo;Município de Ferreira do Alentejo;CM;501227490;0208
+5112;Município de Ferreira do Zêzere;Município de Ferreira do Zêzere;CM;501216839;1411
+5113;Município de Figueira de Castelo Rodrigo;Município de Figueira de Castelo Rodrigo;CM;505987449;0904
+5114;Município de Figueiró dos Vinhos;Município de Figueiró dos Vinhos;CM;506546381;1008
+5115;Município de Fornos de Algodres;Município de Fornos de Algodres;CM;505592959;0905
+5116;Município de Freixo de Espada à Cinta;Município de Freixo de Espada À Cinta;CM;506884937;0404
+5117;Município de Fronteira;Município de Fronteira;CM;501162941;1208
+5118;Município de Gavião;Município do Gavião;CM;506865517;1209
+5119;Município de Góis;Município de Góis;CM;506613399;0606
+5120;Município de Gondomar;Município de Gondomar;CM;506848957;1304
+5121;Município de Gouveia;Município de Gouveia;CM;506510476;0906
+5122;Município de Grândola;Município de Grândola;CM;506823318;1505
+5123;Município de Guimarães;Município de Guimarães;CM;505948605;0308
+5124;Município de Idanha-a-Nova;Município de Idanha-a-Nova;CM;501121030;0505
+5125;Município de Ílhavo;Município de Ílhavo;CM;506920887;0110
+5127;Município de Lagoa (Açores);Município de Lagoa - Açores;CM;512074410;4201
+5128;Município de Lagoa (Algarve);Município de Lagoa;CM;506804240;0806
+5129;Município de Lagos;Município de Lagos;CM;505170876;0807
+5130;Município de Lajes das Flores;Município de Lajes das Flores;CM;512074836;4801
+5131;Município de Lamego;Município de Lamego;CM;506572218;1805
+5132;Município de Leiria;Município de Leiria;CM;505181266;1009
+5133;Município de Lisboa;Município de Lisboa;CM;500051070;1106
+5134;Município de Loulé;Município de Loulé;CM;502098139;0808
+5135;Município de Loures;Município de Loures;CM;501294996;1107
+5136;Município de Lousada;Município de Lousada;CM;505279460;1305
+5137;Município de Mação;Município de Mação;CM;506814343;1413
+5138;Município de Macedo de Cavaleiros;Município de Macedo de Cavaleiros;CM;506697339;0405
+5139;Município de Machico;Município de Machico;CM;511239440;3104
+5140;Município de Mafra;Município de Mafra;CM;502177080;1109
+5141;Município de Mangualde;Município de Mangualde;CM;501262997;1806
+5142;Município de Manteigas;Município de Manteigas;CM;506632946;0908
+5143;Município de Marco de Canaveses;Município de Marco de Canaveses;CM;501073655;1307
+5144;Município de Marvão;Município de Marvão;CM;501170162;1210
+5145;Município de Matosinhos;Município de Matosinhos;CM;501305912;1308
+5146;Município de Mêda;Município de Meda;CM;505161974;0909
+5147;Município de Melgaço;Município de Melgaço;CM;505592940;1603
+5148;Município de Mértola;Município de Mértola;CM;503279765;0209
+5149;Município de Mesão Frio;Município de Mesão Frio;CM;506840328;1704
+5150;Município de Mira;Município de Mira;CM;506724530;0608
+5151;Município de Miranda do Corvo;Município de Miranda do Corvo;CM;506624200;0609
+5152;Município de Miranda do Douro;Município de Miranda do Douro;CM;506806898;0406
+5153;Município de Mirandela;Município de Mirandela;CM;506881784;0407
+5154;Município de Mogadouro;Município de Mogadouro;CM;506851168;0408
+5155;Município de Moimenta da Beira;Município de Moimenta da Beira;CM;506664686;1807
+5156;Município de Monção;Município de Monção;CM;501937471;1604
+5157;Município de Monchique;Município de Monchique;CM;506826961;0809
+5158;Município de Mondim de Basto;Município de Mondim de Basto;CM;506967107;1705
+5159;Município de Monforte;Município de Monforte;CM;506873412;1211
+5160;Município de Montalegre;Município de Montalegre;CM;506149811;1706
+5161;Município de Montemor-o-Novo;Município de Montemor-o-Novo;CM;506609553;0706
+5162;Município de Montemor-o-Velho;Município de Montemor-o-Velho;CM;501272976;0610
+5163;Município de Mora;Município de Mora;CM;501129103;0707
+5164;Município de Mortágua;Município de Mortágua;CM;506855368;1808
+5165;Município de Moura;Município de Moura;CM;502174153;0210
+5166;Município de Mourão;Município de Mourão;CM;501206639;0708
+5167;Município de Murça;Município de Murça;CM;506862763;1707
+5168;Município de Nelas;Município de Nelas;CM;506834166;1809
+5169;Município de Nisa;Município de Nisa;CM;506612287;1212
+5170;Município de Nordeste;Município de Nordeste;CM;512042659;4202
+5171;Município de Óbidos;Município de Óbidos;CM;506802698;1012
+5172;Município de Odemira;Município de Odemira;CM;505311313;0211
+5173;Município de Odivelas;Município de Odivelas;CM;504293125;1116
+5174;Município de Oeiras;Município de Oeiras;CM;500745943;1110
+5175;Município de Oleiros;Município de Oleiros;CM;506824152;0506
+5176;Município de Olhão;Município de Olhão;CM;506321894;0810
+5177;Município de Oliveira de Azeméis;Município de Oliveira de Azeméis;CM;506302970;0113
+5178;Município de Oliveira de Frades;Município de Oliveira de Frades;CM;501306234;1810
+5179;Município de Oliveira do Bairro;Município de Oliveira do Bairro;CM;501128840;0114
+5180;Município de Oliveira do Hospital;Município de Oliveira do Hospital;CM;506818829;0611
+5181;Município de Ourém;Município de Ourém;CM;501280740;1421
+5182;Município de Ourique;Município de Ourique;CM;506876330;0212
+5183;Município de Ovar;Município de Ovar;CM;501306269;0115
+5184;Município de Paços de Ferreira;Município de Paços de Ferreira;CM;502173297;1309
+5185;Município de Palmela;Município de Palmela;CM;506187543;1508
+5186;Município de Pampilhosa da Serra;Município de Pampilhosa da Serra;CM;506811883;0612
+5187;Município de Paredes;Município de Paredes;CM;506656128;1310
+5188;Município de Paredes de Coura;Município de Paredes de Coura;CM;506632938;1605
+5189;Município de Pedrógão Grande;Município de Pedrógão Grande;CM;507011937;1013
+5190;Município de Penacova;Município de Penacova;CM;506657957;0613
+5191;Município de Penafiel;Município de Penafiel;CM;501073663;1311
+5192;Município de Penalva do Castelo;Município de Penalva do Castelo;CM;506792404;1811
+5193;Município de Penamacor;Município de Penamacor;CM;506192164;0507
+5194;Município de Penedono;Município de Penedono;CM;506651541;1812
+5195;Município de Penela;Município de Penela;CM;506778037;0614
+5196;Município de Peniche;Município de Peniche;CM;506812820;1014
+5197;Município de Peso da Régua;Município de Peso da Régua;CM;506829260;1708
+5198;Município de Pinhel;Município de Pinhel;CM;506787249;0910
+5199;Município de Pombal;Município de Pombal;CM;506334562;1015
+5200;Município de Ponta Delgada;Município de Ponta Delgada;CM;512012814;4203
+5201;Município de Ponta do Sol;Município de Ponta do Sol;CM;511235461;3105
+5202;Município de Ponte da Barca;Município de Ponte da Barca;CM;505676770;1606
+5203;Município de Ponte de Lima;Município de Ponte de Lima;CM;506811913;1607
+5204;Município de Ponte de Sor;Município de Ponte de Sor;CM;506806456;1213
+5205;Município de Portalegre;Município de Portalegre;CM;501143718;1214
+5206;Município de Portel;Município de Portel;CM;506196445;0709
+5207;Município de Portimão;Município de Portimão;CM;505309939;0811
+5208;Município de Porto de Mós;Município de Porto de Mós;CM;505586401;1016
+5209;Município de Porto Moniz;Município de Porto Moniz;CM;511239068;3106
+5210;Município de Proença-a-Nova;Município de Proença-a-Nova;CM;505377802;0508
+5211;Município de Redondo;Município de Redondo;CM;501834117;0710
+5212;Município de Reguengos de Monsaraz;Município de Reguengos de Monsaraz;CM;507040589;0711
+5213;Município de Resende;Município de Resende;CM;506349381;1813
+5214;Município de Ribeira Brava;Município de Ribeira Brava;CM;511236417;3107
+5215;Município de Ribeira de Pena;Município de Ribeira de Pena;CM;506818098;1709
+5216;Município de Rio Maior;Município de Rio Maior;CM;505656000;1414
+5217;Município de Sabrosa;Município de Sabrosa;CM;506824942;1710
+5218;Município de Salvaterra de Magos;Município de Salvaterra de Magos;CM;506755150;1415
+5219;Município de Santa Comba Dão;Município de Santa Comba Dão;CM;506637441;1814
+5220;Município de Santa Cruz;Município de Santa Cruz;CM;511244681;3108
+5221;Município de Santa Cruz da Graciosa;Município de Santa Cruz da Graciosa;CM;512069760;4401
+5222;Município de Santa Cruz das Flores;Município de Santa Cruz das Flores;CM;512079110;4802
+5223;Município de Santa Maria da Feira;Município de Santa Maria da Feira;CM;501157280;0109
+5224;Município de Santa Marta de Penaguião;Município de Santa Marta de Penaguião;CM;506829138;1711
+5225;Município de Santana;Município de Santana;CM;511239980;3109
+5226;Município de Santarém;Município de Santarém;CM;505941350;1416
+5227;Município de Santiago do Cacém;Município de Santiago do Cacém;CM;502130040;1509
+5228;Município de Santo Tirso;Município de Santo Tirso;CM;501306870;1314
+5229;Município de São Brás de Alportel;Município de São Brás de Alportel;CM;503219924;0812
+5230;Município de São João da Madeira;Município de São João da Madeira;CM;506538575;0116
+5231;Município de São João da Pesqueira;Município de São João da Pesqueira;CM;506892646;1815
+5232;Município de São Pedro do Sul;Município de São Pedro do Sul;CM;506785815;1816
+5233;Município de São Roque do Pico;Município de São Roque do Pico;CM;512074771;4603
+5234;Município de São Vicente;Município de São Vicente;CM;511240112;3110
+5235;Município de Sardoal;Município de Sardoal;CM;501181857;1417
+5236;Município de Sátão;Município de Sátão;CM;506882713;1817
+5237;Município de Seia;Município de Seia;CM;506676170;0912
+5238;Município de Sernancelhe;Município de Sernancelhe;CM;506852032;1818
+5239;Município de Serpa;Município de Serpa;CM;501112049;0213
+5240;Município de Sesimbra;Município de Sesimbra;CM;501144218;1511
+5241;Município de Setúbal;Município de Setúbal;CM;501294104;1512
+5242;Município de Sever do Vouga;Município de Sever do Vouga;CM;502704977;0117
+5243;Município de Silves;Município de Silves;CM;506818837;0813
+5244;Município de Sines;Município de Sines;CM;502563010;1513
+5245;Município de Sintra;Município de Sintra;CM;500051062;1111
+5246;Município de Sobral de Monte Agraço;Município de Sobral de Monte Agraço;CM;505410850;1112
+5247;Município de Soure;Município de Soure;CM;507103742;0615
+5248;Município de Sousel;Município de Sousel;CM;506809560;1215
+5249;Município de Tábua;Município de Tábua;CM;506806944;0616
+5250;Município de Tabuaço;Município de Tabuaço;CM;506601455;1819
+5251;Município de Tarouca;Município de Tarouca;CM;506753905;1820
+5252;Município de Tavira;Município de Tavira;CM;501067191;0814
+5253;Município de Terras de Bouro;Município de Terras de Bouro;CM;506907619;0310
+5254;Município de Tomar;Município de Tomar;CM;506738914;1418
+5255;Município de Tondela;Município de Tondela;CM;506822680;1821
+5256;Município de Torre de Moncorvo;Município de Torre de Moncorvo;CM;501121536;0409
+5257;Município de Torres Novas;Município de Torres Novas;CM;506608972;1419
+5258;Município de Torres Vedras;Município de Torres Vedras;CM;502173653;1113
+5259;Município de Trancoso;Município de Trancoso;CM;501143726;0913
+5260;Município de Vagos;Município de Vagos;CM;506912833;0118
+5261;Município de Vale de Cambra;Município de Vale de Cambra;CM;506735524;0119
+5262;Município de Valença;Município de Valença;CM;506728897;1608
+5263;Município de Valongo;Município de Valongo;CM;501138960;1315
+5264;Município de Valpaços;Município de Valpaços;CM;506874320;1712
+5265;Município de Velas;Município de Velas;CM;512075506;4502
+5266;Município de Vendas Novas;Município de Vendas Novas;CM;501177256;0712
+5267;Município de Viana do Alentejo;Município de Viana do Alentejo;CM;506151174;0713
+5268;Município de Viana do Castelo;Município de Viana do Castelo;CM;506037258;1609
+5269;Município de Vidigueira;Município de Vidigueira;CM;501143734;0214
+5270;Município de Vieira do Minho;Município de Vieira do Minho;CM;506659682;0311
+5271;Município de Vila de Rei;Município de Vila de Rei;CM;506932273;0510
+5272;Município de Vila do Bispo;Município de Vila do Bispo;CM;506730573;0815
+5273;Município de Vila do Conde;Município de Vila do Conde;CM;505804786;1316
+5274;Município de Vila do Porto;Município de Vila do Porto;CM;512063770;4101
+5275;Município de Vila Flor;Município de Vila Flor;CM;506696464;0410
+5276;Município de Vila Franca de Xira;Município de Vila Franca de Xira;CM;506614913;1114
+5277;Município de Vila Franca do Campo;Município de Vila Franca do Campo;CM;512043701;4206
+5278;Município de Vila Nova da Barquinha;Município de Vila Nova da Barquinha;CM;506899250;1420
+5279;Município de Vila Nova de Cerveira;Município de Vila Nova de Cerveira;CM;506896625;1610
+5280;Município de Vila Nova de Famalicão;Município de Vila Nova de Famalicão;CM;506663264;0312
+5281;Município de Vila Nova de Foz Côa;Município de Vila Nova de Foz Côa;CM;506829197;0914
+5282;Município de Vila Nova de Gaia;Município de Vila Nova de Gaia;CM;505335018;1317
+5283;Município de Vila Nova de Paiva;Município de Vila Nova de Paiva;CM;506809323;1822
+5284;Município de Vila Nova de Poiares;Município de Vila Nova de Poiares;CM;505371600;0617
+5285;Município de Vila Pouca de Aguiar;Município de Vila Pouca de Aguiar;CM;506810267;1713
+5286;Município de Vila Real;Município de Vila Real;CM;506359670;1714
+5287;Município de Vila Real de Santo António;Município de Vila Real de Santo António;CM;506833224;0816
+5288;Município de Vila Velha de Ródão;Município de Vila Velha de Ródão;CM;506642798;0511
+5289;Município de Vila Verde;Município de Vila Verde;CM;506641376;0313
+5290;Município de Vila Viçosa;Município de Vila Viçosa;CM;506613461;0714
+5291;Município de Vimioso;Município de Vimioso;CM;506627888;0411
+5292;Município de Vinhais;Município de Vinhais;CM;501156003;0412
+5293;Município de Viseu;Município de Viseu;CM;506697320;1823
+5294;Município de Vizela;Município de Vizela;CM;505985217;0314
+5295;Município de Vouzela;Município de Vouzela;CM;506770664;1824
+5296;Município do Barreiro;Município do Barreiro;CM;506673626;1504
+5297;Município do Bombarral;Município do Bombarral;CM;506800580;1005
+5298;Município do Cadaval;Município do Cadaval;CM;505763621;1104
+5299;Município do Cartaxo;Município do Cartaxo;CM;506780902;1406
+5300;Município do Corvo;Município de Corvo;CM;512065837;4901
+5301;Município do Crato;Município de Crato;CM;506659968;1206
+5302;Município do Entroncamento;Município de Entroncamento;CM;501120149;1410
+5303;Município do Funchal;Município de Funchal;CM;511217315;3103
+5304;Município do Fundão;Município do Fundão;CM;506215695;0504
+5305;Município do Montijo;Município do Montijo;CM;502834846;1507
+5306;Município do Porto;Município do Porto;CM;501306099;1312
+5307;Município do Porto Santo;Município de Porto Santo;CM;511236425;3201
+5308;Município do Sabugal;Município do Sabugal;CM;506811662;0911
+5309;Município do Seixal;Município do Seixal;CM;506173968;1510
+6002;Património Cultural, IP;Direção-Geral do Património Cultural (DGPC);DGPC;517842920;
+8007;Secretaria Regional de Agricultura e Pescas;Secretaria Regional de Agricultura e Pescas;CCDR_DR;671001299;
+4002;Secretaria-Geral;Secretaria-Geral;PCM;600014690;
+4003;Secretaria-Geral do Governo;Secretaria-Geral do Governo;PCM;600088103;

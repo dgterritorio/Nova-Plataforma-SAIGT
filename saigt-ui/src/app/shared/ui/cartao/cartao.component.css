@@ -1,0 +1,50 @@
+/* O Figma corta o conteúdo pelos cantos do cartão (tabelas incluídas). */
+:host {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background: var(--cor-superficie);
+  border: var(--borda-largura) solid var(--cor-borda);
+  border-radius: var(--raio-lg);
+}
+
+:host(.cartao-elevado),
+:host(.cartao-indicador) {
+  border-color: var(--cor-borda-elevado);
+  box-shadow: var(--sombra-cartao);
+}
+
+:host(.cartao-indicador) {
+  border-top-width: var(--borda-largura-indicador);
+}
+
+.cartao-cabecalho {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--espaco-3);
+  padding: var(--espaco-4) var(--espaco-5);
+  border-bottom: var(--borda-largura) solid var(--cor-borda-suave);
+}
+
+.cartao-titulo {
+  margin: 0;
+  font-size: var(--texto-sm);
+  font-weight: var(--peso-semi);
+  line-height: var(--texto-sm-linha);
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+  color: var(--cor-titulo-cartao);
+}
+
+/* Em coluna, para um rodapé poder ficar no fundo do cartão (como nos cartões de resumo). */
+.cartao-conteudo {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  padding: var(--espaco-6);
+}
+
+:host(.cartao-espacamento-nenhum) .cartao-conteudo {
+  padding: 0;
+}

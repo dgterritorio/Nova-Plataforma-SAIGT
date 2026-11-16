@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="2026-10-27-3-add-link-dr-processo" author="david.raposo">
+        <comment>
+            Hiperligação do ato publicado no Diário da República (DB-PROC-014): vem da INCM no `GetActDetails`
+            (`Publication.ActURL`) e fica nula enquanto o processo não é publicado.
+        </comment>
+
+        <addColumn tableName="processo">
+            <column name="link_dr" type="TEXT"/>
+        </addColumn>
+
+        <rollback>
+            <dropColumn tableName="processo" columnName="link_dr"/>
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>

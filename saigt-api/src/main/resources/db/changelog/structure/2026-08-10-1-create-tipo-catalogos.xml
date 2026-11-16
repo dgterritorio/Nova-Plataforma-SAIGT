@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="2026-08-10-1-create-tipo-catalogos" author="latitudde">
+        <comment>Grupo 1 (parcial) — catálogos globais de tipo, seed por developers. Ver desenho v0.1, 03-modelo-dados.md §11. Restantes tabelas dos 5 grupos chegam por história.</comment>
+
+        <createTable tableName="tipo_instrumento">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="codigo" type="VARCHAR(20)">
+                <constraints nullable="false" unique="true" uniqueConstraintName="uq_tipo_instrumento_codigo"/>
+            </column>
+            <column name="nome" type="VARCHAR(200)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="categoria" type="VARCHAR(20)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="ativo" type="BOOLEAN" defaultValueBoolean="true">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <sql>ALTER TABLE tipo_instrumento ADD CONSTRAINT ck_tipo_instrumento_categoria
+            CHECK (categoria IN ('PLANO', 'PROGRAMA', 'SRUP', 'ARU'))</sql>
+
+        <createTable tableName="tipo_dinamica">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="codigo" type="VARCHAR(40)">
+                <constraints nullable="false" unique="true" uniqueConstraintName="uq_tipo_dinamica_codigo"/>
+            </column>
+            <column name="nome" type="VARCHAR(200)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="ativo" type="BOOLEAN" defaultValueBoolean="true">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <createTable tableName="tipo_procedimento">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="codigo" type="VARCHAR(40)">
+                <constraints nullable="false" unique="true" uniqueConstraintName="uq_tipo_procedimento_codigo"/>
+            </column>
+            <column name="nome" type="VARCHAR(200)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="ativo" type="BOOLEAN" defaultValueBoolean="true">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+</databaseChangeLog>

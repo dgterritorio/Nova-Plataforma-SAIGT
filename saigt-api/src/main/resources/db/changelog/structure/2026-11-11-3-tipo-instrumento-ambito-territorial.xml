@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="2026-11-11-3-tipo-instrumento-ambito-territorial" author="arnaldo.costa">
+        <comment>
+            Âmbito territorial do tipo de Instrumento (LLD 05, tipo_instrumento.ambito_territorial; BL-PROC-067): diz
+            quantos concelhos tem um Instrumento novo, um no municipal e dois ou mais no intermunicipal. PDM, PU e PP
+            são municipais; PDIM, PUIM, PPIM e PIMOT, quando existirem, são intermunicipais. PROT e PEOT ficam nulos
+            enquanto a regra dos regionais e nacionais não estiver definida. O rollback retira a coluna.
+        </comment>
+        <addColumn tableName="tipo_instrumento">
+            <column name="ambito_territorial" type="VARCHAR(20)"/>
+        </addColumn>
+        <sql>
+            ALTER TABLE tipo_instrumento ADD CONSTRAINT ck_tipo_instrumento_ambito_territorial
+                CHECK (ambito_territorial IS NULL
+                       OR ambito_territorial IN ('MUNICIPAL', 'INTERMUNICIPAL', 'REGIONAL', 'NACIONAL'))
+        </sql>
+        <update tableName="tipo_instrumento">
+            <column name="ambito_territorial" value="MUNICIPAL"/>
+            <where>codigo IN ('PDM', 'PU', 'PP')</where>
+        </update>
+        <update tableName="tipo_instrumento">
+            <column name="ambito_territorial" value="INTERMUNICIPAL"/>
+            <where>codigo IN ('PDIM', 'PUIM', 'PPIM', 'PIMOT')</where>
+        </update>
+
+        <rollback>
+            <sql>ALTER TABLE tipo_instrumento DROP CONSTRAINT ck_tipo_instrumento_ambito_territorial</sql>
+            <dropColumn tableName="tipo_instrumento" columnName="ambito_territorial"/>
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>

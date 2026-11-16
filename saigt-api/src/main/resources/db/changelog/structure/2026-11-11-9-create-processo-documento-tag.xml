@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="2026-11-11-9-create-processo-documento-tag" author="david.raposo">
+        <comment>
+            Itens de depósito obrigatório que o mesmo ficheiro também satisfaz (DB-DOC-003, FR-137). A condição
+            «item DEPOSITO e obrigatório» cruza tabelas e fica na aplicação (BL-DOC-021). As tags saem com o
+            ficheiro (ON DELETE CASCADE). O rollback apaga a tabela.
+        </comment>
+
+        <createTable tableName="processo_documento_tag">
+            <column name="processo_documento_id" type="UUID">
+                <constraints nullable="false"/>
+            </column>
+            <column name="documento_config_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <addPrimaryKey tableName="processo_documento_tag" columnNames="processo_documento_id, documento_config_id"
+                       constraintName="pk_processo_documento_tag"/>
+        <addForeignKeyConstraint baseTableName="processo_documento_tag" baseColumnNames="processo_documento_id"
+                                 constraintName="fk_processo_documento_tag_documento"
+                                 referencedTableName="processo_documento" referencedColumnNames="id"
+                                 onDelete="CASCADE"/>
+        <addForeignKeyConstraint baseTableName="processo_documento_tag" baseColumnNames="documento_config_id"
+                                 constraintName="fk_processo_documento_tag_config"
+                                 referencedTableName="documento_config" referencedColumnNames="id"/>
+        <createIndex tableName="processo_documento_tag" indexName="idx_processo_documento_tag_config">
+            <column name="documento_config_id"/>
+        </createIndex>
+
+        <rollback>
+            <dropTable tableName="processo_documento_tag"/>
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>

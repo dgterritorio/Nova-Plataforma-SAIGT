@@ -1,0 +1,117 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaco-5);
+}
+
+h2 {
+  margin: 0;
+  font-size: var(--texto-xl);
+  font-weight: var(--peso-negrito);
+  line-height: var(--texto-xl-linha);
+  color: var(--cor-titulo-assistente);
+}
+
+/* O #6b7a9b do Figma fica a 4,29:1 sobre branco: usa-se o cinza acessível mais próximo. */
+.subtitulo {
+  margin: 0;
+  font-size: var(--texto-base);
+  line-height: var(--texto-base-linha);
+  color: var(--cor-texto-passo);
+}
+
+.subtitulo strong {
+  font-weight: var(--peso-negrito);
+  color: var(--cor-titulo-assistente);
+}
+
+.grupo-rotulo {
+  margin: 0;
+  font-size: var(--texto-sm);
+  font-weight: var(--peso-semi);
+  line-height: var(--texto-sm-linha);
+  letter-spacing: 0.3px;
+  text-transform: uppercase;
+  color: var(--cor-texto-passo);
+}
+
+.estado,
+.vazio {
+  margin: 0;
+  font-size: var(--texto-base);
+  line-height: var(--texto-base-linha);
+  color: var(--cor-texto-secundario);
+}
+
+.grupo-rotulo-caducadas {
+  display: flex;
+  align-items: center;
+  gap: var(--espaco-1-5);
+  color: var(--cor-aviso);
+}
+
+.grupo-rotulo-caducadas svg {
+  width: 14px;
+  height: 14px;
+}
+
+.divisor {
+  width: 100%;
+  margin: 0;
+  border: 0;
+  border-top: var(--borda-largura) solid var(--cor-borda-controlo);
+}
+
+.faixa-dinamica {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--espaco-2);
+  margin: var(--espaco-1) 0 0;
+  padding: var(--espaco-2-5) var(--espaco-3);
+  border-radius: var(--raio-md);
+  background: var(--cor-faixa-dinamica-fundo);
+  font-size: var(--texto-rotulo);
+  line-height: var(--texto-rotulo-linha);
+  color: var(--cor-texto);
+}
+
+.faixa-dinamica svg {
+  flex-shrink: 0;
+  width: 14px;
+  height: 14px;
+  margin-top: var(--espaco-0-5);
+}
+
+.faixa-dinamica strong {
+  font-weight: var(--peso-semi);
+}
+
+.continuar-sem-igt {
+  margin: 0;
+}
+
+.visualmente-oculto {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+/* O foco vem do código ao abrir a página: só se vê o anel quando chega pelo teclado. */
+h2[tabindex='-1']:focus {
+  outline: none;
+}
+
+h2[tabindex='-1']:focus-visible {
+  outline: var(--anel-foco);
+  outline-offset: var(--anel-foco-afastamento);
+}
+
+/* No Figma, o rótulo de grupo cola-se ao título da página. */
+.cabecalho-pagina {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaco-1);
+}

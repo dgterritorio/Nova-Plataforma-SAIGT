@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="2026-11-13-15-seed-matriz-permissao-acao-prot-so-ccdr" author="arnaldo.costa">
+        <comment>
+            Acerta a matriz de tipos de entidade no PROT: só a CCDR respetiva o submete (EF v1.5, «IGT Programas»:
+            «Entidade submetente é a CCDR respetiva»; OI-534), e a SEC_ESTADO que a proposta do FR-189 lhe dava sai.
+            A matriz inicial (2026-11-11-4) e o seed dos Programas (2026-11-11-12) já a tinham semeado; aqui
+            desativa-se, como faria o Master no BackOffice, que só muda `ativo`. As Dinâmicas do Governo
+            (Suspensão e Medidas Preventivas) mantêm a SEC_ESTADO, que tem regra própria, e a Constituição da CC
+            fica como está. Pelos códigos, sem ids; idempotente, só mexe em linhas ativas. O rollback reativa as
+            mesmas linhas.
+        </comment>
+        <sql>
+            UPDATE permissao_acao pa
+            SET ativo = false
+            FROM instrumento_procedimento_config c
+            JOIN instrumento_dinamica_config d ON d.id = c.instrumento_dinamica_config_id
+            JOIN tipo_instrumento ti ON ti.id = d.tipo_instrumento_id
+            JOIN tipo_dinamica td ON td.id = d.tipo_dinamica_id
+            JOIN tipo_procedimento tp ON tp.id = c.tipo_procedimento_id
+            WHERE c.id = pa.instrumento_procedimento_config_id
+              AND ti.codigo = 'PROT'
+              AND pa.tipo_entidade = 'SEC_ESTADO'
+              AND pa.ativo
+              AND tp.codigo &lt;&gt; 'CONSTITUICAO_CC'
+              AND td.codigo NOT IN ('SUSPENSAO_CCDR', 'SUSPENSAO_GOVERNO', 'MEDIDAS_PREVENTIVAS_GOVERNO', 'RATIFICACAO')
+        </sql>
+        <rollback>
+            <sql>
+                UPDATE permissao_acao pa
+                SET ativo = true
+                FROM instrumento_procedimento_config c
+                JOIN instrumento_dinamica_config d ON d.id = c.instrumento_dinamica_config_id
+                JOIN tipo_instrumento ti ON ti.id = d.tipo_instrumento_id
+                JOIN tipo_dinamica td ON td.id = d.tipo_dinamica_id
+                JOIN tipo_procedimento tp ON tp.id = c.tipo_procedimento_id
+                WHERE c.id = pa.instrumento_procedimento_config_id
+                  AND ti.codigo = 'PROT'
+                  AND pa.tipo_entidade = 'SEC_ESTADO'
+                  AND NOT pa.ativo
+                  AND tp.codigo &lt;&gt; 'CONSTITUICAO_CC'
+                  AND td.codigo NOT IN ('SUSPENSAO_CCDR', 'SUSPENSAO_GOVERNO', 'MEDIDAS_PREVENTIVAS_GOVERNO', 'RATIFICACAO')
+            </sql>
+        </rollback>
+    </changeSet>
+</databaseChangeLog>

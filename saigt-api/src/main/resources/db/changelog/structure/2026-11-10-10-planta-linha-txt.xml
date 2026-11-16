@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="2026-11-10-10-planta-linha-txt" author="joao.pereira">
+        <comment>
+            Ordem da linha do TXT da página das Plantas a que a folha foi associada. As correções do Nome Regulamento e da
+            Folha N deixam de a perder e de desfazer a associação. Nulo nas linhas fora da página e nas já gravadas.
+        </comment>
+
+        <sql>ALTER TABLE planta ADD COLUMN linha_txt INTEGER</sql>
+
+        <rollback>
+            <dropColumn tableName="planta" columnName="linha_txt"/>
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>

@@ -1,0 +1,112 @@
+/* O Figma desenha os traços por dentro: borda de 1px e padding menos 1px. */
+:host {
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--espaco-2);
+  height: var(--altura-controlo);
+  padding: 0 var(--espaco-6);
+  border: var(--borda-largura) solid transparent;
+  border-radius: var(--raio-md);
+  font-family: var(--fonte-base);
+  font-size: var(--texto-base);
+  font-weight: var(--peso-medio);
+  line-height: var(--texto-base-linha);
+  text-decoration: none;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+:host ::ng-deep [icone] {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+}
+
+:host(:focus-visible) {
+  outline: var(--anel-foco);
+  outline-offset: var(--anel-foco-afastamento);
+}
+
+:host(.botao-primario) {
+  background: var(--cor-primaria);
+  color: var(--cor-primaria-contraste);
+}
+
+:host(.botao-primario:hover) {
+  background: var(--cor-primaria-hover);
+}
+
+:host(.botao-secundario) {
+  background: var(--cor-superficie);
+  border-color: var(--cor-borda);
+  color: var(--cor-texto-rotulo);
+}
+
+:host(.botao-suave) {
+  background: var(--cor-info-fundo);
+  border-color: var(--cor-borda-suave-primaria);
+  color: var(--cor-primaria);
+}
+
+:host(.botao-contorno) {
+  height: 38px;
+  padding: 0 var(--espaco-4);
+  background: transparent;
+  border-color: var(--cor-borda);
+  color: var(--cor-texto-rotulo);
+}
+
+:host(.botao-texto) {
+  padding: 0 var(--espaco-2);
+  background: transparent;
+  color: var(--cor-primaria);
+}
+
+:host(.botao-perigo) {
+  background: var(--cor-erro);
+  color: var(--cor-primaria-contraste);
+}
+
+:host(.botao-secundario:hover),
+:host(.botao-contorno:hover),
+:host(.botao-texto:hover) {
+  background: var(--cor-superficie-alt);
+}
+
+:host(.botao-suave:hover) {
+  background: var(--cor-icone-info-fundo);
+}
+
+:host(.botao-pequeno) {
+  height: var(--altura-controlo-sm);
+  padding: 0 var(--espaco-4);
+}
+
+:host([aria-disabled='true']) {
+  opacity: 0.4;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.botao-indicador {
+  width: 16px;
+  height: 16px;
+  border: 2px solid currentcolor;
+  border-right-color: transparent;
+  border-radius: var(--raio-pill);
+  animation: rodar 0.8s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .botao-indicador {
+    animation: none;
+  }
+}
+
+@keyframes rodar {
+  to {
+    transform: rotate(360deg);
+  }
+}

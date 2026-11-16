@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="2026-11-09-2-localizacao-motivo-alteracao-procedimento" author="margarida.marques">
+        <comment>
+            Procedimentos que pedem, no formulário inicial, a localização (freguesia e topónimo) e o motivo da
+            alteração. Escolhe-se por configuração do Procedimento, nunca pelo tipo de Instrumento no código. Os
+            valores das listas FREGUESIA, TOPONIMO e MOTIVO_ALTERACAO_* são geridos pelo Master e arrancam vazios.
+        </comment>
+
+        <addColumn tableName="instrumento_procedimento_config">
+            <column name="pede_localizacao" type="VARCHAR(20)" defaultValue="NAO">
+                <constraints nullable="false"/>
+            </column>
+            <column name="pede_motivo_alteracao" type="VARCHAR(20)" defaultValue="NAO">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+        <sql>ALTER TABLE instrumento_procedimento_config ADD CONSTRAINT ck_instrumento_procedimento_config_pede_localizacao
+            CHECK (pede_localizacao IN ('NAO', 'OPCIONAL', 'OBRIGATORIA'))</sql>
+        <sql>ALTER TABLE instrumento_procedimento_config ADD CONSTRAINT ck_instrumento_procedimento_config_pede_motivo_alteracao
+            CHECK (pede_motivo_alteracao IN ('NAO', 'COM_PERGUNTA', 'OBRIGATORIO'))</sql>
+
+        <rollback>
+            <sql>ALTER TABLE instrumento_procedimento_config DROP CONSTRAINT ck_instrumento_procedimento_config_pede_motivo_alteracao</sql>
+            <sql>ALTER TABLE instrumento_procedimento_config DROP CONSTRAINT ck_instrumento_procedimento_config_pede_localizacao</sql>
+            <dropColumn tableName="instrumento_procedimento_config" columnName="pede_motivo_alteracao"/>
+            <dropColumn tableName="instrumento_procedimento_config" columnName="pede_localizacao"/>
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>

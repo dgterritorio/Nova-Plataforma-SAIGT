@@ -1,0 +1,55 @@
+.cartao-subtitulo {
+  margin: calc(var(--espaco-4) * -1) 0 0;
+  font-size: var(--texto-base);
+  line-height: var(--texto-base-linha);
+  color: var(--cor-texto-secundario);
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaco-4);
+}
+
+.alternar-senha {
+  display: flex;
+  padding: var(--espaco-1);
+  border: 0;
+  border-radius: var(--raio-sm);
+  background: none;
+  color: var(--cor-texto-secundario);
+  cursor: pointer;
+}
+
+.alternar-senha svg {
+  width: 16px;
+  height: 16px;
+}
+
+.alternar-senha:focus-visible {
+  outline: var(--anel-foco);
+  outline-offset: var(--anel-foco-afastamento);
+}
+
+.linha-checkbox {
+  display: flex;
+  align-items: center;
+  gap: var(--espaco-2);
+  font-size: var(--texto-base);
+  font-weight: var(--peso-medio);
+  line-height: var(--texto-base-linha);
+  color: var(--cor-texto-rotulo);
+  cursor: pointer;
+}
+
+.linha-checkbox input {
+  width: 16px;
+  height: 16px;
+  margin: 0;
+  accent-color: var(--cor-primaria);
+}
+
+.entrar {
+  width: 100%;
+}
+

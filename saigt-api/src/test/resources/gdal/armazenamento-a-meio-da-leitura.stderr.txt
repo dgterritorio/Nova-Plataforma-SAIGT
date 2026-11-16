@@ -1,0 +1,4 @@
+Warning 1: HTTP response code on http://rustfs:9000/saigt-documentos/processos/2026-000123/DEPOSITO/0b7d-plantas.zip: 503
+ERROR 1: geotif1204_ren.tif: TIFFFetchDirectory:/vsizip//vsis3/saigt-documentos/processos/2026-000123/DEPOSITO/0b7d-plantas.zip/geotif1204_ren.tif: Can not read TIFF directory count
+ERROR 1: geotif1204_ren.tif: TIFFReadDirectory:Failed to read directory at offset 8
+gdalinfo failed - unable to open '/vsizip//vsis3/saigt-documentos/processos/2026-000123/DEPOSITO/0b7d-plantas.zip/geotif1204_ren.tif'.

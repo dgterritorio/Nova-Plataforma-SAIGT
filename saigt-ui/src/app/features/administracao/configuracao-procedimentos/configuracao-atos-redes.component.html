@@ -1,0 +1,166 @@
+@if (mensagemSucesso(); as mensagem) {
+  <app-alerta tipo="sucesso">{{ mensagem }}</app-alerta>
+}
+<app-error-banner [erro]="erroAcao()" />
+
+<app-cartao class="cartao-atos" titulo="Tipos de ato" variante="elevado">
+  <div class="conteudo-cartao">
+    <div class="barra-filtros">
+      <div class="filtros-direita">
+        <div class="grupo-filtros" role="group" aria-label="Estado do tipo de ato">
+          @for (opcao of opcoesEstado; track opcao.valor) {
+            <button
+              type="button"
+              class="filtro filtro-estado"
+              [class.ativo]="filtroAtos() === opcao.valor"
+              [attr.aria-pressed]="filtroAtos() === opcao.valor"
+              (click)="mudarFiltroAtos(opcao.valor)"
+            >
+              {{ opcao.rotulo }}
+            </button>
+          }
+        </div>
+        <span class="contador">{{ totalAtos() }} tipos de ato</span>
+        <button app-botao type="button" tamanho="pequeno" class="botao-adicionar" (click)="adicionarAto()">Adicionar tipo de ato</button>
+      </div>
+    </div>
+
+    @if (erroAtos()) {
+      <app-error-banner [erro]="erroAtos()" />
+    } @else {
+      <app-tabela
+        familia="compacta"
+        legenda="Tipos de ato"
+        [colunas]="colunasAtos"
+        [linhas]="atos()"
+        [aCarregar]="aCarregarAtos()"
+        mensagemVazia="Sem tipos de ato para os filtros indicados."
+      >
+        <ng-template appCelula="ordem" let-ato>{{ ato.ordem }}</ng-template>
+        <ng-template appCelula="codigo" let-ato>
+          <span class="celula-codigo">{{ ato.codigo }}</span>
+        </ng-template>
+        <ng-template appCelula="nome" let-ato>
+          <span class="celula-nome">{{ ato.nome }}</span>
+        </ng-template>
+        <ng-template appCelula="serie1" let-ato>{{ ato.incmActTypeIdSerie1 ?? '—' }}</ng-template>
+        <ng-template appCelula="serie2" let-ato>{{ ato.incmActTypeIdSerie2 ?? '—' }}</ng-template>
+        <ng-template appCelula="estado" let-ato>
+          <app-selo [tom]="ato.ativo ? 'sucesso' : 'cinza'" forma="pill">
+            <span icone class="status-ponto" aria-hidden="true"></span>
+            {{ ato.ativo ? 'Ativo' : 'Inativo' }}
+          </app-selo>
+        </ng-template>
+        <ng-template appCelula="acoes" let-ato>
+          <div class="menu-acoes">
+            <button
+              type="button"
+              class="btn-acoes"
+              [attr.aria-label]="'Mais opções para ' + ato.nome"
+              [attr.aria-expanded]="menuAbertoId() === ato.id"
+              (click)="alternarMenu(ato, $event)"
+            >
+              <svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
+                <circle cx="4" cy="8" r="1" /><circle cx="8" cy="8" r="1" /><circle cx="12" cy="8" r="1" />
+              </svg>
+            </button>
+            @if (menuAbertoId() === ato.id) {
+              <!-- eslint-disable-next-line @angular-eslint/template/click-events-have-key-events, @angular-eslint/template/interactive-supports-focus -- só impede o click de fechar o próprio menu, não é uma interação do utilizador -->
+              <div
+                class="dropdown-menu"
+                [style.top.px]="menuPosicao().topo"
+                [style.right.px]="menuPosicao().direita"
+                (click)="$event.stopPropagation()"
+              >
+                <button type="button" class="acao-editar" (click)="editarAto(ato)">Editar</button>
+                <button type="button" class="acao-estado" (click)="pedirAlternarEstado(ato)">
+                  {{ ato.ativo ? 'Desativar' : 'Reativar' }}
+                </button>
+              </div>
+            }
+          </div>
+        </ng-template>
+        <app-paginacao
+          rodape
+          [pagina]="paginaAtos() + 1"
+          [tamanhoPagina]="tamanhoPagina"
+          [total]="totalAtos()"
+          etiquetaItens="tipos de ato"
+          (paginaMudou)="irParaPaginaAtos($event - 1)"
+        />
+      </app-tabela>
+    }
+  </div>
+</app-cartao>
+
+<app-cartao class="cartao-redes" titulo="Redes de defesa do SGIFR" variante="elevado">
+  <div class="conteudo-cartao">
+    <div class="barra-filtros">
+      <div class="filtros-direita">
+        <span class="contador">{{ totalRedes() }} redes</span>
+        <button app-botao type="button" tamanho="pequeno" class="botao-adicionar" (click)="adicionarRede()">Adicionar rede</button>
+      </div>
+    </div>
+
+    @if (erroRedes()) {
+      <app-error-banner [erro]="erroRedes()" />
+    } @else {
+      <app-tabela
+        familia="compacta"
+        legenda="Redes de defesa do SGIFR"
+        [colunas]="colunasRedes"
+        [linhas]="redes()"
+        [aCarregar]="aCarregarRedes()"
+        mensagemVazia="Sem redes de defesa."
+      >
+        <ng-template appCelula="codigo" let-rede>
+          <span class="celula-codigo">{{ rede.codigo }}</span>
+        </ng-template>
+        <ng-template appCelula="nome" let-rede>
+          <span class="celula-nome">{{ rede.nome }}</span>
+        </ng-template>
+        <ng-template appCelula="pra" let-rede>{{ simNao(rede.aplicaPra) }}</ng-template>
+        <ng-template appCelula="psa" let-rede>{{ simNao(rede.aplicaPsa) }}</ng-template>
+        <ng-template appCelula="publicavel" let-rede>{{ simNao(rede.publicavel) }}</ng-template>
+        <ng-template appCelula="acoes" let-rede>
+          <button type="button" class="acao-editar-rede" [attr.aria-label]="'Editar ' + rede.codigo" (click)="editarRede(rede)">Editar</button>
+        </ng-template>
+        <app-paginacao
+          rodape
+          [pagina]="paginaRedes() + 1"
+          [tamanhoPagina]="tamanhoPagina"
+          [total]="totalRedes()"
+          etiquetaItens="redes"
+          (paginaMudou)="irParaPaginaRedes($event - 1)"
+        />
+      </app-tabela>
+    }
+  </div>
+</app-cartao>
+
+<app-tipo-ato-config-modal
+  [aberto]="modalAtoAberto()"
+  [tipoAto]="ato()"
+  [aGravar]="aGravar()"
+  [erroServidor]="erroModalAto()"
+  (guardar)="guardarAto($event)"
+  (fechar)="fecharModalAto()"
+/>
+
+<app-rede-defesa-config-modal
+  [aberto]="modalRedeAberto()"
+  [rede]="rede()"
+  [aGravar]="aGravar()"
+  [erroServidor]="erroModalRede()"
+  (guardar)="guardarRede($event)"
+  (fechar)="fecharModalRede()"
+/>
+
+<app-confirmacao-modal
+  [aberto]="confirmacao() !== null"
+  [titulo]="tituloConfirmacao()"
+  [mensagem]="mensagemConfirmacao()"
+  [aProcessar]="aProcessar()"
+  (sim)="confirmarAlternarEstado()"
+  (nao)="cancelarConfirmacao()"
+/>

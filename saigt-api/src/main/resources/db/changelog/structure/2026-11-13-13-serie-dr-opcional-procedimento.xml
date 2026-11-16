@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="2026-11-13-13-serie-dr-opcional-procedimento" author="arnaldo.costa">
+        <comment>
+            `instrumento_procedimento_config.serie_dr` passa a aceitar nulo (DB-PROC-005, v30): nulo quer dizer «a série
+            escolhe-se no processo», só nos Procedimentos das restantes servidões, em que o utilizador escolhe a série e
+            a parte e a plataforma mostra os tipos de ato dessa série (EF v1.5 l.1691; OI-196, premissa do OI-507). A
+            escolha guarda-se em `processo.serie_dr` (DB-PROC-014). O CHECK ck_instrumento_procedimento_config_serie_dr
+            (PRIMEIRA, SEGUNDA_H, SEGUNDA_C) fica como está e aceita o nulo.
+        </comment>
+
+        <dropNotNullConstraint tableName="instrumento_procedimento_config" columnName="serie_dr"
+                               columnDataType="VARCHAR(10)"/>
+
+        <rollback>
+            <!-- Os `preConditions` do changeSet não correm no rollback: a verificação vai no próprio SQL. -->
+            <sql splitStatements="false">
+                DO $$
+                BEGIN
+                    IF EXISTS (SELECT 1 FROM instrumento_procedimento_config WHERE serie_dr IS NULL) THEN
+                        RAISE EXCEPTION 'Há configurações de Procedimento sem série do DR: atribua-lhes uma série ou apague-as antes de repor instrumento_procedimento_config.serie_dr NOT NULL.';
+                    END IF;
+                END $$;
+            </sql>
+            <addNotNullConstraint tableName="instrumento_procedimento_config" columnName="serie_dr"
+                                  columnDataType="VARCHAR(10)"/>
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="2026-11-09-7-seed-municipio-codigo-deposito" author="david.raposo">
+        <comment>
+            Código de cada concelho no n.º de depósito, do extrato legado t4_codigo_municipio_202607021407.csv: DTCC e
+            CodigoMunicipio (não o CodigoConcelho, que difere em concelhos como Alcobaça). A região é o 1.º segmento do
+            CodigoMunicipio e não a coluna COD_REGIAO, que diverge dele nos Açores, na Madeira e em 1421: assim o
+            Instrumento de vários concelhos de uma região tem o mesmo prefixo que os de um só. Fica de fora o DTCC 0000,
+            repetido no extrato e que não é um concelho.
+        </comment>
+
+        <loadData tableName="municipio_codigo_deposito" file="db/data/2026-11-09-7-municipio_codigo_deposito.csv"
+                  relativeToChangelogFile="false" separator=";" quotchar="&quot;" encoding="UTF-8">
+            <column name="dtcc" type="STRING"/>
+            <column name="codigo_regiao" type="STRING"/>
+            <column name="codigo_municipio" type="STRING"/>
+        </loadData>
+
+        <rollback>
+            <delete tableName="municipio_codigo_deposito"/>
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>

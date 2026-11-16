@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="2026-10-27-7-numero-ocorrencia-processo" author="david.raposo">
+        <comment>
+            Processo (DB-PROC-014): n.º de processo de 5 dígitos e `ocorrencia` em vez de `numero_tentativa`.
+            Os números das linhas existentes seguem a ordem de criação.
+        </comment>
+
+        <createSequence sequenceName="seq_processo_numero" startValue="1" incrementBy="1"/>
+        <renameColumn tableName="processo" oldColumnName="numero_tentativa" newColumnName="ocorrencia"/>
+        <sql>ALTER TABLE processo RENAME CONSTRAINT uq_processo_tentativa TO uq_processo_ocorrencia</sql>
+        <addColumn tableName="processo">
+            <column name="numero_processo" type="VARCHAR(20)"/>
+        </addColumn>
+        <sql>UPDATE processo p SET numero_processo = lpad(o.n::text, 5, '0')
+            FROM (SELECT id, row_number() OVER (ORDER BY criado_em, id) AS n FROM processo) o WHERE p.id = o.id</sql>
+        <sql>SELECT setval('seq_processo_numero', (SELECT count(*) FROM processo) + 1, false)</sql>
+        <addNotNullConstraint tableName="processo" columnName="numero_processo"/>
+        <addUniqueConstraint tableName="processo" columnNames="numero_processo" constraintName="uq_processo_numero"/>
+        <addDefaultValue tableName="processo" columnName="numero_processo"
+                         defaultValueComputed="lpad(CAST(nextval('seq_processo_numero') AS VARCHAR), 5, '0')"/>
+
+        <rollback>
+            <dropColumn tableName="processo" columnName="numero_processo"/>
+            <sql>ALTER TABLE processo RENAME CONSTRAINT uq_processo_ocorrencia TO uq_processo_tentativa</sql>
+            <renameColumn tableName="processo" oldColumnName="ocorrencia" newColumnName="numero_tentativa"/>
+            <dropSequence sequenceName="seq_processo_numero"/>
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>

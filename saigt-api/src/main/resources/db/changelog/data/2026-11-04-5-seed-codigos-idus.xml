@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="2026-11-04-5-seed-codigos-idus" author="david.raposo">
+        <comment>
+            Códigos do IDUS nos catálogos, de IDUS_Tabelas_SNIT_20261009.XLSX: folha B (IDTYPE) para o Instrumento, folha D
+            (CodProcedimento, não o ID) para a Dinâmica e folha E (coluna "Cód dinâmica", 3 algarismos) para o Procedimento,
+            igual em PDM, PP e PU. Os códigos vêm de CSV para tabelas de passagem e o UPDATE usa os códigos dos tipos e não
+            ids, para servir qualquer ambiente. Ficam a nulo: PROT e PEOT (Programas, sem IDUS); ALTERACAO_RERAE na Dinâmica
+            e ABERTURA_DISCUSSAO_PUBLICA_RERAE no Procedimento (a folha D não tem a RERAE e a folha E não tem a Abertura);
+            MEDIDAS_PREVENTIVAS, NORMAS_PROVISORIAS e SUSPENSAO (sem Procedimentos configurados nos Planos).
+            Todas as colunas são STRING: sem tipo, o loadData lê `01` como número.
+        </comment>
+
+        <createTable tableName="idus_carga_instrumento">
+            <column name="codigo" type="VARCHAR(100)"/>
+            <column name="codigo_idus" type="VARCHAR(10)"/>
+        </createTable>
+        <createTable tableName="idus_carga_dinamica">
+            <column name="codigo" type="VARCHAR(100)"/>
+            <column name="codigo_idus" type="VARCHAR(10)"/>
+        </createTable>
+        <createTable tableName="idus_carga_procedimento">
+            <column name="dinamica" type="VARCHAR(100)"/>
+            <column name="procedimento" type="VARCHAR(100)"/>
+            <column name="codigo_idus" type="VARCHAR(10)"/>
+        </createTable>
+
+        <loadData tableName="idus_carga_instrumento" file="db/data/2026-11-04-5-tipo_instrumento-idus.csv"
+                  relativeToChangelogFile="false" separator=";" quotchar="&quot;" encoding="UTF-8">
+            <column name="codigo" type="STRING"/>
+            <column name="codigo_idus" type="STRING"/>
+        </loadData>
+        <loadData tableName="idus_carga_dinamica" file="db/data/2026-11-04-5-tipo_dinamica-idus.csv"
+                  relativeToChangelogFile="false" separator=";" quotchar="&quot;" encoding="UTF-8">
+            <column name="codigo" type="STRING"/>
+            <column name="codigo_idus" type="STRING"/>
+        </loadData>
+        <loadData tableName="idus_carga_procedimento" file="db/data/2026-11-04-5-instrumento_procedimento_config-idus.csv"
+                  relativeToChangelogFile="false" separator=";" quotchar="&quot;" encoding="UTF-8">
+            <column name="dinamica" type="STRING"/>
+            <column name="procedimento" type="STRING"/>
+            <column name="codigo_idus" type="STRING"/>
+        </loadData>
+
+        <sql>UPDATE tipo_instrumento SET codigo_idus = c.codigo_idus
+            FROM idus_carga_instrumento c
+            WHERE tipo_instrumento.codigo = c.codigo</sql>
+
+        <sql>UPDATE tipo_dinamica SET codigo_idus = c.codigo_idus
+            FROM idus_carga_dinamica c
+            WHERE tipo_dinamica.codigo = c.codigo</sql>
+
+        <sql>UPDATE instrumento_procedimento_config SET codigo_idus = c.codigo_idus
+            FROM idus_carga_procedimento c
+            JOIN tipo_dinamica d ON d.codigo = c.dinamica
+            JOIN tipo_procedimento t ON t.codigo = c.procedimento
+            JOIN instrumento_dinamica_config i ON i.tipo_dinamica_id = d.id
+            WHERE instrumento_procedimento_config.instrumento_dinamica_config_id = i.id
+              AND instrumento_procedimento_config.tipo_procedimento_id = t.id</sql>
+
+        <dropTable tableName="idus_carga_instrumento"/>
+        <dropTable tableName="idus_carga_dinamica"/>
+        <dropTable tableName="idus_carga_procedimento"/>
+
+        <rollback>
+            <sql>UPDATE instrumento_procedimento_config SET codigo_idus = NULL</sql>
+            <sql>UPDATE tipo_dinamica SET codigo_idus = NULL</sql>
+            <sql>UPDATE tipo_instrumento SET codigo_idus = NULL</sql>
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>

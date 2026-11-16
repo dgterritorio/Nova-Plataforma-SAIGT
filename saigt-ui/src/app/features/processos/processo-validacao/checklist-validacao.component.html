@@ -1,0 +1,81 @@
+<section class="checklist" aria-labelledby="checklist-titulo">
+  <app-cartao espacamento="nenhum">
+    <div class="cabecalho">
+      <h2 class="titulo" id="checklist-titulo">Checklist de validação</h2>
+      <button
+        type="button"
+        app-botao
+        variante="secundario"
+        tamanho="pequeno"
+        class="atualizar"
+        [desativado]="aCarregar()"
+        (click)="atualizar()"
+      >
+        Atualizar
+      </button>
+    </div>
+
+    <div class="corpo">
+      @if (aCarregar()) {
+        <p class="estado" role="status">A carregar a checklist…</p>
+      } @else if (erro()) {
+        <div class="erro">
+          <app-error-banner [erro]="erro()" />
+          <button type="button" app-botao variante="secundario" tamanho="pequeno" class="tentar" (click)="atualizar()">
+            Tentar novamente
+          </button>
+        </div>
+      } @else {
+        <p class="resumo" role="status" data-campo="resumo">{{ resumo() }}</p>
+
+        @for (grupo of grupos(); track grupo.verificacao) {
+          <section class="grupo" [attr.aria-labelledby]="idGrupo(grupo.verificacao)" [attr.data-verificacao]="grupo.verificacao">
+            <h3 class="grupo-titulo" [id]="idGrupo(grupo.verificacao)">{{ grupo.titulo }}</h3>
+            <app-tabela familia="compacta" [legenda]="grupo.titulo" [colunas]="colunas" [linhas]="grupo.linhas">
+              <ng-template appCelula="ficheiro" let-linha>
+                <span class="nome-ficheiro" data-campo="ficheiro">{{ linha.nomeFicheiro ?? 'Processo' }}</span>
+                @if (linha.justificacaoDesbloqueio) {
+                  <span class="desbloqueio" data-campo="desbloqueio">Desbloqueado: {{ linha.justificacaoDesbloqueio }}</span>
+                }
+              </ng-template>
+              <ng-template appCelula="resultado" let-linha>
+                <app-selo [tom]="linha.tomResultado" forma="pill" data-campo="resultado">
+                  {{ linha.rotuloResultado }}
+                </app-selo>
+              </ng-template>
+              <ng-template appCelula="detalhe" let-linha>
+                <span class="detalhe" data-campo="detalhe">{{ linha.detalhe ?? '—' }}</span>
+              </ng-template>
+              <ng-template appCelula="acoes" let-linha>
+                @if (linha.documentoId) {
+                  <button
+                    type="button"
+                    app-botao
+                    variante="texto"
+                    tamanho="pequeno"
+                    class="descarregar"
+                    [aCarregar]="emDownload() === linha.documentoId"
+                    [attr.aria-label]="'Descarregar ' + linha.nomeFicheiro"
+                    (click)="descarregar(linha.documentoId)"
+                  >
+                    Descarregar
+                  </button>
+                }
+              </ng-template>
+            </app-tabela>
+          </section>
+        } @empty {
+          <p class="estado">Este processo não tem verificações a mostrar.</p>
+        }
+
+        @if (erroDescarga(); as mensagem) {
+          <p class="erro-descarga" role="alert">{{ mensagem }}</p>
+        }
+      }
+
+      <app-alerta tipo="info" class="nota">
+        As verificações manuais não ficam registadas. A decisão de validar ou rejeitar cada ficheiro faz-se na lista de documentos.
+      </app-alerta>
+    </div>
+  </app-cartao>
+</section>

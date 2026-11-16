@@ -1,0 +1,423 @@
+instrumento;dinamica;procedimento;codigo;ordem;obrigatorio;nome;descricao;separador;tipo_elemento
+PNPOT;REVISAO;DECISAO_INICIO;TEXTO_ATO_PUB;1;true;Texto do ato a publicar no Diário da República (RCM);;Texto do Ato;PECA_ESCRITA
+PNPOT;REVISAO;DECISAO_INICIO;TEXTO_ATO_DEP;2;true;Texto do ato a publicar no Diário da República (RCM);;Texto do Ato;PECA_ESCRITA
+PNPOT;REVISAO;ABERTURA_DISCUSSAO_PUBLICA;TEXTO_ATO_PUB;1;true;Texto do aviso a publicar no Diário da República;;Texto do Ato;PECA_ESCRITA
+PNPOT;REVISAO;ABERTURA_DISCUSSAO_PUBLICA;TEXTO_ATO_DEP;2;true;Texto do aviso a publicar no Diário da República;;Texto do Ato;PECA_ESCRITA
+PNPOT;REVISAO;REVISAO;TEXTO_ATO_PUB;1;true;Texto do ato a publicar (Lei, RCM, etc.);;Texto do Ato;PECA_ESCRITA
+PNPOT;REVISAO;REVISAO;TEXTO_ATO_DEP;2;true;Texto do ato a publicar (Lei, RCM, etc.);;Texto do Ato;PECA_ESCRITA
+PNPOT;REVISAO;REVISAO;RELATORIO_PUB;3;true;Relatório;;Relatório;PECA_ESCRITA
+PNPOT;REVISAO;REVISAO;RELATORIO_DEP;4;true;Relatório;;Relatório;PECA_ESCRITA
+PNPOT;REVISAO;REVISAO;PECAS_GRAFICAS_PUB;5;true;Peças gráficas ilustrativas;;Peças Gráficas;PECA_GRAFICA
+PNPOT;REVISAO;REVISAO;PECAS_GRAFICAS_DEP;6;true;Peças gráficas ilustrativas;;Peças Gráficas;PECA_GRAFICA
+PNPOT;REVISAO;REVISAO;PROGRAMA_ACAO_DEP;7;true;Programa de Ação;;Programa de Ação;PECA_ESCRITA
+PNPOT;REVISAO;REVISAO;RELATORIO_PONDERACAO_DEP;8;true;Relatório de ponderação dos resultados da discussão pública;;Relatório de Ponderação;PECA_ESCRITA
+PNPOT;REVISAO;REVISAO;LEI_AR_DEP;9;true;Lei da Assembleia da República que aprova o PNPOT;Lei da Assembleia da República que aprova o Programa Nacional da Política de Ordenamento do Território;Lei da Assembleia da República;PECA_ESCRITA
+PNPOT;REVISAO;REVISAO;RCM_ELABORACAO_DEP;10;true;Resolução do Conselho de Ministros que determina a elaboração do programa;Resolução do Conselho de Ministros que determina a elaboração do Programa Nacional de Ordenamento do Território;Resolução do Conselho de Ministros;PECA_ESCRITA
+PNPOT;REVISAO;REVISAO;PARECER_CC_DEP;11;true;Parecer da Comissão Consultiva;;Parecer da Comissão Consultiva;PECA_ESCRITA
+PNPOT;ALTERACAO;DECISAO_INICIO;TEXTO_ATO_PUB;1;true;Texto do ato a publicar no Diário da República (RCM);;Texto do Ato;PECA_ESCRITA
+PNPOT;ALTERACAO;DECISAO_INICIO;TEXTO_ATO_DEP;2;true;Texto do ato a publicar no Diário da República (RCM);;Texto do Ato;PECA_ESCRITA
+PNPOT;ALTERACAO;ABERTURA_DISCUSSAO_PUBLICA;TEXTO_ATO_PUB;1;true;Texto do aviso a publicar no Diário da República;;Texto do Ato;PECA_ESCRITA
+PNPOT;ALTERACAO;ABERTURA_DISCUSSAO_PUBLICA;TEXTO_ATO_DEP;2;true;Texto do aviso a publicar no Diário da República;;Texto do Ato;PECA_ESCRITA
+PNPOT;ALTERACAO;ALTERACAO;TEXTO_ATO_PUB;1;true;Texto do ato a publicar (Lei, RCM, etc.);;Texto do Ato;PECA_ESCRITA
+PNPOT;ALTERACAO;ALTERACAO;TEXTO_ATO_DEP;2;true;Texto do ato a publicar (Lei, RCM, etc.);;Texto do Ato;PECA_ESCRITA
+PNPOT;ALTERACAO;ALTERACAO;ALTERACOES_RELATORIO_PUB;3;true;Texto das alterações ao Relatório - quando tenha sido alterado;;Alterações ao Relatório;PECA_ESCRITA
+PNPOT;ALTERACAO;ALTERACAO;ALTERACOES_RELATORIO_DEP;4;true;Texto das alterações ao Relatório - quando tenha sido alterado;;Alterações ao Relatório;PECA_ESCRITA
+PNPOT;ALTERACAO;ALTERACAO;RELATORIO_INTEGRAL_PUB;5;false;Republicação do Relatório alterado (opcional);;Relatório Integral;PECA_ESCRITA
+PNPOT;ALTERACAO;ALTERACAO;RELATORIO_INTEGRAL_DEP;6;false;Republicação do Relatório alterado (opcional);;Relatório Integral;PECA_ESCRITA
+PNPOT;ALTERACAO;ALTERACAO;PECAS_GRAFICAS_PUB;7;true;Peças gráficas ilustrativas - se alteradas;;Peças Gráficas;PECA_GRAFICA
+PNPOT;ALTERACAO;ALTERACAO;PECAS_GRAFICAS_DEP;8;true;Peças gráficas ilustrativas - se alteradas;;Peças Gráficas;PECA_GRAFICA
+PNPOT;ALTERACAO;ALTERACAO;RELATORIO_FUNDAMENTACAO_DEP;9;true;Relatório de fundamentação da alteração;;Relatório de Fundamentação;PECA_ESCRITA
+PNPOT;ALTERACAO;ALTERACAO;PARECER_CC_DEP;10;true;Parecer da Comissão Consultiva;;Parecer da Comissão Consultiva;PECA_ESCRITA
+PNPOT;ALTERACAO;ALTERACAO;PARECERES_ENTIDADES_DEP;11;true;Pareceres das entidades consultadas;;Pareceres;PECA_ESCRITA
+PNPOT;ALTERACAO_ADAPTACAO;ALTERACAO_ADAPTACAO;TEXTO_ATO_PUB;1;true;Declaração da entidade responsável pela elaboração do programa;Texto da declaração a publicar - Declaração da entidade responsável pela elaboração do plano;Texto do Ato;PECA_ESCRITA
+PNPOT;ALTERACAO_ADAPTACAO;ALTERACAO_ADAPTACAO;TEXTO_ATO_DEP;2;true;Declaração da entidade responsável pela elaboração do programa;Texto da declaração a publicar - Declaração da entidade responsável pela elaboração do plano;Texto do Ato;PECA_ESCRITA
+PNPOT;ALTERACAO_ADAPTACAO;ALTERACAO_ADAPTACAO;ALTERACOES_RELATORIO_PUB;3;true;Texto das disposições alteradas no Relatório - quando tenha sido alterado;;Alterações ao Relatório;PECA_ESCRITA
+PNPOT;ALTERACAO_ADAPTACAO;ALTERACAO_ADAPTACAO;ALTERACOES_RELATORIO_DEP;4;true;Texto das disposições alteradas no Relatório - quando tenha sido alterado;;Alterações ao Relatório;PECA_ESCRITA
+PNPOT;ALTERACAO_ADAPTACAO;ALTERACAO_ADAPTACAO;RELATORIO_INTEGRAL_PUB;5;false;Relatório (versão alterada integral);;Relatório Integral;PECA_ESCRITA
+PNPOT;ALTERACAO_ADAPTACAO;ALTERACAO_ADAPTACAO;RELATORIO_INTEGRAL_DEP;6;false;Relatório (versão alterada integral);;Relatório Integral;PECA_ESCRITA
+PNPOT;ALTERACAO_ADAPTACAO;ALTERACAO_ADAPTACAO;PECAS_GRAFICAS_PUB;7;true;Peças gráficas ilustrativas - se alteradas;;Peças Gráficas;PECA_GRAFICA
+PNPOT;ALTERACAO_ADAPTACAO;ALTERACAO_ADAPTACAO;PECAS_GRAFICAS_DEP;8;true;Peças gráficas ilustrativas - se alteradas;;Peças Gráficas;PECA_GRAFICA
+PNPOT;CORRECAO_MATERIAL;CORRECAO_MATERIAL;TEXTO_ATO_PUB;1;true;Declaração da entidade responsável pela elaboração do programa;Texto do ato a publicar - Declaração da entidade responsável pela elaboração do programa;Texto do Ato;PECA_ESCRITA
+PNPOT;CORRECAO_MATERIAL;CORRECAO_MATERIAL;TEXTO_ATO_DEP;2;true;Declaração da entidade responsável pela elaboração do programa;Texto do ato a publicar - Declaração da entidade responsável pela elaboração do programa;Texto do Ato;PECA_ESCRITA
+PNPOT;CORRECAO_MATERIAL;CORRECAO_MATERIAL;ALTERACOES_RELATORIO_PUB;3;true;Texto das disposições retificadas no Relatório - quando tenha sido corrigido;;Alterações ao Relatório;PECA_ESCRITA
+PNPOT;CORRECAO_MATERIAL;CORRECAO_MATERIAL;ALTERACOES_RELATORIO_DEP;4;true;Texto das disposições retificadas no Relatório - quando tenha sido corrigido;;Alterações ao Relatório;PECA_ESCRITA
+PNPOT;CORRECAO_MATERIAL;CORRECAO_MATERIAL;RELATORIO_INTEGRAL_PUB;5;false;Relatório (versão corrigida integral);;Relatório Integral;PECA_ESCRITA
+PNPOT;CORRECAO_MATERIAL;CORRECAO_MATERIAL;RELATORIO_INTEGRAL_DEP;6;false;Relatório (versão corrigida integral);;Relatório Integral;PECA_ESCRITA
+PNPOT;CORRECAO_MATERIAL;CORRECAO_MATERIAL;PECAS_GRAFICAS_PUB;7;true;Peças gráficas ilustrativas - se corrigidas;;Peças Gráficas;PECA_GRAFICA
+PNPOT;CORRECAO_MATERIAL;CORRECAO_MATERIAL;PECAS_GRAFICAS_DEP;8;true;Peças gráficas ilustrativas - se corrigidas;;Peças Gráficas;PECA_GRAFICA
+PNPOT;REVOGACAO;REVOGACAO;TEXTO_ATO_PUB;1;true;Texto do ato a publicar (Lei, RCM, etc.);;Texto do Ato;PECA_ESCRITA
+PNPOT;REVOGACAO;REVOGACAO;TEXTO_ATO_DEP;2;true;Texto do ato a publicar (Lei, RCM, etc.);;Texto do Ato;PECA_ESCRITA
+PNPOT;SUSPENSAO_GOVERNO;PUBLICACAO_SUSPENSAO_GOVERNO;RCM_PUB;1;true;Resolução do Conselho de Ministros;;Resolução do Conselho de Ministros;PECA_ESCRITA
+PNPOT;SUSPENSAO_GOVERNO;PUBLICACAO_SUSPENSAO_GOVERNO;RCM_DEP;2;true;Resolução do Conselho de Ministros;;Resolução do Conselho de Ministros;PECA_ESCRITA
+PNPOT;SUSPENSAO_GOVERNO;PUBLICACAO_SUSPENSAO_GOVERNO;TEXTO_MEDIDAS_PREVENTIVAS_PUB;3;true;Texto das Medidas Preventivas;;Texto das Medidas Preventivas;PECA_ESCRITA
+PNPOT;SUSPENSAO_GOVERNO;PUBLICACAO_SUSPENSAO_GOVERNO;TEXTO_MEDIDAS_PREVENTIVAS_DEP;4;true;Texto das Medidas Preventivas;;Texto das Medidas Preventivas;PECA_ESCRITA
+PNPOT;SUSPENSAO_GOVERNO;PUBLICACAO_SUSPENSAO_GOVERNO;PLANTA_DELIMITACAO_PUB;5;true;Planta de delimitação da área abrangida pela suspensão - quando aplicável;;Planta de Delimitação;PECA_GRAFICA
+PNPOT;SUSPENSAO_GOVERNO;PUBLICACAO_SUSPENSAO_GOVERNO;PLANTA_DELIMITACAO_DEP;6;true;Planta de delimitação da área abrangida pela suspensão - quando aplicável;;Planta de Delimitação;PECA_GRAFICA
+PNPOT;SUSPENSAO_GOVERNO;PRORROGACAO_SUSPENSAO_GOVERNO;RCM_PUB;1;true;Resolução do Conselho de Ministros;;Resolução do Conselho de Ministros;PECA_ESCRITA
+PNPOT;SUSPENSAO_GOVERNO;PRORROGACAO_SUSPENSAO_GOVERNO;RCM_DEP;2;true;Resolução do Conselho de Ministros;;Resolução do Conselho de Ministros;PECA_ESCRITA
+PNPOT;MEDIDAS_PREVENTIVAS_GOVERNO;PUBLICACAO_MP_GOVERNO;TEXTO_ATO_PUB;1;true;Texto do aviso a publicar no Diário da República;;Texto do Ato;PECA_ESCRITA
+PNPOT;MEDIDAS_PREVENTIVAS_GOVERNO;PUBLICACAO_MP_GOVERNO;TEXTO_ATO_DEP;2;true;Texto do aviso a publicar no Diário da República;;Texto do Ato;PECA_ESCRITA
+PNPOT;MEDIDAS_PREVENTIVAS_GOVERNO;PUBLICACAO_MP_GOVERNO;TEXTO_MEDIDAS_PREVENTIVAS_PUB;3;true;Texto das Medidas Preventivas;;Texto das Medidas Preventivas;PECA_ESCRITA
+PNPOT;MEDIDAS_PREVENTIVAS_GOVERNO;PUBLICACAO_MP_GOVERNO;TEXTO_MEDIDAS_PREVENTIVAS_DEP;4;true;Texto das Medidas Preventivas;;Texto das Medidas Preventivas;PECA_ESCRITA
+PNPOT;MEDIDAS_PREVENTIVAS_GOVERNO;PUBLICACAO_MP_GOVERNO;PLANTA_DELIMITACAO_PUB;5;true;Planta de delimitação da área abrangida pelas Medidas Preventivas - quando aplicável;;Planta de Delimitação;PECA_GRAFICA
+PNPOT;MEDIDAS_PREVENTIVAS_GOVERNO;PUBLICACAO_MP_GOVERNO;PLANTA_DELIMITACAO_DEP;6;true;Planta de delimitação da área abrangida pelas Medidas Preventivas - quando aplicável;;Planta de Delimitação;PECA_GRAFICA
+PNPOT;MEDIDAS_PREVENTIVAS_GOVERNO;PRORROGACAO_MP_GOVERNO;RCM_PUB;1;true;Resolução do Conselho de Ministros;;Resolução do Conselho de Ministros;PECA_ESCRITA
+PNPOT;MEDIDAS_PREVENTIVAS_GOVERNO;PRORROGACAO_MP_GOVERNO;RCM_DEP;2;true;Resolução do Conselho de Ministros;;Resolução do Conselho de Ministros;PECA_ESCRITA
+PS;ELABORACAO;DECISAO_INICIO;TEXTO_ATO_PUB;1;true;Texto do ato a publicar no Diário da República (RCM);;Texto do Ato;PECA_ESCRITA
+PS;ELABORACAO;DECISAO_INICIO;TEXTO_ATO_DEP;2;true;Texto do ato a publicar no Diário da República (RCM);;Texto do Ato;PECA_ESCRITA
+PS;ELABORACAO;ABERTURA_DISCUSSAO_PUBLICA;TEXTO_ATO_PUB;1;true;Texto do aviso a publicar no Diário da República;;Texto do Ato;PECA_ESCRITA
+PS;ELABORACAO;ABERTURA_DISCUSSAO_PUBLICA;TEXTO_ATO_DEP;2;true;Texto do aviso a publicar no Diário da República;;Texto do Ato;PECA_ESCRITA
+PS;ELABORACAO;ELABORACAO;TEXTO_ATO_PUB;1;true;Texto do ato a publicar (Lei, RCM, etc.);;Texto do Ato;PECA_ESCRITA
+PS;ELABORACAO;ELABORACAO;TEXTO_ATO_DEP;2;true;Texto do ato a publicar (Lei, RCM, etc.);;Texto do Ato;PECA_ESCRITA
+PS;ELABORACAO;ELABORACAO;RELATORIO_PUB;3;true;Relatório;;Relatório;PECA_ESCRITA
+PS;ELABORACAO;ELABORACAO;RELATORIO_DEP;4;true;Relatório;;Relatório;PECA_ESCRITA
+PS;ELABORACAO;ELABORACAO;PECAS_GRAFICAS_PUB;5;true;Peças gráficas ilustrativas;;Peças Gráficas;PECA_GRAFICA
+PS;ELABORACAO;ELABORACAO;PECAS_GRAFICAS_DEP;6;true;Peças gráficas ilustrativas;;Peças Gráficas;PECA_GRAFICA
+PS;ELABORACAO;ELABORACAO;RELATORIO_PONDERACAO_DEP;7;true;Relatório de ponderação dos resultados da discussão pública;;Relatório de Ponderação;PECA_ESCRITA
+PS;ELABORACAO;ELABORACAO;RELATORIO_AMBIENTAL_DEP;8;true;Relatório ambiental;;Relatório Ambiental;PECA_ESCRITA
+PS;ELABORACAO;ELABORACAO;OPCOES_OBJETIVOS_NORMAS_DEP;9;true;Opções/Objetivos/Normas de execução;;Opções, Objetivos e Normas de Execução;PECA_ESCRITA
+PS;ELABORACAO;ELABORACAO;RCM_APROVACAO_DEP;10;true;Resolução do Conselho de Ministros que aprova o programa;;Resolução do Conselho de Ministros;PECA_ESCRITA
+PS;ELABORACAO;ELABORACAO;DESPACHO_ELABORACAO_DEP;11;true;Despacho ministerial que determina a elaboração do programa;;Despacho Ministerial;PECA_ESCRITA
+PS;ELABORACAO;ELABORACAO;PARECERES_ATA_DEP;12;true;Pareceres emitidos em sede de acompanhamento ou Ata da conferência de serviços;;Pareceres;PECA_ESCRITA
+PS;ELABORACAO;ELABORACAO;PARECERES_ERAE_DEP;13;true;Pareceres das entidades com responsabilidade ambiental específica;;Pareceres das ERAE;PECA_ESCRITA
+PS;REVISAO;DECISAO_INICIO;TEXTO_ATO_PUB;1;true;Texto do ato a publicar no Diário da República (RCM);;Texto do Ato;PECA_ESCRITA
+PS;REVISAO;DECISAO_INICIO;TEXTO_ATO_DEP;2;true;Texto do ato a publicar no Diário da República (RCM);;Texto do Ato;PECA_ESCRITA
+PS;REVISAO;ABERTURA_DISCUSSAO_PUBLICA;TEXTO_ATO_PUB;1;true;Texto do aviso a publicar no Diário da República;;Texto do Ato;PECA_ESCRITA
+PS;REVISAO;ABERTURA_DISCUSSAO_PUBLICA;TEXTO_ATO_DEP;2;true;Texto do aviso a publicar no Diário da República;;Texto do Ato;PECA_ESCRITA
+PS;REVISAO;REVISAO;TEXTO_ATO_PUB;1;true;Texto do ato a publicar (Lei, RCM, etc.);;Texto do Ato;PECA_ESCRITA
+PS;REVISAO;REVISAO;TEXTO_ATO_DEP;2;true;Texto do ato a publicar (Lei, RCM, etc.);;Texto do Ato;PECA_ESCRITA
+PS;REVISAO;REVISAO;RELATORIO_PUB;3;true;Relatório;;Relatório;PECA_ESCRITA
+PS;REVISAO;REVISAO;RELATORIO_DEP;4;true;Relatório;;Relatório;PECA_ESCRITA
+PS;REVISAO;REVISAO;PECAS_GRAFICAS_PUB;5;true;Peças gráficas ilustrativas;;Peças Gráficas;PECA_GRAFICA
+PS;REVISAO;REVISAO;PECAS_GRAFICAS_DEP;6;true;Peças gráficas ilustrativas;;Peças Gráficas;PECA_GRAFICA
+PS;REVISAO;REVISAO;RELATORIO_PONDERACAO_DEP;7;true;Relatório de ponderação dos resultados da discussão pública;;Relatório de Ponderação;PECA_ESCRITA
+PS;REVISAO;REVISAO;RELATORIO_AMBIENTAL_DEP;8;true;Relatório ambiental;;Relatório Ambiental;PECA_ESCRITA
+PS;REVISAO;REVISAO;OPCOES_OBJETIVOS_NORMAS_DEP;9;true;Opções/Objetivos/Normas de execução;;Opções, Objetivos e Normas de Execução;PECA_ESCRITA
+PS;REVISAO;REVISAO;RCM_APROVACAO_DEP;10;true;Resolução do Conselho de Ministros que aprova o programa;;Resolução do Conselho de Ministros;PECA_ESCRITA
+PS;REVISAO;REVISAO;DESPACHO_ELABORACAO_DEP;11;true;Despacho ministerial que determina a elaboração do programa;;Despacho Ministerial;PECA_ESCRITA
+PS;REVISAO;REVISAO;PARECERES_ATA_DEP;12;true;Pareceres emitidos em sede de acompanhamento ou Ata da conferência de serviços;;Pareceres;PECA_ESCRITA
+PS;REVISAO;REVISAO;PARECERES_ERAE_DEP;13;true;Pareceres das entidades com responsabilidade ambiental específica;;Pareceres das ERAE;PECA_ESCRITA
+PS;ALTERACAO;DECISAO_INICIO;TEXTO_ATO_PUB;1;true;Texto do ato a publicar no Diário da República (RCM);;Texto do Ato;PECA_ESCRITA
+PS;ALTERACAO;DECISAO_INICIO;TEXTO_ATO_DEP;2;true;Texto do ato a publicar no Diário da República (RCM);;Texto do Ato;PECA_ESCRITA
+PS;ALTERACAO;ABERTURA_DISCUSSAO_PUBLICA;TEXTO_ATO_PUB;1;true;Texto do aviso a publicar no Diário da República;;Texto do Ato;PECA_ESCRITA
+PS;ALTERACAO;ABERTURA_DISCUSSAO_PUBLICA;TEXTO_ATO_DEP;2;true;Texto do aviso a publicar no Diário da República;;Texto do Ato;PECA_ESCRITA
+PS;ALTERACAO;ALTERACAO;TEXTO_ATO_PUB;1;true;Texto do ato a publicar (Lei, RCM, etc.);;Texto do Ato;PECA_ESCRITA
+PS;ALTERACAO;ALTERACAO;TEXTO_ATO_DEP;2;true;Texto do ato a publicar (Lei, RCM, etc.);;Texto do Ato;PECA_ESCRITA
+PS;ALTERACAO;ALTERACAO;ALTERACOES_RELATORIO_PUB;3;true;Texto das alterações ao Relatório - quando tenha sido alterado;;Alterações ao Relatório;PECA_ESCRITA
+PS;ALTERACAO;ALTERACAO;ALTERACOES_RELATORIO_DEP;4;true;Texto das alterações ao Relatório - quando tenha sido alterado;;Alterações ao Relatório;PECA_ESCRITA
+PS;ALTERACAO;ALTERACAO;RELATORIO_INTEGRAL_PUB;5;false;Republicação do Relatório alterado (opcional);;Relatório Integral;PECA_ESCRITA
+PS;ALTERACAO;ALTERACAO;RELATORIO_INTEGRAL_DEP;6;false;Republicação do Relatório alterado (opcional);;Relatório Integral;PECA_ESCRITA
+PS;ALTERACAO;ALTERACAO;PECAS_GRAFICAS_PUB;7;true;Peças gráficas ilustrativas - se alteradas;;Peças Gráficas;PECA_GRAFICA
+PS;ALTERACAO;ALTERACAO;PECAS_GRAFICAS_DEP;8;true;Peças gráficas ilustrativas - se alteradas;;Peças Gráficas;PECA_GRAFICA
+PS;ALTERACAO;ALTERACAO;RELATORIO_FUNDAMENTACAO_DEP;9;true;Relatório de fundamentação da alteração;;Relatório de Fundamentação;PECA_ESCRITA
+PS;ALTERACAO;ALTERACAO;RELATORIO_AMBIENTAL_DEP;10;true;Relatório ambiental;;Relatório Ambiental;PECA_ESCRITA
+PS;ALTERACAO;ALTERACAO;PARECER_CC_DEP;11;true;Parecer da Comissão Consultiva;;Parecer da Comissão Consultiva;PECA_ESCRITA
+PS;ALTERACAO;ALTERACAO;PARECERES_ENTIDADES_DEP;12;true;Pareceres das entidades consultadas;;Pareceres;PECA_ESCRITA
+PS;ALTERACAO_ADAPTACAO;ALTERACAO_ADAPTACAO;TEXTO_ATO_PUB;1;true;Declaração da entidade responsável pela elaboração do programa;Texto da declaração a publicar - Declaração da entidade responsável pela elaboração do plano;Texto do Ato;PECA_ESCRITA
+PS;ALTERACAO_ADAPTACAO;ALTERACAO_ADAPTACAO;TEXTO_ATO_DEP;2;true;Declaração da entidade responsável pela elaboração do programa;Texto da declaração a publicar - Declaração da entidade responsável pela elaboração do plano;Texto do Ato;PECA_ESCRITA
+PS;ALTERACAO_ADAPTACAO;ALTERACAO_ADAPTACAO;ALTERACOES_RELATORIO_PUB;3;true;Texto das disposições alteradas no Relatório - quando tenha sido alterado;;Alterações ao Relatório;PECA_ESCRITA
+PS;ALTERACAO_ADAPTACAO;ALTERACAO_ADAPTACAO;ALTERACOES_RELATORIO_DEP;4;true;Texto das disposições alteradas no Relatório - quando tenha sido alterado;;Alterações ao Relatório;PECA_ESCRITA
+PS;ALTERACAO_ADAPTACAO;ALTERACAO_ADAPTACAO;RELATORIO_INTEGRAL_PUB;5;false;Relatório (versão alterada integral);;Relatório Integral;PECA_ESCRITA
+PS;ALTERACAO_ADAPTACAO;ALTERACAO_ADAPTACAO;RELATORIO_INTEGRAL_DEP;6;false;Relatório (versão alterada integral);;Relatório Integral;PECA_ESCRITA
+PS;ALTERACAO_ADAPTACAO;ALTERACAO_ADAPTACAO;PECAS_GRAFICAS_PUB;7;true;Peças gráficas ilustrativas - se alteradas;;Peças Gráficas;PECA_GRAFICA
+PS;ALTERACAO_ADAPTACAO;ALTERACAO_ADAPTACAO;PECAS_GRAFICAS_DEP;8;true;Peças gráficas ilustrativas - se alteradas;;Peças Gráficas;PECA_GRAFICA
+PS;CORRECAO_MATERIAL;CORRECAO_MATERIAL;TEXTO_ATO_PUB;1;true;Declaração da entidade responsável pela elaboração do programa;Texto do ato a publicar - Declaração da entidade responsável pela elaboração do programa;Texto do Ato;PECA_ESCRITA
+PS;CORRECAO_MATERIAL;CORRECAO_MATERIAL;TEXTO_ATO_DEP;2;true;Declaração da entidade responsável pela elaboração do programa;Texto do ato a publicar - Declaração da entidade responsável pela elaboração do programa;Texto do Ato;PECA_ESCRITA
+PS;CORRECAO_MATERIAL;CORRECAO_MATERIAL;ALTERACOES_RELATORIO_PUB;3;true;Texto das disposições retificadas no Relatório - quando tenha sido corrigido;;Alterações ao Relatório;PECA_ESCRITA
+PS;CORRECAO_MATERIAL;CORRECAO_MATERIAL;ALTERACOES_RELATORIO_DEP;4;true;Texto das disposições retificadas no Relatório - quando tenha sido corrigido;;Alterações ao Relatório;PECA_ESCRITA
+PS;CORRECAO_MATERIAL;CORRECAO_MATERIAL;RELATORIO_INTEGRAL_PUB;5;false;Relatório (versão corrigida integral);;Relatório Integral;PECA_ESCRITA
+PS;CORRECAO_MATERIAL;CORRECAO_MATERIAL;RELATORIO_INTEGRAL_DEP;6;false;Relatório (versão corrigida integral);;Relatório Integral;PECA_ESCRITA
+PS;CORRECAO_MATERIAL;CORRECAO_MATERIAL;PECAS_GRAFICAS_PUB;7;true;Peças gráficas ilustrativas - se corrigidas;;Peças Gráficas;PECA_GRAFICA
+PS;CORRECAO_MATERIAL;CORRECAO_MATERIAL;PECAS_GRAFICAS_DEP;8;true;Peças gráficas ilustrativas - se corrigidas;;Peças Gráficas;PECA_GRAFICA
+PS;REVOGACAO;REVOGACAO;TEXTO_ATO_PUB;1;true;Texto do ato a publicar (Lei, RCM, etc.);;Texto do Ato;PECA_ESCRITA
+PS;REVOGACAO;REVOGACAO;TEXTO_ATO_DEP;2;true;Texto do ato a publicar (Lei, RCM, etc.);;Texto do Ato;PECA_ESCRITA
+PS;SUSPENSAO_GOVERNO;PUBLICACAO_SUSPENSAO_GOVERNO;RCM_PUB;1;true;Resolução do Conselho de Ministros;;Resolução do Conselho de Ministros;PECA_ESCRITA
+PS;SUSPENSAO_GOVERNO;PUBLICACAO_SUSPENSAO_GOVERNO;RCM_DEP;2;true;Resolução do Conselho de Ministros;;Resolução do Conselho de Ministros;PECA_ESCRITA
+PS;SUSPENSAO_GOVERNO;PUBLICACAO_SUSPENSAO_GOVERNO;TEXTO_MEDIDAS_PREVENTIVAS_PUB;3;true;Texto das Medidas Preventivas;;Texto das Medidas Preventivas;PECA_ESCRITA
+PS;SUSPENSAO_GOVERNO;PUBLICACAO_SUSPENSAO_GOVERNO;TEXTO_MEDIDAS_PREVENTIVAS_DEP;4;true;Texto das Medidas Preventivas;;Texto das Medidas Preventivas;PECA_ESCRITA
+PS;SUSPENSAO_GOVERNO;PUBLICACAO_SUSPENSAO_GOVERNO;PLANTA_DELIMITACAO_PUB;5;true;Planta de delimitação da área abrangida pela suspensão - quando aplicável;;Planta de Delimitação;PECA_GRAFICA
+PS;SUSPENSAO_GOVERNO;PUBLICACAO_SUSPENSAO_GOVERNO;PLANTA_DELIMITACAO_DEP;6;true;Planta de delimitação da área abrangida pela suspensão - quando aplicável;;Planta de Delimitação;PECA_GRAFICA
+PS;SUSPENSAO_GOVERNO;PRORROGACAO_SUSPENSAO_GOVERNO;RCM_PUB;1;true;Resolução do Conselho de Ministros;;Resolução do Conselho de Ministros;PECA_ESCRITA
+PS;SUSPENSAO_GOVERNO;PRORROGACAO_SUSPENSAO_GOVERNO;RCM_DEP;2;true;Resolução do Conselho de Ministros;;Resolução do Conselho de Ministros;PECA_ESCRITA
+PS;MEDIDAS_PREVENTIVAS_GOVERNO;PUBLICACAO_MP_GOVERNO;TEXTO_ATO_PUB;1;true;Texto do aviso a publicar no Diário da República;;Texto do Ato;PECA_ESCRITA
+PS;MEDIDAS_PREVENTIVAS_GOVERNO;PUBLICACAO_MP_GOVERNO;TEXTO_ATO_DEP;2;true;Texto do aviso a publicar no Diário da República;;Texto do Ato;PECA_ESCRITA
+PS;MEDIDAS_PREVENTIVAS_GOVERNO;PUBLICACAO_MP_GOVERNO;TEXTO_MEDIDAS_PREVENTIVAS_PUB;3;true;Texto das Medidas Preventivas;;Texto das Medidas Preventivas;PECA_ESCRITA
+PS;MEDIDAS_PREVENTIVAS_GOVERNO;PUBLICACAO_MP_GOVERNO;TEXTO_MEDIDAS_PREVENTIVAS_DEP;4;true;Texto das Medidas Preventivas;;Texto das Medidas Preventivas;PECA_ESCRITA
+PS;MEDIDAS_PREVENTIVAS_GOVERNO;PUBLICACAO_MP_GOVERNO;PLANTA_DELIMITACAO_PUB;5;true;Planta de delimitação da área abrangida pelas Medidas Preventivas - quando aplicável;;Planta de Delimitação;PECA_GRAFICA
+PS;MEDIDAS_PREVENTIVAS_GOVERNO;PUBLICACAO_MP_GOVERNO;PLANTA_DELIMITACAO_DEP;6;true;Planta de delimitação da área abrangida pelas Medidas Preventivas - quando aplicável;;Planta de Delimitação;PECA_GRAFICA
+PS;MEDIDAS_PREVENTIVAS_GOVERNO;PRORROGACAO_MP_GOVERNO;RCM_PUB;1;true;Resolução do Conselho de Ministros;;Resolução do Conselho de Ministros;PECA_ESCRITA
+PS;MEDIDAS_PREVENTIVAS_GOVERNO;PRORROGACAO_MP_GOVERNO;RCM_DEP;2;true;Resolução do Conselho de Ministros;;Resolução do Conselho de Ministros;PECA_ESCRITA
+PROT;ELABORACAO;DECISAO_INICIO;TEXTO_ATO_PUB;1;true;Texto do ato a publicar no Diário da República (RCM);;Texto do Ato;PECA_ESCRITA
+PROT;ELABORACAO;DECISAO_INICIO;TEXTO_ATO_DEP;2;true;Texto do ato a publicar no Diário da República (RCM);;Texto do Ato;PECA_ESCRITA
+PROT;ELABORACAO;ABERTURA_DISCUSSAO_PUBLICA;TEXTO_ATO_PUB;1;true;Texto do aviso a publicar no Diário da República;;Texto do Ato;PECA_ESCRITA
+PROT;ELABORACAO;ABERTURA_DISCUSSAO_PUBLICA;TEXTO_ATO_DEP;2;true;Texto do aviso a publicar no Diário da República;;Texto do Ato;PECA_ESCRITA
+PROT;ELABORACAO;ELABORACAO;TEXTO_ATO_PUB;1;true;Texto do ato a publicar (Lei, RCM, etc.);;Texto do Ato;PECA_ESCRITA
+PROT;ELABORACAO;ELABORACAO;TEXTO_ATO_DEP;2;true;Texto do ato a publicar (Lei, RCM, etc.);;Texto do Ato;PECA_ESCRITA
+PROT;ELABORACAO;ELABORACAO;RELATORIO_PUB;3;true;Relatório;;Relatório;PECA_ESCRITA
+PROT;ELABORACAO;ELABORACAO;RELATORIO_DEP;4;true;Relatório;;Relatório;PECA_ESCRITA
+PROT;ELABORACAO;ELABORACAO;PECAS_GRAFICAS_PUB;5;true;Peças gráficas ilustrativas;;Peças Gráficas;PECA_GRAFICA
+PROT;ELABORACAO;ELABORACAO;PECAS_GRAFICAS_DEP;6;true;Peças gráficas ilustrativas;;Peças Gráficas;PECA_GRAFICA
+PROT;ELABORACAO;ELABORACAO;RELATORIO_PONDERACAO_DEP;7;true;Relatório de ponderação dos resultados da discussão pública;;Relatório de Ponderação;PECA_ESCRITA
+PROT;ELABORACAO;ELABORACAO;RELATORIO_AMBIENTAL_DEP;8;true;Relatório ambiental;;Relatório Ambiental;PECA_ESCRITA
+PROT;ELABORACAO;ELABORACAO;OPCOES_OBJETIVOS_NORMAS_DEP;9;true;Opções/Objetivos/Normas de execução;;Opções, Objetivos e Normas de Execução;PECA_ESCRITA
+PROT;ELABORACAO;ELABORACAO;RCM_APROVACAO_DEP;10;true;Resolução do Conselho de Ministros que aprova o programa;;Resolução do Conselho de Ministros;PECA_ESCRITA
+PROT;ELABORACAO;ELABORACAO;RCM_ELABORACAO_DEP;11;true;Resolução do Conselho de Ministros que determina a elaboração do programa regional;Resolução do Conselho de Ministros que determina a elaboração do plano regional de ordenamento do território;Resolução do Conselho de Ministros;PECA_ESCRITA
+PROT;ELABORACAO;ELABORACAO;PARECER_CC_DEP;12;true;Parecer da Comissão Consultiva;;Parecer da Comissão Consultiva;PECA_ESCRITA
+PROT;REVISAO;DECISAO_INICIO;TEXTO_ATO_PUB;1;true;Texto do ato a publicar no Diário da República (RCM);;Texto do Ato;PECA_ESCRITA
+PROT;REVISAO;DECISAO_INICIO;TEXTO_ATO_DEP;2;true;Texto do ato a publicar no Diário da República (RCM);;Texto do Ato;PECA_ESCRITA
+PROT;REVISAO;ABERTURA_DISCUSSAO_PUBLICA;TEXTO_ATO_PUB;1;true;Texto do aviso a publicar no Diário da República;;Texto do Ato;PECA_ESCRITA
+PROT;REVISAO;ABERTURA_DISCUSSAO_PUBLICA;TEXTO_ATO_DEP;2;true;Texto do aviso a publicar no Diário da República;;Texto do Ato;PECA_ESCRITA
+PROT;REVISAO;REVISAO;TEXTO_ATO_PUB;1;true;Texto do ato a publicar (Lei, RCM, etc.);;Texto do Ato;PECA_ESCRITA
+PROT;REVISAO;REVISAO;TEXTO_ATO_DEP;2;true;Texto do ato a publicar (Lei, RCM, etc.);;Texto do Ato;PECA_ESCRITA
+PROT;REVISAO;REVISAO;RELATORIO_PUB;3;true;Relatório;;Relatório;PECA_ESCRITA
+PROT;REVISAO;REVISAO;RELATORIO_DEP;4;true;Relatório;;Relatório;PECA_ESCRITA
+PROT;REVISAO;REVISAO;PECAS_GRAFICAS_PUB;5;true;Peças gráficas ilustrativas;;Peças Gráficas;PECA_GRAFICA
+PROT;REVISAO;REVISAO;PECAS_GRAFICAS_DEP;6;true;Peças gráficas ilustrativas;;Peças Gráficas;PECA_GRAFICA
+PROT;REVISAO;REVISAO;RELATORIO_PONDERACAO_DEP;7;true;Relatório de ponderação dos resultados da discussão pública;;Relatório de Ponderação;PECA_ESCRITA
+PROT;REVISAO;REVISAO;RELATORIO_AMBIENTAL_DEP;8;true;Relatório ambiental;;Relatório Ambiental;PECA_ESCRITA
+PROT;REVISAO;REVISAO;OPCOES_OBJETIVOS_NORMAS_DEP;9;true;Opções/Objetivos/Normas de execução;;Opções, Objetivos e Normas de Execução;PECA_ESCRITA
+PROT;REVISAO;REVISAO;RCM_APROVACAO_DEP;10;true;Resolução do Conselho de Ministros que aprova o programa;;Resolução do Conselho de Ministros;PECA_ESCRITA
+PROT;REVISAO;REVISAO;RCM_ELABORACAO_DEP;11;true;Resolução do Conselho de Ministros que determina a elaboração do programa regional;Resolução do Conselho de Ministros que determina a elaboração do plano regional de ordenamento do território;Resolução do Conselho de Ministros;PECA_ESCRITA
+PROT;REVISAO;REVISAO;PARECER_CC_DEP;12;true;Parecer da Comissão Consultiva;;Parecer da Comissão Consultiva;PECA_ESCRITA
+PROT;ALTERACAO;DECISAO_INICIO;TEXTO_ATO_PUB;1;true;Texto do ato a publicar no Diário da República (RCM);;Texto do Ato;PECA_ESCRITA
+PROT;ALTERACAO;DECISAO_INICIO;TEXTO_ATO_DEP;2;true;Texto do ato a publicar no Diário da República (RCM);;Texto do Ato;PECA_ESCRITA
+PROT;ALTERACAO;ABERTURA_DISCUSSAO_PUBLICA;TEXTO_ATO_PUB;1;true;Texto do aviso a publicar no Diário da República;;Texto do Ato;PECA_ESCRITA
+PROT;ALTERACAO;ABERTURA_DISCUSSAO_PUBLICA;TEXTO_ATO_DEP;2;true;Texto do aviso a publicar no Diário da República;;Texto do Ato;PECA_ESCRITA
+PROT;ALTERACAO;ALTERACAO;TEXTO_ATO_PUB;1;true;Texto do ato a publicar (Lei, RCM, etc.);;Texto do Ato;PECA_ESCRITA
+PROT;ALTERACAO;ALTERACAO;TEXTO_ATO_DEP;2;true;Texto do ato a publicar (Lei, RCM, etc.);;Texto do Ato;PECA_ESCRITA
+PROT;ALTERACAO;ALTERACAO;ALTERACOES_RELATORIO_PUB;3;true;Texto das alterações ao Relatório - quando tenha sido alterado;;Alterações ao Relatório;PECA_ESCRITA
+PROT;ALTERACAO;ALTERACAO;ALTERACOES_RELATORIO_DEP;4;true;Texto das alterações ao Relatório - quando tenha sido alterado;;Alterações ao Relatório;PECA_ESCRITA
+PROT;ALTERACAO;ALTERACAO;RELATORIO_INTEGRAL_PUB;5;false;Republicação do Relatório alterado (opcional);;Relatório Integral;PECA_ESCRITA
+PROT;ALTERACAO;ALTERACAO;RELATORIO_INTEGRAL_DEP;6;false;Republicação do Relatório alterado (opcional);;Relatório Integral;PECA_ESCRITA
+PROT;ALTERACAO;ALTERACAO;PECAS_GRAFICAS_PUB;7;true;Peças gráficas ilustrativas - se alteradas;;Peças Gráficas;PECA_GRAFICA
+PROT;ALTERACAO;ALTERACAO;PECAS_GRAFICAS_DEP;8;true;Peças gráficas ilustrativas - se alteradas;;Peças Gráficas;PECA_GRAFICA
+PROT;ALTERACAO;ALTERACAO;RELATORIO_FUNDAMENTACAO_DEP;9;true;Relatório de fundamentação da alteração;;Relatório de Fundamentação;PECA_ESCRITA
+PROT;ALTERACAO;ALTERACAO;RELATORIO_AMBIENTAL_DEP;10;true;Relatório ambiental;;Relatório Ambiental;PECA_ESCRITA
+PROT;ALTERACAO;ALTERACAO;PARECER_CC_DEP;11;true;Parecer da Comissão Consultiva;;Parecer da Comissão Consultiva;PECA_ESCRITA
+PROT;ALTERACAO;ALTERACAO;PARECERES_ENTIDADES_DEP;12;true;Pareceres das entidades consultadas;;Pareceres;PECA_ESCRITA
+PROT;ALTERACAO_ADAPTACAO;ALTERACAO_ADAPTACAO;TEXTO_ATO_PUB;1;true;Declaração da entidade responsável pela elaboração do programa;Texto da declaração a publicar - Declaração da entidade responsável pela elaboração do plano;Texto do Ato;PECA_ESCRITA
+PROT;ALTERACAO_ADAPTACAO;ALTERACAO_ADAPTACAO;TEXTO_ATO_DEP;2;true;Declaração da entidade responsável pela elaboração do programa;Texto da declaração a publicar - Declaração da entidade responsável pela elaboração do plano;Texto do Ato;PECA_ESCRITA
+PROT;ALTERACAO_ADAPTACAO;ALTERACAO_ADAPTACAO;ALTERACOES_RELATORIO_PUB;3;true;Texto das disposições alteradas no Relatório - quando tenha sido alterado;;Alterações ao Relatório;PECA_ESCRITA
+PROT;ALTERACAO_ADAPTACAO;ALTERACAO_ADAPTACAO;ALTERACOES_RELATORIO_DEP;4;true;Texto das disposições alteradas no Relatório - quando tenha sido alterado;;Alterações ao Relatório;PECA_ESCRITA
+PROT;ALTERACAO_ADAPTACAO;ALTERACAO_ADAPTACAO;RELATORIO_INTEGRAL_PUB;5;false;Relatório (versão alterada integral);;Relatório Integral;PECA_ESCRITA
+PROT;ALTERACAO_ADAPTACAO;ALTERACAO_ADAPTACAO;RELATORIO_INTEGRAL_DEP;6;false;Relatório (versão alterada integral);;Relatório Integral;PECA_ESCRITA
+PROT;ALTERACAO_ADAPTACAO;ALTERACAO_ADAPTACAO;PECAS_GRAFICAS_PUB;7;true;Peças gráficas ilustrativas - se alteradas;;Peças Gráficas;PECA_GRAFICA
+PROT;ALTERACAO_ADAPTACAO;ALTERACAO_ADAPTACAO;PECAS_GRAFICAS_DEP;8;true;Peças gráficas ilustrativas - se alteradas;;Peças Gráficas;PECA_GRAFICA
+PROT;CORRECAO_MATERIAL;CORRECAO_MATERIAL;TEXTO_ATO_PUB;1;true;Declaração da entidade responsável pela elaboração do programa;Texto do ato a publicar - Declaração da entidade responsável pela elaboração do programa;Texto do Ato;PECA_ESCRITA
+PROT;CORRECAO_MATERIAL;CORRECAO_MATERIAL;TEXTO_ATO_DEP;2;true;Declaração da entidade responsável pela elaboração do programa;Texto do ato a publicar - Declaração da entidade responsável pela elaboração do programa;Texto do Ato;PECA_ESCRITA
+PROT;CORRECAO_MATERIAL;CORRECAO_MATERIAL;ALTERACOES_RELATORIO_PUB;3;true;Texto das disposições retificadas no Relatório - quando tenha sido corrigido;;Alterações ao Relatório;PECA_ESCRITA
+PROT;CORRECAO_MATERIAL;CORRECAO_MATERIAL;ALTERACOES_RELATORIO_DEP;4;true;Texto das disposições retificadas no Relatório - quando tenha sido corrigido;;Alterações ao Relatório;PECA_ESCRITA
+PROT;CORRECAO_MATERIAL;CORRECAO_MATERIAL;RELATORIO_INTEGRAL_PUB;5;false;Relatório (versão corrigida integral);;Relatório Integral;PECA_ESCRITA
+PROT;CORRECAO_MATERIAL;CORRECAO_MATERIAL;RELATORIO_INTEGRAL_DEP;6;false;Relatório (versão corrigida integral);;Relatório Integral;PECA_ESCRITA
+PROT;CORRECAO_MATERIAL;CORRECAO_MATERIAL;PECAS_GRAFICAS_PUB;7;true;Peças gráficas ilustrativas - se corrigidas;;Peças Gráficas;PECA_GRAFICA
+PROT;CORRECAO_MATERIAL;CORRECAO_MATERIAL;PECAS_GRAFICAS_DEP;8;true;Peças gráficas ilustrativas - se corrigidas;;Peças Gráficas;PECA_GRAFICA
+PROT;REVOGACAO;REVOGACAO;TEXTO_ATO_PUB;1;true;Texto do ato a publicar (Lei, RCM, etc.);;Texto do Ato;PECA_ESCRITA
+PROT;REVOGACAO;REVOGACAO;TEXTO_ATO_DEP;2;true;Texto do ato a publicar (Lei, RCM, etc.);;Texto do Ato;PECA_ESCRITA
+PROT;SUSPENSAO_GOVERNO;PUBLICACAO_SUSPENSAO_GOVERNO;RCM_PUB;1;true;Resolução do Conselho de Ministros;;Resolução do Conselho de Ministros;PECA_ESCRITA
+PROT;SUSPENSAO_GOVERNO;PUBLICACAO_SUSPENSAO_GOVERNO;RCM_DEP;2;true;Resolução do Conselho de Ministros;;Resolução do Conselho de Ministros;PECA_ESCRITA
+PROT;SUSPENSAO_GOVERNO;PUBLICACAO_SUSPENSAO_GOVERNO;TEXTO_MEDIDAS_PREVENTIVAS_PUB;3;true;Texto das Medidas Preventivas;;Texto das Medidas Preventivas;PECA_ESCRITA
+PROT;SUSPENSAO_GOVERNO;PUBLICACAO_SUSPENSAO_GOVERNO;TEXTO_MEDIDAS_PREVENTIVAS_DEP;4;true;Texto das Medidas Preventivas;;Texto das Medidas Preventivas;PECA_ESCRITA
+PROT;SUSPENSAO_GOVERNO;PUBLICACAO_SUSPENSAO_GOVERNO;PLANTA_DELIMITACAO_PUB;5;true;Planta de delimitação da área abrangida pela suspensão - quando aplicável;;Planta de Delimitação;PECA_GRAFICA
+PROT;SUSPENSAO_GOVERNO;PUBLICACAO_SUSPENSAO_GOVERNO;PLANTA_DELIMITACAO_DEP;6;true;Planta de delimitação da área abrangida pela suspensão - quando aplicável;;Planta de Delimitação;PECA_GRAFICA
+PROT;SUSPENSAO_GOVERNO;PRORROGACAO_SUSPENSAO_GOVERNO;RCM_PUB;1;true;Resolução do Conselho de Ministros;;Resolução do Conselho de Ministros;PECA_ESCRITA
+PROT;SUSPENSAO_GOVERNO;PRORROGACAO_SUSPENSAO_GOVERNO;RCM_DEP;2;true;Resolução do Conselho de Ministros;;Resolução do Conselho de Ministros;PECA_ESCRITA
+PROT;MEDIDAS_PREVENTIVAS_GOVERNO;PUBLICACAO_MP_GOVERNO;TEXTO_ATO_PUB;1;true;Texto do aviso a publicar no Diário da República;;Texto do Ato;PECA_ESCRITA
+PROT;MEDIDAS_PREVENTIVAS_GOVERNO;PUBLICACAO_MP_GOVERNO;TEXTO_ATO_DEP;2;true;Texto do aviso a publicar no Diário da República;;Texto do Ato;PECA_ESCRITA
+PROT;MEDIDAS_PREVENTIVAS_GOVERNO;PUBLICACAO_MP_GOVERNO;TEXTO_MEDIDAS_PREVENTIVAS_PUB;3;true;Texto das Medidas Preventivas;;Texto das Medidas Preventivas;PECA_ESCRITA
+PROT;MEDIDAS_PREVENTIVAS_GOVERNO;PUBLICACAO_MP_GOVERNO;TEXTO_MEDIDAS_PREVENTIVAS_DEP;4;true;Texto das Medidas Preventivas;;Texto das Medidas Preventivas;PECA_ESCRITA
+PROT;MEDIDAS_PREVENTIVAS_GOVERNO;PUBLICACAO_MP_GOVERNO;PLANTA_DELIMITACAO_PUB;5;true;Planta de delimitação da área abrangida pelas Medidas Preventivas - quando aplicável;;Planta de Delimitação;PECA_GRAFICA
+PROT;MEDIDAS_PREVENTIVAS_GOVERNO;PUBLICACAO_MP_GOVERNO;PLANTA_DELIMITACAO_DEP;6;true;Planta de delimitação da área abrangida pelas Medidas Preventivas - quando aplicável;;Planta de Delimitação;PECA_GRAFICA
+PROT;MEDIDAS_PREVENTIVAS_GOVERNO;PRORROGACAO_MP_GOVERNO;RCM_PUB;1;true;Resolução do Conselho de Ministros;;Resolução do Conselho de Ministros;PECA_ESCRITA
+PROT;MEDIDAS_PREVENTIVAS_GOVERNO;PRORROGACAO_MP_GOVERNO;RCM_DEP;2;true;Resolução do Conselho de Ministros;;Resolução do Conselho de Ministros;PECA_ESCRITA
+PEOT;ELABORACAO;DECISAO_INICIO;TEXTO_ATO_PUB;1;true;Texto do ato a publicar no Diário da República (RCM);;Texto do Ato;PECA_ESCRITA
+PEOT;ELABORACAO;DECISAO_INICIO;TEXTO_ATO_DEP;2;true;Texto do ato a publicar no Diário da República (RCM);;Texto do Ato;PECA_ESCRITA
+PEOT;ELABORACAO;ABERTURA_DISCUSSAO_PUBLICA;TEXTO_ATO_PUB;1;true;Texto do aviso a publicar no Diário da República;;Texto do Ato;PECA_ESCRITA
+PEOT;ELABORACAO;ABERTURA_DISCUSSAO_PUBLICA;TEXTO_ATO_DEP;2;true;Texto do aviso a publicar no Diário da República;;Texto do Ato;PECA_ESCRITA
+PEOT;ELABORACAO;ELABORACAO;TEXTO_ATO_PUB;1;true;Texto do ato a publicar (Lei, RCM, etc.);;Texto do Ato;PECA_ESCRITA
+PEOT;ELABORACAO;ELABORACAO;TEXTO_ATO_DEP;2;true;Texto do ato a publicar (Lei, RCM, etc.);;Texto do Ato;PECA_ESCRITA
+PEOT;ELABORACAO;ELABORACAO;RELATORIO_PUB;3;true;Relatório;;Relatório;PECA_ESCRITA
+PEOT;ELABORACAO;ELABORACAO;RELATORIO_DEP;4;true;Relatório;;Relatório;PECA_ESCRITA
+PEOT;ELABORACAO;ELABORACAO;PECAS_GRAFICAS_PUB;5;true;Peças gráficas ilustrativas;;Peças Gráficas;PECA_GRAFICA
+PEOT;ELABORACAO;ELABORACAO;PECAS_GRAFICAS_DEP;6;true;Peças gráficas ilustrativas;;Peças Gráficas;PECA_GRAFICA
+PEOT;ELABORACAO;ELABORACAO;RELATORIO_PONDERACAO_DEP;7;true;Relatório de ponderação dos resultados da discussão pública;;Relatório de Ponderação;PECA_ESCRITA
+PEOT;ELABORACAO;ELABORACAO;RELATORIO_AMBIENTAL_DEP;8;true;Relatório ambiental;;Relatório Ambiental;PECA_ESCRITA
+PEOT;ELABORACAO;ELABORACAO;RCM_APROVACAO_DEP;9;true;Resolução do Conselho de Ministros que aprova o programa;;Resolução do Conselho de Ministros;PECA_ESCRITA
+PEOT;ELABORACAO;ELABORACAO;DESPACHO_ELABORACAO_DEP;10;true;Despacho ministerial que determina a elaboração do programa;;Despacho Ministerial;PECA_ESCRITA
+PEOT;ELABORACAO;ELABORACAO;PARECER_CA_DEP;11;true;Parecer da Comissão de Acompanhamento;;Parecer da Comissão de Acompanhamento;PECA_ESCRITA
+PEOT;ELABORACAO;ELABORACAO;ESQUEMA_MODELO_TERRITORIAL_DEP;12;true;Esquema do modelo territorial;;Esquema do Modelo Territorial;PECA_GRAFICA
+PEOT;ELABORACAO;ELABORACAO;PLANTA_CONDICIONANTES_DEP;13;true;Planta de condicionantes;Planta de condicionantes (art.º 45.º do Decreto-Lei n.º 380/99);Planta de Condicionantes;PECA_GRAFICA
+PEOT;ELABORACAO;ELABORACAO;PLANTA_ENQUADRAMENTO_DEP;14;true;Planta de enquadramento da área de intervenção e da zona envolvente;Planta de enquadramento, abrangendo a área de intervenção, devidamente assinalada, e a zona envolvente, bem como as principais vias de comunicação;Planta de Enquadramento;PECA_GRAFICA
+PEOT;ELABORACAO;ELABORACAO;PROGRAMA_EXECUCAO_DEP;15;true;Programa de execução das principais intervenções;Programa de execução que contenha disposições indicadas sobre as principais intervenções, indicando as entidades responsáveis pela sua implementação e concretização, bem como a estimativa dos custos associados e o cronograma da sua execução;Programa de Execução;PECA_ESCRITA
+PEOT;ELABORACAO;ELABORACAO;ESTUDOS_CARACTERIZACAO_DEP;16;true;Estudos de caracterização física, económica e urbanística;Estudos de caracterização física, económica e urbanística que fundamentam a solução proposta;Estudos de Caracterização;PECA_ESCRITA
+PEOT;ELABORACAO;ELABORACAO;PLANTA_SITUACAO_EXISTENTE_DEP;17;true;Planta da situação existente;;Planta da Situação Existente;PECA_GRAFICA
+PEOT;ELABORACAO;ELABORACAO;ELEMENTOS_GRAFICOS_DETALHE_DEP;18;true;Elementos gráficos de maior detalhe de situações específicas;Elementos gráficos de maior detalhe que ilustrem situações específicas do respetivo plano;Elementos Gráficos de Detalhe;PECA_GRAFICA
+PEOT;ELABORACAO;ELABORACAO;PLANOS_PRAIA_DEP;19;true;Planos de praia (aplicável apenas aos POOC);;Planos de Praia;PECA_GRAFICA
+PEOT;REVISAO;DECISAO_INICIO;TEXTO_ATO_PUB;1;true;Texto do ato a publicar no Diário da República (RCM);;Texto do Ato;PECA_ESCRITA
+PEOT;REVISAO;DECISAO_INICIO;TEXTO_ATO_DEP;2;true;Texto do ato a publicar no Diário da República (RCM);;Texto do Ato;PECA_ESCRITA
+PEOT;REVISAO;ABERTURA_DISCUSSAO_PUBLICA;TEXTO_ATO_PUB;1;true;Texto do aviso a publicar no Diário da República;;Texto do Ato;PECA_ESCRITA
+PEOT;REVISAO;ABERTURA_DISCUSSAO_PUBLICA;TEXTO_ATO_DEP;2;true;Texto do aviso a publicar no Diário da República;;Texto do Ato;PECA_ESCRITA
+PEOT;REVISAO;REVISAO;TEXTO_ATO_PUB;1;true;Texto do ato a publicar (Lei, RCM, etc.);;Texto do Ato;PECA_ESCRITA
+PEOT;REVISAO;REVISAO;TEXTO_ATO_DEP;2;true;Texto do ato a publicar (Lei, RCM, etc.);;Texto do Ato;PECA_ESCRITA
+PEOT;REVISAO;REVISAO;RELATORIO_PUB;3;true;Relatório;;Relatório;PECA_ESCRITA
+PEOT;REVISAO;REVISAO;RELATORIO_DEP;4;true;Relatório;;Relatório;PECA_ESCRITA
+PEOT;REVISAO;REVISAO;PECAS_GRAFICAS_PUB;5;true;Peças gráficas ilustrativas;;Peças Gráficas;PECA_GRAFICA
+PEOT;REVISAO;REVISAO;PECAS_GRAFICAS_DEP;6;true;Peças gráficas ilustrativas;;Peças Gráficas;PECA_GRAFICA
+PEOT;REVISAO;REVISAO;RELATORIO_PONDERACAO_DEP;7;true;Relatório de ponderação dos resultados da discussão pública;;Relatório de Ponderação;PECA_ESCRITA
+PEOT;REVISAO;REVISAO;RELATORIO_AMBIENTAL_DEP;8;true;Relatório ambiental;;Relatório Ambiental;PECA_ESCRITA
+PEOT;REVISAO;REVISAO;RCM_APROVACAO_DEP;9;true;Resolução do Conselho de Ministros que aprova o programa;;Resolução do Conselho de Ministros;PECA_ESCRITA
+PEOT;REVISAO;REVISAO;DESPACHO_ELABORACAO_DEP;10;true;Despacho ministerial que determina a elaboração do programa;;Despacho Ministerial;PECA_ESCRITA
+PEOT;REVISAO;REVISAO;PARECER_CA_DEP;11;true;Parecer da Comissão de Acompanhamento;;Parecer da Comissão de Acompanhamento;PECA_ESCRITA
+PEOT;REVISAO;REVISAO;ESQUEMA_MODELO_TERRITORIAL_DEP;12;true;Esquema do modelo territorial;;Esquema do Modelo Territorial;PECA_GRAFICA
+PEOT;REVISAO;REVISAO;PLANTA_CONDICIONANTES_DEP;13;true;Planta de condicionantes;Planta de condicionantes (art.º 45.º do Decreto-Lei n.º 380/99);Planta de Condicionantes;PECA_GRAFICA
+PEOT;REVISAO;REVISAO;PLANTA_ENQUADRAMENTO_DEP;14;true;Planta de enquadramento da área de intervenção e da zona envolvente;Planta de enquadramento, abrangendo a área de intervenção, devidamente assinalada, e a zona envolvente, bem como as principais vias de comunicação;Planta de Enquadramento;PECA_GRAFICA
+PEOT;REVISAO;REVISAO;PROGRAMA_EXECUCAO_DEP;15;true;Programa de execução das principais intervenções;Programa de execução que contenha disposições indicadas sobre as principais intervenções, indicando as entidades responsáveis pela sua implementação e concretização, bem como a estimativa dos custos associados e o cronograma da sua execução;Programa de Execução;PECA_ESCRITA
+PEOT;REVISAO;REVISAO;ESTUDOS_CARACTERIZACAO_DEP;16;true;Estudos de caracterização física, económica e urbanística;Estudos de caracterização física, económica e urbanística que fundamentam a solução proposta;Estudos de Caracterização;PECA_ESCRITA
+PEOT;REVISAO;REVISAO;PLANTA_SITUACAO_EXISTENTE_DEP;17;true;Planta da situação existente;;Planta da Situação Existente;PECA_GRAFICA
+PEOT;REVISAO;REVISAO;ELEMENTOS_GRAFICOS_DETALHE_DEP;18;true;Elementos gráficos de maior detalhe de situações específicas;Elementos gráficos de maior detalhe que ilustrem situações específicas do respetivo plano;Elementos Gráficos de Detalhe;PECA_GRAFICA
+PEOT;REVISAO;REVISAO;PLANOS_PRAIA_DEP;19;true;Planos de praia (aplicável apenas aos POOC);;Planos de Praia;PECA_GRAFICA
+PEOT;ALTERACAO;DECISAO_INICIO;TEXTO_ATO_PUB;1;true;Texto do ato a publicar no Diário da República (RCM);;Texto do Ato;PECA_ESCRITA
+PEOT;ALTERACAO;DECISAO_INICIO;TEXTO_ATO_DEP;2;true;Texto do ato a publicar no Diário da República (RCM);;Texto do Ato;PECA_ESCRITA
+PEOT;ALTERACAO;ABERTURA_DISCUSSAO_PUBLICA;TEXTO_ATO_PUB;1;true;Texto do aviso a publicar no Diário da República;;Texto do Ato;PECA_ESCRITA
+PEOT;ALTERACAO;ABERTURA_DISCUSSAO_PUBLICA;TEXTO_ATO_DEP;2;true;Texto do aviso a publicar no Diário da República;;Texto do Ato;PECA_ESCRITA
+PEOT;ALTERACAO;ALTERACAO;TEXTO_ATO_PUB;1;true;Texto do ato a publicar (Lei, RCM, etc.);;Texto do Ato;PECA_ESCRITA
+PEOT;ALTERACAO;ALTERACAO;TEXTO_ATO_DEP;2;true;Texto do ato a publicar (Lei, RCM, etc.);;Texto do Ato;PECA_ESCRITA
+PEOT;ALTERACAO;ALTERACAO;ALTERACOES_RELATORIO_PUB;3;true;Texto das alterações ao Relatório - quando tenha sido alterado;;Alterações ao Relatório;PECA_ESCRITA
+PEOT;ALTERACAO;ALTERACAO;ALTERACOES_RELATORIO_DEP;4;true;Texto das alterações ao Relatório - quando tenha sido alterado;;Alterações ao Relatório;PECA_ESCRITA
+PEOT;ALTERACAO;ALTERACAO;RELATORIO_INTEGRAL_PUB;5;false;Republicação do Relatório alterado (opcional);;Relatório Integral;PECA_ESCRITA
+PEOT;ALTERACAO;ALTERACAO;RELATORIO_INTEGRAL_DEP;6;false;Republicação do Relatório alterado (opcional);;Relatório Integral;PECA_ESCRITA
+PEOT;ALTERACAO;ALTERACAO;PECAS_GRAFICAS_PUB;7;true;Peças gráficas ilustrativas - se alteradas;;Peças Gráficas;PECA_GRAFICA
+PEOT;ALTERACAO;ALTERACAO;PECAS_GRAFICAS_DEP;8;true;Peças gráficas ilustrativas - se alteradas;;Peças Gráficas;PECA_GRAFICA
+PEOT;ALTERACAO;ALTERACAO;RELATORIO_FUNDAMENTACAO_DEP;9;true;Relatório de fundamentação da alteração;;Relatório de Fundamentação;PECA_ESCRITA
+PEOT;ALTERACAO;ALTERACAO;RELATORIO_AMBIENTAL_DEP;10;true;Relatório ambiental;;Relatório Ambiental;PECA_ESCRITA
+PEOT;ALTERACAO;ALTERACAO;PARECER_CC_DEP;11;true;Parecer da Comissão Consultiva;;Parecer da Comissão Consultiva;PECA_ESCRITA
+PEOT;ALTERACAO;ALTERACAO;PARECERES_ENTIDADES_DEP;12;true;Pareceres das entidades consultadas;;Pareceres;PECA_ESCRITA
+PEOT;ALTERACAO_ADAPTACAO;ALTERACAO_ADAPTACAO;TEXTO_ATO_PUB;1;true;Declaração da entidade responsável pela elaboração do programa;Texto da declaração a publicar - Declaração da entidade responsável pela elaboração do plano;Texto do Ato;PECA_ESCRITA
+PEOT;ALTERACAO_ADAPTACAO;ALTERACAO_ADAPTACAO;TEXTO_ATO_DEP;2;true;Declaração da entidade responsável pela elaboração do programa;Texto da declaração a publicar - Declaração da entidade responsável pela elaboração do plano;Texto do Ato;PECA_ESCRITA
+PEOT;ALTERACAO_ADAPTACAO;ALTERACAO_ADAPTACAO;ALTERACOES_RELATORIO_PUB;3;true;Texto das disposições alteradas no Relatório - quando tenha sido alterado;;Alterações ao Relatório;PECA_ESCRITA
+PEOT;ALTERACAO_ADAPTACAO;ALTERACAO_ADAPTACAO;ALTERACOES_RELATORIO_DEP;4;true;Texto das disposições alteradas no Relatório - quando tenha sido alterado;;Alterações ao Relatório;PECA_ESCRITA
+PEOT;ALTERACAO_ADAPTACAO;ALTERACAO_ADAPTACAO;RELATORIO_INTEGRAL_PUB;5;false;Relatório (versão alterada integral);;Relatório Integral;PECA_ESCRITA
+PEOT;ALTERACAO_ADAPTACAO;ALTERACAO_ADAPTACAO;RELATORIO_INTEGRAL_DEP;6;false;Relatório (versão alterada integral);;Relatório Integral;PECA_ESCRITA
+PEOT;ALTERACAO_ADAPTACAO;ALTERACAO_ADAPTACAO;PECAS_GRAFICAS_PUB;7;true;Peças gráficas ilustrativas - se alteradas;;Peças Gráficas;PECA_GRAFICA
+PEOT;ALTERACAO_ADAPTACAO;ALTERACAO_ADAPTACAO;PECAS_GRAFICAS_DEP;8;true;Peças gráficas ilustrativas - se alteradas;;Peças Gráficas;PECA_GRAFICA
+PEOT;CORRECAO_MATERIAL;CORRECAO_MATERIAL;TEXTO_ATO_PUB;1;true;Declaração da entidade responsável pela elaboração do programa;Texto do ato a publicar - Declaração da entidade responsável pela elaboração do programa;Texto do Ato;PECA_ESCRITA
+PEOT;CORRECAO_MATERIAL;CORRECAO_MATERIAL;TEXTO_ATO_DEP;2;true;Declaração da entidade responsável pela elaboração do programa;Texto do ato a publicar - Declaração da entidade responsável pela elaboração do programa;Texto do Ato;PECA_ESCRITA
+PEOT;CORRECAO_MATERIAL;CORRECAO_MATERIAL;ALTERACOES_RELATORIO_PUB;3;true;Texto das disposições retificadas no Relatório - quando tenha sido corrigido;;Alterações ao Relatório;PECA_ESCRITA
+PEOT;CORRECAO_MATERIAL;CORRECAO_MATERIAL;ALTERACOES_RELATORIO_DEP;4;true;Texto das disposições retificadas no Relatório - quando tenha sido corrigido;;Alterações ao Relatório;PECA_ESCRITA
+PEOT;CORRECAO_MATERIAL;CORRECAO_MATERIAL;RELATORIO_INTEGRAL_PUB;5;false;Relatório (versão corrigida integral);;Relatório Integral;PECA_ESCRITA
+PEOT;CORRECAO_MATERIAL;CORRECAO_MATERIAL;RELATORIO_INTEGRAL_DEP;6;false;Relatório (versão corrigida integral);;Relatório Integral;PECA_ESCRITA
+PEOT;CORRECAO_MATERIAL;CORRECAO_MATERIAL;PECAS_GRAFICAS_PUB;7;true;Peças gráficas ilustrativas - se corrigidas;;Peças Gráficas;PECA_GRAFICA
+PEOT;CORRECAO_MATERIAL;CORRECAO_MATERIAL;PECAS_GRAFICAS_DEP;8;true;Peças gráficas ilustrativas - se corrigidas;;Peças Gráficas;PECA_GRAFICA
+PEOT;REVOGACAO;REVOGACAO;TEXTO_ATO_PUB;1;true;Texto do ato a publicar (Lei, RCM, etc.);;Texto do Ato;PECA_ESCRITA
+PEOT;REVOGACAO;REVOGACAO;TEXTO_ATO_DEP;2;true;Texto do ato a publicar (Lei, RCM, etc.);;Texto do Ato;PECA_ESCRITA
+PEOT;SUSPENSAO_GOVERNO;PUBLICACAO_SUSPENSAO_GOVERNO;RCM_PUB;1;true;Resolução do Conselho de Ministros;;Resolução do Conselho de Ministros;PECA_ESCRITA
+PEOT;SUSPENSAO_GOVERNO;PUBLICACAO_SUSPENSAO_GOVERNO;RCM_DEP;2;true;Resolução do Conselho de Ministros;;Resolução do Conselho de Ministros;PECA_ESCRITA
+PEOT;SUSPENSAO_GOVERNO;PUBLICACAO_SUSPENSAO_GOVERNO;TEXTO_MEDIDAS_PREVENTIVAS_PUB;3;true;Texto das Medidas Preventivas;;Texto das Medidas Preventivas;PECA_ESCRITA
+PEOT;SUSPENSAO_GOVERNO;PUBLICACAO_SUSPENSAO_GOVERNO;TEXTO_MEDIDAS_PREVENTIVAS_DEP;4;true;Texto das Medidas Preventivas;;Texto das Medidas Preventivas;PECA_ESCRITA
+PEOT;SUSPENSAO_GOVERNO;PUBLICACAO_SUSPENSAO_GOVERNO;PLANTA_DELIMITACAO_PUB;5;true;Planta de delimitação da área abrangida pela suspensão - quando aplicável;;Planta de Delimitação;PECA_GRAFICA
+PEOT;SUSPENSAO_GOVERNO;PUBLICACAO_SUSPENSAO_GOVERNO;PLANTA_DELIMITACAO_DEP;6;true;Planta de delimitação da área abrangida pela suspensão - quando aplicável;;Planta de Delimitação;PECA_GRAFICA
+PEOT;SUSPENSAO_GOVERNO;PRORROGACAO_SUSPENSAO_GOVERNO;RCM_PUB;1;true;Resolução do Conselho de Ministros;;Resolução do Conselho de Ministros;PECA_ESCRITA
+PEOT;SUSPENSAO_GOVERNO;PRORROGACAO_SUSPENSAO_GOVERNO;RCM_DEP;2;true;Resolução do Conselho de Ministros;;Resolução do Conselho de Ministros;PECA_ESCRITA
+PEOT;MEDIDAS_PREVENTIVAS_GOVERNO;PUBLICACAO_MP_GOVERNO;TEXTO_ATO_PUB;1;true;Texto do aviso a publicar no Diário da República;;Texto do Ato;PECA_ESCRITA
+PEOT;MEDIDAS_PREVENTIVAS_GOVERNO;PUBLICACAO_MP_GOVERNO;TEXTO_ATO_DEP;2;true;Texto do aviso a publicar no Diário da República;;Texto do Ato;PECA_ESCRITA
+PEOT;MEDIDAS_PREVENTIVAS_GOVERNO;PUBLICACAO_MP_GOVERNO;TEXTO_MEDIDAS_PREVENTIVAS_PUB;3;true;Texto das Medidas Preventivas;;Texto das Medidas Preventivas;PECA_ESCRITA
+PEOT;MEDIDAS_PREVENTIVAS_GOVERNO;PUBLICACAO_MP_GOVERNO;TEXTO_MEDIDAS_PREVENTIVAS_DEP;4;true;Texto das Medidas Preventivas;;Texto das Medidas Preventivas;PECA_ESCRITA
+PEOT;MEDIDAS_PREVENTIVAS_GOVERNO;PUBLICACAO_MP_GOVERNO;PLANTA_DELIMITACAO_PUB;5;true;Planta de delimitação da área abrangida pelas Medidas Preventivas - quando aplicável;;Planta de Delimitação;PECA_GRAFICA
+PEOT;MEDIDAS_PREVENTIVAS_GOVERNO;PUBLICACAO_MP_GOVERNO;PLANTA_DELIMITACAO_DEP;6;true;Planta de delimitação da área abrangida pelas Medidas Preventivas - quando aplicável;;Planta de Delimitação;PECA_GRAFICA
+PEOT;MEDIDAS_PREVENTIVAS_GOVERNO;PRORROGACAO_MP_GOVERNO;RCM_PUB;1;true;Resolução do Conselho de Ministros;;Resolução do Conselho de Ministros;PECA_ESCRITA
+PEOT;MEDIDAS_PREVENTIVAS_GOVERNO;PRORROGACAO_MP_GOVERNO;RCM_DEP;2;true;Resolução do Conselho de Ministros;;Resolução do Conselho de Ministros;PECA_ESCRITA
+PIMOT;ELABORACAO;DECISAO_INICIO;TEXTO_ATO_PUB;1;true;Texto do ato a publicar no Diário da República (RCM);;Texto do Ato;PECA_ESCRITA
+PIMOT;ELABORACAO;DECISAO_INICIO;TEXTO_ATO_DEP;2;true;Texto do ato a publicar no Diário da República (RCM);;Texto do Ato;PECA_ESCRITA
+PIMOT;ELABORACAO;DECISAO_INICIO;DELIBERACAO_PUB;3;true;Deliberação da(s) entidade(s) responsável(eis) pela elaboração do Programa intermunicipal;;Deliberação;PECA_ESCRITA
+PIMOT;ELABORACAO;DECISAO_INICIO;DELIBERACAO_DEP;4;true;Deliberação da(s) entidade(s) responsável(eis) pela elaboração do Programa intermunicipal;;Deliberação;PECA_ESCRITA
+PIMOT;ELABORACAO;CONSTITUICAO_CC;TEXTO_ATO_PUB;1;true;Texto do Aviso de constituição da CC;;Texto do Ato;PECA_ESCRITA
+PIMOT;ELABORACAO;CONSTITUICAO_CC;TEXTO_ATO_DEP;2;true;Texto do Aviso de constituição da CC;;Texto do Ato;PECA_ESCRITA
+PIMOT;ELABORACAO;CONSTITUICAO_CC;DESPACHO_CCDR_PUB;3;true;Despacho do Presidente da CCDR para constituição da CC;;Despacho da CCDR;PECA_ESCRITA
+PIMOT;ELABORACAO;CONSTITUICAO_CC;DESPACHO_CCDR_DEP;4;true;Despacho do Presidente da CCDR para constituição da CC;;Despacho da CCDR;PECA_ESCRITA
+PIMOT;ELABORACAO;ABERTURA_DISCUSSAO_PUBLICA;TEXTO_ATO_PUB;1;true;Texto do aviso a publicar no Diário da República;;Texto do Ato;PECA_ESCRITA
+PIMOT;ELABORACAO;ABERTURA_DISCUSSAO_PUBLICA;TEXTO_ATO_DEP;2;true;Texto do aviso a publicar no Diário da República;;Texto do Ato;PECA_ESCRITA
+PIMOT;ELABORACAO;ELABORACAO;TEXTO_ATO_PUB;1;true;Texto do aviso a publicar no Diário da República;;Texto do Ato;PECA_ESCRITA
+PIMOT;ELABORACAO;ELABORACAO;TEXTO_ATO_DEP;2;true;Texto do aviso a publicar no Diário da República;;Texto do Ato;PECA_ESCRITA
+PIMOT;ELABORACAO;ELABORACAO;DELIBERACAO_PUB;3;true;Deliberação da(s) entidade(s) responsável(eis) pela aprovação do Programa intermunicipal;;Deliberação;PECA_ESCRITA
+PIMOT;ELABORACAO;ELABORACAO;DELIBERACAO_DEP;4;true;Deliberação da(s) entidade(s) responsável(eis) pela aprovação do Programa intermunicipal;;Deliberação;PECA_ESCRITA
+PIMOT;ELABORACAO;ELABORACAO;RELATORIO_PUB;5;true;Relatório do Programa;;Relatório;PECA_ESCRITA
+PIMOT;ELABORACAO;ELABORACAO;RELATORIO_DEP;6;true;Relatório do Programa;;Relatório;PECA_ESCRITA
+PIMOT;ELABORACAO;ELABORACAO;PECAS_GRAFICAS_PUB;7;true;Peças gráficas;;Peças Gráficas;PECA_GRAFICA
+PIMOT;ELABORACAO;ELABORACAO;PECAS_GRAFICAS_DEP;8;true;Peças gráficas;;Peças Gráficas;PECA_GRAFICA
+PIMOT;ELABORACAO;ELABORACAO;PLANTA_ENQUADRAMENTO_DEP;9;false;Planta de enquadramento da área de intervenção e da área envolvente;Planta de enquadramento abrangendo a área de intervenção e a área envolvente de todos os municípios integrados no programa;Planta de Enquadramento;PECA_GRAFICA
+PIMOT;ELABORACAO;ELABORACAO;VALORES_CULTURAIS_NATURAIS_DEP;10;false;Identificação dos valores culturais e naturais a proteger;;Valores Culturais e Naturais;PECA_ESCRITA
+PIMOT;ELABORACAO;ELABORACAO;ESPACOS_AGRICOLAS_FLORESTAIS_DEP;11;false;Identificação dos espaços agrícolas e florestais com relevância intermunicipal;Identificação dos espaços agrícolas e florestais com relevância para a estratégia intermunicipal de desenvolvimento rural;Espaços Agrícolas e Florestais;PECA_ESCRITA
+PIMOT;ELABORACAO;ELABORACAO;REDES_ACESSIBILIDADES_DEP;12;false;Redes de acessibilidades e equipamentos públicos de interesse supramunicipal;Representação das redes de acessibilidades e dos equipamentos públicos de interesse supramunicipal;Redes de Acessibilidades e Equipamentos;PECA_ESCRITA
+PIMOT;ELABORACAO;ELABORACAO;ANALISE_PREVISIONAL_DEP;13;false;Análise previsional da dinâmica demográfica, económica, social e ambiental;Análise previsional da dinâmica demográfica, económica, social e ambiental da área abrangida;Análise Previsional;PECA_ESCRITA
+PIMOT;ELABORACAO;ELABORACAO;PROGRAMA_EXECUCAO_DEP;14;false;Programa de execução;Programa de execução, contendo disposições indicativas sobre a realização das obras públicas determinadas a efetuar, bem como de outros objetivos e ações de interesse intermunicipal, indicando as entidades responsáveis pela respetiva concretização;Programa de Execução;PECA_ESCRITA
+PIMOT;ELABORACAO;ELABORACAO;PLANO_FINANCIAMENTO_DEP;15;false;Plano de financiamento;;Plano de Financiamento;PECA_ESCRITA
+PIMOT;ELABORACAO;ELABORACAO;RELATORIO_AMBIENTAL_DEP;16;false;Relatório ambiental;;Relatório Ambiental;PECA_ESCRITA
+PIMOT;ELABORACAO;ELABORACAO;RELATORIO_PONDERACAO_DEP;17;false;Relatório de ponderação dos resultados da discussão pública;;Relatório de Ponderação;PECA_ESCRITA
+PIMOT;ELABORACAO;ELABORACAO;PARECER_CC_DEP;18;false;Parecer da Comissão Consultiva;;Parecer da Comissão Consultiva;PECA_ESCRITA
+PIMOT;ELABORACAO;ELABORACAO;PARECER_CCDR_DEP;19;false;Parecer final da(s) CCDR;;Parecer da CCDR;PECA_ESCRITA
+PIMOT;ELABORACAO;ELABORACAO;DELIBERACAO_ELABORACAO_DEP;20;false;Deliberação da(s) entidade(s) responsável(eis) pela elaboração do Programa intermunicipal;;Deliberação;PECA_ESCRITA
+PIMOT;REVISAO;DECISAO_INICIO;TEXTO_ATO_PUB;1;true;Texto do ato a publicar no Diário da República (RCM);;Texto do Ato;PECA_ESCRITA
+PIMOT;REVISAO;DECISAO_INICIO;TEXTO_ATO_DEP;2;true;Texto do ato a publicar no Diário da República (RCM);;Texto do Ato;PECA_ESCRITA
+PIMOT;REVISAO;DECISAO_INICIO;DELIBERACAO_PUB;3;true;Deliberação da(s) entidade(s) responsável(eis) pela elaboração do Programa intermunicipal;;Deliberação;PECA_ESCRITA
+PIMOT;REVISAO;DECISAO_INICIO;DELIBERACAO_DEP;4;true;Deliberação da(s) entidade(s) responsável(eis) pela elaboração do Programa intermunicipal;;Deliberação;PECA_ESCRITA
+PIMOT;REVISAO;ABERTURA_DISCUSSAO_PUBLICA;TEXTO_ATO_PUB;1;true;Texto do aviso a publicar no Diário da República;;Texto do Ato;PECA_ESCRITA
+PIMOT;REVISAO;ABERTURA_DISCUSSAO_PUBLICA;TEXTO_ATO_DEP;2;true;Texto do aviso a publicar no Diário da República;;Texto do Ato;PECA_ESCRITA
+PIMOT;REVISAO;REVISAO;TEXTO_ATO_PUB;1;true;Texto do aviso a publicar no Diário da República;;Texto do Ato;PECA_ESCRITA
+PIMOT;REVISAO;REVISAO;TEXTO_ATO_DEP;2;true;Texto do aviso a publicar no Diário da República;;Texto do Ato;PECA_ESCRITA
+PIMOT;REVISAO;REVISAO;DELIBERACAO_PUB;3;true;Deliberação da(s) entidade(s) responsável(eis) pela aprovação do Programa intermunicipal;;Deliberação;PECA_ESCRITA
+PIMOT;REVISAO;REVISAO;DELIBERACAO_DEP;4;true;Deliberação da(s) entidade(s) responsável(eis) pela aprovação do Programa intermunicipal;;Deliberação;PECA_ESCRITA
+PIMOT;REVISAO;REVISAO;RELATORIO_PUB;5;true;Relatório do Programa;;Relatório;PECA_ESCRITA
+PIMOT;REVISAO;REVISAO;RELATORIO_DEP;6;true;Relatório do Programa;;Relatório;PECA_ESCRITA
+PIMOT;REVISAO;REVISAO;PECAS_GRAFICAS_PUB;7;true;Peças gráficas;;Peças Gráficas;PECA_GRAFICA
+PIMOT;REVISAO;REVISAO;PECAS_GRAFICAS_DEP;8;true;Peças gráficas;;Peças Gráficas;PECA_GRAFICA
+PIMOT;REVISAO;REVISAO;PLANTA_ENQUADRAMENTO_DEP;9;false;Planta de enquadramento da área de intervenção e da área envolvente;Planta de enquadramento abrangendo a área de intervenção e a área envolvente de todos os municípios integrados no programa;Planta de Enquadramento;PECA_GRAFICA
+PIMOT;REVISAO;REVISAO;VALORES_CULTURAIS_NATURAIS_DEP;10;false;Identificação dos valores culturais e naturais a proteger;;Valores Culturais e Naturais;PECA_ESCRITA
+PIMOT;REVISAO;REVISAO;ESPACOS_AGRICOLAS_FLORESTAIS_DEP;11;false;Identificação dos espaços agrícolas e florestais com relevância intermunicipal;Identificação dos espaços agrícolas e florestais com relevância para a estratégia intermunicipal de desenvolvimento rural;Espaços Agrícolas e Florestais;PECA_ESCRITA
+PIMOT;REVISAO;REVISAO;REDES_ACESSIBILIDADES_DEP;12;false;Redes de acessibilidades e equipamentos públicos de interesse supramunicipal;Representação das redes de acessibilidades e dos equipamentos públicos de interesse supramunicipal;Redes de Acessibilidades e Equipamentos;PECA_ESCRITA
+PIMOT;REVISAO;REVISAO;ANALISE_PREVISIONAL_DEP;13;false;Análise previsional da dinâmica demográfica, económica, social e ambiental;Análise previsional da dinâmica demográfica, económica, social e ambiental da área abrangida;Análise Previsional;PECA_ESCRITA
+PIMOT;REVISAO;REVISAO;PROGRAMA_EXECUCAO_DEP;14;false;Programa de execução;Programa de execução, contendo disposições indicativas sobre a realização das obras públicas determinadas a efetuar, bem como de outros objetivos e ações de interesse intermunicipal, indicando as entidades responsáveis pela respetiva concretização;Programa de Execução;PECA_ESCRITA
+PIMOT;REVISAO;REVISAO;PLANO_FINANCIAMENTO_DEP;15;false;Plano de financiamento;;Plano de Financiamento;PECA_ESCRITA
+PIMOT;REVISAO;REVISAO;RELATORIO_AMBIENTAL_DEP;16;false;Relatório ambiental;;Relatório Ambiental;PECA_ESCRITA
+PIMOT;REVISAO;REVISAO;RELATORIO_PONDERACAO_DEP;17;false;Relatório de ponderação dos resultados da discussão pública;;Relatório de Ponderação;PECA_ESCRITA
+PIMOT;REVISAO;REVISAO;PARECER_CC_DEP;18;false;Parecer da Comissão Consultiva;;Parecer da Comissão Consultiva;PECA_ESCRITA
+PIMOT;REVISAO;REVISAO;PARECER_CCDR_DEP;19;false;Parecer final da(s) CCDR;;Parecer da CCDR;PECA_ESCRITA
+PIMOT;REVISAO;REVISAO;DELIBERACAO_ELABORACAO_DEP;20;false;Deliberação da(s) entidade(s) responsável(eis) pela elaboração do Programa intermunicipal;;Deliberação;PECA_ESCRITA
+PIMOT;ALTERACAO;DECISAO_INICIO;TEXTO_ATO_PUB;1;true;Texto do ato a publicar no Diário da República (RCM);;Texto do Ato;PECA_ESCRITA
+PIMOT;ALTERACAO;DECISAO_INICIO;TEXTO_ATO_DEP;2;true;Texto do ato a publicar no Diário da República (RCM);;Texto do Ato;PECA_ESCRITA
+PIMOT;ALTERACAO;DECISAO_INICIO;DELIBERACAO_PUB;3;true;Deliberação da(s) entidade(s) responsável(eis) pela alteração do Programa intermunicipal;;Deliberação;PECA_ESCRITA
+PIMOT;ALTERACAO;DECISAO_INICIO;DELIBERACAO_DEP;4;true;Deliberação da(s) entidade(s) responsável(eis) pela alteração do Programa intermunicipal;;Deliberação;PECA_ESCRITA
+PIMOT;ALTERACAO;ABERTURA_DISCUSSAO_PUBLICA;TEXTO_ATO_PUB;1;true;Texto do aviso a publicar no Diário da República;;Texto do Ato;PECA_ESCRITA
+PIMOT;ALTERACAO;ABERTURA_DISCUSSAO_PUBLICA;TEXTO_ATO_DEP;2;true;Texto do aviso a publicar no Diário da República;;Texto do Ato;PECA_ESCRITA
+PIMOT;ALTERACAO;ALTERACAO;TEXTO_ATO_PUB;1;true;Texto do aviso a publicar no Diário da República;;Texto do Ato;PECA_ESCRITA
+PIMOT;ALTERACAO;ALTERACAO;TEXTO_ATO_DEP;2;true;Texto do aviso a publicar no Diário da República;;Texto do Ato;PECA_ESCRITA
+PIMOT;ALTERACAO;ALTERACAO;DELIBERACAO_PUB;3;true;Deliberação de aprovação da alteração do Programa intermunicipal;Deliberação da entidade(s) responsável(eis) pela aprovação da alteração do Programa intermunicipal;Deliberação;PECA_ESCRITA
+PIMOT;ALTERACAO;ALTERACAO;DELIBERACAO_DEP;4;true;Deliberação de aprovação da alteração do Programa intermunicipal;Deliberação da entidade(s) responsável(eis) pela aprovação da alteração do Programa intermunicipal;Deliberação;PECA_ESCRITA
+PIMOT;ALTERACAO;ALTERACAO;ALTERACOES_RELATORIO_PUB;5;true;Texto das alterações ao Relatório - quando tenha sido alterado;;Alterações ao Relatório;PECA_ESCRITA
+PIMOT;ALTERACAO;ALTERACAO;ALTERACOES_RELATORIO_DEP;6;true;Texto das alterações ao Relatório - quando tenha sido alterado;;Alterações ao Relatório;PECA_ESCRITA
+PIMOT;ALTERACAO;ALTERACAO;RELATORIO_INTEGRAL_PUB;7;false;Relatório na versão integral - quando tenha sido alterado;;Relatório Integral;PECA_ESCRITA
+PIMOT;ALTERACAO;ALTERACAO;RELATORIO_INTEGRAL_DEP;8;false;Relatório na versão integral - quando tenha sido alterado;;Relatório Integral;PECA_ESCRITA
+PIMOT;ALTERACAO;ALTERACAO;PECAS_GRAFICAS_PUB;9;true;Peças gráficas - quando tenham sido alteradas;;Peças Gráficas;PECA_GRAFICA
+PIMOT;ALTERACAO;ALTERACAO;PECAS_GRAFICAS_DEP;10;true;Peças gráficas - quando tenham sido alteradas;;Peças Gráficas;PECA_GRAFICA
+PIMOT;ALTERACAO_ADAPTACAO;ALTERACAO_ADAPTACAO;TEXTO_ATO_PUB;1;true;Texto do aviso a publicar no Diário da República;;Texto do Ato;PECA_ESCRITA
+PIMOT;ALTERACAO_ADAPTACAO;ALTERACAO_ADAPTACAO;TEXTO_ATO_DEP;2;true;Texto do aviso a publicar no Diário da República;;Texto do Ato;PECA_ESCRITA
+PIMOT;ALTERACAO_ADAPTACAO;ALTERACAO_ADAPTACAO;DELIBERACAO_PUB;3;true;Deliberação de aprovação da alteração do Programa intermunicipal;Deliberação da entidade(s) responsável(eis) pela aprovação da alteração do Programa intermunicipal;Deliberação;PECA_ESCRITA
+PIMOT;ALTERACAO_ADAPTACAO;ALTERACAO_ADAPTACAO;DELIBERACAO_DEP;4;true;Deliberação de aprovação da alteração do Programa intermunicipal;Deliberação da entidade(s) responsável(eis) pela aprovação da alteração do Programa intermunicipal;Deliberação;PECA_ESCRITA
+PIMOT;ALTERACAO_ADAPTACAO;ALTERACAO_ADAPTACAO;ALTERACOES_RELATORIO_PUB;5;true;Texto das alterações ao Relatório - quando tenha sido alterado;;Alterações ao Relatório;PECA_ESCRITA
+PIMOT;ALTERACAO_ADAPTACAO;ALTERACAO_ADAPTACAO;ALTERACOES_RELATORIO_DEP;6;true;Texto das alterações ao Relatório - quando tenha sido alterado;;Alterações ao Relatório;PECA_ESCRITA
+PIMOT;ALTERACAO_ADAPTACAO;ALTERACAO_ADAPTACAO;RELATORIO_INTEGRAL_PUB;7;false;Relatório na versão integral - quando tenha sido alterado;;Relatório Integral;PECA_ESCRITA
+PIMOT;ALTERACAO_ADAPTACAO;ALTERACAO_ADAPTACAO;RELATORIO_INTEGRAL_DEP;8;false;Relatório na versão integral - quando tenha sido alterado;;Relatório Integral;PECA_ESCRITA
+PIMOT;ALTERACAO_ADAPTACAO;ALTERACAO_ADAPTACAO;PECAS_GRAFICAS_PUB;9;true;Peças gráficas - quando tenham sido alteradas;;Peças Gráficas;PECA_GRAFICA
+PIMOT;ALTERACAO_ADAPTACAO;ALTERACAO_ADAPTACAO;PECAS_GRAFICAS_DEP;10;true;Peças gráficas - quando tenham sido alteradas;;Peças Gráficas;PECA_GRAFICA
+PIMOT;CORRECAO_MATERIAL;CORRECAO_MATERIAL;TEXTO_ATO_PUB;1;true;Texto do ato a publicar;;Texto do Ato;PECA_ESCRITA
+PIMOT;CORRECAO_MATERIAL;CORRECAO_MATERIAL;TEXTO_ATO_DEP;2;true;Texto do ato a publicar;;Texto do Ato;PECA_ESCRITA
+PIMOT;CORRECAO_MATERIAL;CORRECAO_MATERIAL;DELIBERACAO_PUB;3;true;Deliberação de aprovação da alteração do Programa intermunicipal;Deliberação da entidade(s) responsável(eis) pela aprovação da alteração do Programa intermunicipal;Deliberação;PECA_ESCRITA
+PIMOT;CORRECAO_MATERIAL;CORRECAO_MATERIAL;DELIBERACAO_DEP;4;true;Deliberação de aprovação da alteração do Programa intermunicipal;Deliberação da entidade(s) responsável(eis) pela aprovação da alteração do Programa intermunicipal;Deliberação;PECA_ESCRITA
+PIMOT;CORRECAO_MATERIAL;CORRECAO_MATERIAL;ALTERACOES_RELATORIO_PUB;5;true;Texto das alterações ao Relatório - quando tenha sido alterado;;Alterações ao Relatório;PECA_ESCRITA
+PIMOT;CORRECAO_MATERIAL;CORRECAO_MATERIAL;ALTERACOES_RELATORIO_DEP;6;true;Texto das alterações ao Relatório - quando tenha sido alterado;;Alterações ao Relatório;PECA_ESCRITA
+PIMOT;CORRECAO_MATERIAL;CORRECAO_MATERIAL;RELATORIO_INTEGRAL_PUB;7;false;Relatório na versão integral - quando tenha sido corrigido;;Relatório Integral;PECA_ESCRITA
+PIMOT;CORRECAO_MATERIAL;CORRECAO_MATERIAL;RELATORIO_INTEGRAL_DEP;8;false;Relatório na versão integral - quando tenha sido corrigido;;Relatório Integral;PECA_ESCRITA
+PIMOT;CORRECAO_MATERIAL;CORRECAO_MATERIAL;PECAS_GRAFICAS_PUB;9;true;Peças gráficas - quando tenham sido corrigidas;;Peças Gráficas;PECA_GRAFICA
+PIMOT;CORRECAO_MATERIAL;CORRECAO_MATERIAL;PECAS_GRAFICAS_DEP;10;true;Peças gráficas - quando tenham sido corrigidas;;Peças Gráficas;PECA_GRAFICA
+PIMOT;REVOGACAO;REVOGACAO;TEXTO_ATO_PUB;1;true;Texto do ato a publicar;;Texto do Ato;PECA_ESCRITA
+PIMOT;REVOGACAO;REVOGACAO;TEXTO_ATO_DEP;2;true;Texto do ato a publicar;;Texto do Ato;PECA_ESCRITA
+PIMOT;REVOGACAO;REVOGACAO;DELIBERACAO_PUB;3;true;Deliberação da(s) entidade(s) responsável(eis) pela aprovação do Programa intermunicipal;;Deliberação;PECA_ESCRITA
+PIMOT;REVOGACAO;REVOGACAO;DELIBERACAO_DEP;4;true;Deliberação da(s) entidade(s) responsável(eis) pela aprovação do Programa intermunicipal;;Deliberação;PECA_ESCRITA

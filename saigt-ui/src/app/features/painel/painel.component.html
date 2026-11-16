@@ -1,0 +1,84 @@
+<app-shell breadcrumb="Painel Principal">
+  <div class="painel">
+    <div class="saudacao">
+      <h1>{{ saudacao() }}</h1>
+      <p class="subtitulo">{{ subtitulo() }}</p>
+    </div>
+
+    @if (!souDgt()) {
+      <div class="faixa-criar">
+        <p class="faixa-criar-texto">Quer iniciar um novo processo?</p>
+        <a app-botao class="botao-criar" [routerLink]="rotas.PROCESSOS_CRIAR">
+          <svg icone viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.667" stroke-linecap="round" aria-hidden="true">
+            <path d="M8 2.667V13.333M13.333 8H2.667" />
+          </svg>
+          Criar Processo
+        </a>
+      </div>
+    }
+
+    <div class="indicadores" [class.indicadores-dgt]="souDgt()">
+      @for (indicador of cartoes(); track indicador.grupo) {
+        <app-cartao variante="indicador" espacamento="nenhum">
+          <div class="indicador-corpo">
+            <div class="indicador-topo">
+              <span [class]="'indicador-icone indicador-icone-' + indicador.tom">
+                <img [src]="indicador.icone" alt="" width="20" height="20" />
+              </span>
+              <img [src]="iconeSeta" alt="" width="16" height="16" />
+            </div>
+            <span class="cartao-valor">{{ indicador.valor }}</span>
+            <p class="indicador-rotulo">{{ indicador.rotulo }}</p>
+          </div>
+          <a
+            [class]="'indicador-acao indicador-acao-' + indicador.tomAcao"
+            [routerLink]="indicador.rota"
+            [queryParams]="indicador.queryParams"
+          >
+            {{ indicador.acao }}
+            <img [src]="chevron(indicador.tomAcao)" alt="" width="14" height="14" />
+          </a>
+        </app-cartao>
+      }
+    </div>
+
+    <app-cartao variante="elevado" espacamento="nenhum" class="lista">
+      <div class="lista-cabecalho">
+        <img [src]="painelConfig().icone" alt="" width="20" height="20" />
+        <h2>{{ painelConfig().titulo }}</h2>
+        <span class="lista-contagem">{{ totalLista() }} {{ totalLista() === 1 ? 'processo' : 'processos' }}</span>
+        <a class="lista-ver-todos" [routerLink]="painelConfig().rotaVerTodos" [queryParams]="painelConfig().queryParamsVerTodos">Ver todos</a>
+      </div>
+
+      @if (erro()) {
+        <app-error-banner [erro]="erro()" />
+      } @else {
+        <app-tabela
+          familia="compacta"
+          larguraMinima="720px"
+          [colunas]="colunas"
+          [linhas]="processosLista()"
+          [aCarregar]="loading()"
+          [mensagemVazia]="painelConfig().mensagemVazio"
+        >
+          <ng-template appCelula="numeroProcesso" let-processo>
+            <a class="ligacao-processo" [routerLink]="rotas.PROCESSO_DETALHE(processo.id)">#{{ processo.numeroProcesso }}</a>
+          </ng-template>
+          <ng-template appCelula="tipoInstrumento" let-processo>
+            <span class="tipo-instrumento">{{ processo.tipoInstrumento }}</span>
+          </ng-template>
+          <ng-template appCelula="nomeProcedimento" let-processo>{{ processo.nomeProcedimento || '—' }}</ng-template>
+          <ng-template appCelula="designacaoInstrumento" let-processo>{{ processo.designacaoInstrumento || '—' }}</ng-template>
+          <ng-template appCelula="estado" let-processo>
+            <span class="estado-celula">
+              <app-estado-processo-badge [estado]="processo.estado" />
+              @if (devolvidoPelaPcm(processo)) {
+                <app-selo tom="info" forma="pill" data-campo="devolvido-pcm">Devolvido pela PCM</app-selo>
+              }
+            </span>
+          </ng-template>
+        </app-tabela>
+      }
+    </app-cartao>
+  </div>
+</app-shell>

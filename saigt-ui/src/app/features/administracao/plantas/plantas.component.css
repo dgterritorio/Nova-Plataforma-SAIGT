@@ -1,0 +1,70 @@
+.barra-filtros {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: var(--espaco-3);
+  padding-top: var(--espaco-2);
+}
+
+.pesquisa {
+  flex: 1 1 240px;
+  max-width: 360px;
+}
+
+.filtro-em-vigor {
+  flex: 0 0 160px;
+}
+
+.contador {
+  margin-left: auto;
+  font-size: var(--texto-sm);
+  line-height: var(--texto-sm-linha);
+  color: var(--cor-texto-celula);
+  white-space: nowrap;
+}
+
+/* Com dez colunas, os títulos longos ("Nome conforme o regulamento") passavam por cima dos vizinhos. */
+:host ::ng-deep app-tabela th {
+  height: auto;
+  padding-block: var(--espaco-2);
+  white-space: normal;
+}
+
+:host ::ng-deep app-tabela td {
+  overflow-wrap: anywhere;
+}
+
+.celula-atualizacao {
+  display: flex;
+  flex-direction: column;
+}
+
+.atualizado-por {
+  font-size: var(--texto-sm);
+  line-height: var(--texto-sm-linha);
+  color: var(--cor-texto-celula);
+}
+
+.formulario {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaco-4);
+}
+
+.caixa-verificacao {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--espaco-2);
+  font-size: var(--texto-sm);
+  line-height: var(--texto-sm-linha);
+  color: var(--cor-texto-rotulo);
+}
+
+.caixa-verificacao input:focus-visible {
+  outline: var(--anel-foco);
+  outline-offset: 2px;
+}
+
+[rodape] {
+  display: contents;
+}

@@ -1,0 +1,95 @@
+:host {
+  display: block;
+}
+
+/* Em ecrãs estreitos os separadores passam à linha seguinte em vez de saírem da página (WCAG 1.4.10). */
+.separadores-lista {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--espaco-1);
+  border-bottom: var(--borda-largura) solid var(--cor-borda-controlo);
+}
+
+/* O #6b7a9b do Figma fica abaixo de 4,5:1 sobre o fundo da página: usa-se o tom acessível mais próximo. */
+.separador {
+  display: flex;
+  align-items: center;
+  gap: var(--espaco-2);
+  margin-bottom: calc(var(--borda-largura) * -1);
+  padding: var(--espaco-3) var(--espaco-4);
+  border: 0;
+  border-bottom: var(--borda-largura-opcao) solid transparent;
+  background: none;
+  font-family: var(--fonte-base);
+  font-size: var(--texto-sm);
+  font-weight: var(--peso-semi);
+  line-height: var(--texto-sm-linha);
+  color: var(--cor-texto-celula);
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.separador:hover {
+  color: var(--cor-primaria-variante);
+}
+
+.separador:focus-visible {
+  outline: var(--anel-foco);
+  outline-offset: calc(var(--anel-foco-afastamento) * -1);
+}
+
+.separador-ativo {
+  border-bottom-color: var(--cor-primaria-variante);
+  color: var(--cor-primaria-variante);
+}
+
+.separador-icone {
+  width: 16px;
+  height: 16px;
+  background: currentcolor;
+  mask-image: var(--separador-icone);
+  mask-repeat: no-repeat;
+  mask-size: contain;
+}
+
+/* Sobre o #eef1f7 o cinza dos passos não chega a 4,5:1. */
+.separador-contador {
+  padding: var(--espaco-0-5) var(--espaco-1-5);
+  border-radius: var(--raio-pill);
+  background: var(--cor-etiqueta-fundo);
+  font-size: var(--texto-xs);
+  font-weight: var(--peso-semi);
+  line-height: var(--texto-xs-linha);
+  color: var(--cor-texto-celula);
+}
+
+/* Variante pílula (UI-056). Os cinzentos do Figma (#94a3b8 no contador) ficam abaixo de 4,5:1: usa-se o tom acessível. */
+:host(.separadores-pilula) .separadores-lista {
+  border-bottom: 0;
+}
+
+:host(.separadores-pilula) .separador {
+  gap: var(--espaco-1-5);
+  margin-bottom: 0;
+  padding: var(--espaco-1-5) var(--espaco-3);
+  border-bottom: 0;
+  border-radius: var(--raio-md);
+  font-weight: var(--peso-medio);
+  color: var(--cor-texto-secundario);
+}
+
+:host(.separadores-pilula) .separador-ativo {
+  background: var(--cor-info-fundo);
+  color: var(--cor-primaria);
+}
+
+:host(.separadores-pilula) .separador-contador {
+  line-height: var(--texto-xs-linha-compacta);
+  background: var(--cor-borda-suave);
+  color: var(--cor-texto-celula);
+}
+
+:host(.separadores-pilula) .separador-ativo .separador-contador {
+  background: var(--cor-primaria);
+  color: var(--cor-primaria-contraste);
+}

@@ -1,0 +1,248 @@
+.shell {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* Barra utilitária: no Figma é um contentor de 250px encostado à direita, com os links a 24px do seu início. */
+.barra-utilitaria {
+  display: flex;
+  justify-content: flex-end;
+  flex-shrink: 0;
+  height: 40px;
+  background: var(--cor-acento);
+}
+
+.barra-utilitaria-links {
+  display: flex;
+  align-items: center;
+  gap: 42px;
+  width: 250px;
+  padding-left: var(--espaco-6);
+}
+
+.link-utilitario {
+  font-size: var(--texto-base);
+  font-weight: var(--peso-medio);
+  line-height: var(--texto-base-linha);
+  color: var(--cor-texto);
+  white-space: nowrap;
+  cursor: default;
+}
+
+.cabecalho {
+  position: relative;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-shrink: 0;
+  padding: var(--espaco-3) var(--espaco-6) 0;
+  background: var(--cor-superficie);
+  filter: var(--sombra-cabecalho);
+}
+
+.cabecalho-esquerda {
+  display: flex;
+  align-items: center;
+  gap: var(--espaco-6);
+}
+
+.logotipo {
+  display: block;
+  flex-shrink: 0;
+}
+
+.logotipo img {
+  display: block;
+  width: 181px;
+  height: 35px;
+  object-fit: contain;
+}
+
+.navegacao {
+  display: flex;
+  align-items: center;
+}
+
+.nav-link {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--espaco-1);
+  padding: var(--espaco-4) 14px;
+  border: 0;
+  background: none;
+  font-family: var(--fonte-base);
+  font-size: var(--texto-base);
+  font-weight: var(--peso-medio);
+  line-height: var(--texto-base-linha);
+  color: var(--cor-texto-nav);
+  text-decoration: none;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.nav-link:hover {
+  color: var(--cor-texto);
+}
+
+/*
+ * O Figma desenha o sublinhado por dentro do link de 55px: os 3px saem do padding de baixo.
+ * Nos ecrãs do Figma o link ativo mantém a cor (só o componente de cabeçalho o pinta de preto): seguem-se os ecrãs.
+ */
+.nav-link-ativo {
+  padding-bottom: var(--espaco-4);
+  border-bottom: 3px solid var(--cor-destaque);
+}
+
+/* Nos ecrãs do Figma, "Administração" é sempre um tom mais escuro que os outros links. */
+.nav-link-menu,
+.nav-link-menu:hover {
+  color: var(--cor-texto-secundario);
+}
+
+/* Os itens sem página mantêm a cor dos outros links, como "Notificações" nos ecrãs do Figma. */
+.nav-link-inativo,
+.nav-link-inativo:hover {
+  color: var(--cor-texto-nav);
+  cursor: default;
+}
+
+.chevron {
+  width: 14px;
+  height: 14px;
+  flex-shrink: 0;
+}
+
+.menu-envolvente {
+  position: relative;
+}
+
+/* Menus do Figma (UI-085 e UI-080): painel de 260px, itens de 220px. */
+.menu {
+  position: absolute;
+  top: calc(100% + var(--espaco-1));
+  left: 0;
+  z-index: 20;
+  display: flex;
+  flex-direction: column;
+  width: 260px;
+  padding: var(--espaco-5);
+  background: var(--cor-superficie);
+  border-radius: var(--raio-lg);
+  filter: var(--sombra-menu);
+}
+
+.menu-utilizador {
+  right: 0;
+  left: auto;
+}
+
+.menu-item {
+  display: block;
+  width: 220px;
+  padding: var(--espaco-2-5);
+  border: 0;
+  border-radius: 5px;
+  background: none;
+  font-family: var(--fonte-base);
+  font-size: var(--texto-base);
+  font-weight: var(--peso-normal);
+  line-height: 1;
+  color: var(--cor-texto-nav);
+  text-align: left;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.menu-item:hover,
+.menu-item:focus-visible {
+  background: var(--cor-superficie-alt);
+}
+
+.menu-item-ativo,
+.menu-item-ativo:hover {
+  background: var(--cor-menu-item-ativo);
+}
+
+.menu-item-inativo,
+.menu-item-inativo:hover {
+  background: none;
+  cursor: default;
+}
+
+.cabecalho-direita {
+  display: flex;
+  align-items: center;
+  gap: var(--espaco-2-5);
+}
+
+.botao-utilizador {
+  display: flex;
+  align-items: center;
+  gap: var(--espaco-2);
+  padding: var(--espaco-1-5) var(--espaco-2);
+  border: 0;
+  border-radius: var(--raio-md);
+  background: none;
+  font-family: var(--fonte-base);
+  text-align: left;
+  cursor: pointer;
+}
+
+.botao-utilizador:hover {
+  background: var(--cor-superficie-alt);
+}
+
+.avatar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 28px;
+  height: 28px;
+  border-radius: var(--raio-pill);
+  background: var(--cor-primaria);
+  font-size: var(--texto-sm);
+  font-weight: var(--peso-semi);
+  line-height: var(--texto-sm-linha);
+  color: var(--cor-primaria-contraste);
+}
+
+.utilizador-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.utilizador-nome {
+  font-size: var(--texto-base);
+  font-weight: var(--peso-medio);
+  line-height: 17.5px;
+  color: var(--cor-texto);
+  white-space: nowrap;
+}
+
+.utilizador-subtitulo {
+  font-size: var(--texto-sm);
+  font-weight: var(--peso-medio);
+  line-height: var(--texto-xs-linha);
+  color: var(--cor-texto-secundario);
+  white-space: nowrap;
+}
+
+.botao-utilizador .chevron {
+  color: var(--cor-texto-terciario);
+}
+
+.conteudo {
+  flex: 1;
+  overflow-y: auto;
+  padding: var(--espaco-6);
+  background: var(--cor-fundo-camada);
+}
+
+.conteudo-total {
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+}

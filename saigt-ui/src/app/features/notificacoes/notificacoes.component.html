@@ -1,0 +1,206 @@
+<app-shell breadcrumb="Centro de Notificações" [conteudoTotal]="true">
+  <div class="centro">
+    <header class="cabecalho">
+      <div class="cabecalho-topo">
+        <div>
+          <h1>Centro de Notificações</h1>
+          <p class="resumo">
+            <span class="resumo-nao-lidas">{{ totalNaoLidas() }} {{ totalNaoLidas() === 1 ? 'não lida' : 'não lidas' }}</span>
+            @if (totalTodas() !== null) {
+              <span class="resumo-total"> · {{ totalTodas() }} total</span>
+            }
+          </p>
+        </div>
+        @if (podeCriar()) {
+          <button app-botao type="button" class="nova-notificacao" (click)="abrirCriacao()">
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true">
+              <path d="M8 3.3v9.4M3.3 8h9.4" />
+            </svg>
+            Nova notificação
+          </button>
+        }
+      </div>
+      @if (sucesso(); as mensagem) {
+        <app-alerta class="cabecalho-sucesso" tipo="sucesso" [fechavel]="true" (fechar)="sucesso.set(null)">{{ mensagem }}</app-alerta>
+      }
+      @if (avisoCriacao(); as mensagem) {
+        <app-alerta class="cabecalho-sucesso cabecalho-aviso" tipo="aviso" [fechavel]="true" (fechar)="avisoCriacao.set(null)">{{ mensagem }}</app-alerta>
+      }
+      <app-separadores
+        #separadoresRef
+        class="separadores"
+        variante="pilula"
+        rotulo="Notificações"
+        [separadores]="separadores()"
+        [ativo]="separador()"
+        (mudou)="mudarSeparador($event)"
+      />
+    </header>
+
+    <div
+      class="divisao"
+      role="tabpanel"
+      [class.divisao-com-selecao]="selecionadaId() !== null"
+      [id]="separadoresRef.idPainel(separador())"
+      [attr.aria-labelledby]="separadoresRef.idSeparador(separador())"
+    >
+      <div class="lista">
+        <div class="lista-pesquisa">
+          <app-campo-pesquisa placeholder="Pesquisar por título, remetente, n.º de processo" (pesquisar)="pesquisa.set($event)" />
+        </div>
+
+        @if (noHistorico()) {
+          <form class="filtros" aria-label="Filtros do histórico" novalidate [formGroup]="filtrosHistorico" (submit)="aplicarFiltrosHistorico($event)">
+            <app-seletor
+              data-filtro="tipo"
+              rotulo="Tipo"
+              placeholder="Todos os tipos"
+              [compacto]="true"
+              [permitirVazio]="true"
+              [opcoes]="opcoesTipo"
+              formControlName="tipo"
+            />
+            <app-campo-texto
+              data-filtro="pesquisa-processo"
+              rotulo="Pesquisar processo"
+              placeholder="Designação do instrumento"
+              [compacto]="true"
+              [formControl]="pesquisaProcesso"
+            />
+            <app-seletor
+              data-filtro="processo"
+              rotulo="Processo"
+              placeholder="Todos os processos"
+              [compacto]="true"
+              [permitirVazio]="true"
+              [opcoes]="opcoesProcesso()"
+              formControlName="processoId"
+            />
+            <div class="filtros-datas">
+              <app-campo-texto data-filtro="desde" rotulo="Desde" tipo="date" [compacto]="true" [erro]="erroDatas()" formControlName="desde" />
+              <app-campo-texto data-filtro="ate" rotulo="Até" tipo="date" [compacto]="true" formControlName="ate" />
+            </div>
+            <div class="filtros-barra">
+              <button app-botao type="button" variante="texto" tamanho="pequeno" class="filtros-limpar" (click)="limparFiltrosHistorico()">Limpar</button>
+              <button app-botao type="submit" tamanho="pequeno" class="filtros-aplicar">Aplicar filtros</button>
+            </div>
+          </form>
+        }
+
+        @if (avisoDetalhe(); as aviso) {
+          <app-alerta class="lista-aviso" tipo="aviso" [fechavel]="true" (fechar)="avisoDetalhe.set(null)">{{ aviso }}</app-alerta>
+        }
+
+        @if (erro(); as mensagem) {
+          <div class="lista-erro">
+            <app-alerta tipo="erro">{{ mensagem }}</app-alerta>
+            <button app-botao type="button" variante="contorno" tamanho="pequeno" (click)="carregar()">Tentar de novo</button>
+          </div>
+        } @else {
+          <ul class="itens" [attr.aria-busy]="aCarregar()" aria-label="Notificações">
+            @if (aCarregar()) {
+              @for (linha of [1, 2, 3]; track linha) {
+                <li class="item-esqueleto" aria-hidden="true">
+                  <span class="esqueleto esqueleto-mosaico"></span>
+                  <span class="esqueleto-corpo">
+                    <span class="esqueleto esqueleto-linha"></span>
+                    <span class="esqueleto esqueleto-linha esqueleto-linha-curta"></span>
+                  </span>
+                </li>
+              }
+            } @else {
+              @for (n of itensVisiveis(); track n.id) {
+                @let tipo = apresentacaoTipo(n);
+                @let estado = seloEstado(n);
+                @let porLer = ehNaoLida(n);
+                <li>
+                  <button
+                    type="button"
+                    class="item"
+                    [class.item-nao-lida]="porLer"
+                    [class.item-selecionado]="n.id === selecionadaId()"
+                    [attr.aria-current]="n.id === selecionadaId() ? 'true' : null"
+                    [attr.data-notificacao]="n.id"
+                    (click)="selecionar(n.id)"
+                  >
+                    <span class="item-ponto" [class.item-ponto-visivel]="porLer" aria-hidden="true"></span>
+                    <app-icone-notificacao [simbolo]="tipo.icone" [tom]="tipo.tom" />
+                    <span class="item-corpo">
+                      <span class="item-selos">
+                        <app-selo forma="pill" class="selo-tipo" [tom]="tipo.tom">
+                          <app-icone-notificacao icone [simbolo]="tipo.icone" [mosaico]="false" />{{ tipo.rotulo }}
+                        </app-selo>
+                        @if (estado) {
+                          <app-selo forma="pill" [tom]="estado.tom">{{ estado.rotulo }}</app-selo>
+                        }
+                      </span>
+                      <span class="item-titulo" [class.item-titulo-forte]="porLer">{{ n.titulo }}</span>
+                      <span class="item-remetente">{{ remetente(n.criadoPorNome) }}</span>
+                      <span class="item-meta">
+                        <time [attr.datetime]="n.criadoEm">{{ formatarDataHora(n.criadoEm) }}</time>
+                        @if (n.numeroDocumentos > 0) {
+                          <span class="meta-anexos">
+                            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.33" stroke-linecap="round" aria-hidden="true">
+                              <path d="M13.5 7.5l-5.3 5.3a3.3 3.3 0 01-4.7-4.7l5.6-5.6a2.2 2.2 0 013.1 3.1L6.6 11.2a1.1 1.1 0 01-1.6-1.6l5-5" />
+                            </svg>
+                            {{ n.numeroDocumentos }}<span class="visualmente-oculto"> {{ n.numeroDocumentos === 1 ? 'anexo' : 'anexos' }}</span>
+                          </span>
+                        }
+                        @if (n.prazo) {
+                          <span class="meta-prazo">
+                            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.33" stroke-linecap="round" aria-hidden="true">
+                              <circle cx="8" cy="8" r="6" />
+                              <path d="M8 4.7V8l2.2 1.4" />
+                            </svg>
+                            <span class="visualmente-oculto"> Prazo </span>{{ formatarDia(n.prazo) }}
+                          </span>
+                        }
+                        @if (n.numeroProcesso) {
+                          <span class="meta-processo">{{ n.numeroProcesso }}</span>
+                        }
+                      </span>
+                    </span>
+                    <svg class="item-seta" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.17" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                      <path d="M5.25 10.5L8.75 7L5.25 3.5" />
+                    </svg>
+                  </button>
+                </li>
+              } @empty {
+                <li class="vazio">{{ pesquisa() ? 'Nenhuma notificação corresponde à pesquisa.' : mensagemVazio() }}</li>
+              }
+            }
+          </ul>
+
+          @if (!aCarregar() && total() > tamanhoPagina) {
+            <app-paginacao
+              class="lista-paginacao"
+              etiquetaItens="notificações"
+              [pagina]="pagina() + 1"
+              [tamanhoPagina]="tamanhoPagina"
+              [total]="total()"
+              [mostrados]="pesquisa() ? itensVisiveis().length : null"
+              (paginaMudou)="mudarPagina($event)"
+            />
+          }
+        }
+      </div>
+
+      <div class="detalhe">
+        @if (selecionadaId(); as id) {
+          <app-notificacao-detalhe
+            [notificacaoId]="id"
+            [soLeitura]="noHistorico()"
+            (fechar)="fecharDetalhe()"
+            (naoEncontrada)="naoEncontrada()"
+            (alterada)="carregar()"
+          />
+        } @else {
+          <p class="detalhe-vazio">Selecione uma notificação para ver o detalhe.</p>
+        }
+      </div>
+    </div>
+  </div>
+  @if (podeCriar()) {
+    <app-criar-notificacao-modal [aberto]="criarAberto()" (fechar)="criarAberto.set(false)" (criada)="notificacaoCriada($event)" />
+  }
+</app-shell>

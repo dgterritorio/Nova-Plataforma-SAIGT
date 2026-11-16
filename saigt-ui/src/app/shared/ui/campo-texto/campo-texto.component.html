@@ -1,0 +1,49 @@
+<label class="campo-texto-rotulo" [for]="id">
+  {{ rotulo() }}
+  @if (obrigatorio()) {
+    <span class="campo-texto-obrigatorio" aria-hidden="true">*</span>
+  }
+</label>
+@if (multilinha()) {
+  <textarea
+    rows="4"
+    [id]="id"
+    [value]="valor()"
+    [placeholder]="placeholder()"
+    [disabled]="desativado()"
+    [required]="obrigatorio()"
+    [attr.maxlength]="maxlength()"
+    [attr.aria-invalid]="erro() ? true : null"
+    [attr.aria-describedby]="descritoPor()"
+    (input)="escrever($event)"
+    (blur)="tocar()"
+  ></textarea>
+} @else {
+  <div class="campo-texto-caixa">
+    <input
+      [id]="id"
+      [type]="tipo()"
+      [value]="valor()"
+      [placeholder]="placeholder()"
+      [disabled]="desativado()"
+      [required]="obrigatorio()"
+      [attr.maxlength]="maxlength()"
+      [attr.autocomplete]="autocomplete()"
+      [attr.inputmode]="modoEntrada()"
+      [attr.aria-invalid]="erro() ? true : null"
+      [attr.aria-describedby]="descritoPor()"
+      (input)="escrever($event)"
+      (blur)="tocar()"
+    />
+    <span class="campo-texto-sufixo"><ng-content select="[sufixo]" /></span>
+  </div>
+}
+@if (ajuda()) {
+  <p class="campo-texto-ajuda" [id]="idAjuda">{{ ajuda() }}</p>
+}
+<!-- A região existe sempre: um leitor de ecrã só anuncia o que muda dentro de uma região já presente. -->
+<div class="campo-texto-anuncio" aria-live="polite">
+  @if (erro()) {
+    <p class="campo-texto-erro" [id]="idErro">{{ erro() }}</p>
+  }
+</div>

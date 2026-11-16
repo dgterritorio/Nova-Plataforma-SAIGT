@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="2026-11-13-12-seed-documento-config-sgifr" author="arnaldo.costa">
+        <comment>
+            Itens documentais do SGIFR nos quatro Procedimentos PUBLICACAO_SGIFR (PRA e PSA, Delimitação e Alteração),
+            segundo a lista da EF v1.5, «SGIFR – Recolha de informação no formulário»: no PRA, o texto do ato, a carta
+            do programa da rede primária (RPFGC) e o documento do programa; no PSA, o texto do ato, as cartas do
+            programa das seis redes do PSA (RSFGC, APPS, RVDI, AEMGC, RVF e RPA, os códigos do catálogo
+            sgifr_rede_defesa) e o documento do programa. «Outros documentos» é o balde de depósito sem item (FR-081).
+            Premissas do OI-507: todos os documentos do PRA e do PSA são de publicação e depósito (OI-254), por isso
+            cada documento dá um item _PUB (editável) e um _DEP (não editável); a informação matricial e a vetorial
+            ficam no mesmo separador da carta (OI-435), a vetorial no ZIP de publicação e a matricial no de depósito.
+            Obrigatórios: o _PUB do texto do ato e do programa nos dois programas e o da carta RPFGC no PRA; as cartas
+            do PSA ficam opcionais enquanto não houver ligação entre o item e a rede escolhida no processo. Valores do
+            TR-068 em todos os itens: regra de nomes SGIFR, 500 MB por ficheiro, 10 ficheiros e 2 GB por item; as
+            cartas têm as regras do GeoTIFF do SGIFR (RegrasTiff.inicialSgifr: 300 dpi, RGB, 8 bits por banda, sem
+            compressão). Os itens de publicação têm link público (OI-491). Configuração inicial, editável em
+            backoffice; a lista da DGT entra como dados quando chegar (OI-245). Os Procedimentos escolhem-se pelos
+            códigos, nunca pelo id; idempotente pelo NOT EXISTS (um item já criado em backoffice com o mesmo código
+            fica como está).
+        </comment>
+        <sql>
+            INSERT INTO documento_config (instrumento_procedimento_config_id, codigo, separador, nome, categoria,
+                                          tipo_elemento, formato, obrigatorio, extensoes_aceites, ordem, ativo,
+                                          elemento_informacao_base, pagina, regra_nomenclatura,
+                                          tamanho_maximo_ficheiro, tamanho_maximo_total, numero_maximo_ficheiros,
+                                          link_publico_permitido, regras_tiff)
+            SELECT ipc.id, item.codigo || CASE WHEN caixa.categoria = 'PUBLICACAO' THEN '_PUB' ELSE '_DEP' END,
+                   item.separador, item.nome, caixa.categoria, item.tipo_elemento,
+                   CASE WHEN caixa.categoria = 'PUBLICACAO' THEN 'EDITAVEL' ELSE 'NAO_EDITAVEL' END,
+                   item.obrigatorio AND caixa.categoria = 'PUBLICACAO',
+                   (CASE WHEN item.tipo_elemento = 'PECA_GRAFICA' THEN '["zip"]'
+                         WHEN caixa.categoria = 'PUBLICACAO'
+                             THEN '["doc","docx","rtf","odf","odt","xls","xlsx","csv","ods","pdf","txt"]'
+                         ELSE '["pdf","jpg","png"]' END)::jsonb,
+                   2 * item.posicao - CASE WHEN caixa.categoria = 'PUBLICACAO' THEN 1 ELSE 0 END, true,
+                   NULL, 'DOCUMENTOS', 'SGIFR', 524288000, 2147483648, 10,
+                   caixa.categoria = 'PUBLICACAO',
+                   CASE WHEN item.tipo_elemento = 'PECA_GRAFICA' THEN '{"sistemasReferencia": ["EPSG:3763", "EPSG:5014",
+                       "EPSG:5015", "EPSG:5016"], "compressoesAceites": ["NONE"], "bandaAlfaTolerada": false,
+                       "modeloCor": "RGB", "bitsPorBanda": 8, "resolucaoDpi": 300, "elementosLegenda": ["ID do plano",
+                       "N.º de folha", "Data de aprovação", "Identificação do procedimento"]}'::jsonb END
+            FROM instrumento_procedimento_config ipc
+            JOIN tipo_procedimento tp ON tp.id = ipc.tipo_procedimento_id
+            JOIN instrumento_dinamica_config idc ON idc.id = ipc.instrumento_dinamica_config_id
+            JOIN tipo_instrumento ti ON ti.id = idc.tipo_instrumento_id
+            JOIN tipo_dinamica td ON td.id = idc.tipo_dinamica_id
+            JOIN (VALUES
+                ('PRA', 1, 'TEXTO_ATO', 'Texto do Ato',
+                 'Texto legal do ato que será publicado no Diário da República', 'PECA_ESCRITA', true),
+                ('PRA', 2, 'CARTA_RPFGC', 'Carta do Programa — RPFGC',
+                 'Carta do programa: rede primária de faixas de gestão de combustível', 'PECA_GRAFICA', true),
+                ('PRA', 3, 'PROGRAMA', 'Programa', 'Documento do Programa Regional de Ação', 'PECA_ESCRITA', true),
+                ('PSA', 1, 'TEXTO_ATO', 'Texto do Ato',
+                 'Texto legal do ato que será publicado no Diário da República', 'PECA_ESCRITA', true),
+                ('PSA', 2, 'CARTA_RSFGC', 'Carta do Programa — RSFGC',
+                 'Carta do programa: rede secundária de faixas de gestão de combustível', 'PECA_GRAFICA', false),
+                ('PSA', 3, 'CARTA_APPS', 'Carta do Programa — APPS',
+                 'Carta do programa: áreas prioritárias de prevenção e segurança', 'PECA_GRAFICA', false),
+                ('PSA', 4, 'CARTA_RVDI', 'Carta do Programa — RVDI',
+                 'Carta do programa: rede de vigilância e deteção de incêndios', 'PECA_GRAFICA', false),
+                ('PSA', 5, 'CARTA_AEMGC', 'Carta do Programa — AEMGC',
+                 'Carta do programa: áreas estratégicas de mosaicos de gestão de combustível', 'PECA_GRAFICA', false),
+                ('PSA', 6, 'CARTA_RVF', 'Carta do Programa — RVF', 'Carta do programa: rede viária florestal',
+                 'PECA_GRAFICA', false),
+                ('PSA', 7, 'CARTA_RPA', 'Carta do Programa — RPA', 'Carta do programa: rede de pontos de água',
+                 'PECA_GRAFICA', false),
+                ('PSA', 8, 'PROGRAMA', 'Programa', 'Documento do Programa Sub-Regional de Ação', 'PECA_ESCRITA', true)
+            ) AS item(tipo_instrumento, posicao, codigo, separador, nome, tipo_elemento, obrigatorio)
+                ON item.tipo_instrumento = ti.codigo
+            CROSS JOIN (VALUES ('PUBLICACAO'), ('DEPOSITO')) AS caixa(categoria)
+            WHERE tp.codigo = 'PUBLICACAO_SGIFR'
+              AND ti.codigo IN ('PRA', 'PSA')
+              AND td.codigo IN ('DELIMITACAO', 'ALTERACAO')
+              AND NOT EXISTS (SELECT 1 FROM documento_config d
+                              WHERE d.instrumento_procedimento_config_id = ipc.id
+                                AND d.codigo = item.codigo
+                                    || CASE WHEN caixa.categoria = 'PUBLICACAO' THEN '_PUB' ELSE '_DEP' END)
+            ORDER BY ipc.id, item.posicao, caixa.categoria DESC
+        </sql>
+        <rollback>
+            <sql>
+                DELETE FROM documento_config
+                WHERE codigo IN ('TEXTO_ATO_PUB', 'TEXTO_ATO_DEP', 'CARTA_RPFGC_PUB', 'CARTA_RPFGC_DEP',
+                                 'CARTA_RSFGC_PUB', 'CARTA_RSFGC_DEP', 'CARTA_APPS_PUB', 'CARTA_APPS_DEP',
+                                 'CARTA_RVDI_PUB', 'CARTA_RVDI_DEP', 'CARTA_AEMGC_PUB', 'CARTA_AEMGC_DEP',
+                                 'CARTA_RVF_PUB', 'CARTA_RVF_DEP', 'CARTA_RPA_PUB', 'CARTA_RPA_DEP',
+                                 'PROGRAMA_PUB', 'PROGRAMA_DEP')
+                  AND instrumento_procedimento_config_id IN (
+                      SELECT ipc.id FROM instrumento_procedimento_config ipc
+                      JOIN tipo_procedimento tp ON tp.id = ipc.tipo_procedimento_id
+                      JOIN instrumento_dinamica_config idc ON idc.id = ipc.instrumento_dinamica_config_id
+                      JOIN tipo_instrumento ti ON ti.id = idc.tipo_instrumento_id
+                      JOIN tipo_dinamica td ON td.id = idc.tipo_dinamica_id
+                      WHERE tp.codigo = 'PUBLICACAO_SGIFR' AND ti.codigo IN ('PRA', 'PSA')
+                        AND td.codigo IN ('DELIMITACAO', 'ALTERACAO'))
+            </sql>
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>

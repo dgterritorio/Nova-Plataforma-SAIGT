@@ -1,0 +1,54 @@
+/* Sem mockup próprio: o cartão segue o da Informação Geral (UI-009). O espaço entre cartões é o do ecrã que o usa. */
+:host {
+  display: flex;
+  flex-direction: column;
+  gap: inherit;
+}
+
+.cartao-servidao {
+  overflow: hidden;
+  background: var(--cor-superficie);
+  border: var(--borda-largura) solid var(--cor-borda);
+  border-radius: var(--raio-lg);
+}
+
+.cabecalho {
+  margin: 0;
+  padding: var(--espaco-4) var(--espaco-5);
+  background: var(--cor-cabecalho-cartao);
+  border-bottom: var(--borda-largura) solid var(--cor-borda-suave);
+  font-size: var(--texto-base);
+  font-weight: var(--peso-negrito);
+  line-height: var(--texto-base-linha);
+  color: var(--cor-texto);
+}
+
+.contexto {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--espaco-4) var(--espaco-6);
+  margin: 0;
+  padding: var(--espaco-5);
+}
+
+.contexto dt {
+  font-size: var(--texto-rotulo);
+  font-weight: var(--peso-negrito);
+  letter-spacing: 0.3px;
+  text-transform: uppercase;
+  color: var(--cor-texto-secundario);
+}
+
+.contexto dd {
+  margin: var(--espaco-0-5) 0 0;
+  font-size: var(--texto-base);
+  line-height: var(--texto-base-linha);
+  color: var(--cor-texto);
+  overflow-wrap: anywhere;
+}
+
+@media (width <= 720px) {
+  .contexto {
+    grid-template-columns: 1fr;
+  }
+}

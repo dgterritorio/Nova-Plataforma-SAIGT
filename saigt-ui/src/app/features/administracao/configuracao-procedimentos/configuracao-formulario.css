@@ -1,0 +1,76 @@
+/* Comum aos modais de Procedimentos, permissões, tipos de ato e redes de defesa. */
+.formulario {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaco-4);
+}
+
+.linha-campos {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: var(--espaco-3);
+}
+
+.caixas {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaco-2);
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.caixas legend {
+  margin-bottom: var(--espaco-2);
+  padding: 0;
+  font-size: var(--texto-sm);
+  font-weight: var(--peso-semi);
+  line-height: var(--texto-sm-linha);
+  color: var(--cor-texto-rotulo);
+}
+
+.caixas-grelha {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  gap: var(--espaco-2) var(--espaco-3);
+}
+
+.caixa-verificacao {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--espaco-2);
+  font-size: var(--texto-sm);
+  line-height: var(--texto-sm-linha);
+  color: var(--cor-texto-rotulo);
+  cursor: pointer;
+}
+
+.caixa-verificacao input {
+  width: 16px;
+  height: 16px;
+  margin: 0;
+  accent-color: var(--cor-filtro-ativo);
+  cursor: pointer;
+}
+
+.caixa-verificacao input:focus-visible {
+  outline: var(--anel-foco);
+  outline-offset: var(--anel-foco-afastamento);
+}
+
+.so-leitor {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+[rodape] {
+  display: contents;
+}
+
+.mensagem-falha {
+  display: block;
+}

@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="2026-10-26-2-add-validacao-itens" author="david.raposo">
+        <comment>
+            Validação item a item pela DGT (DB-DOC-002, DB-PROC-020): cada documento e cada elemento da Informação Base
+            do Processo tem um estado de validação. Só o desfecho "validar" é modelado; as colunas `rejeicao_*` ficam
+            para a rejeição por item.
+        </comment>
+
+        <addColumn tableName="processo_documento">
+            <column name="estado_validacao" type="VARCHAR(20)" defaultValue="POR_VALIDAR">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+        <sql>ALTER TABLE processo_documento ADD CONSTRAINT ck_processo_documento_estado_validacao
+            CHECK (estado_validacao IN ('POR_VALIDAR', 'VALIDADO', 'REJEITADO'))</sql>
+
+        <createTable tableName="processo_informacao_base">
+            <column name="id" type="UUID">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="processo_id" type="UUID">
+                <constraints nullable="false" foreignKeyName="fk_processo_informacao_base_processo" references="processo(id)"/>
+            </column>
+            <column name="elemento" type="VARCHAR(30)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="estado_validacao" type="VARCHAR(20)" defaultValue="POR_VALIDAR">
+                <constraints nullable="false"/>
+            </column>
+            <column name="criado_em" type="TIMESTAMP WITH TIME ZONE" defaultValueComputed="CURRENT_TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+            <column name="atualizado_em" type="TIMESTAMP WITH TIME ZONE" defaultValueComputed="CURRENT_TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <addUniqueConstraint tableName="processo_informacao_base" columnNames="processo_id, elemento"
+                             constraintName="uq_processo_informacao_base_processo_elemento"/>
+        <sql>ALTER TABLE processo_informacao_base ADD CONSTRAINT ck_processo_informacao_base_elemento
+            CHECK (elemento IN ('DELIBERACAO', 'TEXTO_ATO'))</sql>
+        <sql>ALTER TABLE processo_informacao_base ADD CONSTRAINT ck_processo_informacao_base_estado_validacao
+            CHECK (estado_validacao IN ('POR_VALIDAR', 'VALIDADO', 'REJEITADO'))</sql>
+        <createIndex tableName="processo_informacao_base" indexName="idx_processo_informacao_base_processo">
+            <column name="processo_id"/>
+        </createIndex>
+
+        <rollback>
+            <dropTable tableName="processo_informacao_base"/>
+            <sql>ALTER TABLE processo_documento DROP CONSTRAINT ck_processo_documento_estado_validacao</sql>
+            <dropColumn tableName="processo_documento" columnName="estado_validacao"/>
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>

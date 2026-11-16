@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="2026-11-14-3-lagoa-algarve-5126" author="david.raposo">
+        <preConditions onFail="MARK_RAN">
+            <sqlCheck expectedResult="0">SELECT count(*) FROM entidade WHERE codigo = '5126'</sqlCheck>
+        </preConditions>
+        <comment>
+            A Lagoa do Algarve (NIPC 506804240, dico 0806) passa a ter o código SAIGT 5126, como no extrato de
+            entidades v6 (ExtracaoEntidadesEmitentes20260921_EntidadesSAIGT_v6.xlsx), em vez da 5128 do OI-271 (OI-546).
+            Muda só o código: o id mantém-se e com ele as referências de processos, utilizadores, contactos, auditoria e
+            notificações. O CSV entidades-saigt-v5.csv e o changeset 2026-11-06-3 não se alteram, para não mudar o
+            checksum de um changeset já aplicado. Se a 5126 já existir (criada por um Master), o changeset fica marcado
+            como corrido sem alterar nada.
+        </comment>
+        <sql>UPDATE entidade SET codigo = '5126' WHERE codigo = '5128'</sql>
+        <rollback>
+            <sql>UPDATE entidade SET codigo = '5128' WHERE codigo = '5126'
+                AND NOT EXISTS (SELECT 1 FROM entidade WHERE codigo = '5128')</sql>
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>

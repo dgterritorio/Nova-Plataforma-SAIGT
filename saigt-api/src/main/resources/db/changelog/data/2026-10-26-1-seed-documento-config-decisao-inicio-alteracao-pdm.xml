@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="2026-10-26-1-seed-documento-config-decisao-inicio-alteracao-pdm" author="david.raposo">
+        <comment>
+            Itens documentais da Decisão de início da Alteração de PDM (procedimento 209), um por caixa
+            (publicação e depósito). A lista vem da EF v1.5 e ainda não está confirmada com a DGT, por isso é seed.
+            "Outros" não tem item.
+        </comment>
+
+        <loadData tableName="documento_config" file="db/data/2026-10-26-1-documento_config.csv"
+                  relativeToChangelogFile="false" separator=";" quotchar="&quot;" encoding="UTF-8">
+            <column name="id" type="NUMERIC"/>
+            <column name="instrumento_procedimento_config_id" type="NUMERIC"/>
+            <column name="codigo" type="STRING"/>
+            <column name="separador" type="STRING"/>
+            <column name="nome" type="STRING"/>
+            <column name="categoria" type="STRING"/>
+            <column name="tipo_elemento" type="STRING"/>
+            <column name="formato" type="STRING"/>
+            <column name="obrigatorio" type="BOOLEAN"/>
+            <column name="extensoes_aceites" type="STRING"/>
+            <column name="ordem" type="NUMERIC"/>
+            <column name="ativo" type="BOOLEAN"/>
+        </loadData>
+
+        <sql dbms="postgresql">SELECT setval(pg_get_serial_sequence('documento_config', 'id'), (SELECT MAX(id) FROM documento_config))</sql>
+
+        <rollback>
+            <delete tableName="documento_config">
+                <where>id BETWEEN 1 AND 6 AND instrumento_procedimento_config_id = 209</where>
+            </delete>
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>

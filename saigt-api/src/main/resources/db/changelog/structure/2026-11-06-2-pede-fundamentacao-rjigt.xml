@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="2026-11-06-2-pede-fundamentacao-rjigt" author="arnaldo.costa">
+        <comment>
+            Procedimentos que pedem a «Fundamentação RJIGT» no formulário inicial: só os dois da Alteração
+            Simplificada DL 10/2024 do PDM (EF v1.5 §3.1.2, nota *4). O PU e o PP têm os mesmos tipos de
+            Procedimento e ficam de fora, por isso a escolha é por configuração e não pelo código do tipo.
+            Os valores da lista `FUNDAMENTACAO_RJIGT` ainda não estão definidos: não se semeia nenhum.
+        </comment>
+
+        <addColumn tableName="instrumento_procedimento_config">
+            <column name="pede_fundamentacao_rjigt" type="BOOLEAN" defaultValueBoolean="false">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+        <sql>UPDATE instrumento_procedimento_config ipc SET pede_fundamentacao_rjigt = true
+            FROM tipo_procedimento tp, instrumento_dinamica_config idc, tipo_instrumento ti
+            WHERE tp.id = ipc.tipo_procedimento_id
+              AND idc.id = ipc.instrumento_dinamica_config_id
+              AND ti.id = idc.tipo_instrumento_id
+              AND tp.codigo IN ('ABERTURA_DISCUSSAO_PUBLICA_DL10', 'ALTERACAO_SIMPLIFICADA_DL10')
+              AND ti.codigo = 'PDM'</sql>
+
+        <rollback>
+            <dropColumn tableName="instrumento_procedimento_config" columnName="pede_fundamentacao_rjigt"/>
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>

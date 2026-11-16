@@ -1,0 +1,51 @@
+/* Moldura comum aos ecrãs de administração (UI-058 a UI-063). */
+.conteudo {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaco-4);
+  max-width: var(--contentor-backoffice);
+  margin: 0 auto;
+  padding-top: var(--espaco-topo-ecra);
+}
+
+.cabecalho {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--espaco-4);
+}
+
+h1 {
+  margin: 0;
+  font-size: var(--texto-lg);
+  font-weight: var(--peso-semi);
+  line-height: var(--texto-lg-linha);
+  color: var(--cor-titulo-pagina);
+}
+
+/* O #62748e do Figma fica abaixo de 4,5:1 sobre o fundo da página: usa-se o tom acessível mais próximo. */
+.subtitulo {
+  margin: 0;
+  padding-top: var(--espaco-0-5);
+  font-size: var(--texto-sm);
+  line-height: var(--texto-sm-linha);
+  color: var(--cor-texto-celula);
+}
+
+.estado {
+  margin: 0;
+  padding: var(--espaco-5);
+  font-size: var(--texto-base);
+  line-height: var(--texto-base-linha);
+  color: var(--cor-texto-celula);
+}
+
+.visualmente-oculto {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}

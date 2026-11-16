@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="2026-10-28-3-alarga-designacao-instrumento" author="david.raposo">
+        <comment>
+            Instrumento: as designações dos IGT do SNIT passam muitas vezes os 50 caracteres e eram cortadas.
+        </comment>
+
+        <modifyDataType tableName="instrumento" columnName="designacao" newDataType="VARCHAR(255)"/>
+
+        <rollback>
+            <sql>UPDATE instrumento SET designacao = left(designacao, 50)</sql>
+            <modifyDataType tableName="instrumento" columnName="designacao" newDataType="VARCHAR(50)"/>
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>

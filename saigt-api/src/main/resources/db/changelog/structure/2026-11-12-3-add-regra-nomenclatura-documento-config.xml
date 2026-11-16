@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="2026-11-12-3-add-regra-nomenclatura-documento-config" author="david.raposo">
+        <comment>
+            Regra de nome do ficheiro por item documental (DB-DOC-001): GERAL (BL-DOC-012, BL-DOC-013) ou SGIFR
+            (TR-068, BL-DOC-014). Os itens existentes ficam GERAL pela omissão; a marcação SGIFR é da configuração
+            dos itens do SGIFR.
+        </comment>
+
+        <sql>ALTER TABLE documento_config ADD COLUMN regra_nomenclatura VARCHAR(10) NOT NULL DEFAULT 'GERAL'</sql>
+        <sql>ALTER TABLE documento_config ADD CONSTRAINT ck_documento_config_regra_nomenclatura
+            CHECK (regra_nomenclatura IN ('GERAL', 'SGIFR'))</sql>
+
+        <rollback>
+            <sql>ALTER TABLE documento_config DROP CONSTRAINT ck_documento_config_regra_nomenclatura</sql>
+            <dropColumn tableName="documento_config" columnName="regra_nomenclatura"/>
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>

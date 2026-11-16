@@ -1,0 +1,16 @@
+@if (servidaoVisivel()) {
+  <section class="cartao-servidao" [attr.aria-labelledby]="idTitulo">
+    <h2 class="cabecalho" [id]="idTitulo">Servidão</h2>
+    <dl class="corpo contexto">
+      <div>
+        <dt>Tipo de instrumento</dt>
+        <dd class="tipo-instrumento">{{ tipoInstrumento() || '—' }}</dd>
+      </div>
+      <div>
+        <dt>Dinâmica</dt>
+        <dd class="dinamica">{{ dinamica() || '—' }}</dd>
+      </div>
+    </dl>
+  </section>
+}
+<ng-content />

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="2026-11-10-1-seed-listas-alteracao-pdm" author="arnaldo.costa">
+        <comment>
+            Valores iniciais das listas do cabeçalho da Alteração de PDM (EF v1.5 §3.1.2, FR-166): as 15 freguesias
+            de Sintra com o código DTMNFR da CAOP2025 (DGT) e os motivos da alteração por lei, programa e plano.
+            Sem valores, o formulário esconde a localização e os motivos. O TOPONIMO fica vazio: aceita texto livre.
+            A lista FREGUESIA é global até haver a carga completa da CAOP e a gestão pelo Master.
+        </comment>
+
+        <loadData tableName="lista_valores" file="db/data/2026-11-10-1-lista_valores-alteracao.csv"
+                  relativeToChangelogFile="false" separator=";" quotchar="&quot;" encoding="UTF-8">
+            <column name="tipo" type="STRING"/>
+            <column name="codigo" type="STRING"/>
+            <column name="descricao" type="STRING"/>
+            <column name="ordem" type="NUMERIC"/>
+            <column name="ativo" type="BOOLEAN"/>
+        </loadData>
+
+        <rollback>
+            <delete tableName="lista_valores">
+                <where>(tipo = 'FREGUESIA' AND codigo IN ('111102', '111129', '111130', '111115', '111105', '111131',
+                    '111132', '111133', '111108', '111134', '111135', '111122', '111125', '111128', '111124'))
+                    OR (tipo = 'MOTIVO_ALTERACAO_LEI' AND codigo IN ('LEI_31_2014', 'DL_80_2015', 'DL_10_2024'))
+                    OR (tipo = 'MOTIVO_ALTERACAO_PROGRAMA' AND codigo IN ('PNPOT', 'PROT_AML', 'POC_ACE'))
+                    OR (tipo = 'MOTIVO_ALTERACAO_PLANO' AND codigo = 'PDIM')</where>
+            </delete>
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>

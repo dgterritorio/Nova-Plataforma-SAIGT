@@ -1,0 +1,50 @@
+/* O Figma desenha os traços por dentro: borda de 1px e padding menos 1px. */
+:host {
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  gap: var(--espaco-2);
+  height: 38px;
+  padding: 0 var(--espaco-3);
+  background: var(--cor-superficie-alt);
+  border: var(--borda-largura) solid var(--cor-borda);
+  border-radius: var(--raio-md);
+  color: var(--cor-texto-terciario);
+}
+
+:host(.campo-pesquisa-total) {
+  flex: 1;
+  min-width: 0;
+}
+
+:host(.campo-pesquisa-cabecalho) {
+  width: 224px;
+}
+
+:host(:focus-within) {
+  outline: var(--anel-foco);
+  outline-offset: var(--anel-foco-afastamento);
+}
+
+.campo-pesquisa-lupa {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+}
+
+.campo-pesquisa-entrada {
+  flex: 1;
+  min-width: 0;
+  padding: 0;
+  border: 0;
+  outline: none;
+  background: transparent;
+  font-family: var(--fonte-base);
+  font-size: var(--texto-base);
+  line-height: var(--texto-base-linha);
+  color: var(--cor-texto);
+}
+
+.campo-pesquisa-entrada::placeholder {
+  color: var(--cor-texto-terciario);
+}

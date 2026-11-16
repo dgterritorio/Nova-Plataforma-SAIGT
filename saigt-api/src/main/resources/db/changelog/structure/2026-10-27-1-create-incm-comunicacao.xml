@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="2026-10-27-1-create-incm-comunicacao" author="margarida.marques">
+        <comment>
+            Histórico permanente das chamadas à INCM (DB-INT-001, TR-033): uma linha por pedido e resposta, só inserção.
+            O ALTER DEFAULT PRIVILEGES de 2026-08-11-8 dá à saigt_app UPDATE e DELETE em tabelas novas, por isso
+            revogam-se aqui.
+        </comment>
+
+        <createTable tableName="incm_comunicacao">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="processo_id" type="UUID">
+                <constraints nullable="false" foreignKeyName="fk_incm_comunicacao_processo" references="processo(id)"/>
+            </column>
+            <column name="operacao" type="VARCHAR(20)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="act_identifier" type="BIGINT"/>
+            <column name="submissao" type="SMALLINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="serie_dr" type="VARCHAR(10)"/>
+            <column name="pedido" type="JSONB">
+                <constraints nullable="false"/>
+            </column>
+            <column name="resposta" type="JSONB"/>
+            <column name="http_status" type="INTEGER"/>
+            <column name="is_success" type="BOOLEAN"/>
+            <column name="processing_status" type="VARCHAR(50)"/>
+            <column name="act_status" type="VARCHAR(100)"/>
+            <column name="falha_tecnica" type="VARCHAR(20)"/>
+            <column name="transicao_derivada" type="VARCHAR(30)"/>
+            <column name="correlation_id" type="VARCHAR(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="enviado_em" type="TIMESTAMP WITH TIME ZONE">
+                <constraints nullable="false"/>
+            </column>
+            <column name="recebido_em" type="TIMESTAMP WITH TIME ZONE"/>
+        </createTable>
+
+        <sql>ALTER TABLE incm_comunicacao ADD CONSTRAINT ck_incm_comunicacao_operacao
+            CHECK (operacao IN ('SUBMIT_NEW_ACT', 'GET_ACT_DETAILS'))</sql>
+        <sql>ALTER TABLE incm_comunicacao ADD CONSTRAINT ck_incm_comunicacao_serie_dr
+            CHECK (serie_dr IN ('PRIMEIRA', 'SEGUNDA_H', 'SEGUNDA_C'))</sql>
+        <sql>ALTER TABLE incm_comunicacao ADD CONSTRAINT ck_incm_comunicacao_falha_tecnica
+            CHECK (falha_tecnica IN ('TIMEOUT', 'CIRCUITO_ABERTO', 'ERRO_REDE', 'ERRO_HTTP'))</sql>
+
+        <createIndex tableName="incm_comunicacao" indexName="idx_incm_comunicacao_processo_id">
+            <column name="processo_id"/>
+        </createIndex>
+        <createIndex tableName="incm_comunicacao" indexName="idx_incm_comunicacao_act_identifier">
+            <column name="act_identifier"/>
+        </createIndex>
+        <createIndex tableName="incm_comunicacao" indexName="idx_incm_comunicacao_correlation_id">
+            <column name="correlation_id"/>
+        </createIndex>
+        <createIndex tableName="incm_comunicacao" indexName="idx_incm_comunicacao_enviado_em">
+            <column name="enviado_em"/>
+        </createIndex>
+
+        <sql>REVOKE UPDATE, DELETE ON incm_comunicacao FROM saigt_app</sql>
+
+        <rollback>
+            <dropTable tableName="incm_comunicacao"/>
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>

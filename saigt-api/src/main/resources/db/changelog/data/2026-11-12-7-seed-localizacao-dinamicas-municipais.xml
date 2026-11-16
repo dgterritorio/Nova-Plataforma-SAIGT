@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="2026-11-12-7-seed-localizacao-dinamicas-municipais" author="david.raposo">
+        <comment>
+            EF v1.5 §3.1.2: a freguesia e o topónimo recolhem-se no primeiro Procedimento das Dinâmicas do município.
+            Obrigatória (ou «Aplicável a toda a área do IGT») na Elaboração, Revisão e Alterações do PU e do PP e nas
+            três Alterações não completas do PDM; opcional na Suspensão, Medidas Preventivas, Normas Provisórias e
+            Correção Material do PDM, PU e PP. A Alteração do PDM já vem do seed 2026-11-09-3; as restantes ficam 'NAO'.
+            As linhas escolhem-se pelos códigos, nunca pelos ids.
+        </comment>
+
+        <sql>UPDATE instrumento_procedimento_config SET pede_localizacao = 'OBRIGATORIA'
+            WHERE ordem = 1
+              AND instrumento_dinamica_config_id IN (
+                  SELECT idc.id FROM instrumento_dinamica_config idc
+                  JOIN tipo_instrumento ti ON ti.id = idc.tipo_instrumento_id
+                  JOIN tipo_dinamica td ON td.id = idc.tipo_dinamica_id
+                  WHERE (ti.codigo = 'PDM' AND td.codigo IN ('ALTERACAO_SIMPLIFICADA_ART123',
+                             'ALTERACAO_SIMPLIFICADA_DL10_2024', 'ALTERACAO_ADAPTACAO'))
+                     OR (ti.codigo IN ('PU', 'PP') AND td.codigo IN ('ELABORACAO', 'REVISAO', 'ALTERACAO',
+                             'ALTERACAO_SIMPLIFICADA_ART123', 'ALTERACAO_SIMPLIFICADA_DL10_2024', 'ALTERACAO_ADAPTACAO')))</sql>
+
+        <sql>UPDATE instrumento_procedimento_config SET pede_localizacao = 'OPCIONAL'
+            WHERE ordem = 1
+              AND instrumento_dinamica_config_id IN (
+                  SELECT idc.id FROM instrumento_dinamica_config idc
+                  JOIN tipo_instrumento ti ON ti.id = idc.tipo_instrumento_id
+                  JOIN tipo_dinamica td ON td.id = idc.tipo_dinamica_id
+                  WHERE ti.codigo IN ('PDM', 'PU', 'PP')
+                    AND td.codigo IN ('SUSPENSAO', 'MEDIDAS_PREVENTIVAS', 'NORMAS_PROVISORIAS', 'CORRECAO_MATERIAL'))</sql>
+
+        <rollback>
+            <sql>UPDATE instrumento_procedimento_config SET pede_localizacao = 'NAO'
+                WHERE ordem = 1
+                  AND instrumento_dinamica_config_id IN (
+                      SELECT idc.id FROM instrumento_dinamica_config idc
+                      JOIN tipo_instrumento ti ON ti.id = idc.tipo_instrumento_id
+                      JOIN tipo_dinamica td ON td.id = idc.tipo_dinamica_id
+                      WHERE (ti.codigo = 'PDM' AND td.codigo IN ('ALTERACAO_SIMPLIFICADA_ART123',
+                                 'ALTERACAO_SIMPLIFICADA_DL10_2024', 'ALTERACAO_ADAPTACAO'))
+                         OR (ti.codigo IN ('PU', 'PP') AND td.codigo IN ('ELABORACAO', 'REVISAO', 'ALTERACAO',
+                                 'ALTERACAO_SIMPLIFICADA_ART123', 'ALTERACAO_SIMPLIFICADA_DL10_2024', 'ALTERACAO_ADAPTACAO'))
+                         OR (ti.codigo IN ('PDM', 'PU', 'PP')
+                             AND td.codigo IN ('SUSPENSAO', 'MEDIDAS_PREVENTIVAS', 'NORMAS_PROVISORIAS', 'CORRECAO_MATERIAL')))</sql>
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>

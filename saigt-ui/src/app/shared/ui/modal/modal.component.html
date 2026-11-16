@@ -1,0 +1,61 @@
+@if (aberto()) {
+  <!-- eslint-disable-next-line @angular-eslint/template/click-events-have-key-events, @angular-eslint/template/interactive-supports-focus -- clicar no fundo é um atalho de rato; no teclado fecha-se com Esc ou com o botão da caixa -->
+  <div class="modal-fundo" (click)="clicarFundo($event)">
+    <div
+      #caixa
+      [class]="'modal-caixa modal-' + largura() + ' modal-' + variante()"
+      role="dialog"
+      aria-modal="true"
+      tabindex="-1"
+      [attr.aria-labelledby]="idTitulo"
+      [attr.aria-describedby]="subtitulo() ? idSubtitulo : (descritoPor() ?? null)"
+    >
+      @if (variante() === 'confirmacao') {
+        <div class="modal-cabecalho-confirmacao">
+          <span class="modal-medalhao" aria-hidden="true">
+            <ng-content select="[icone]">
+              <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round">
+                <circle cx="10" cy="10" r="7.5" />
+                <path d="M10 9v4.5M10 6.5h.01" />
+              </svg>
+            </ng-content>
+          </span>
+          <div>
+            <h2 class="modal-titulo" [id]="idTitulo">{{ titulo() }}</h2>
+            @if (subtitulo()) {
+              <p class="modal-subtitulo" [id]="idSubtitulo">{{ subtitulo() }}</p>
+            }
+          </div>
+        </div>
+      } @else {
+        <div class="modal-cabecalho">
+          <div>
+            <h2 class="modal-titulo" [id]="idTitulo">{{ titulo() }}</h2>
+            @if (subtitulo()) {
+              <p class="modal-subtitulo" [id]="idSubtitulo">{{ subtitulo() }}</p>
+            }
+          </div>
+          <button type="button" class="modal-fechar" aria-label="Fechar" (click)="fechar.emit()">
+            <svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true">
+              <path d="M13.5 4.5l-9 9M4.5 4.5l9 9" />
+            </svg>
+          </button>
+        </div>
+      }
+      <div
+        #corpo
+        class="modal-corpo"
+        [attr.tabindex]="comScroll() ? 0 : null"
+        [attr.role]="comScroll() ? 'region' : null"
+        [attr.aria-labelledby]="comScroll() ? idTitulo : null"
+      >
+        <div #conteudo class="modal-corpo-conteudo">
+          <ng-content />
+        </div>
+      </div>
+      <div class="modal-rodape">
+        <ng-content select="[rodape]" />
+      </div>
+    </div>
+  </div>
+}

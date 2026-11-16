@@ -1,0 +1,26 @@
+instrumento_procedimento_config_id;codigo;separador;nome;categoria;tipo_elemento;formato;obrigatorio;extensoes_aceites;ordem;ativo;elemento_informacao_base
+210;"DELIBERACAO_PUB";"Deliberação";"Deliberação do início de alteração do plano territorial";"PUBLICACAO";"PECA_ESCRITA";"EDITAVEL";true;"[""doc"",""docx"",""rtf"",""odf"",""odt"",""xls"",""xlsx"",""csv"",""ods"",""pdf"",""txt""]";1;true;"DELIBERACAO"
+210;"DELIBERACAO_DEP";"Deliberação";"Deliberação do início de alteração do plano territorial";"DEPOSITO";"PECA_ESCRITA";"NAO_EDITAVEL";false;"[""pdf"",""jpg"",""png""]";2;true;"DELIBERACAO"
+210;"TEXTO_ATO_PUB";"Texto do Ato";"Texto do ato a publicar no Diário da República";"PUBLICACAO";"PECA_ESCRITA";"EDITAVEL";true;"[""doc"",""docx"",""rtf"",""odf"",""odt"",""xls"",""xlsx"",""csv"",""ods"",""pdf"",""txt""]";3;true;"TEXTO_ATO"
+210;"TEXTO_ATO_DEP";"Texto do Ato";"Texto do ato a publicar no Diário da República";"DEPOSITO";"PECA_ESCRITA";"NAO_EDITAVEL";false;"[""pdf"",""jpg"",""png""]";4;true;"TEXTO_ATO"
+210;"PLANTA_LOCALIZACAO_PUB";"Planta de Localização";"Planta com área de intervenção";"PUBLICACAO";"PECA_GRAFICA";"EDITAVEL";true;"[""gpkg"",""zip""]";5;true;NULL
+210;"PLANTA_LOCALIZACAO_DEP";"Planta de Localização";"Planta com área de intervenção";"DEPOSITO";"PECA_GRAFICA";"NAO_EDITAVEL";false;"[""tif"",""tiff"",""tfw""]";6;true;NULL
+211;"TEXTO_ATO_PUB";"Texto do Ato";"Texto do ato a publicar no Diário da República";"PUBLICACAO";"PECA_ESCRITA";"EDITAVEL";true;"[""doc"",""docx"",""rtf"",""odf"",""odt"",""xls"",""xlsx"",""csv"",""ods"",""pdf"",""txt""]";1;true;"TEXTO_ATO"
+211;"TEXTO_ATO_DEP";"Texto do Ato";"Texto do ato a publicar no Diário da República";"DEPOSITO";"PECA_ESCRITA";"NAO_EDITAVEL";false;"[""pdf"",""jpg"",""png""]";2;true;"TEXTO_ATO"
+211;"DELIBERACAO_PUB";"Deliberação";"Deliberação da Assembleia Municipal (AM) que aprova a alteração do plano";"PUBLICACAO";"PECA_ESCRITA";"EDITAVEL";true;"[""doc"",""docx"",""rtf"",""odf"",""odt"",""xls"",""xlsx"",""csv"",""ods"",""pdf"",""txt""]";3;true;"DELIBERACAO"
+211;"DELIBERACAO_DEP";"Deliberação";"Deliberação da Assembleia Municipal (AM) que aprova a alteração do plano";"DEPOSITO";"PECA_ESCRITA";"NAO_EDITAVEL";false;"[""pdf"",""jpg"",""png""]";4;true;"DELIBERACAO"
+211;"ALTERACOES_REGULAMENTO_PUB";"Alterações ao Regulamento";"Alterações ao Regulamento — extrato com as alterações introduzidas";"PUBLICACAO";"PECA_ESCRITA";"EDITAVEL";false;"[""doc"",""docx"",""rtf"",""odf"",""odt"",""xls"",""xlsx"",""csv"",""ods"",""pdf"",""txt""]";5;true;NULL
+211;"ALTERACOES_REGULAMENTO_DEP";"Alterações ao Regulamento";"Alterações ao Regulamento — extrato com as alterações introduzidas";"DEPOSITO";"PECA_ESCRITA";"NAO_EDITAVEL";false;"[""pdf"",""jpg"",""png""]";6;true;NULL
+211;"REGULAMENTO_INTEGRAL_PUB";"Regulamento";"Regulamento alterado na sua versão integral";"PUBLICACAO";"PECA_ESCRITA";"EDITAVEL";false;"[""doc"",""docx"",""rtf"",""odf"",""odt"",""xls"",""xlsx"",""csv"",""ods"",""pdf"",""txt""]";7;true;NULL
+211;"REGULAMENTO_INTEGRAL_DEP";"Regulamento";"Regulamento alterado na sua versão integral";"DEPOSITO";"PECA_ESCRITA";"NAO_EDITAVEL";false;"[""pdf"",""jpg"",""png""]";8;true;NULL
+211;"PLANTA_ORDENAMENTO_PUB";"Planta de Ordenamento";"Planta de ordenamento";"PUBLICACAO";"PECA_GRAFICA";"EDITAVEL";false;"[""gpkg"",""zip""]";9;true;NULL
+211;"PLANTA_ORDENAMENTO_DEP";"Planta de Ordenamento";"Planta de ordenamento";"DEPOSITO";"PECA_GRAFICA";"NAO_EDITAVEL";false;"[""tif"",""tiff"",""tfw""]";10;true;NULL
+211;"PLANTA_CONDICIONANTES_PUB";"Planta de Condicionantes";"Planta de condicionantes";"PUBLICACAO";"PECA_GRAFICA";"EDITAVEL";false;"[""gpkg"",""zip""]";11;true;NULL
+211;"PLANTA_CONDICIONANTES_DEP";"Planta de Condicionantes";"Planta de condicionantes";"DEPOSITO";"PECA_GRAFICA";"NAO_EDITAVEL";false;"[""tif"",""tiff"",""tfw""]";12;true;NULL
+211;"RELATORIO_FUNDAMENTACAO_DEP";"Relatório de Fundamentação";"Relatório fundamentando as alterações introduzidas";"DEPOSITO";"PECA_ESCRITA";"NAO_EDITAVEL";false;"[""pdf"",""jpg"",""png""]";13;true;NULL
+211;"RELATORIO_AMBIENTAL_DEP";"Relatório Ambiental";"Relatório ambiental (AAE)";"DEPOSITO";"PECA_ESCRITA";"NAO_EDITAVEL";false;"[""pdf"",""jpg"",""png""]";14;true;NULL
+211;"DEMAIS_ELEMENTOS_DEP";"Outros Elementos do Plano";"Os demais elementos do plano afetados pela alteração";"DEPOSITO";"OUTROS";"NAO_EDITAVEL";false;"[""pdf"",""jpg"",""png""]";15;true;NULL
+211;"RELATORIO_PONDERACAO_DEP";"Relatório de Ponderação";"Relatório de ponderação dos resultados da discussão pública";"DEPOSITO";"PECA_ESCRITA";"NAO_EDITAVEL";false;"[""pdf"",""jpg"",""png""]";16;true;NULL
+211;"DELIBERACAO_CM_DEP";"Deliberação da CM";"Deliberação da Câmara Municipal (CM) que determina a alteração do plano";"DEPOSITO";"PECA_ESCRITA";"NAO_EDITAVEL";false;"[""pdf"",""jpg"",""png""]";17;true;NULL
+211;"PARECER_CCDR_DEP";"Parecer da CCDR";"Parecer da CCDR";"DEPOSITO";"PECA_ESCRITA";"NAO_EDITAVEL";false;"[""pdf"",""jpg"",""png""]";18;true;NULL
+211;"PARECERES_ATA_DEP";"Pareceres";"Pareceres emitidos / Ata da conferência de serviços";"DEPOSITO";"PECA_ESCRITA";"NAO_EDITAVEL";false;"[""pdf"",""jpg"",""png""]";19;true;NULL

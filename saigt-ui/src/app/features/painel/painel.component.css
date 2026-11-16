@@ -1,0 +1,226 @@
+/* O Figma desce o painel 43px abaixo do padding do conteúdo (67px do cabeçalho). */
+.painel {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaco-6);
+  max-width: var(--contentor-painel);
+  margin: 0 auto;
+  padding-top: var(--espaco-topo-ecra);
+}
+
+.saudacao h1 {
+  margin: 0;
+  font-size: var(--texto-xl);
+  font-weight: var(--peso-semi);
+  line-height: var(--texto-xl-linha);
+  color: var(--cor-texto);
+}
+
+/* O #64748b do Figma fica a 4,37:1 sobre o fundo da página: usa-se o tom acessível mais próximo. */
+.subtitulo {
+  margin: 0;
+  padding-top: var(--espaco-0-5);
+  font-size: var(--texto-base);
+  line-height: var(--texto-base-linha);
+  color: var(--cor-texto-celula);
+}
+
+.faixa-criar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--espaco-4);
+  padding: var(--espaco-2) var(--espaco-3);
+  border: var(--borda-largura-destaque) solid var(--cor-primaria);
+  border-radius: var(--raio-lg);
+  background: var(--cor-faixa-fundo);
+}
+
+.faixa-criar-texto {
+  margin: 0;
+  font-size: var(--texto-base);
+  font-weight: var(--peso-semi);
+  line-height: var(--texto-base-linha);
+  color: var(--cor-texto-forte);
+}
+
+.indicadores {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--espaco-4);
+}
+
+.indicadores-dgt {
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.indicador-corpo {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  padding: var(--espaco-5) var(--espaco-5) var(--espaco-4);
+}
+
+.indicador-topo {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+
+.indicador-icone {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: var(--raio-lg);
+}
+
+.indicador-icone-sucesso {
+  background: var(--cor-icone-sucesso-fundo);
+}
+
+.indicador-icone-info {
+  background: var(--cor-icone-info-fundo);
+}
+
+.indicador-icone-erro {
+  background: var(--cor-icone-erro-fundo);
+}
+
+.indicador-icone-aviso {
+  background: var(--cor-icone-aviso-fundo);
+}
+
+.cartao-valor {
+  padding-top: var(--espaco-4);
+  font-family: var(--fonte-destaque);
+  font-size: var(--texto-numero);
+  font-weight: var(--peso-negrito);
+  line-height: var(--texto-numero-linha);
+  color: var(--cor-texto-titulo);
+}
+
+.indicador-rotulo {
+  margin: 0;
+  padding-top: var(--espaco-1);
+  font-size: var(--texto-base);
+  font-weight: var(--peso-medio);
+  line-height: var(--texto-base-linha);
+  color: var(--cor-texto-cartao);
+}
+
+/* O #99a1af do Figma fica a 2,6:1 sobre branco. */
+.indicador-ano {
+  font-weight: var(--peso-normal);
+  color: var(--cor-texto-nav);
+}
+
+.indicador-acao {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--espaco-3) var(--espaco-5);
+  border-top: var(--borda-largura) solid var(--cor-borda-elevado);
+  font-size: var(--texto-sm);
+  font-weight: var(--peso-semi);
+  line-height: var(--texto-sm-linha);
+  text-decoration: none;
+}
+
+.indicador-acao:hover {
+  text-decoration: underline;
+}
+
+.indicador-acao-primaria {
+  color: var(--cor-acao-cartao);
+}
+
+.indicador-acao-sucesso {
+  color: var(--cor-acao-sucesso);
+}
+
+.indicador-acao-aviso {
+  color: var(--cor-acao-aviso);
+}
+
+.lista-cabecalho {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--espaco-3);
+  padding: var(--espaco-4) var(--espaco-5);
+  border-bottom: var(--borda-largura) solid var(--cor-borda-elevado);
+}
+
+.lista-cabecalho h2 {
+  margin: 0;
+  font-family: var(--fonte-destaque);
+  font-size: var(--texto-base);
+  font-weight: var(--peso-negrito);
+  line-height: var(--texto-base-linha);
+  color: var(--cor-texto-titulo);
+}
+
+/* O #99a1af do Figma fica a 2,6:1 sobre branco. */
+.lista-contagem {
+  margin-left: auto;
+  font-size: var(--texto-sm);
+  line-height: var(--texto-sm-linha);
+  color: var(--cor-texto-nav);
+}
+
+.lista-ver-todos {
+  font-size: var(--texto-sm);
+  font-weight: var(--peso-semi);
+  line-height: var(--texto-sm-linha);
+  color: var(--cor-ligacao-secundaria);
+  text-decoration: none;
+}
+
+.ligacao-processo {
+  font-weight: var(--peso-semi);
+  color: var(--cor-primaria);
+  text-decoration: none;
+}
+
+.lista-ver-todos:hover,
+.ligacao-processo:hover {
+  text-decoration: underline;
+}
+
+.tipo-instrumento {
+  font-weight: var(--peso-semi);
+  color: var(--cor-texto-celula-forte);
+}
+
+/* O cartão corta o que passa dos cantos: o anel de foco fica por dentro. */
+.indicador-acao:focus-visible,
+.lista-ver-todos:focus-visible,
+.ligacao-processo:focus-visible {
+  outline: var(--anel-foco);
+  outline-offset: calc(var(--anel-foco-afastamento) * -1);
+}
+
+/* Ecrãs estreitos: os cartões passam a 2 colunas e depois a 1; a tabela desliza na horizontal. */
+@media (width <= 1024px) {
+  .indicadores {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (width <= 640px) {
+  .indicadores,
+  .indicadores-dgt {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* O selo da devolução pela PCM ao lado do estado: texto, não só cor. */
+.estado-celula {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--espaco-1);
+}

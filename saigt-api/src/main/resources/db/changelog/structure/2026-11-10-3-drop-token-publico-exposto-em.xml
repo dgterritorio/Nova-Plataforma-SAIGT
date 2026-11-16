@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="2026-11-10-3-drop-token-publico-exposto-em" author="david.raposo">
+        <comment>
+            Sem prefixo publico/ nem cópias (DB-DOC-002 v22, OI-491): o link público é uma linha de
+            documento_link_publico. Sai o par token_publico/exposto_em, sem migração de dados.
+        </comment>
+        <sql>ALTER TABLE processo_documento DROP CONSTRAINT IF EXISTS ck_processo_documento_exposicao</sql>
+        <sql>DROP INDEX IF EXISTS idx_processo_documento_token_publico</sql>
+        <sql>ALTER TABLE processo_documento DROP CONSTRAINT IF EXISTS uq_processo_documento_token_publico</sql>
+        <dropColumn tableName="processo_documento" columnName="token_publico"/>
+        <dropColumn tableName="processo_documento" columnName="exposto_em"/>
+        <rollback>
+            <addColumn tableName="processo_documento">
+                <column name="token_publico" type="UUID">
+                    <constraints nullable="true" unique="true" uniqueConstraintName="uq_processo_documento_token_publico"/>
+                </column>
+                <column name="exposto_em" type="TIMESTAMP WITH TIME ZONE"/>
+            </addColumn>
+            <sql>ALTER TABLE processo_documento ADD CONSTRAINT ck_processo_documento_exposicao
+                CHECK ((token_publico IS NULL) = (exposto_em IS NULL))</sql>
+        </rollback>
+    </changeSet>
+</databaseChangeLog>

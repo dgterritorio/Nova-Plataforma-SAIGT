@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="2026-11-13-5-add-instrumento-origem" author="arnaldo.costa">
+        <comment>
+            Servidão de origem ("mãe") de uma servidão (DB-PROC-012, BL-PROC-016, FR-094, TR-235): relação por
+            identificador e não por texto livre. Nula nas linhas existentes. A regra «só categoria SRUP» envolve
+            tipo_instrumento e fica no serviço. Sem ON DELETE: os Instrumentos não se apagam.
+        </comment>
+
+        <addColumn tableName="instrumento">
+            <column name="instrumento_origem_id" type="UUID"/>
+        </addColumn>
+
+        <addForeignKeyConstraint constraintName="fk_instrumento_instrumento_origem"
+                                 baseTableName="instrumento" baseColumnNames="instrumento_origem_id"
+                                 referencedTableName="instrumento" referencedColumnNames="id"/>
+
+        <sql>
+            ALTER TABLE instrumento ADD CONSTRAINT ck_instrumento_origem_diferente
+                CHECK (instrumento_origem_id IS NULL OR instrumento_origem_id &lt;&gt; id)
+        </sql>
+
+        <createIndex tableName="instrumento" indexName="idx_instrumento_instrumento_origem_id">
+            <column name="instrumento_origem_id"/>
+        </createIndex>
+
+        <rollback>
+            <dropIndex tableName="instrumento" indexName="idx_instrumento_instrumento_origem_id"/>
+            <sql>ALTER TABLE instrumento DROP CONSTRAINT ck_instrumento_origem_diferente</sql>
+            <dropForeignKeyConstraint baseTableName="instrumento" constraintName="fk_instrumento_instrumento_origem"/>
+            <dropColumn tableName="instrumento" columnName="instrumento_origem_id"/>
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="2026-09-10-5-seed-permissao-acao-pdm" author="nuno.miguel.silva">
+        <comment>
+            Issue #123 — Grupo 3: permissao_acao (40 linhas, duas por
+            procedimento — ENTIDADE submete, DGT valida). Fonte:
+            pdm-mapeamento-configuracao.md §13.7. Nenhuma das 40 pode faltar:
+            um procedimento sem linha para o ator do utilizador falha a
+            Camada 3 de autorização. Sem linha PCM neste lote (dinâmicas
+            todas de 2.ª série). Ids explícitos + setval.
+        </comment>
+
+        <loadData tableName="permissao_acao" file="db/data/2026-09-10-5-permissao_acao.csv"
+                  relativeToChangelogFile="false" separator=";" quotchar="&quot;" encoding="UTF-8">
+            <column name="id" type="NUMERIC"/>
+            <column name="instrumento_procedimento_config_id" type="NUMERIC"/>
+            <column name="ator" type="STRING"/>
+            <column name="ativo" type="BOOLEAN"/>
+        </loadData>
+
+        <sql dbms="postgresql">SELECT setval(pg_get_serial_sequence('permissao_acao', 'id'), (SELECT MAX(id) FROM permissao_acao))</sql>
+
+        <rollback>
+            <delete tableName="permissao_acao">
+                <where>id BETWEEN 601 AND 640</where>
+            </delete>
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>

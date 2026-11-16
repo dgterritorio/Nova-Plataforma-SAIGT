@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="2026-11-06-2-add-link-publico-permitido-documento-config" author="pedro.paixao">
+        <comment>
+            Indica se os ficheiros do item podem ter link público (DB-DOC-001). Falso por omissão; os itens que o
+            permitem são marcados no seed.
+        </comment>
+
+        <addColumn tableName="documento_config">
+            <column name="link_publico_permitido" type="BOOLEAN" defaultValueBoolean="false">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+
+        <rollback>
+            <dropColumn tableName="documento_config" columnName="link_publico_permitido"/>
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>

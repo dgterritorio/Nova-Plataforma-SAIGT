@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="2026-11-09-3-seed-localizacao-motivo-alteracao-pdm" author="margarida.marques">
+        <comment>
+            EF v1.5 §3.1.2: na Alteração de um PDM a freguesia é obrigatória (ou «Aplicável a toda a área do IGT») e,
+            antes do motivo, pergunta-se se a alteração conforma o plano com uma lei, programa ou plano de hierarquia
+            superior. Os campos recolhem-se no primeiro Procedimento da Dinâmica. A linha escolhe-se pelos códigos,
+            nunca pelos ids.
+        </comment>
+
+        <sql>UPDATE instrumento_procedimento_config SET pede_localizacao = 'OBRIGATORIA', pede_motivo_alteracao = 'COM_PERGUNTA'
+            WHERE ordem = 1
+              AND instrumento_dinamica_config_id IN (
+                  SELECT idc.id FROM instrumento_dinamica_config idc
+                  JOIN tipo_instrumento ti ON ti.id = idc.tipo_instrumento_id
+                  JOIN tipo_dinamica td ON td.id = idc.tipo_dinamica_id
+                  WHERE ti.codigo = 'PDM' AND td.codigo = 'ALTERACAO')</sql>
+
+        <rollback>
+            <sql>UPDATE instrumento_procedimento_config SET pede_localizacao = 'NAO', pede_motivo_alteracao = 'NAO'
+                WHERE ordem = 1
+                  AND instrumento_dinamica_config_id IN (
+                      SELECT idc.id FROM instrumento_dinamica_config idc
+                      JOIN tipo_instrumento ti ON ti.id = idc.tipo_instrumento_id
+                      JOIN tipo_dinamica td ON td.id = idc.tipo_dinamica_id
+                      WHERE ti.codigo = 'PDM' AND td.codigo = 'ALTERACAO')</sql>
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>

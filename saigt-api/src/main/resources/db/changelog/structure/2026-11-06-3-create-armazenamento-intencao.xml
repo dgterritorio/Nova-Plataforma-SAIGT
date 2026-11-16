@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="2026-11-06-3-create-armazenamento-intencao" author="pedro.paixao">
+        <comment>
+            Intenções de escrita no storage (DB-DOC-011): uma linha por gravação, cópia ou apagamento, registada
+            antes de o objeto ser tocado, para a limpeza noturna reconciliar o bucket com a base de dados.
+        </comment>
+
+        <createTable tableName="armazenamento_intencao">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="chave_objeto" type="VARCHAR(500)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="operacao" type="VARCHAR(20)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="registada_em" type="TIMESTAMP WITH TIME ZONE">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <sql>ALTER TABLE armazenamento_intencao ADD CONSTRAINT ck_armazenamento_intencao_operacao
+            CHECK (operacao IN ('GRAVACAO', 'COPIA', 'APAGAMENTO'))</sql>
+
+        <createIndex tableName="armazenamento_intencao" indexName="idx_armazenamento_intencao_registada_em">
+            <column name="registada_em"/>
+        </createIndex>
+
+        <rollback>
+            <dropTable tableName="armazenamento_intencao"/>
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>

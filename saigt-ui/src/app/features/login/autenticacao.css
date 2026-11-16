@@ -1,0 +1,95 @@
+/* Moldura comum ao login e à escolha de entidade (Figma UI-026/028). */
+:host {
+  display: block;
+  min-height: 100vh;
+}
+
+.pagina {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background: var(--cor-fundo-autenticacao);
+}
+
+.conteudo {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: var(--espaco-8) var(--espaco-4);
+}
+
+.marca {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--espaco-3);
+  margin-bottom: var(--espaco-8);
+}
+
+.marca-logotipo {
+  width: 104px;
+  height: 36px;
+}
+
+.marca-subtitulo {
+  margin: 0;
+  font-size: var(--texto-base);
+  line-height: var(--texto-base-linha);
+  color: var(--cor-texto-sobre-escuro);
+  text-align: center;
+}
+
+.cartao {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaco-4);
+  box-sizing: border-box;
+  width: 100%;
+  max-width: var(--largura-cartao-autenticacao);
+  padding: var(--espaco-8);
+  border-radius: var(--raio-xl);
+  background: var(--cor-superficie);
+  box-shadow: var(--sombra-modal);
+}
+
+.cartao-titulo {
+  margin: 0;
+  font-size: var(--texto-xl);
+  font-weight: var(--peso-semi);
+  line-height: var(--texto-xl-linha);
+  color: var(--cor-texto);
+}
+
+.rodape {
+  margin: var(--espaco-8) 0 0;
+  font-size: var(--texto-sm);
+  line-height: var(--texto-sm-linha);
+  color: var(--cor-texto-sobre-escuro);
+  text-align: center;
+}
+
+.parceiros {
+  display: flex;
+  flex-shrink: 0;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--espaco-4);
+  padding: var(--espaco-4) var(--espaco-8);
+  background: var(--cor-superficie);
+}
+
+.grupo {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--espaco-6);
+}
+
+.parceiros img {
+  display: block;
+  width: auto;
+  height: 24px;
+}

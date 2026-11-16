@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="2026-11-10-4-descarga-sobrevive-ao-documento" author="david.raposo">
+        <comment>
+            Um documento já descarregado (pela INCM, por exemplo) tem de poder ser removido na correção. A auditoria
+            fica, com o processo; perde só a ligação ao documento, como já perde a do link.
+        </comment>
+        <dropForeignKeyConstraint baseTableName="documento_descarga"
+                                  constraintName="fk_documento_descarga_processo_documento"/>
+        <addForeignKeyConstraint baseTableName="documento_descarga" baseColumnNames="processo_documento_id"
+                                 constraintName="fk_documento_descarga_processo_documento"
+                                 referencedTableName="processo_documento" referencedColumnNames="id"
+                                 onDelete="SET NULL"/>
+        <rollback>
+            <dropForeignKeyConstraint baseTableName="documento_descarga"
+                                      constraintName="fk_documento_descarga_processo_documento"/>
+            <addForeignKeyConstraint baseTableName="documento_descarga" baseColumnNames="processo_documento_id"
+                                     constraintName="fk_documento_descarga_processo_documento"
+                                     referencedTableName="processo_documento" referencedColumnNames="id"/>
+        </rollback>
+    </changeSet>
+</databaseChangeLog>

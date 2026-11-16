@@ -1,0 +1,6 @@
+@if (aCarregar()) {
+  <span class="botao-indicador" aria-hidden="true"></span>
+} @else {
+  <ng-content select="[icone]" />
+}
+<ng-content />

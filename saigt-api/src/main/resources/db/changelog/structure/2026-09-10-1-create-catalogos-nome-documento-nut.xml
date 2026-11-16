@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="2026-09-10-1-create-catalogos-nome-documento-nut" author="nuno.miguel.silva">
+        <comment>
+            Issue #122 — Grupo 1 (catálogos globais, seed por developers, sem
+            CRUD). Cria nome_documento e nut, os 2 catálogos que faltavam para
+            ligar os cartões "Nomes de documento"/"NUTs (região)" do ecrã
+            Listas de Valores a GET /api/v1/catalogos. Ver
+            desenho v0.1, 03-modelo-dados.md §11 (21→23 tabelas).
+        </comment>
+
+        <createTable tableName="nome_documento">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="nome" type="VARCHAR(100)">
+                <constraints nullable="false" unique="true" uniqueConstraintName="uq_nome_documento_nome"/>
+            </column>
+            <column name="ordem" type="INTEGER">
+                <constraints nullable="false"/>
+            </column>
+            <column name="ativo" type="BOOLEAN" defaultValueBoolean="true">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <createTable tableName="nut">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="codigo" type="VARCHAR(10)">
+                <constraints nullable="false" unique="true" uniqueConstraintName="uq_nut_codigo"/>
+            </column>
+            <column name="nome" type="VARCHAR(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="ordem" type="INTEGER">
+                <constraints nullable="false"/>
+            </column>
+            <column name="ativo" type="BOOLEAN" defaultValueBoolean="true">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <rollback>
+            <dropTable tableName="nut"/>
+            <dropTable tableName="nome_documento"/>
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>

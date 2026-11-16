@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="2026-11-11-10-seed-regra-ren-sem-dinamicas-em-simultaneo" author="david.raposo">
+        <comment>
+            Na REN não há Dinâmicas em simultâneo no mesmo Instrumento (OI-417): uma regra por configuração da REN,
+            com uma condição OCORRENCIA_NAO_EXISTE sobre qualquer Dinâmica EM_CURSO (sem codigo). Soma-se às outras
+            regras da configuração, porque o motor exige que todas passem. FK resolvidas pelo código, sem ids
+            explícitos. Só atua quando as configurações da REN forem ativadas.
+        </comment>
+
+        <insert tableName="regra">
+            <column name="instrumento_dinamica_config_id"
+                    valueComputed="(SELECT idc.id FROM instrumento_dinamica_config idc JOIN tipo_instrumento ti ON ti.id = idc.tipo_instrumento_id JOIN tipo_dinamica td ON td.id = idc.tipo_dinamica_id WHERE ti.codigo = 'REN' AND td.codigo = 'DELIMITACAO')"/>
+            <column name="operador" value="AND"/>
+            <column name="substitui_sequenciamento" valueBoolean="false"/>
+            <column name="descricao" value="Sem Dinâmicas em simultâneo no mesmo Instrumento"/>
+            <column name="ativo" valueBoolean="true"/>
+        </insert>
+        <insert tableName="regra">
+            <column name="instrumento_dinamica_config_id"
+                    valueComputed="(SELECT idc.id FROM instrumento_dinamica_config idc JOIN tipo_instrumento ti ON ti.id = idc.tipo_instrumento_id JOIN tipo_dinamica td ON td.id = idc.tipo_dinamica_id WHERE ti.codigo = 'REN' AND td.codigo = 'ALTERACAO')"/>
+            <column name="operador" value="AND"/>
+            <column name="substitui_sequenciamento" valueBoolean="false"/>
+            <column name="descricao" value="Sem Dinâmicas em simultâneo no mesmo Instrumento"/>
+            <column name="ativo" valueBoolean="true"/>
+        </insert>
+        <insert tableName="regra">
+            <column name="instrumento_dinamica_config_id"
+                    valueComputed="(SELECT idc.id FROM instrumento_dinamica_config idc JOIN tipo_instrumento ti ON ti.id = idc.tipo_instrumento_id JOIN tipo_dinamica td ON td.id = idc.tipo_dinamica_id WHERE ti.codigo = 'REN' AND td.codigo = 'CORRECAO_MATERIAL_RETIFICACAO')"/>
+            <column name="operador" value="AND"/>
+            <column name="substitui_sequenciamento" valueBoolean="false"/>
+            <column name="descricao" value="Sem Dinâmicas em simultâneo no mesmo Instrumento"/>
+            <column name="ativo" valueBoolean="true"/>
+        </insert>
+        <insert tableName="condicao">
+            <column name="regra_id"
+                    valueComputed="(SELECT r.id FROM regra r WHERE r.descricao = 'Sem Dinâmicas em simultâneo no mesmo Instrumento' AND r.instrumento_dinamica_config_id = (SELECT idc.id FROM instrumento_dinamica_config idc JOIN tipo_instrumento ti ON ti.id = idc.tipo_instrumento_id JOIN tipo_dinamica td ON td.id = idc.tipo_dinamica_id WHERE ti.codigo = 'REN' AND td.codigo = 'DELIMITACAO'))"/>
+            <column name="avaliador" value="OCORRENCIA_NAO_EXISTE"/>
+            <column name="parametros" value='{"tipo_ocorrencia": "DINAMICA", "estado": "EM_CURSO"}'/>
+            <column name="grupo" valueNumeric="1"/>
+            <column name="ativo" valueBoolean="true"/>
+        </insert>
+        <insert tableName="condicao">
+            <column name="regra_id"
+                    valueComputed="(SELECT r.id FROM regra r WHERE r.descricao = 'Sem Dinâmicas em simultâneo no mesmo Instrumento' AND r.instrumento_dinamica_config_id = (SELECT idc.id FROM instrumento_dinamica_config idc JOIN tipo_instrumento ti ON ti.id = idc.tipo_instrumento_id JOIN tipo_dinamica td ON td.id = idc.tipo_dinamica_id WHERE ti.codigo = 'REN' AND td.codigo = 'ALTERACAO'))"/>
+            <column name="avaliador" value="OCORRENCIA_NAO_EXISTE"/>
+            <column name="parametros" value='{"tipo_ocorrencia": "DINAMICA", "estado": "EM_CURSO"}'/>
+            <column name="grupo" valueNumeric="1"/>
+            <column name="ativo" valueBoolean="true"/>
+        </insert>
+        <insert tableName="condicao">
+            <column name="regra_id"
+                    valueComputed="(SELECT r.id FROM regra r WHERE r.descricao = 'Sem Dinâmicas em simultâneo no mesmo Instrumento' AND r.instrumento_dinamica_config_id = (SELECT idc.id FROM instrumento_dinamica_config idc JOIN tipo_instrumento ti ON ti.id = idc.tipo_instrumento_id JOIN tipo_dinamica td ON td.id = idc.tipo_dinamica_id WHERE ti.codigo = 'REN' AND td.codigo = 'CORRECAO_MATERIAL_RETIFICACAO'))"/>
+            <column name="avaliador" value="OCORRENCIA_NAO_EXISTE"/>
+            <column name="parametros" value='{"tipo_ocorrencia": "DINAMICA", "estado": "EM_CURSO"}'/>
+            <column name="grupo" valueNumeric="1"/>
+            <column name="ativo" valueBoolean="true"/>
+        </insert>
+
+        <rollback>
+            <sql>DELETE FROM condicao WHERE regra_id IN (SELECT r.id FROM regra r
+                JOIN instrumento_dinamica_config idc ON idc.id = r.instrumento_dinamica_config_id
+                JOIN tipo_instrumento ti ON ti.id = idc.tipo_instrumento_id
+                WHERE ti.codigo = 'REN' AND r.descricao = 'Sem Dinâmicas em simultâneo no mesmo Instrumento')</sql>
+            <sql>DELETE FROM regra WHERE descricao = 'Sem Dinâmicas em simultâneo no mesmo Instrumento'
+                AND instrumento_dinamica_config_id IN (SELECT idc.id FROM instrumento_dinamica_config idc
+                JOIN tipo_instrumento ti ON ti.id = idc.tipo_instrumento_id WHERE ti.codigo = 'REN')</sql>
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>

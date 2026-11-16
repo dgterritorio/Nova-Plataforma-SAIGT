@@ -1,0 +1,45 @@
+<label class="seletor-rotulo" [class.seletor-rotulo-oculto]="rotuloOculto()" [for]="id">
+  {{ rotulo() }}
+  @if (obrigatorio()) {
+    <span class="seletor-obrigatorio" aria-hidden="true">*</span>
+  }
+</label>
+<div class="seletor-caixa">
+  <select
+    [id]="id"
+    [disabled]="desativado()"
+    [required]="obrigatorio()"
+    [attr.aria-invalid]="temErro() || null"
+    [attr.aria-describedby]="descritoPor()"
+    [attr.aria-label]="rotuloAria()"
+    (change)="escolher($event)"
+    (blur)="tocar()"
+  >
+    <option value="" [disabled]="!permitirVazio()" [selected]="valor() === null">{{ placeholder() }}</option>
+    @for (grupo of grupos(); track $index) {
+      @if (grupo.rotulo !== null) {
+        <optgroup [label]="grupo.rotulo">
+          @for (opcao of grupo.opcoes; track opcao.valor) {
+            <option [value]="opcao.valor" [selected]="valor() === opcao.valor">{{ opcao.rotulo }}</option>
+          }
+        </optgroup>
+      } @else {
+        @for (opcao of grupo.opcoes; track opcao.valor) {
+          <option [value]="opcao.valor" [selected]="valor() === opcao.valor">{{ opcao.rotulo }}</option>
+        }
+      }
+    }
+  </select>
+  <svg class="seletor-chevron" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" aria-hidden="true">
+    <path d="M3 4.5L6 7.5L9 4.5" />
+  </svg>
+</div>
+@if (ajuda(); as texto) {
+  <p class="seletor-ajuda" [id]="idAjuda">{{ texto }}</p>
+}
+<!-- A região existe sempre: um leitor de ecrã só anuncia o que muda dentro de uma região já presente. -->
+<div class="seletor-anuncio" aria-live="polite">
+  @if (erro(); as mensagem) {
+    <p class="seletor-erro" [id]="idErro">{{ mensagem }}</p>
+  }
+</div>

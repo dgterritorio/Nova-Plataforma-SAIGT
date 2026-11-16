@@ -1,0 +1,44 @@
+{
+  "extends": ["stylelint-config-standard"],
+  "rules": {
+    "value-keyword-case": ["lower", { "ignoreProperties": ["/^--font-/", "/^--fonte-/"] }],
+    "selector-pseudo-element-no-unknown": [true, { "ignorePseudoElements": ["ng-deep"] }]
+  },
+  "ignoreFiles": [
+    "src/styles/tokens.css",
+    "src/app/features/processos/{processo-documentos,processo-historico,processo-validacao,processo-vista-dgt}/**/*.css"
+  ],
+  "overrides": [
+    {
+      "files": [
+        "src/app/shared/ui/**/*.css",
+        "src/app/features/processos/processos.component.css",
+        "src/app/features/processos/menu-exportar/menu-exportar.component.css",
+        "src/app/features/painel/painel.component.css",
+        "src/app/shared/components/app-shell.component.css",
+        "src/app/shared/components/ficheiros-remetidos.component.css",
+        "src/app/shared/components/recibo-submissao.component.css",
+        "src/app/shared/components/ficheiros-processo.component.css",
+        "src/app/shared/components/cartao-identidade.component.css",
+        "src/app/features/login/**/*.css",
+        "src/app/features/perfil/**/*.css",
+        "src/app/features/processos/alteracoes-modal/alteracoes-modal.component.css",
+        "src/app/features/processos/processo-detalhe/processo-detalhe.component.css",
+        "src/app/features/processos/processo-formulario-inicial/**/*.css",
+        "src/app/features/processos/dinamica-associada/**/*.css",
+        "src/app/features/processos/destino-processo/**/*.css",
+        "src/app/features/processos/criar-processo/**/*.css",
+        "src/app/features/processos/resumo-rejeicao/**/*.css",
+        "src/app/features/processos/enviar-pcm/**/*.css",
+        "src/app/features/processos/processo-recusas/**/*.css",
+        "src/app/features/administracao/**/*.css",
+        "src/app/features/notificacoes/**/*.css",
+        "src/app/shared/components/notificacoes-dropdown.component.css"
+      ],
+      "rules": {
+        "color-no-hex": true,
+        "function-disallowed-list": ["rgb", "rgba", "hsl", "hsla"]
+      }
+    }
+  ]
+}

@@ -1,0 +1,146 @@
+<app-modal titulo="Alterações" [aberto]="aberto()" [largura]="largura()" (fechar)="fechar.emit()">
+  @if (acaoAberta() === 'ESTADO') {
+    <div class="sub-ecra">
+      <div class="estado-atual">
+        <span>Estado atual:</span>
+        <app-estado-processo-badge [estado]="estadoAtual()" />
+      </div>
+
+      <app-seletor
+        data-campo="novo-estado"
+        [compacto]="true"
+        rotulo="Novo estado"
+        [obrigatorio]="true"
+        [opcoes]="opcoesSeletorEstado()"
+        [formControl]="controloEstado"
+      />
+
+      <app-error-banner [erro]="erro()" />
+      @if (conflito()) {
+        <button type="button" app-botao variante="secundario" tamanho="pequeno" class="recarregar" (click)="recarregar.emit()">
+          Recarregar
+        </button>
+      }
+    </div>
+  } @else if (acaoAberta() === 'OWNER') {
+    <div class="sub-ecra">
+      <div class="estado-atual">
+        <span>Owner atual:</span>
+        <strong data-campo="owner-atual">{{ ownerAtual() }}</strong>
+      </div>
+
+      <app-seletor
+        data-campo="novo-owner"
+        [compacto]="true"
+        rotulo="Novo owner"
+        [obrigatorio]="true"
+        [opcoes]="opcoesSeletorOwner()"
+        [placeholder]="placeholderOwner()"
+        [erro]="erroNovoOwner()"
+        [formControl]="controloOwner"
+      />
+      @if (semCandidatos()) {
+        <p class="aviso-campo" role="status">Nenhum outro utilizador desta entidade.</p>
+      }
+
+      <app-error-banner [erro]="erro()" />
+      @if (falhaCandidatos()) {
+        <button type="button" app-botao variante="secundario" tamanho="pequeno" class="recarregar" (click)="carregarCandidatos()">
+          Tentar novamente
+        </button>
+      }
+      @if (conflito()) {
+        <button type="button" app-botao variante="secundario" tamanho="pequeno" class="recarregar" (click)="recarregar.emit()">
+          Recarregar
+        </button>
+      }
+    </div>
+  } @else if (acaoAberta() === 'ANULAR') {
+    <div class="sub-ecra">
+      <div class="estado-atual">
+        <span>Estado atual:</span>
+        <app-estado-processo-badge [estado]="estadoAtual()" />
+      </div>
+
+      <p class="aviso-irreversivel" role="note">
+        Ação irreversível: um processo anulado não pode ser corrigido. Será necessário iniciar um novo processo.
+      </p>
+
+      <label class="campo">
+        <span class="rotulo">Motivo <span class="obrigatorio">*</span></span>
+        <textarea
+          data-campo="motivo-anulacao"
+          rows="4"
+          placeholder="Indique o motivo da anulação"
+          required
+          [value]="motivoAnulacao()"
+          [disabled]="aProcessar()"
+          (input)="escreverMotivoAnulacao($event)"
+        ></textarea>
+      </label>
+
+      <app-error-banner [erro]="erro()" />
+      @if (conflito()) {
+        <button type="button" app-botao variante="secundario" tamanho="pequeno" class="recarregar" (click)="recarregar.emit()">
+          Recarregar
+        </button>
+      }
+    </div>
+  } @else if (acaoAberta(); as aberta) {
+    <p class="por-disponibilizar">{{ tituloDe(aberta) }}: esta ação ainda não está disponível.</p>
+  } @else {
+    <div class="cartoes">
+      @for (cartao of cartoes(); track cartao.acao) {
+        <button
+          type="button"
+          class="cartao"
+          [class.selecionado]="acaoSelecionada() === cartao.acao"
+          [disabled]="cartao.motivoDesativado !== null"
+          [attr.aria-pressed]="acaoSelecionada() === cartao.acao"
+          [attr.data-acao]="cartao.acao"
+          (click)="selecionar(cartao)"
+        >
+          <span class="icone" aria-hidden="true">
+            @switch (cartao.acao) {
+              @case ('OWNER') {
+                <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4">
+                  <circle cx="8" cy="5.5" r="2.5" />
+                  <path d="M3.5 13.5c.6-2.3 2.4-3.5 4.5-3.5s3.9 1.2 4.5 3.5" stroke-linecap="round" />
+                </svg>
+              }
+              @case ('ESTADO') {
+                <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4">
+                  <circle cx="8" cy="8" r="5.5" />
+                  <circle cx="8" cy="8" r="2.5" />
+                </svg>
+              }
+              @case ('ANULAR') {
+                <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4">
+                  <circle cx="8" cy="8" r="5.5" />
+                  <path d="M5.5 8h5" stroke-linecap="round" />
+                </svg>
+              }
+            }
+          </span>
+          <span class="texto">
+            <span class="titulo-cartao">{{ cartao.titulo }}</span>
+            <span class="contexto">{{ cartao.contexto }}</span>
+            @if (cartao.motivoDesativado) {
+              <span class="motivo">{{ cartao.motivoDesativado }}</span>
+            }
+          </span>
+        </button>
+      }
+    </div>
+  }
+
+  <div rodape class="acoes">
+    @if (acaoAberta()) {
+      <button type="button" app-botao variante="secundario" tamanho="pequeno" (click)="voltar()">Voltar</button>
+    }
+    <button type="button" app-botao variante="secundario" tamanho="pequeno" (click)="fechar.emit()">Cancelar</button>
+    <button type="button" app-botao tamanho="pequeno" [desativado]="!podeConfirmar()" (click)="confirmar()">
+      {{ aProcessar() ? 'A processar…' : 'Confirmar' }}
+    </button>
+  </div>
+</app-modal>

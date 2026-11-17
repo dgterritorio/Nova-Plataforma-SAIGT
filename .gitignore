@@ -1,0 +1,4 @@
+.env
+docker/secrets/*.pem
+.idea/
+.vscode/

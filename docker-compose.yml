@@ -1,0 +1,106 @@
+# Nova Plataforma SAIGT — orquestração de referência: PostgreSQL, armazenamento S3 (RustFS), saigt-api e saigt-ui.
+# Configuração no .env (copiar de .env.example); a chave JWT em docker/secrets/ (ver docker/secrets/README.md).
+#
+#   docker compose build      # gera as imagens saigt-api e saigt-ui a partir do código
+#   docker compose up -d      # arranca a plataforma (UI em http://localhost:${SAIGT_UI_PORTA:-8080})
+#
+# Os sistemas externos (AD/LDAP, INCM, SNIT, PCGT, GeoConform, SMTP) não fazem parte deste compose: os endereços e
+# as credenciais de cada ambiente entram pelo .env.
+
+x-logging: &logging
+  driver: json-file
+  options:
+    max-size: "10m"
+    max-file: "3"
+
+services:
+  postgres:
+    image: postgres:15-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-saigt}
+      POSTGRES_USER: ${POSTGRES_USER:-saigt}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Definir POSTGRES_PASSWORD no .env}
+      # Palavra-passe do role saigt_app (runtime da API), criado no primeiro arranque por docker/postgres/init.
+      SAIGT_APP_PASSWORD: ${SAIGT_APP_PASSWORD:?Definir SAIGT_APP_PASSWORD no .env}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./docker/postgres/init:/docker-entrypoint-initdb.d:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    logging: *logging
+
+  rustfs:
+    image: rustfs/rustfs:1.0.0
+    restart: unless-stopped
+    environment:
+      RUSTFS_ACCESS_KEY: ${STORAGE_ACCESS_KEY:?Definir STORAGE_ACCESS_KEY no .env}
+      RUSTFS_SECRET_KEY: ${STORAGE_SECRET_KEY:?Definir STORAGE_SECRET_KEY no .env}
+    volumes:
+      - rustfs_data:/data
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "-o", "/dev/null", "http://127.0.0.1:9000/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    logging: *logging
+
+  saigt-api:
+    build:
+      context: ./saigt-api
+    image: saigt-api:${SAIGT_VERSAO:-local}
+    restart: unless-stopped
+    depends_on:
+      postgres:
+        condition: service_healthy
+      rustfs:
+        condition: service_healthy
+    env_file:
+      - .env
+    environment:
+      # Ligações internas do compose; o resto da configuração vem do .env.
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/${POSTGRES_DB:-saigt}
+      SPRING_DATASOURCE_USERNAME: saigt_app
+      SPRING_DATASOURCE_PASSWORD: ${SAIGT_APP_PASSWORD}
+      # O Liquibase corre com o dono da base de dados, para aplicar DDL e grants nas migrações.
+      SPRING_LIQUIBASE_URL: jdbc:postgresql://postgres:5432/${POSTGRES_DB:-saigt}
+      SPRING_LIQUIBASE_USERNAME: ${POSTGRES_USER:-saigt}
+      SPRING_LIQUIBASE_PASSWORD: ${POSTGRES_PASSWORD}
+      STORAGE_ENDPOINT: http://rustfs:9000
+      JWT_PRIVATE_KEY_PATH: /secrets/jwt-private-key.pem
+      JWT_JWKS_URI: http://saigt-api:8080/oauth2/jwks
+    volumes:
+      - ./docker/secrets:/secrets:ro
+    # Só em loopback: o acesso normal é pela saigt-ui, que encaminha /api e /oauth2/token para aqui.
+    ports:
+      - "127.0.0.1:${SAIGT_API_PORTA:-8081}:8080"
+    healthcheck:
+      # O wget do BusyBox falha com o 503 do Actuator (DOWN).
+      test: ["CMD", "wget", "-q", "-O", "/dev/null", "http://127.0.0.1:8080/actuator/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      # Cobre o primeiro arranque, com as migrações Liquibase.
+      start_period: 120s
+    logging: *logging
+
+  saigt-ui:
+    build:
+      context: ./saigt-ui
+      args:
+        BUILD_CONFIG: production
+    image: saigt-ui:${SAIGT_VERSAO:-local}
+    restart: unless-stopped
+    depends_on:
+      saigt-api:
+        condition: service_healthy
+    ports:
+      - "${SAIGT_UI_PORTA:-8080}:8080"
+    logging: *logging
+
+volumes:
+  postgres_data:
+  rustfs_data:

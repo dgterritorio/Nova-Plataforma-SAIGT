@@ -13,11 +13,6 @@
     "lint": "ng lint && npm run lint:css",
     "lint:css": "stylelint \"src/**/*.css\"",
     "test": "ng test",
-    "e2e": "playwright test -c e2e/playwright.config.ts",
-    "e2e:demo": "playwright test -c e2e/playwright.config.ts --project=demo",
-    "e2e:visual:atualizar": "playwright test -c e2e/playwright.config.ts --project=visual --update-snapshots",
-    "e2e:figma": "playwright test -c e2e/playwright.config.ts --project=figma",
-    "e2e:harness": "playwright test -c e2e/playwright.config.ts --project=harness",
     "catalogo": "ng run saigt-ui:storybook",
     "catalogo:build": "ng run saigt-ui:build-storybook"
   },

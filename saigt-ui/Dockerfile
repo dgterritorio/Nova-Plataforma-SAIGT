@@ -5,7 +5,7 @@ RUN npm ci
 COPY angular.json tsconfig.json tsconfig.app.json ./
 COPY public ./public
 COPY src ./src
-# `development` só para o compose local (build-all do saigt-implementation).
+# `development` só para desenvolvimento local; as imagens a entregar usam `production`.
 ARG BUILD_CONFIG=production
 RUN npx ng build --configuration $BUILD_CONFIG
 

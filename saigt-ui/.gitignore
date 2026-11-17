@@ -5,7 +5,5 @@ dist/
 .idea/
 *.log
 /coverage
-/e2e/.auth/
-/e2e/relatorios/
 /relatorios/
 /.npm/

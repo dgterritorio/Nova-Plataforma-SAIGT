@@ -3,7 +3,7 @@
 Backend da Nova Plataforma SAIGT (PC5979 — DGT). Java 21 + Spring Boot 3.x, PostgreSQL + Liquibase, storage S3 (RustFS), autenticação própria (Spring Authorization Server em-processo, LDAP para utilizadores DGT e INCM para utilizadores externos).
 
 ## Desenvolvimento local
-A orquestração completa (Postgres, RustFS, este serviço, o frontend) vive em `saigt-implementation`. Para correr só este serviço isoladamente:
+A orquestração completa (Postgres, RustFS, este serviço, o frontend) está no `docker-compose.yml` da raiz do repositório (ver o `README.md` da raiz). Para correr só este serviço isoladamente:
 
 ```bash
 ./mvnw spring-boot:run
@@ -19,74 +19,8 @@ Exige `STORAGE_ACCESS_KEY` e `STORAGE_SECRET_KEY` no ambiente (ver `.env.example
 - `make migrate` — `liquibase:update`
 - `make build` — build da imagem Docker
 
-## Integração contínua
-O pipeline do GitLab CI está no `.gitlab-ci.yml` e é o gate dos merge requests: com "Pipelines must succeed" ativo no projeto (Settings → Merge requests), um MR só se integra com o pipeline verde.
-
-**Quando corre**
-- Em cada merge request (pipeline de MR).
-- Em cada push em `develop`, `staging` e `master` (pipeline de ramo).
-- Um ramo com MR aberto corre só o pipeline do MR. Um push noutro ramo sem MR não cria pipeline.
-
-**Jobs**
-
-| Job | Stage | O que faz |
-|---|---|---|
-| `testes` | `testes` | `mvn -B --no-transfer-progress verify` na imagem `maven:3.9-eclipse-temurin-21` (a da fase de build do `Dockerfile`): a suite completa, com os testes unitários, os `@SpringBootTest` em H2 (perfil `test`) e os `@Tag("docker")` com Testcontainers (PostgreSQL, RustFS). Um teste a falhar faz falhar o job. Os relatórios `target/surefire-reports/TEST-*.xml` vão para o separador de testes do MR (guardados 14 dias, também quando falha). A cache `.m2/repository` muda só quando muda o `pom.xml`. |
-| `imagem` | `imagem` | Só nos merge requests, depois do `testes`: `docker build -t saigt-api:<sha curto> .`, confirma que o `Dockerfile` constrói. Não faz login nem push. |
-| `publicar` | `imagem` | Só nos pipelines de ramo de `develop`, `staging` e `master`, depois do `testes`: constrói e publica a imagem no registry (ver «Publicação da imagem»). |
-| `deploy-desenvolvimento`, `deploy-qualidade`, `deploy-producao` | `deploy` | Manuais, só nos pipelines de ramo de ramos protegidos, depois do `publicar`: instalam no ambiente a imagem publicada por esse pipeline e esperam que o `saigt-api` migre e fique saudável (ver «Deploy por ambiente»). |
-
-Os jobs podem ser cancelados por um push mais recente no mesmo ramo (`interruptible`). Só o `publicar` e os jobs de deploy usam credenciais (as do registry e, no deploy, a chave SSH do ambiente); o perfil `test` só tem valores fictícios.
-
-**Publicação da imagem.** Só nos pipelines de ramo de `develop`, `staging` e `master`, e só com o `testes` verde, o job `publicar` faz `docker login` com a palavra-passe lida do stdin, constrói a imagem e publica-a como `$CI_REGISTRY_IMAGE:<sha curto do commit>` (por exemplo `registry.exemplo/delivery-iberia/saigt/saigt-api:5f1dade`). É a única etiqueta: a do commit, que o deploy usa e que nunca se sobrescreve (se já existe, num pipeline repetido ou no mesmo commit promovido a `staging` ou `master`, o job termina sem reconstruir). Nos merge requests o `imagem` só constrói, sem login nem push. Variáveis de CI/CD de que depende: `CI_REGISTRY` (endereço do registry), `CI_REGISTRY_IMAGE` (nome da imagem, sem etiqueta), `CI_REGISTRY_USER` e `CI_REGISTRY_PASSWORD`. Com o Container Registry do GitLab são as predefinidas (a palavra-passe é o token do job, já mascarado). Com outro registry, definem-se no projeto (Settings → CI/CD → Variables) com os mesmos nomes, protegidas, para só os ramos protegidos as receberem, e a palavra-passe mascarada; o `.gitlab-ci.yml` não muda. `develop`, `staging` e `master` têm de ser ramos protegidos.
-
-**Runner.** Os jobs usam um serviço Docker-in-Docker (`docker:<versão>-dind`, alias `docker`) ligado por TLS na porta 2376 (`DOCKER_TLS_VERIFY=1`, certificados em `/certs/client`). O runner tem de ter o executor `docker` em modo privilegiado e o volume `/certs/client` na configuração (`volumes = ["/certs/client", "/cache"]`). Os contentores do Testcontainers correm dentro desse serviço; `TESTCONTAINERS_HOST_OVERRIDE=docker` faz os testes chegarem às suas portas. A versão do Docker está fixa no `.gitlab-ci.yml`, igual na imagem dos jobs `imagem` e `publicar` e no serviço; muda-se nos dois sítios ao mesmo tempo.
-
-**Simuladores da INCM e do SNIT.** Os testes contra os mocks (`ClienteIncmContraMockTest`, `ConsultaIncmServiceTest`, `EnvioIncmServiceContraMockTest`, `FluxoPublicacaoIncmIntegrationTest`, `ClienteSnitContraMockTest`) usam os mappings de `docker/incm-mock` e `docker/snit-mock` do `saigt-implementation`, os mesmos do docker-compose. O `before_script` do `testes` faz um clone raso desse repositório para a pasta irmã (`../saigt-implementation`), no ramo da variável `SAIGT_IMPLEMENTATION_REF` (por omissão `master`), com o `CI_JOB_TOKEN`; o `SimuladorWireMockTeste` levanta um WireMock por simulador no dind. Para testar contra um ramo de mocks ainda por integrar, corre-se o pipeline à mão (Build → Pipelines → Run pipeline, num ramo com pipeline, como `develop`) com `SAIGT_IMPLEMENTATION_REF` nesse ramo. Pré-requisito: no `saigt-implementation`, Settings → CI/CD → Job token permissions, o `saigt-api` na allowlist (ação de Maintainer).
-
-**Reproduzir localmente.** Com o Docker a correr, `make test` corre a mesma suite (os testes com contentores precisam dele). Os testes contra os simuladores usam, por esta ordem, o mock do compose (`INCM_MOCK_URL=http://localhost:8089`, `SNIT_MOCK_URL=http://localhost:8090`, sem contentor extra), um WireMock com os mappings da pasta irmã `../saigt-implementation`, ou ficam ignorados quando não há nenhum dos dois. `make build` constrói a imagem como o job `imagem`.
-
-**Deploy por ambiente.** Um job manual por ambiente, criado só nos pipelines de ramo e só quando o ramo é protegido (`CI_COMMIT_REF_PROTECTED`), nunca nos merge requests:
-
-| Ramo | Job | Ambiente no GitLab (`environment:name`) | Tier |
-|---|---|---|---|
-| `develop` | `deploy-desenvolvimento` | `desenvolvimento` | `development` |
-| `staging` | `deploy-qualidade` | `qualidade` | `staging` |
-| `master` | `deploy-producao` | `producao` | `production` |
-
-O mapa de ramos e ambientes e o gatilho manual são a proposta da story, ainda por confirmar pela DGT com a decisão de infraestrutura dos ambientes (OI-392); confirmá-los ou mudá-los só muda este ficheiro, não o código. Cada job tem um `resource_group` próprio (dois deploys no mesmo ambiente esperam um pelo outro) e não é cancelado por um push mais recente.
-
-*O que o job faz.* Cada ambiente tem, num servidor, uma pasta com o seu `docker-compose.yml` e o seu `.env`, com os segredos de runtime, geridos pela infraestrutura fora dos repositórios. O job liga-se por SSH a essa pasta e:
-1. confirma que o ambiente dá ao serviço `saigt-api` as seis variáveis `SPRING_DATASOURCE_URL/USERNAME/PASSWORD` (runtime, role `saigt_app`) e `SPRING_LIQUIBASE_URL/USERNAME/PASSWORD` (dono da base, para a migração) com valor; conta-as no servidor e nada sai de lá. Sem elas pára antes de mexer no ambiente: o `saigt-api` nunca arranca com os valores por omissão de desenvolvimento do `application.properties`;
-2. faz `docker login` no registry com a palavra-passe pelo stdin, `docker compose pull saigt-api` e `docker logout`;
-3. faz `docker compose up -d --no-deps --force-recreate saigt-api` com `SAIGT_API_IMAGEM=$CI_REGISTRY_IMAGE:$CI_COMMIT_SHORT_SHA` só no ambiente desse comando: a imagem que o `publicar` do mesmo pipeline publicou. Não escreve no `.env` nem em nenhum ficheiro do ambiente, não lê os valores das credenciais e não toca nos outros serviços;
-4. espera até `DEPLOY_TEMPO_LIMITE` segundos (300 por omissão) que todos os contentores do serviço estejam a correr a imagem nova e `healthy` (o healthcheck do compose chama o `/actuator/health`) e mostra o `/actuator/health` de cada um. Falha logo se um contentor parar ou reiniciar, e falha ao fim do tempo limite; em qualquer falha mostra as últimas `DEPLOY_LINHAS_LOG` linhas (100 por omissão) do log do `saigt-api`.
-
-*Migração da base de dados.* Corre no arranque do `saigt-api` (Liquibase do Spring, `db/master.xml`), com as credenciais do dono que o ambiente lhe dá; o pipeline não acede à base de dados. Um changeset que falhe impede o arranque e o job falha (o PostgreSQL desfaz o changeset). Um changeset já aplicado e alterado faz falhar a validação por checksum e o job falha: a correção é sempre um changeset novo. Com várias instâncias a arrancar ao mesmo tempo, o `DATABASECHANGELOGLOCK` garante que só uma aplica os changesets; as outras esperam e arrancam sem os repetir. Numa base vazia (primeiro deploy), as tabelas de controlo do Liquibase ainda não existem e duas instâncias podem tentar criá-las ao mesmo tempo: uma falha e reinicia, e o job falha por causa do reinício; por isso o primeiro deploy faz-se com uma só instância. Repetir o deploy é seguro: sem changesets novos, o Liquibase não aplica nada.
-
-*Repetir um deploy.* Correr outra vez o job (Retry), no mesmo pipeline: volta a fazer pull e a recriar o serviço com a mesma imagem.
-
-*Voltar à versão anterior.* Novo deploy da etiqueta anterior: em Operate → Environments → ambiente, Rollback no deploy anterior (repete o job de deploy desse pipeline, com a imagem desse commit), ou Retry do job de deploy no pipeline anterior. A migração não volta atrás: a versão anterior arranca sobre a base já migrada (o Liquibase ignora os changesets que não conhece), por isso uma alteração ao esquema tem de manter a versão anterior a funcionar, ou a correção é um changeset novo. O rollback automático da migração não está definido.
-
-*Variáveis de CI/CD* (Settings → CI/CD → Variables), com o âmbito de cada ambiente (`desenvolvimento`, `qualidade`, `producao`), protegidas (só os ramos protegidos as recebem) e, as que o permitem, mascaradas; nenhuma tem valor no `.gitlab-ci.yml`:
-
-| Variável | Tipo | O que é |
-|---|---|---|
-| `DEPLOY_SSH_HOST` | Variable | Utilizador e servidor do ambiente para o SSH (`utilizador@servidor`) |
-| `DEPLOY_SSH_PORT` | Variable | Porta SSH, se não for a 22 |
-| `DEPLOY_SSH_KEY` | File | Chave privada SSH do utilizador de deploy, só para este fim |
-| `DEPLOY_SSH_KNOWN_HOSTS` | File | Linha(s) `known_hosts` com a chave pública do servidor, obtida da infraestrutura por um canal fiável; o host é sempre verificado (`StrictHostKeyChecking=yes`) |
-| `DEPLOY_DIR` | Variable | Pasta do ambiente no servidor (onde estão o `docker-compose.yml` e o `.env`) |
-| `DEPLOY_URL` | Variable | Endereço público do ambiente (`environment:url`) |
-| `DEPLOY_TEMPO_LIMITE`, `DEPLOY_LINHAS_LOG` | Variable | Opcionais: sobrepõem-se aos valores por omissão do job |
-| `CI_REGISTRY`, `CI_REGISTRY_IMAGE`, `CI_REGISTRY_USER`, `CI_REGISTRY_PASSWORD` | — | As mesmas do `publicar` (as predefinidas do Container Registry do GitLab, ou as do projeto) |
-
-*Pré-requisitos do ambiente* (infraestrutura, fora do repositório): a base de dados e os roles do dono e `saigt_app` criados antes do primeiro deploy (como em `docker/postgres/init/01-init.sql` do `saigt-implementation`); no `docker-compose.yml` do ambiente, o serviço `saigt-api` com `image: ${SAIGT_API_IMAGEM}` (com um valor por omissão), o healthcheck do `/actuator/health` com `start_period` que cubra a migração, as seis variáveis `SPRING_*` no `.env` e sem `container_name` (para poder ter várias instâncias); o servidor com Docker e Docker Compose v2, SSH só por chave e um utilizador de deploy com acesso ao Docker e à pasta do ambiente, que confia no certificado do registry. Os jobs de deploy não precisam de Docker-in-Docker: só do cliente SSH da imagem `docker`.
-
-**Fora do pipeline:** a análise SonarQube (`make analyse` precisa de um servidor que ainda não existe), a criação dos ambientes e o rollback automático da migração.
-
 ## Estrutura
-Organização use-case-first: `controller/{usecase}/`, `dto/{usecase}/`, `service/{usecase}/`, `mapper/{usecase}/`, `persistence/{usecase}/`; adaptadores de sistemas externos em `integracao/{sistema}/` (desvio declarado no `CLAUDE.md`); código transversal em `core/` de cada camada.
+Organização use-case-first: `controller/{usecase}/`, `dto/{usecase}/`, `service/{usecase}/`, `mapper/{usecase}/`, `persistence/{usecase}/`; adaptadores de sistemas externos em `integracao/{sistema}/` (desvio deliberado à organização use-case-first); código transversal em `core/` de cada camada.
 
 ## Jobs periódicos
 O `saigt-api` pode correr com mais de uma instância, mas cada job periódico corre numa só de cada vez.
